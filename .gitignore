@@ -4,6 +4,8 @@
 *.ap_
 *.aab
 
+flutter_build
+
 # Files for the ART/Dalvik VM
 *.dex
 
