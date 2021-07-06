@@ -1,4 +1,6 @@
-## 0.0.1
+
+## [0.0.1] - 2021/07/06.
 
 * support Game Loop.
-* add Class GameScene.
+* add GameScene.
+* add Sprite.
