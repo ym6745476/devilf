@@ -38,12 +38,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "cupertino_icons",
-      "rootUri": "file:///E:/project/tools/flutter/.pub-cache/hosted/pub.flutter-io.cn/cupertino_icons-1.0.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "fake_async",
       "rootUri": "file:///E:/project/tools/flutter/.pub-cache/hosted/pub.flutter-io.cn/fake_async-1.2.0",
       "packageUri": "lib/",
@@ -140,7 +134,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-07-05T10:18:19.046743Z",
+  "generated": "2021-07-06T07:58:56.963758Z",
   "generator": "pub",
   "generatorVersion": "2.13.4"
 }
