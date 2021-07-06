@@ -9,9 +9,9 @@ A little game engine implemented with flutter
     <img src="https://github.com/ym6745476/devilf/blob/master/logo.png?raw=true" />
 </p>
 
-# 适用范围：开发中小型游戏，APP内营销活动小游戏。
-# 主要特性：游戏循环，精灵动画，交互控制。
-# 游戏支持：Tiled地图，碰撞检测，TexturePack精灵，遥杆控制器。
+### 适用范围：开发中小型游戏，APP内营销活动小游戏。
+### 主要特性：游戏循环，精灵动画，交互控制。
+### 游戏支持：Tiled地图，碰撞检测，TexturePack精灵，遥杆控制器。
 
 # Finished
 
