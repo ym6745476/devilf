@@ -20,7 +20,7 @@ A little game engine implemented with flutter.
 ![图片说明](https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/1.png "1.png")
 
 
-# 已完成功能 
+# 结构关系图 
 ------------------------------------ GameScene ----------------------------------  
 ---------------------------------------- | --------------------------------------  
 -------------------------- UI Widget --------- GameWidget -----------------------  
@@ -33,3 +33,14 @@ A little game engine implemented with flutter.
 -----------------------------------------|---------------------------------------  
 -----------------------------------------|---------------------------------------  
 -----------------------------------------|---------------------------------------  
+
+# 功能说明
+* GameScene：游戏场景  
+* UI Widget：Flutter UI控件  
+* GameWidget：管理游戏Widget 和 Sprite的控件  
+* Game：通过Game Loop完成Sprite渲染  
+* Sprite：精灵基础类  
+* FpsSprite：Sprite的派生类显示帧数  
+* PlayerSprite：玩家精灵类  
+* MonsterSprite：怪物精灵类  
+* MapSprite：地图精灵类  
