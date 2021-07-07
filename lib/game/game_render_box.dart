@@ -8,7 +8,7 @@ import 'game.dart';
 import 'game_loop.dart';
 
 /// 游戏RenderBox
-/// 继承LeafRenderObjectWidget可以将game类变成Widget
+/// 继承LeafRenderObjectWidget可以将game类变成Widget通过canvas绘制界面
 class GameRenderBox extends RenderBox with WidgetsBindingObserver {
 
   BuildContext context;
@@ -27,6 +27,7 @@ class GameRenderBox extends RenderBox with WidgetsBindingObserver {
   @override
   void attach(PipelineOwner owner) {
     super.attach(owner);
+
     //启动游戏循环
     this.gameLoop = GameLoop(gameLoopCallback);
     this.gameLoop?.start();

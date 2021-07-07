@@ -18,13 +18,16 @@ class Sprite {
     }
   );
 
+  // 设置位置
   void setPosition(double x, double y) {
     this.x = x;
     this.y = y;
   }
 
+  // 更新数据
   void update(double dt){}
 
+  // 重绘界面
   void render(Canvas canvas){}
 
 }

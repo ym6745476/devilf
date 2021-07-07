@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'package:devilf/game/game.dart';
 import 'package:devilf/sprite/sprite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 /// 帧数精灵类
 class FpsSprite extends Sprite{
 
+  // 文本
   String text;
 
   FpsSprite(this.text,
@@ -15,13 +17,9 @@ class FpsSprite extends Sprite{
   }
   ):super(x:x,y:y);
 
-  void setText(String text) {
-    this.text = text;
-  }
-
   @override
   void update(double dt) {
-
+    this.text = Game.fps;
   }
 
   @override
