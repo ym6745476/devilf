@@ -24,7 +24,7 @@ A little game engine implemented with flutter.
 ## 在线演示    
 https://ymbok.com/phone-3.html  
 
-### 截图 
+### 示例截图  
 ![图片说明](https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/1.png "1.png")
 
 
