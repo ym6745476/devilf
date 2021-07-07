@@ -54,7 +54,7 @@ class Game extends LeafRenderObjectWidget {
 
   /// 显示FPS
   void onTimingsCallback(List<FrameTiming> timings) {
-    Game.fps = (1/(timings[0].totalSpan.inMilliseconds/1000)).toStringAsFixed(0) + " fps";
+    Game.fps = (1/(timings[0].totalSpan.inMilliseconds/1000.0)).toStringAsFixed(0) + " fps";
     //print(Game.fps);
   }
 
