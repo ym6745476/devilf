@@ -1,7 +1,8 @@
 # Devilf 恶魔游戏引擎  
 A little game engine implemented with flutter.  
 
-<p align="center" >
+<p align="center">
+    <img src="https://img.shields.io/badge/devilf-0.0.2-orange" />
     <img src="https://img.shields.io/badge/flutter-2.2.3-green" />
 </p>
 
