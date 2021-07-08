@@ -2,6 +2,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:devilf/base/position.dart';
 import 'package:devilf/sprite/sprite.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -11,12 +12,12 @@ class MonsterSprite extends Sprite{
   late double turn;
 
   MonsterSprite(
-    {
-      double x = 0,
-      double y = 0,
-      this.turn = 0,
-    }
-  ):super(x:x,y:y);
+      {
+        Position position = const Position(0,0),
+        Size size = const Size(64,64),
+        this.turn = 0,
+      }
+  ):super(position:position,size:size);
 
 
   @override
@@ -28,7 +29,7 @@ class MonsterSprite extends Sprite{
   void render(Canvas canvas) {
     var tau = pi * 2;
     canvas.save();
-    canvas.translate(this.x, this.y);
+    canvas.translate(this.position.x, this.position.y);
     canvas.rotate(tau * this.turn);
     var white = new Paint()..color = new Color(0xFFFF0000);
     var size = 100.0;

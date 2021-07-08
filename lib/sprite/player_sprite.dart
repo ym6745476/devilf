@@ -1,39 +1,39 @@
 
-import 'dart:math';
-import 'dart:ui';
-
+import 'dart:ui' as ui;
+import 'package:devilf/base/position.dart';
 import 'package:devilf/sprite/sprite.dart';
+import 'package:devilf/sprite/sprite_animation.dart';
 import 'package:flutter/cupertino.dart';
+
+import 'image_sprite.dart';
 
 /// 玩家精灵类
 class PlayerSprite extends Sprite{
 
-  late double turn;
+  ImageSprite bodySprite;
 
-  PlayerSprite(
+
+
+  PlayerSprite(this.bodySprite,
     {
-      double x = 0,
-      double y = 0,
-      this.turn = 0,
+      Position position = const Position(0,0),
+      Size size = const Size(128,128),
     }
-  ):super(x:x,y:y);
+  ):super(position:position,size:size);
 
 
   @override
-  void update(double dt) {
-    this.turn += dt * 0.25;
+  void update(double dt){
+    super.update(dt);
+    bodySprite.angle += dt * 0.25;
+    bodySprite.position = this.position;
+    bodySprite.update(dt);
   }
 
   @override
-  void render(Canvas canvas) {
-    var tau = pi * 2;
-    canvas.save();
-    canvas.translate(this.x, this.y);
-    canvas.rotate(tau * this.turn);
-    var white = new Paint()..color = new Color(0xFFFFFFFF);
-    var size = 100.0;
-    canvas.drawRect(new Rect.fromLTWH(-size / 2, -size / 2, size, size), white);
-    canvas.restore();
+  void render(Canvas canvas){
+    super.render(canvas);
+    bodySprite.render(canvas);
   }
 
 }

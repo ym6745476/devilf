@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'package:devilf/base/position.dart';
 import 'package:devilf/game/game.dart';
 import 'package:devilf/sprite/sprite.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,11 +12,11 @@ class FpsSprite extends Sprite{
   String text;
 
   FpsSprite(this.text,
-  {
-    double x = 0,
-    double y = 0,
-  }
-  ):super(x:x,y:y);
+    {
+      Position position = const Position(0,0),
+      Size size = const Size(64,64),
+    }
+  ):super(position:position,size:size);
 
   @override
   void update(double dt) {
@@ -25,7 +26,7 @@ class FpsSprite extends Sprite{
   @override
   void render(Canvas canvas) {
     canvas.save();
-    canvas.translate(this.x, this.y);
+    canvas.translate(this.position.x, this.position.y);
     var size = 200.0;
     ui.ParagraphBuilder pb = ui.ParagraphBuilder(ui.ParagraphStyle(
       textAlign: TextAlign.left,

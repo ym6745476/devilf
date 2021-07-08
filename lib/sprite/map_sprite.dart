@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:devilf/base/position.dart';
 import 'package:devilf/sprite/sprite.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -8,11 +9,11 @@ import 'package:flutter/cupertino.dart';
 class MapSprite extends Sprite{
 
   MapSprite(
-  {
-    double x = 0,
-    double y = 0,
-  }
-  ):super(x:x,y:y);
+      {
+        Position position = const Position(0,0),
+        Size size = const Size(64,64),
+      }
+  ):super(position:position,size:size);
 
 
   @override
@@ -24,7 +25,7 @@ class MapSprite extends Sprite{
   void render(Canvas canvas) {
     canvas.drawPaint(new Paint()..color = const Color(0xFF333333));
     canvas.save();
-    canvas.translate(this.x, this.y);
+    canvas.translate(this.position.x, this.position.y);
     canvas.restore();
   }
 

@@ -1,7 +1,9 @@
 
+import 'package:devilf/base/position.dart';
 import 'package:devilf/game/game.dart';
 import 'package:devilf/game/game_widget.dart';
 import 'package:devilf/sprite/fps_sprite.dart';
+import 'package:devilf/sprite/image_sprite.dart';
 import 'package:devilf/sprite/map_sprite.dart';
 import 'package:devilf/sprite/monster_sprite.dart';
 import 'package:devilf/sprite/player_sprite.dart';
@@ -41,12 +43,21 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
   void _loadGame() async {
     try {
 
-      await Future.delayed(Duration(seconds: 2), () {
-        _mapSprite = MapSprite(x:0,y:0);
-        _playerSprite = PlayerSprite(x:MediaQuery.of(context).size.width/2,y:MediaQuery.of(context).size.height/2);
-        _fpsSprite = FpsSprite("60 fps",x:0,y:MediaQuery.of(context).size.height - 25);
+      ImageSprite bodySprite = await ImageSprite.load("assets/images/sprite.png");
 
-        MonsterSprite monsterSprite = MonsterSprite(x:MediaQuery.of(context).size.width-100,y:MediaQuery.of(context).size.height-100);
+      //SpriteAnimation spriteAnimation = SpriteAnimation();
+
+      _playerSprite = PlayerSprite(bodySprite);
+      _playerSprite!.position = Position(MediaQuery.of(context).size.width/2,MediaQuery.of(context).size.height/2);
+
+
+
+      await Future.delayed(Duration(seconds: 2), () {
+        _mapSprite = MapSprite();
+
+        _fpsSprite = FpsSprite("60 fps",position:Position(0,MediaQuery.of(context).size.height - 25));
+
+        MonsterSprite monsterSprite = MonsterSprite(position:Position(MediaQuery.of(context).size.width-100,MediaQuery.of(context).size.height-100));
         _monsterSprites.add(monsterSprite);
 
         setState(() {

@@ -1,3 +1,4 @@
+import 'package:devilf/base/position.dart';
 import 'package:devilf/sprite/fps_sprite.dart';
 import 'package:devilf/sprite/map_sprite.dart';
 import 'package:devilf/sprite/monster_sprite.dart';
@@ -51,7 +52,7 @@ class GameWidget extends StatelessWidget {
   /// 鼠标点击
   void _pointerDown(PointerDownEvent event){
     print("鼠标点击：" + event.localPosition.toString());
-    _updatePlayerPosition(event.localPosition);
+    _updatePlayerPosition(Position(event.localPosition.dx,event.localPosition.dy));
   }
 
   /// 鼠标抬起
@@ -62,7 +63,7 @@ class GameWidget extends StatelessWidget {
   /// 鼠标移动
   void _pointerMove(PointerMoveEvent event){
     print("鼠标移动：" + event.localPosition.toString());
-    _updatePlayerPosition(event.localPosition);
+    _updatePlayerPosition(Position(event.localPosition.dx,event.localPosition.dy));
   }
 
   /// 鼠标取消
@@ -72,8 +73,8 @@ class GameWidget extends StatelessWidget {
   }
 
   /// 玩家位置更新
-  void _updatePlayerPosition(Offset position){
-    playerSprite!.setPosition(position.dx, position.dy);
+  void _updatePlayerPosition(Position position){
+    playerSprite!.position = position;
   }
 
   @override
