@@ -23,8 +23,9 @@ class MapSprite extends Sprite{
 
   @override
   void render(Canvas canvas) {
-    canvas.drawPaint(new Paint()..color = const Color(0xFF333333));
-    canvas.save();
+    super.render(canvas);
+
+    canvas.drawPaint(new Paint()..color = const Color(0xFF694D9F));
     canvas.translate(this.position.x, this.position.y);
     canvas.restore();
   }

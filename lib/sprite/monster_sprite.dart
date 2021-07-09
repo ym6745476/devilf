@@ -27,12 +27,12 @@ class MonsterSprite extends Sprite{
 
   @override
   void render(Canvas canvas) {
+    super.render(canvas);
+
     var tau = pi * 2;
-    canvas.save();
-    canvas.translate(this.position.x, this.position.y);
     canvas.rotate(tau * this.turn);
     var white = new Paint()..color = new Color(0xFFFF0000);
-    var size = 100.0;
+    var size = 50.0;
     canvas.drawRect(new Rect.fromLTWH(-size / 2, -size / 2, size, size), white);
     canvas.restore();
   }

@@ -1,12 +1,13 @@
 
+import 'package:devilf/base/animation_name.dart';
 import 'package:devilf/base/position.dart';
-import 'package:devilf/game/game.dart';
 import 'package:devilf/game/game_widget.dart';
 import 'package:devilf/sprite/fps_sprite.dart';
 import 'package:devilf/sprite/image_sprite.dart';
 import 'package:devilf/sprite/map_sprite.dart';
 import 'package:devilf/sprite/monster_sprite.dart';
 import 'package:devilf/sprite/player_sprite.dart';
+import 'package:devilf/sprite/sprite_animation.dart';
 import 'package:flutter/material.dart';
 
 class GameScene extends StatefulWidget {
@@ -41,21 +42,25 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
   }
 
   void _loadGame() async {
+
     try {
 
-      ImageSprite bodySprite = await ImageSprite.load("assets/images/sprite.png");
+      await Future.delayed(Duration(seconds: 2), () async {
 
-      //SpriteAnimation spriteAnimation = SpriteAnimation();
+        ImageSprite logoSprite = await ImageSprite.load("assets/images/sprite.png");
+        logoSprite.scale = 0.6;
 
-      _playerSprite = PlayerSprite(bodySprite);
-      _playerSprite!.position = Position(MediaQuery.of(context).size.width/2,MediaQuery.of(context).size.height/2);
+        SpriteAnimation bodySprite = await SpriteAnimation.load("assets/images/role/nan_01.png","assets/images/role/nan_01.plist");
+
+        _playerSprite = PlayerSprite();
+        _playerSprite?.position = Position(MediaQuery.of(context).size.width/2,MediaQuery.of(context).size.height/2);
+
+        _playerSprite?.addChild(logoSprite);
+        _playerSprite?.addChild(bodySprite);
 
 
-
-      await Future.delayed(Duration(seconds: 2), () {
+        _fpsSprite = FpsSprite("60 fps",position:Position(MediaQuery.of(context).size.width - 100,25));
         _mapSprite = MapSprite();
-
-        _fpsSprite = FpsSprite("60 fps",position:Position(0,MediaQuery.of(context).size.height - 25));
 
         MonsterSprite monsterSprite = MonsterSprite(position:Position(MediaQuery.of(context).size.width-100,MediaQuery.of(context).size.height-100));
         _monsterSprites.add(monsterSprite);
@@ -64,6 +69,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
           _loading = false;
         });
 
+        print("加载完成...");
       });
 
     } catch (e) {
@@ -124,10 +130,10 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                 ),
 
                 Positioned(
-                  left: 4,
-                  top: 4,
+                  left: 10,
+                  top: 30,
                   child: Text(
-                    "devilf",
+                    "Devilf",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
@@ -138,23 +144,20 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                 Positioned(
                   bottom: 30,
                   right: 20,
-                  child: GestureDetector(
-                    child: Container(
-                      child: Text(
-                        _tipText,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                    onTap: (){
-                      setState(() {
-                          _tipText = "点到我了";
-                      });
-                    },
+                  child:Wrap(
+                    spacing: 5,
+                    runSpacing: 5,
+                    children: [
+                      ElevatedButton(
+                        child: new Text('Play'),
+                        onPressed: () {
+                          _playerSprite?.play(AnimationName.idleDown);
+                        },
+                      )
+                    ],
                   ),
                 ),
+
               ]
           );
         }

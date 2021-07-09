@@ -5,12 +5,12 @@ import 'dart:ui' as ui;
 import 'package:flutter/services.dart' show rootBundle;
 
 /// 资源加载和缓存
-class Cache {
+class AssetsLoader {
 
   // 缓存目录
   static final Map<String,dynamic> _files = {};
 
-  Cache();
+  AssetsLoader();
 
   /// 从Cache删除文件
   static void clear(String file) {
@@ -35,7 +35,7 @@ class Cache {
   }
 
   /// 读取文本文件
-  static Future<String> readFile(String src) async {
+  static Future<String> loadFile(String src) async {
     if (!_files.containsKey(src)) {
       _files[src] = await rootBundle.loadString(src);
     }
@@ -43,7 +43,7 @@ class Cache {
   }
 
   /// 读取Json文件
-  static Future<Map<String, dynamic>> readJson(String src) async {
+  static Future<Map<String, dynamic>> loadJson(String src) async {
     final content =  await rootBundle.loadString(src);
     return jsonDecode(content) as Map<String, dynamic>;
   }

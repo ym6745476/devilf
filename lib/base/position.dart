@@ -9,4 +9,9 @@ class Position{
   const Position(this.x, this.y);
 
   Offset toOffset() => Offset(x, y);
+
+  @override
+  String toString() {
+    return "x:" + x.toString() + ",y:" + y.toString();
+  }
 }
