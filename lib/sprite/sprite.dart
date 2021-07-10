@@ -22,6 +22,9 @@ class Sprite {
   /// 子精灵
   List<Sprite> children = [];
 
+  /// 被绑定状态
+  bool isBind = false;
+
   Sprite(
     {
         required this.position,
@@ -33,7 +36,6 @@ class Sprite {
   void addChild(Sprite child){
     child.parent = this;
     children.add(child);
-    onChildChange(child);
   }
 
   /// 更新数据
@@ -43,20 +45,6 @@ class Sprite {
 
   /// 重绘界面
   void render(Canvas canvas){
-
-    canvas.save();
-    /// 子类调用super可以自动移动画布到相对坐标
-    if(parent!=null){
-      Position parentPosition = Position(parent!.position.x - parent!.size.width/2,parent!.position.y - parent!.size.height/2);
-      canvas.translate(parentPosition.x + position.x, parentPosition.y + position.y);
-    }else{
-      canvas.translate(position.x, position.y);
-    }
-
-  }
-
-  /// 节点发生变化
-  void onChildChange(Sprite child){
 
   }
 

@@ -1,27 +1,53 @@
 
+/// 动画类型
+enum AnimationName {
 
-enum  AnimationName {
-    none,
+    NONE,
+    IDLE_LEFT,
+    IDLE_UP_LEFT,
+    IDLE_UP,
+    IDLE_UP_RIGHT,
+    IDLE_RIGHT,
+    IDLE_DOWN_RIGHT,
+    IDLE_DOWN,
+    IDLE_DOWN_LEFT,
 
-    idleLeft,
-    idleRight,
-    idleUp,
-    idleDown,
+    RUN_LEFT,
+    RUN_UP_LEFT,
+    RUN_UP,
+    RUN_UP_RIGHT,
+    RUN_RIGHT,
+    RUN_DOWN_RIGHT,
+    RUN_DOWN,
+    RUN_DOWN_LEFT
 
-    idleTopLeft,
-    idleTopRight,
-    idleDownLeft,
-    idleDownRight,
-
-    runUp,
-    runRight,
-    runDown,
-    runLeft,
-
-    runUpLeft,
-    runUpRight,
-    runDownLeft,
-    runDownRight,
-
-    custom,
 }
+
+/// 用数字编号
+class AnimationSequence{
+
+    static final List<AnimationName> sequence = [
+
+        AnimationName.NONE,  //0
+        AnimationName.IDLE_LEFT, //1
+        AnimationName.IDLE_UP_LEFT,
+        AnimationName.IDLE_UP,
+        AnimationName.IDLE_UP_RIGHT,
+        AnimationName.IDLE_RIGHT,
+        AnimationName.IDLE_DOWN_RIGHT,
+        AnimationName.IDLE_DOWN,
+        AnimationName.IDLE_DOWN_LEFT,  //8
+
+        AnimationName.RUN_LEFT,  //9
+        AnimationName.RUN_UP_LEFT,
+        AnimationName.RUN_UP,
+        AnimationName.RUN_UP_RIGHT,
+        AnimationName.RUN_RIGHT,
+        AnimationName.RUN_DOWN_RIGHT,
+        AnimationName.RUN_DOWN,
+        AnimationName.RUN_DOWN_LEFT  //18
+
+    ];
+}
+
+

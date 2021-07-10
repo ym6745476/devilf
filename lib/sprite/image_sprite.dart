@@ -12,7 +12,10 @@ class ImageSprite extends Sprite {
   /// 精灵图片
   ui.Image image;
 
-  /// 图片区域绘制的起点
+  /// 截取图片区域
+  Rect rect;
+
+  /// 坐标偏移
   Offset offset;
 
   /// 是否旋转
@@ -25,6 +28,7 @@ class ImageSprite extends Sprite {
       {
         Position position = const Position(0, 0),
         Size size = const Size(64, 64),
+        this.rect = const Rect.fromLTWH(0, 0, 64, 64),
         this.offset = const Offset(0, 0),
         this.rotated = false,
         this.scale = 1,
@@ -39,7 +43,7 @@ class ImageSprite extends Sprite {
 
   @override
   void update(double dt) {
-    super.update(dt);
+
   }
 
   @override
@@ -48,7 +52,6 @@ class ImageSprite extends Sprite {
     /// 这里不应该调用super 因为有rotated的情况，单独实现画布的移动
     canvas.save();
 
-    Rect srcRect;
     Rect dstRect;
 
     if(rotated){
@@ -61,12 +64,10 @@ class ImageSprite extends Sprite {
         canvas.translate(position.y,position.x);
       }
 
-      /// 针对plist中的图像旋转
+      /// 针对json中的图像旋转
       this.angle = -90;
-      /// 截取图片区域
-      srcRect = Rect.fromLTWH(offset.dx, offset.dy, size.height, size.width);
       /// 目标区域
-      dstRect = Rect.fromLTWH(-size.height/2, -size.width/2, size.height, size.width);
+      dstRect = Rect.fromLTWH(-rect.width/2, -rect.height/2, rect.width, rect.height);
 
     }else{
 
@@ -77,21 +78,27 @@ class ImageSprite extends Sprite {
       }else{
         canvas.translate(position.x , position.y);
       }
-
-      srcRect = Rect.fromLTWH(offset.dx, offset.dy, size.width, size.height);
-      dstRect = Rect.fromLTWH(-size.width/2, -size.height/2, size.width, size.height);
+      dstRect = Rect.fromLTWH(-rect.width/2, -rect.height/2, rect.width, rect.height);
     }
 
     canvas.rotate(this.angle * pi / 180);  //弧度
 
-    /// 精灵矩形边界
-    Paint paint = Paint()..color = new Color(0x50007947); //绿色
-    //canvas.drawRect(dstRect, paint);
-
     Rect outputRect = Rect.fromCenter(center:dstRect.center, width:dstRect.width * scale,height:dstRect.height * scale);
 
+    /// 精灵矩形边界
+    Paint paint = Paint()..color = new Color(0x50007947); //绿色
+    canvas.drawRect(outputRect, paint);
+
     Paint imagePaint = Paint()..color = Color(0xFFFFFFFF);
-    canvas.drawImageRect(this.image, srcRect, outputRect, imagePaint);
+    canvas.drawImageRect(this.image, rect, outputRect, imagePaint);
+
+    /// 绘制子精灵
+    if(children.length > 0){
+      children.forEach((element) {
+        element.render(canvas);
+      });
+    }
+
     canvas.restore();
   }
 }

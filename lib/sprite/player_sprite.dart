@@ -13,6 +13,8 @@ class PlayerSprite extends Sprite{
 
   ImageSprite? logoSprite;
   SpriteAnimation? bodySprite;
+  SpriteAnimation? hairSprite;
+  SpriteAnimation? weaponSprite;
 
   PlayerSprite(
     {
@@ -21,20 +23,35 @@ class PlayerSprite extends Sprite{
     }
   ):super(position:position,size:size);
 
-  ///
+  /// 播放动画
   void play(AnimationName animation) {
     bodySprite?.play(animation);
   }
 
-  @override
-  void onChildChange(Sprite child){
-    if(this.children.length > 0){
-      logoSprite = this.children[0] as ImageSprite;
-    }
-    if(this.children.length > 1){
-      bodySprite = this.children[1] as SpriteAnimation;
-    }
+  void setLogoSprite(ImageSprite sprite){
+    this.logoSprite = sprite;
 
+    //必须调用add产生层级关系进行坐标转换
+    addChild(sprite);
+  }
+
+  void setBodySprite(SpriteAnimation sprite){
+    this.bodySprite = sprite;
+    addChild(sprite);
+  }
+
+  void setHairSprite(SpriteAnimation sprite){
+    this.hairSprite = sprite;
+    /// 绑定动画同步
+    sprite.position = Position(this.bodySprite!.size.width/2, this.bodySprite!.size.height/2);
+    this.bodySprite?.bindChild(sprite);
+  }
+
+  void setWeaponSprite(SpriteAnimation sprite){
+    this.weaponSprite = sprite;
+    /// 绑定动画同步
+    sprite.position = Position(this.bodySprite!.size.width/2, this.bodySprite!.size.height/2);
+    this.bodySprite?.bindChild(sprite);
   }
 
 
@@ -58,7 +75,7 @@ class PlayerSprite extends Sprite{
 
     /// 精灵矩形边界
     var paint = new Paint()..color =  Color(0x20ED1941);
-    //canvas.drawRect(Rect.fromLTWH(position.x - size.width/2,position.y - size.height/2, size.width, size.height), paint);
+    canvas.drawRect(Rect.fromLTWH(position.x - size.width/2,position.y - size.height/2, size.width, size.height), paint);
 
   }
 

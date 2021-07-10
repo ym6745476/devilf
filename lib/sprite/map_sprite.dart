@@ -23,7 +23,15 @@ class MapSprite extends Sprite{
 
   @override
   void render(Canvas canvas) {
-    super.render(canvas);
+
+    canvas.save();
+    /// 子类调用super可以自动移动画布到相对坐标
+    if(parent!=null){
+      Position parentPosition = Position(parent!.position.x - parent!.size.width/2,parent!.position.y - parent!.size.height/2);
+      canvas.translate(parentPosition.x + position.x, parentPosition.y + position.y);
+    }else{
+      canvas.translate(position.x, position.y);
+    }
 
     canvas.drawPaint(new Paint()..color = const Color(0xFF694D9F));
     canvas.translate(this.position.x, this.position.y);

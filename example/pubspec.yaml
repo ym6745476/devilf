@@ -47,8 +47,10 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-    - assets/images/role/
     - assets/audio/
+    - assets/images/role/
+    - assets/images/weapon/
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

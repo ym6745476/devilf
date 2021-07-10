@@ -31,6 +31,9 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
   bool _loading = true;
   String _tipText = "点击";
 
+  /// 当前主角的动画
+  int  _currentAnimationIndex = 0;
+
   _GameSceneState();
 
 
@@ -50,13 +53,17 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         ImageSprite logoSprite = await ImageSprite.load("assets/images/sprite.png");
         logoSprite.scale = 0.6;
 
-        SpriteAnimation bodySprite = await SpriteAnimation.load("assets/images/role/nan_01.png","assets/images/role/nan_01.plist");
+        SpriteAnimation bodySprite = await SpriteAnimation.load("assets/images/role/man_01.png","assets/images/role/man_01.json");
+        SpriteAnimation hairSprite = await SpriteAnimation.load("assets/images/role/man_hair_01.png","assets/images/role/man_hair_01.json");
+        SpriteAnimation weaponSprite = await SpriteAnimation.load("assets/images/weapon/weapon_01.png","assets/images/weapon/weapon_01.json");
 
         _playerSprite = PlayerSprite();
         _playerSprite?.position = Position(MediaQuery.of(context).size.width/2,MediaQuery.of(context).size.height/2);
 
-        _playerSprite?.addChild(logoSprite);
-        _playerSprite?.addChild(bodySprite);
+        _playerSprite?.setLogoSprite(logoSprite);
+        _playerSprite?.setBodySprite(bodySprite);
+        _playerSprite?.setHairSprite(hairSprite);
+        _playerSprite?.setWeaponSprite(weaponSprite);
 
 
         _fpsSprite = FpsSprite("60 fps",position:Position(MediaQuery.of(context).size.width - 100,25));
@@ -68,6 +75,10 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         setState(() {
           _loading = false;
         });
+
+        ///播放第一个动画
+        _currentAnimationIndex = 1;
+        _playerSprite?.play(AnimationSequence.sequence[_currentAnimationIndex]);
 
         print("加载完成...");
       });
@@ -149,11 +160,38 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                     runSpacing: 5,
                     children: [
                       ElevatedButton(
-                        child: new Text('Play'),
+                        child: new Text('方向'),
                         onPressed: () {
-                          _playerSprite?.play(AnimationName.idleDown);
+
+                          if(_currentAnimationIndex <= 8){
+                            if(_currentAnimationIndex == 8){
+                              _currentAnimationIndex = 0;
+                            }
+                            _currentAnimationIndex += 1 ;
+                            _playerSprite?.play(AnimationSequence.sequence[_currentAnimationIndex]);
+                          }else{
+                            if(_currentAnimationIndex == 16){
+                              _currentAnimationIndex = 8;
+                            }
+                            _currentAnimationIndex += 1 ;
+                            _playerSprite?.play(AnimationSequence.sequence[_currentAnimationIndex]);
+                          }
+
                         },
-                      )
+                      ),
+
+                      ElevatedButton(
+                        child: new Text('动作'),
+                        onPressed: () {
+                          if(_currentAnimationIndex + 8 > 16){
+                            _currentAnimationIndex -= 8 ;
+                            _playerSprite?.play(AnimationSequence.sequence[_currentAnimationIndex]);
+                          }else{
+                            _currentAnimationIndex += 8 ;
+                            _playerSprite?.play(AnimationSequence.sequence[_currentAnimationIndex]);
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
