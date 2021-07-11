@@ -1,13 +1,13 @@
 
-import 'package:devilf/base/animation_name.dart';
-import 'package:devilf/base/position.dart';
-import 'package:devilf/game/game_widget.dart';
+import 'package:devilf/game/df_game_widget.dart';
+import 'package:devilf/game/df_sprite_image.dart';
+import 'package:devilf/game/df_math_position.dart';
+import 'package:devilf/game/df_sprite_animation.dart';
+import 'package:devilf/game/df_animation.dart';
 import 'package:devilf/sprite/fps_sprite.dart';
-import 'package:devilf/sprite/image_sprite.dart';
 import 'package:devilf/sprite/map_sprite.dart';
 import 'package:devilf/sprite/monster_sprite.dart';
 import 'package:devilf/sprite/player_sprite.dart';
-import 'package:devilf/sprite/sprite_animation.dart';
 import 'package:flutter/material.dart';
 
 class GameScene extends StatefulWidget {
@@ -23,6 +23,7 @@ class GameScene extends StatefulWidget {
 
 class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
+  DFGameWidget? _gameWidget;
   MapSprite? _mapSprite;
   PlayerSprite? _playerSprite;
   List<MonsterSprite> _monsterSprites = [];
@@ -44,41 +45,78 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
     print("GameScene initState  ok ");
   }
 
+  /// 鼠标点击
+  void _pointerDown(PointerDownEvent event){
+    print("鼠标点击：" + event.localPosition.toString());
+    _updatePlayerPosition(DFPosition(event.localPosition.dx,event.localPosition.dy));
+  }
+
+  /// 鼠标抬起
+  void _pointerUp(PointerUpEvent event){
+    print("鼠标抬起：" + event.localPosition.toString());
+  }
+
+  /// 鼠标移动
+  void _pointerMove(PointerMoveEvent event){
+    print("鼠标移动：" + event.localPosition.toString());
+    _updatePlayerPosition(DFPosition(event.localPosition.dx,event.localPosition.dy));
+  }
+
+  /// 鼠标取消
+  void _pointerCancel(PointerCancelEvent event){
+    print("鼠标取消：" + event.localPosition.toString());
+
+  }
+
+  /// 玩家位置更新
+  void _updatePlayerPosition(DFPosition position){
+    _playerSprite!.position = position;
+  }
+
   void _loadGame() async {
 
     try {
 
+
+
       await Future.delayed(Duration(seconds: 2), () async {
 
-        ImageSprite logoSprite = await ImageSprite.load("assets/images/sprite.png");
+        DFImageSprite logoSprite = await DFImageSprite.load("assets/images/sprite.png");
         logoSprite.scale = 0.6;
 
-        SpriteAnimation bodySprite = await SpriteAnimation.load("assets/images/role/man_01.png","assets/images/role/man_01.json");
-        SpriteAnimation hairSprite = await SpriteAnimation.load("assets/images/role/man_hair_01.png","assets/images/role/man_hair_01.json");
-        SpriteAnimation weaponSprite = await SpriteAnimation.load("assets/images/weapon/weapon_01.png","assets/images/weapon/weapon_01.json");
+        DFSpriteAnimation bodySprite = await DFSpriteAnimation.load("assets/images/role/man_01.png","assets/images/role/man_01.json");
+        //DFSpriteAnimation hairSprite = await DFSpriteAnimation.load("assets/images/role/man_hair_01.png","assets/images/role/man_hair_01.json");
+        DFSpriteAnimation weaponSprite = await DFSpriteAnimation.load("assets/images/weapon/weapon_01.png","assets/images/weapon/weapon_01.json");
 
         _playerSprite = PlayerSprite();
-        _playerSprite?.position = Position(MediaQuery.of(context).size.width/2,MediaQuery.of(context).size.height/2);
+        _playerSprite?.position = DFPosition(MediaQuery.of(context).size.width/2,MediaQuery.of(context).size.height/2);
 
         _playerSprite?.setLogoSprite(logoSprite);
         _playerSprite?.setBodySprite(bodySprite);
-        _playerSprite?.setHairSprite(hairSprite);
+        //_playerSprite?.setHairSprite(hairSprite);
         _playerSprite?.setWeaponSprite(weaponSprite);
 
 
-        _fpsSprite = FpsSprite("60 fps",position:Position(MediaQuery.of(context).size.width - 100,25));
+        _fpsSprite = FpsSprite("60 fps",position:DFPosition(MediaQuery.of(context).size.width - 100,25));
         _mapSprite = MapSprite();
 
-        MonsterSprite monsterSprite = MonsterSprite(position:Position(MediaQuery.of(context).size.width-100,MediaQuery.of(context).size.height-100));
+        MonsterSprite monsterSprite = MonsterSprite(position:DFPosition(MediaQuery.of(context).size.width-100,MediaQuery.of(context).size.height-100));
         _monsterSprites.add(monsterSprite);
+
+
+        this._gameWidget = DFGameWidget();
+        this._gameWidget!.addChild(_mapSprite);
+        this._gameWidget!.addChild(_playerSprite);
+        this._gameWidget!.fpsSprite = _fpsSprite;
+        this._gameWidget!.addChildren(_monsterSprites);
 
         setState(() {
           _loading = false;
         });
 
         ///播放第一个动画
-        _currentAnimationIndex = 1;
-        _playerSprite?.play(AnimationSequence.sequence[_currentAnimationIndex]);
+        _currentAnimationIndex = 0;
+        _playerSprite?.play(DFAnimation.sequence[_currentAnimationIndex]);
 
         print("加载完成...");
       });
@@ -130,19 +168,24 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                     height: MediaQuery.of(context).size.height,
                     color: Colors.black87,
                     child:  _loading ? _loadingWidget():
-                    GameWidget(
-                        size: Size(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height),
-                        fpsSprite:_fpsSprite,
-                        playerSprite:_playerSprite,
-                        mapSprite:_mapSprite,
-                        monsterSprites:_monsterSprites,
+
+                    Listener(
+                        onPointerDown: (event)=> _pointerDown(event),
+                        onPointerMove: (event)=> _pointerMove(event),
+                        onPointerUp: (event) => _pointerUp(event),
+                        onPointerCancel: (event) => _pointerCancel(event),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: _gameWidget,
+                        )
                     ),
                   ),
                 ),
 
                 Positioned(
                   left: 10,
-                  top: 30,
+                  top: MediaQuery.of(context).padding.top+ 10,
                   child: Text(
                     "Devilf",
                     style: TextStyle(
@@ -153,7 +196,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                 ),
 
                 Positioned(
-                  bottom: 30,
+                  bottom: MediaQuery.of(context).padding.bottom + 10,
                   right: 20,
                   child:Wrap(
                     spacing: 5,
@@ -163,19 +206,14 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                         child: new Text('方向'),
                         onPressed: () {
 
-                          if(_currentAnimationIndex <= 8){
-                            if(_currentAnimationIndex == 8){
+                          if(_currentAnimationIndex == 7){
                               _currentAnimationIndex = 0;
-                            }
-                            _currentAnimationIndex += 1 ;
-                            _playerSprite?.play(AnimationSequence.sequence[_currentAnimationIndex]);
-                          }else{
-                            if(_currentAnimationIndex == 16){
+                          }else if(_currentAnimationIndex == 15){
                               _currentAnimationIndex = 8;
-                            }
+                          }else{
                             _currentAnimationIndex += 1 ;
-                            _playerSprite?.play(AnimationSequence.sequence[_currentAnimationIndex]);
                           }
+                          _playerSprite?.play(DFAnimation.sequence[_currentAnimationIndex]);
 
                         },
                       ),
@@ -183,12 +221,12 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                       ElevatedButton(
                         child: new Text('动作'),
                         onPressed: () {
-                          if(_currentAnimationIndex + 8 > 16){
+                          if(_currentAnimationIndex + 8 > 15){
                             _currentAnimationIndex -= 8 ;
-                            _playerSprite?.play(AnimationSequence.sequence[_currentAnimationIndex]);
+                            _playerSprite?.play(DFAnimation.sequence[_currentAnimationIndex]);
                           }else{
                             _currentAnimationIndex += 8 ;
-                            _playerSprite?.play(AnimationSequence.sequence[_currentAnimationIndex]);
+                            _playerSprite?.play(DFAnimation.sequence[_currentAnimationIndex]);
                           }
                         },
                       ),

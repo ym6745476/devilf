@@ -1,35 +1,41 @@
 import 'dart:ui' as ui;
-import 'package:devilf/base/position.dart';
-import 'package:devilf/game/game.dart';
-import 'package:devilf/sprite/sprite.dart';
+import 'package:devilf/game/df_math_position.dart';
+import 'package:devilf/game/df_game_widget.dart';
+import 'package:devilf/game/df_math_size.dart';
+import 'package:devilf/game/df_sprite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-/// 帧数精灵类
-class FpsSprite extends Sprite{
+/// 文本精灵类
+class FpsSprite extends DFSprite{
 
-  // 文本
+  /// 文本内容
   String text;
 
+  /// 创建文本精灵
   FpsSprite(this.text,
     {
-      Position position = const Position(0,0),
-      Size size = const Size(100,30),
+      DFPosition position = const DFPosition(0,0),
+      DFSize size = const DFSize(100,30),
     }
   ):super(position:position,size:size);
 
+  /// 更新文本
   @override
   void update(double dt) {
-    this.text = Game.fps;
+    this.text = DFGameWidget.fps;
   }
 
+  /// 渲染精灵
   @override
   void render(Canvas canvas) {
 
+    /// 画布暂存
     canvas.save();
-    /// 子类调用super可以自动移动画布到相对坐标
+
+    /// 将子精灵转换为相对坐标
     if(parent!=null){
-      Position parentPosition = Position(parent!.position.x - parent!.size.width/2,parent!.position.y - parent!.size.height/2);
+      DFPosition parentPosition = DFPosition(parent!.position.x - parent!.size.width/2,parent!.position.y - parent!.size.height/2);
       canvas.translate(parentPosition.x + position.x, parentPosition.y + position.y);
     }else{
       canvas.translate(position.x, position.y);
@@ -50,9 +56,10 @@ class FpsSprite extends Sprite{
     canvas.drawParagraph(paragraph, Offset(5,5));
 
     /// 精灵矩形边界
-    var paint = new Paint()..color =  Color(0x20ED1941);
-    canvas.drawRect(Rect.fromLTWH(position.x - size.width/2,position.y - size.height/2, size.width, size.height), paint);
+    var paint = new Paint()..color =  Color(0x80000000);
+    canvas.drawRect(Rect.fromLTWH( - size.width/2, - size.height/2, size.width, size.height), paint);
 
+    ///恢复画布
     canvas.restore();
   }
 
