@@ -25,8 +25,7 @@ A little game engine implemented with flutter.
 https://ymbok.com/phone-3.html  
 
 ### 截图 
-![图片说明](https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/1.gif "1.gif")
-
+<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/1.gif" width="300" height="617"/><br/>
 
 # 结构关系图 
 ---------------------------- GameScene -----------------------------  
