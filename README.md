@@ -27,7 +27,7 @@ https://ymbok.com/phone-3.html
 ### 截图 
 <img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/1.gif" width="300" height="617"/>  
 
-# 结构关系图 
+# 结构关系图  
 ---------------------------- GameScene -----------------------------  
 -------------------------------- | ---------------------------------  
 ------------------ UI Widget --------- GameWidget ------------------  
@@ -48,3 +48,8 @@ https://ymbok.com/phone-3.html
 * ImageSprite：图片精灵  
 * AnimationSprite：动画帧精灵  
 * AssetsLoading：资源加载  
+
+# 推荐Flutter开发框架（Http请求，各类UI组件全搞定）
+https://github.com/ym6745476/ym_flutter_widget  
+
+
