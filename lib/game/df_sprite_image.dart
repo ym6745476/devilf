@@ -51,12 +51,14 @@ class DFImageSprite extends DFSprite {
   }
 
   /// 精灵渲染
+  /// 代码没几行,坐标计算有点复杂
   @override
   void render(Canvas canvas) {
 
     /// 画布暂存
     canvas.save();
 
+    /// 目标位置
     Rect dstRect;
 
     if(rotated){
@@ -64,13 +66,21 @@ class DFImageSprite extends DFSprite {
       /// 将子精灵转换为相对坐标
       if(parent!=null){
         DFPosition parentPosition = DFPosition(parent!.position.y - parent!.size.height/2,parent!.position.x - parent!.size.width/2);
-        canvas.translate(parentPosition.y + position.y, parentPosition.x + position.x + rect.height/2);
+        canvas.translate(parentPosition.y + position.y, parentPosition.x + position.x);
       }else{
-        canvas.translate(position.y,position.x + rect.height/2);
+        canvas.translate(position.y,position.x);
       }
 
       /// 针对json中的图像旋转
-      this.angle = -90;
+      canvas.rotate(-90 * pi / 180);  //弧度
+
+      //Paint paint1 = Paint()..color = new Color(0x40FFFFFF); //白色
+      //canvas.drawRect(Rect.fromLTWH(0,0, size.width, size.height), paint1);
+
+      dstRect = Rect.fromCenter(center:Offset(0,0) , width:rect.width * scale,height:rect.height * scale);
+
+      //Paint paint2 = Paint()..color = Color(0x60444693);
+      //canvas.drawRect(outputRect, paint2);
 
     }else{
 
@@ -81,35 +91,40 @@ class DFImageSprite extends DFSprite {
       }else{
         canvas.translate(position.x , position.y);
       }
+      canvas.rotate(this.angle * pi / 180);  //弧度
 
+      //Paint paint3 = Paint()..color = new Color(0x40FFFFFF); //白色
+      //canvas.drawRect(Rect.fromLTWH(0,0, size.width, size.height), paint3);
+
+      dstRect = Rect.fromCenter(center:Offset(0,- rect.height/2) , width:rect.width * scale,height:rect.height * scale);
+
+      //Paint paint4 = Paint()..color = Color(0x60444693);
+      //canvas.drawRect(outputRect, paint4);
     }
-
-    /// 目标区域
-    dstRect = Rect.fromLTWH(-rect.width * (1-anchorPoint.x), -rect.height * anchorPoint.y, rect.width, rect.height);
-
-    canvas.rotate(this.angle * pi / 180);  //弧度
 
     /// 水平镜像
     if(flippedX){
       if(rotated){
-        canvas.translate(0, -rect.height/2);
         canvas.scale(1, -1); //左右镜像翻转
-        canvas.translate(0, -rect.height/2);
       }else{
-        canvas.translate(-rect.width/2, 0);
         canvas.scale(-1, 1); //左右镜像翻转
-        canvas.translate(-rect.width/2, 0);
       }
     }
 
-    Rect outputRect = Rect.fromCenter(center:Offset(dstRect.center.dx + offset.dx,dstRect.center.dy + offset.dy), width:dstRect.width * scale,height:dstRect.height * scale);
+    /// 目标绘制位置
+    if(rotated){
+      dstRect = Rect.fromCenter(center:Offset(offset.dx ,offset.dy), width:rect.width,height:rect.height);
+    }else{
+      dstRect = Rect.fromCenter(center:Offset(offset.dx, -offset.dy), width:rect.width,height:rect.height);
+    }
 
-    /// 精灵矩形边界
-    Paint paint = Paint()..color = new Color(0x40FFFFFF); //白色
-    //canvas.drawRect(outputRect, paint);
+    /// 处理缩放
+    Rect outputRect = Rect.fromCenter(center:Offset(dstRect.center.dx * scale ,dstRect.center.dy * scale), width:dstRect.width * scale,height:dstRect.height * scale);
 
-    Paint imagePaint = Paint()..color = Color(0xFFFFFFFF);
-    canvas.drawImageRect(this.image, rect.toRect(), outputRect, imagePaint);
+    /// 绘制图像
+    Paint paint5 = Paint()..color = Color(0xFFFFFFFF);
+    //canvas.drawRect(outputRect, paint5);
+    canvas.drawImageRect(this.image, rect.toRect(), outputRect, paint5);
 
     /// 绘制子精灵
     if(children.length > 0){

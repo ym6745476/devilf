@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:devilf/game/df_sprite.dart';
-import 'package:devilf/sprite/fps_sprite.dart';
 import 'package:flutter/material.dart';
 import 'df_game_render_box.dart';
 
@@ -11,10 +10,7 @@ class DFGameWidget extends LeafRenderObjectWidget {
   /// 游戏里的所有精灵
   final List<DFSprite> children = [];
 
-  /// 显示当前帧数
-  FpsSprite? fpsSprite;
-
-  /// 帧数
+  /// 当前帧数
   static String fps = "60 fps";
 
   /// 创建游戏控件
@@ -46,10 +42,6 @@ class DFGameWidget extends LeafRenderObjectWidget {
 
   /// 更新界面
   void update(double dt) {
-    if(fpsSprite != null){
-      fpsSprite!.text = fps;
-      fpsSprite!.update(dt);
-    }
     children.forEach((sprite) {
       sprite.update(dt);
     });

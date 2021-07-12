@@ -7,13 +7,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// 文本精灵类
-class FpsSprite extends DFSprite{
+class DFTextSprite extends DFSprite{
 
   /// 文本内容
   String text;
 
+  /// 更新监听函数
+  void Function(double dt)? onUpdate;
+
   /// 创建文本精灵
-  FpsSprite(this.text,
+  DFTextSprite(this.text,
     {
       DFPosition position = const DFPosition(0,0),
       DFSize size = const DFSize(100,30),
@@ -23,7 +26,14 @@ class FpsSprite extends DFSprite{
   /// 更新文本
   @override
   void update(double dt) {
-    this.text = DFGameWidget.fps;
+    if(onUpdate!=null){
+      onUpdate!(dt);
+    }
+  }
+
+  /// 设置更新函数
+  void setOnUpdate(Function(double dt) onUpdate){
+    this.onUpdate = onUpdate;
   }
 
   /// 渲染精灵
@@ -41,6 +51,7 @@ class FpsSprite extends DFSprite{
       canvas.translate(position.x, position.y);
     }
 
+    /// 文本内容
     ui.ParagraphBuilder pb = ui.ParagraphBuilder(
         ui.ParagraphStyle(
           textAlign: TextAlign.center,
@@ -56,8 +67,8 @@ class FpsSprite extends DFSprite{
     canvas.drawParagraph(paragraph, Offset(5,5));
 
     /// 精灵矩形边界
-    var paint = new Paint()..color =  Color(0x80000000);
-    canvas.drawRect(Rect.fromLTWH( - size.width/2, - size.height/2, size.width, size.height), paint);
+    //var paint = new Paint()..color =  Color(0x60000000);
+    //canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), paint);
 
     ///恢复画布
     canvas.restore();

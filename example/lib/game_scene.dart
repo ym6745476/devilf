@@ -4,7 +4,7 @@ import 'package:devilf/game/df_sprite_image.dart';
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_sprite_animation.dart';
 import 'package:devilf/game/df_animation.dart';
-import 'package:devilf/sprite/fps_sprite.dart';
+import 'package:devilf/game/df_text_sprite.dart';
 import 'package:devilf/sprite/map_sprite.dart';
 import 'package:devilf/sprite/monster_sprite.dart';
 import 'package:devilf/sprite/player_sprite.dart';
@@ -23,21 +23,23 @@ class GameScene extends StatefulWidget {
 
 class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
+  /// 主界面
   DFGameWidget? _gameWidget;
-  MapSprite? _mapSprite;
-  PlayerSprite? _playerSprite;
-  List<MonsterSprite> _monsterSprites = [];
-  FpsSprite? _fpsSprite;
 
+  /// 玩家精灵
+  PlayerSprite? _playerSprite;
+
+  /// 加载状态
   bool _loading = true;
-  String _tipText = "点击";
 
   /// 当前主角的动画
   int  _currentAnimationIndex = 0;
 
+  /// 创建主场景
   _GameSceneState();
 
 
+  /// 初始化状态
   @override
   void initState() {
     super.initState();
@@ -65,7 +67,6 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
   /// 鼠标取消
   void _pointerCancel(PointerCancelEvent event){
     print("鼠标取消：" + event.localPosition.toString());
-
   }
 
   /// 玩家位置更新
@@ -73,52 +74,69 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
     _playerSprite!.position = position;
   }
 
+  /// 开始进入游戏
   void _loadGame() async {
 
     try {
 
-
-
       await Future.delayed(Duration(seconds: 2), () async {
 
-        DFImageSprite logoSprite = await DFImageSprite.load("assets/images/sprite.png");
-        logoSprite.scale = 0.6;
+        /// 定义主界面
+        this._gameWidget = DFGameWidget();
 
+        /// 地图精灵
+        MapSprite mapSprite = MapSprite();
+        /// 将地图精灵添加到主界面
+        this._gameWidget!.addChild(mapSprite);
+
+        /// 玩家精灵
         DFSpriteAnimation bodySprite = await DFSpriteAnimation.load("assets/images/role/man_01.png","assets/images/role/man_01.json");
-        //DFSpriteAnimation hairSprite = await DFSpriteAnimation.load("assets/images/role/man_hair_01.png","assets/images/role/man_hair_01.json");
         DFSpriteAnimation weaponSprite = await DFSpriteAnimation.load("assets/images/weapon/weapon_01.png","assets/images/weapon/weapon_01.json");
+        //DFSpriteAnimation hairSprite = await DFSpriteAnimation.load("assets/images/role/man_hair_01.png","assets/images/role/man_hair_01.json");
 
         _playerSprite = PlayerSprite();
         _playerSprite?.position = DFPosition(MediaQuery.of(context).size.width/2,MediaQuery.of(context).size.height/2);
 
-        _playerSprite?.setLogoSprite(logoSprite);
         _playerSprite?.setBodySprite(bodySprite);
-        //_playerSprite?.setHairSprite(hairSprite);
         _playerSprite?.setWeaponSprite(weaponSprite);
+        //_playerSprite?.setHairSprite(hairSprite);
 
-
-        _fpsSprite = FpsSprite("60 fps",position:DFPosition(MediaQuery.of(context).size.width - 100,25));
-        _mapSprite = MapSprite();
-
-        MonsterSprite monsterSprite = MonsterSprite(position:DFPosition(MediaQuery.of(context).size.width-100,MediaQuery.of(context).size.height-100));
-        _monsterSprites.add(monsterSprite);
-
-
-        this._gameWidget = DFGameWidget();
-        this._gameWidget!.addChild(_mapSprite);
+        /// 将玩家精灵添加到主界面
         this._gameWidget!.addChild(_playerSprite);
-        this._gameWidget!.fpsSprite = _fpsSprite;
+
+        /// 怪物精灵
+        List<MonsterSprite> _monsterSprites = [];
+        MonsterSprite monsterSprite = MonsterSprite(position:DFPosition(MediaQuery.of(context).size.width/2,MediaQuery.of(context).padding.top + 60));
+        _monsterSprites.add(monsterSprite);
+        /// 将怪物精灵添加到主界面
         this._gameWidget!.addChildren(_monsterSprites);
 
+        /// Logo精灵
+        DFImageSprite logoSprite = await DFImageSprite.load("assets/images/sprite.png");
+        logoSprite.scale = 0.6;
+        logoSprite.position = DFPosition(MediaQuery.of(context).size.width/2, MediaQuery.of(context).padding.top + 60);
+        /// 将Logo精灵添加到主界面
+        this._gameWidget!.addChild(logoSprite);
+
+        /// 帧数精灵
+        DFTextSprite fpsSprite = DFTextSprite("60 fps",position:DFPosition(MediaQuery.of(context).size.width - 100,25));
+        fpsSprite.setOnUpdate((dt){
+          fpsSprite.text = DFGameWidget.fps;
+        });
+
+        /// 将帧数精灵添加到主界面
+        this._gameWidget!.addChild(fpsSprite);
+
+        /// Loading完成
         setState(() {
           _loading = false;
         });
 
-        ///播放第一个动画
+        ///自动播放玩家第一个动画
         _currentAnimationIndex = 0;
         _playerSprite?.play(DFAnimation.sequence[_currentAnimationIndex]);
 
-        print("加载完成...");
+        print("游戏加载完成...");
       });
 
     } catch (e) {
@@ -126,8 +144,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
     }
   }
 
-
-  /// Loading
+  /// Loading显示
   Widget _loadingWidget() {
     return Center(
       child: Column(
@@ -150,10 +167,8 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-    print("GameScene build");
     return LayoutBuilder(
         builder: (context, constraints) {
           return Stack(

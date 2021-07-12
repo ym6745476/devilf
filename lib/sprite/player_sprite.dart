@@ -12,7 +12,6 @@ import '../game/df_sprite_image.dart';
 /// 玩家精灵类
 class PlayerSprite extends DFSprite{
 
-  DFImageSprite? logoSprite;
   DFSpriteAnimation? bodySprite;
   DFSpriteAnimation? hairSprite;
   DFSpriteAnimation? weaponSprite;
@@ -36,17 +35,11 @@ class PlayerSprite extends DFSprite{
     bodySprite?.play(animation);
   }
 
-  void setLogoSprite(DFImageSprite sprite){
-    this.logoSprite = sprite;
-
-    //必须调用add产生层级关系进行坐标转换
-    addChild(sprite);
-  }
-
   void setBodySprite(DFSpriteAnimation sprite){
     this.bodySprite = sprite;
     sprite.position = DFPosition(size.width/2, size.height/2);
     sprite.size = DFSize(160,160);
+    //必须调用add产生层级关系进行坐标转换
     addChild(sprite);
   }
 
@@ -62,18 +55,13 @@ class PlayerSprite extends DFSprite{
     /// 绑定动画同步
     sprite.position = DFPosition(this.bodySprite!.size.width/2, this.bodySprite!.size.height/2);
     sprite.size = DFSize(120,120);
-    //sprite.anchorPoint = DFPosition(0, 0);
     this.bodySprite?.bindChild(sprite);
   }
 
 
   @override
   void update(double dt){
-
-    logoSprite?.angle += 1;
-    logoSprite?.update(dt);
     bodySprite?.update(dt);
-
   }
 
   @override
@@ -83,7 +71,6 @@ class PlayerSprite extends DFSprite{
     var paint = new Paint()..color =  Color(0x20FFFC00);
     canvas.drawRect(Rect.fromLTWH(position.x - size.width/2,position.y - size.height/2, size.width, size.height), paint);
 
-    logoSprite?.render(canvas);
     bodySprite?.render(canvas);
 
   }

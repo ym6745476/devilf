@@ -15,7 +15,7 @@ class MonsterSprite extends DFSprite{
   MonsterSprite(
       {
         DFPosition position = const DFPosition(0,0),
-        DFSize size = const DFSize(64,64),
+        DFSize size = const DFSize(32,32),
         this.turn = 0,
       }
   ):super(position:position,size:size);
@@ -40,9 +40,8 @@ class MonsterSprite extends DFSprite{
 
     var tau = pi * 2;
     canvas.rotate(tau * this.turn);
-    var white = new Paint()..color = new Color(0xFFFF0000);
-    var size = 50.0;
-    canvas.drawRect(new Rect.fromLTWH(-size / 2, -size / 2, size, size), white);
+    var paint = new Paint()..color = new Color(0xFFFF0000);
+    canvas.drawRect(new Rect.fromLTWH(-size.width / 2, -size.height / 2, size.width, size.height), paint);
     canvas.restore();
   }
 

@@ -66,7 +66,7 @@ class DFSpriteAnimation extends DFSprite{
   /// }
   static Future<DFSpriteAnimation> load(String src,String plist) async {
 
-    DFSpriteAnimation spriteAnimation = DFSpriteAnimation(stepTime:100,loop: true);
+    DFSpriteAnimation spriteAnimation = DFSpriteAnimation(stepTime:200,loop: true);
 
     DFAnimation.sequence.forEach((element) {
       spriteAnimation.frames[element] = [];
@@ -106,9 +106,8 @@ class DFSpriteAnimation extends DFSprite{
         image,
         offset:frameOffset,
         rect: frameRect,
-        //size: DFSize(512,512),
         rotated:rotated,
-        scale: 1,
+        scale: 0.5,
       );
 
       //idle_00000.png
@@ -279,7 +278,6 @@ class DFSpriteAnimation extends DFSprite{
   void bindChild(DFSpriteAnimation sprite){
     sprite.isBind = true;
     sprite.position = DFPosition(sprite.position.x - size.width/2, sprite.position.y - size.height/2);
-    sprite.anchorPoint = sprite.anchorPoint;
     this.bindSprites.add(sprite);
   }
 
@@ -347,7 +345,6 @@ class DFSpriteAnimation extends DFSprite{
 
     if(this.frames[this.currentAnimation]!=null && this.frames[this.currentAnimation]!.length > 0) {
       List<DFImageSprite> sprites = this.frames[this.currentAnimation]!;
-      sprites[this.currentIndex].anchorPoint = anchorPoint;
       sprites[this.currentIndex].flippedX = currentAnimationFlippedX;
       sprites[this.currentIndex].render(canvas);
     }

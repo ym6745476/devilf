@@ -490,28 +490,28 @@
 			"sourceColorRect": "{{202,174},{76,118}}",
 			"sourceSize": "{512,512}"
 		},
-		"role\/5110501\/death\/30000.png": {
+		"death_30000.png": {
 			"frame": "{{1799,659},{92,120}}",
 			"offset": "{1,14}",
 			"rotated": true,
 			"sourceColorRect": "{{211,182},{92,120}}",
 			"sourceSize": "{512,512}"
 		},
-		"role\/5110501\/death\/30001.png": {
+		"death_30001.png": {
 			"frame": "{{1633,299},{78,110}}",
 			"offset": "{7,7}",
 			"rotated": true,
 			"sourceColorRect": "{{224,194},{78,110}}",
 			"sourceSize": "{512,512}"
 		},
-		"role\/5110501\/death\/30002.png": {
+		"death_30002.png": {
 			"frame": "{{695,449},{108,80}}",
 			"offset": "{2,-8}",
 			"rotated": false,
 			"sourceColorRect": "{{204,224},{108,80}}",
 			"sourceSize": "{512,512}"
 		},
-		"role\/5110501\/death\/30003.png": {
+		"death_30003.png": {
 			"frame": "{{907,1},{114,62}}",
 			"offset": "{11,-21}",
 			"rotated": false,

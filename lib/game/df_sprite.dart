@@ -15,9 +15,6 @@ class DFSprite {
   /// 坐标  左上角是0点
   DFPosition position;
 
-  /// 锚点 默认: 0.5,0.5
-  DFPosition anchorPoint = DFPosition(0.5, 0.5);
-
   /// 尺寸
   DFSize size;
 

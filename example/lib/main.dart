@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 main() async {
 
-  // 进入游戏场景
+  // 游戏场景
   GameScene gameScene = GameScene();
   runApp(MyApp(gameScene));
 

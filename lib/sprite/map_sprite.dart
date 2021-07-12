@@ -26,7 +26,6 @@ class MapSprite extends DFSprite{
   void render(Canvas canvas) {
 
     canvas.save();
-    /// 子类调用super可以自动移动画布到相对坐标
     if(parent!=null){
       DFPosition parentPosition = DFPosition(parent!.position.x - parent!.size.width/2,parent!.position.y - parent!.size.height/2);
       canvas.translate(parentPosition.x + position.x, parentPosition.y + position.y);
