@@ -9,7 +9,6 @@ import 'df_game_loop.dart';
 
 /// 游戏RenderBox
 class DFGameRenderBox extends RenderBox with WidgetsBindingObserver {
-
   /// 上下文
   BuildContext context;
 
@@ -68,7 +67,6 @@ class DFGameRenderBox extends RenderBox with WidgetsBindingObserver {
   @override
   bool get isRepaintBoundary => true;
 
-
   /// 计算尺寸
   @override
   void performLayout() {
@@ -78,7 +76,6 @@ class DFGameRenderBox extends RenderBox with WidgetsBindingObserver {
   /// 计算布局
   @override
   Size computeDryLayout(BoxConstraints constraints) => constraints.biggest;
-
 
   /// 状态改变
   @override
@@ -95,5 +92,4 @@ class DFGameRenderBox extends RenderBox with WidgetsBindingObserver {
   void unbindLifecycleListener() {
     WidgetsBinding.instance!.removeObserver(this);
   }
-
 }

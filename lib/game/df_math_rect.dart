@@ -1,9 +1,7 @@
-
 import 'dart:ui';
 
- /// 矩形
-class DFRect{
-
+/// 矩形
+class DFRect {
   /// x坐标
   final double x;
 
@@ -17,7 +15,7 @@ class DFRect{
   final double height;
 
   /// 创建矩形
-  const DFRect(this.x, this.y,this.width, this.height);
+  const DFRect(this.x, this.y, this.width, this.height);
 
   /// 转换为Rect
   Rect toRect() => Rect.fromLTWH(x, y, width, height);

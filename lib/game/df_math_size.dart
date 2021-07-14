@@ -1,9 +1,7 @@
-
 import 'dart:ui';
 
 /// 尺寸
-class DFSize{
-
+class DFSize {
   /// 宽度
   final double width;
 
@@ -12,7 +10,6 @@ class DFSize{
 
   /// 创建尺寸
   const DFSize(this.width, this.height);
-
 
   @override
   String toString() {

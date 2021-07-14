@@ -1,9 +1,7 @@
-
 import 'dart:ui';
 
 /// 位置
-class DFPosition{
-
+class DFPosition {
   /// x坐标
   final double x;
 

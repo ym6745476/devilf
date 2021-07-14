@@ -1,9 +1,7 @@
-
 import 'dart:ui';
 
 /// 偏移量
-class DFOffset{
-
+class DFOffset {
   /// x坐标偏移
   final double dx;
 

@@ -2,7 +2,6 @@ import 'package:flutter/scheduler.dart';
 
 /// 游戏循环
 class DFGameLoop {
-
   Duration previous = Duration.zero;
   late Ticker _ticker;
   void Function(double dt) update;
@@ -43,5 +42,4 @@ class DFGameLoop {
   void resume() {
     _ticker.muted = false;
   }
-
 }

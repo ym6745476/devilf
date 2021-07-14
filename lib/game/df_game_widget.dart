@@ -6,7 +6,6 @@ import 'df_game_render_box.dart';
 /// 游戏主循环
 /// 继承LeafRenderObjectWidget实现RenderBox可以使用canvas实现Widget
 class DFGameWidget extends LeafRenderObjectWidget {
-
   /// 游戏里的所有精灵
   final List<DFSprite> children = [];
 
@@ -17,21 +16,21 @@ class DFGameWidget extends LeafRenderObjectWidget {
   DFGameWidget();
 
   /// 增加精灵 增加进来精灵才能被绘制
-  void addChild(DFSprite? sprite){
-    if(sprite!=null){
+  void addChild(DFSprite? sprite) {
+    if (sprite != null) {
       children.add(sprite);
     }
   }
 
   /// 增加精灵 增加进来精灵才能被绘制
-  void addChildren(List<DFSprite> sprites){
+  void addChildren(List<DFSprite> sprites) {
     children.addAll(sprites);
   }
 
   /// 创建GameRenderBox
   @override
   RenderBox createRenderObject(BuildContext context) {
-    return DFGameRenderBox(context,this);
+    return DFGameRenderBox(context, this);
   }
 
   /// 设置Game到GameRenderBox
@@ -56,7 +55,7 @@ class DFGameWidget extends LeafRenderObjectWidget {
 
   /// 显示FPS
   void onTimingsCallback(List<FrameTiming> timings) {
-    DFGameWidget.fps = (1/(timings[0].totalSpan.inMilliseconds/1000.0)).toStringAsFixed(0) + " fps";
+    DFGameWidget.fps = (1 / (timings[0].totalSpan.inMilliseconds / 1000.0)).toStringAsFixed(0) + " fps";
     //print(Game.fps);
   }
 
@@ -64,5 +63,4 @@ class DFGameWidget extends LeafRenderObjectWidget {
   void lifecycleStateChange(AppLifecycleState state) {
     //
   }
-
 }
