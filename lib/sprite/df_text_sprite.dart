@@ -15,12 +15,8 @@ class DFTextSprite extends DFSprite {
   void Function(double dt)? onUpdate;
 
   /// 创建文本精灵
-  DFTextSprite(
-      this.text,
-      {
-        DFSize size = const DFSize(100, 30)
-      }
-  ):super(position:DFPosition(0, 0),size: size);
+  DFTextSprite(this.text, {DFSize size = const DFSize(100, 30)})
+      : super(position: DFPosition(0, 0), size: size);
 
   /// 更新文本
   @override
@@ -42,12 +38,10 @@ class DFTextSprite extends DFSprite {
     canvas.save();
 
     /// 将子精灵转换为相对坐标
-    if (parent != null) {
-      DFPosition parentPosition =
-          DFPosition(parent!.position.x - parent!.size.width / 2, parent!.position.y - parent!.size.height / 2);
-      canvas.translate(parentPosition.x + position.x, parentPosition.y + position.y);
-    } else {
+    if (parent == null) {
       canvas.translate(position.x, position.y);
+    } else {
+      canvas.translate(position.x - parent!.size.width / 2, position.y - parent!.size.height / 2);
     }
 
     /// 文本内容

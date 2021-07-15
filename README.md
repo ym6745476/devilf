@@ -43,11 +43,12 @@ https://ymbok.com/phone-3.html
 * UI Widget：Flutter内置UI控件  
 * GameWidget：管理游戏Widget和Sprite的控件  
 * GameLoop：通过GameLoop显示Sprite更新和渲染  
-* Sprite：精灵基础类  
-* TextSprite：文本显示精灵  
+* Sprite：精灵类  
+* TextSprite：文本精灵  
 * ImageSprite：图片精灵  
-* AnimationSprite：动画帧精灵  
+* AnimationSprite：动画精灵  
 * AssetsLoading：资源加载  
+* Joystick：遥杆控件  
 
 # 推荐Flutter开发框架（Http请求，各类UI组件全搞定）
 https://github.com/ym6745476/ym_flutter_widget  

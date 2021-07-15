@@ -8,35 +8,29 @@ import 'package:flutter/cupertino.dart';
 
 /// 怪物精灵类
 class MonsterSprite extends DFSprite {
-  late double turn;
-
-  MonsterSprite({
-    DFSize size = const DFSize(32, 32),
-    this.turn = 0,
-  }) : super(position:DFPosition(0, 0), size: size);
+  MonsterSprite({DFSize size = const DFSize(32, 32)})
+      : super(position: DFPosition(0, 0), size: size);
 
   @override
   void update(double dt) {
-    this.turn += dt * 0.25;
+    this.angle += dt * 0.25;
   }
 
   @override
   void render(Canvas canvas) {
     canvas.save();
 
-    /// 子类调用super可以自动移动画布到相对坐标
-    if (parent != null) {
-      DFPosition parentPosition =
-          DFPosition(parent!.position.x - parent!.size.width / 2, parent!.position.y - parent!.size.height / 2);
-      canvas.translate(parentPosition.x + position.x, parentPosition.y + position.y);
-    } else {
+    /// 将子精灵转换为相对坐标
+    if (parent == null) {
       canvas.translate(position.x, position.y);
+    } else {
+      canvas.translate(position.x - parent!.size.width / 2, position.y - parent!.size.height / 2);
     }
 
-    var tau = pi * 2;
-    canvas.rotate(tau * this.turn);
+    canvas.rotate(pi * 2 * this.angle);
     var paint = new Paint()..color = new Color(0xFFFF0000);
-    canvas.drawRect(new Rect.fromLTWH(-size.width / 2, -size.height / 2, size.width, size.height), paint);
+    canvas.drawRect(
+        new Rect.fromLTWH(-size.width / 2, -size.height / 2, size.width, size.height), paint);
     canvas.restore();
   }
 }

@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 class MapSprite extends DFSprite {
   MapSprite({
     DFSize size = const DFSize(64, 64),
-  }) : super(position:DFPosition(0, 0), size: size);
+  }) : super(position: DFPosition(0, 0), size: size);
 
   @override
   void update(double dt) {}
@@ -17,12 +17,12 @@ class MapSprite extends DFSprite {
   @override
   void render(Canvas canvas) {
     canvas.save();
-    if (parent != null) {
-      DFPosition parentPosition =
-          DFPosition(parent!.position.x - parent!.size.width / 2, parent!.position.y - parent!.size.height / 2);
-      canvas.translate(parentPosition.x + position.x, parentPosition.y + position.y);
-    } else {
+
+    /// 将子精灵转换为相对坐标
+    if (parent == null) {
       canvas.translate(position.x, position.y);
+    } else {
+      canvas.translate(position.x - parent!.size.width / 2, position.y - parent!.size.height / 2);
     }
 
     canvas.drawPaint(new Paint()..color = const Color(0xFF4f5555));

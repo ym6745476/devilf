@@ -23,10 +23,7 @@ class DFSprite {
   List<DFSprite> children = [];
 
   /// 创建精灵
-  DFSprite({
-    required this.position,
-    required this.size
-  });
+  DFSprite({required this.position, required this.size});
 
   /// 增加子精灵
   void addChild(DFSprite child) {

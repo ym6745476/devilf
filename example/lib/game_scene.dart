@@ -44,7 +44,8 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
     super.initState();
 
     /// 强制横屏
-    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
 
     /// 加载游戏
     _loadGame();
@@ -63,15 +64,15 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         MapSprite mapSprite = MapSprite();
 
         /// 玩家精灵动画
-        DFSpriteAnimation bodySprite =
-            await DFSpriteAnimation.load("assets/images/role/man_01.png", "assets/images/role/man_01.json");
-        DFSpriteAnimation weaponSprite =
-            await DFSpriteAnimation.load("assets/images/weapon/weapon_01.png", "assets/images/weapon/weapon_01.json");
+        DFSpriteAnimation bodySprite = await DFSpriteAnimation.load(
+            "assets/images/role/man_01.png", "assets/images/role/man_01.json");
+        DFSpriteAnimation weaponSprite = await DFSpriteAnimation.load(
+            "assets/images/weapon/weapon_01.png", "assets/images/weapon/weapon_01.json");
 
         /// 创建玩家精灵
         _playerSprite = PlayerSprite(_player);
-        _playerSprite?.position =
-            DFPosition(MediaQuery.of(context).size.width / 2, MediaQuery.of(context).size.height / 2);
+        _playerSprite?.position = DFPosition(
+            MediaQuery.of(context).size.width / 2, MediaQuery.of(context).size.height / 2);
 
         _playerSprite?.setBodySprite(bodySprite);
         _playerSprite?.setWeaponSprite(weaponSprite);
@@ -79,19 +80,19 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 怪物精灵
         List<MonsterSprite> _monsterSprites = [];
         MonsterSprite monsterSprite = MonsterSprite();
-        monsterSprite.position =
-            DFPosition(MediaQuery.of(context).size.width / 2, MediaQuery.of(context).padding.top + 120);
+        monsterSprite.position = DFPosition(
+            MediaQuery.of(context).size.width / 2, MediaQuery.of(context).padding.top + 120);
         _monsterSprites.add(monsterSprite);
 
         /// Logo精灵
         DFImageSprite logoSprite = await DFImageSprite.load("assets/images/sprite.png");
         logoSprite.scale = 0.6;
-        logoSprite.position =
-            DFPosition(MediaQuery.of(context).size.width / 2, MediaQuery.of(context).padding.top + 60);
+        logoSprite.position = DFPosition(
+            MediaQuery.of(context).size.width / 2, MediaQuery.of(context).padding.top + 60);
 
         /// 帧数精灵
         DFTextSprite fpsSprite = DFTextSprite("60 fps");
-        fpsSprite.position = DFPosition(MediaQuery.of(context).size.width - 100, 25);
+        fpsSprite.position = DFPosition(MediaQuery.of(context).size.width - 100, 20);
         fpsSprite.setOnUpdate((dt) {
           fpsSprite.text = DFGameWidget.fps;
         });
@@ -126,20 +127,22 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
   /// Loading显示
   Widget _loadingWidget() {
     return Center(
-      child:
-          Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-        CircularProgressIndicator(),
-        Padding(
-          padding: EdgeInsets.only(top: 16),
-          child: Text(
-            "Loading...",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+            Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: Text(
+                "Loading...",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
             ),
-          ),
-        ),
-      ]),
+          ]),
     );
   }
 
@@ -158,8 +161,8 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
           ),
         ),
         Positioned(
-          left: 10,
-          top: MediaQuery.of(context).padding.top + 10,
+          left: 20,
+          top: MediaQuery.of(context).padding.top + 20,
           child: Text(
             "Devilf",
             style: TextStyle(
@@ -171,16 +174,16 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
         /// 摇杆
         Positioned(
-          bottom: MediaQuery.of(context).padding.bottom + 20,
-          left: 20,
+          bottom: MediaQuery.of(context).padding.bottom + 30,
+          left: 30,
           child: DFJoyStick(
             //backgroundImage: "assets/images/ui/joystick.png",
             //handleImage: "assets/images/ui/joystick_btn.png",
             onChange: (double radians, String direction) {
-              _playerSprite?.play(DFAnimation.RUN + direction, radians: radians);
+              _playerSprite?.play(action: DFAnimation.RUN, direction: direction, radians: radians);
             },
             onCancel: (direction) {
-              _playerSprite?.play(DFAnimation.IDLE + direction);
+              _playerSprite?.play(action: DFAnimation.IDLE, direction: direction);
             },
           ),
         ),
@@ -191,20 +194,27 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
           child: Wrap(
             spacing: 5,
             runSpacing: 5,
-            children: [],
+            children: [
+              ElevatedButton(
+                child: new Text('攻击'),
+                onPressed: () {
+                  _playerSprite?.play(action: DFAnimation.ATTACK);
+                },
+              ),
+              ElevatedButton(
+                child: new Text('施法'),
+                onPressed: () {
+                  _playerSprite?.play(action: DFAnimation.CASTING);
+                },
+              ),
+              ElevatedButton(
+                child: new Text('挖'),
+                onPressed: () {
+                  _playerSprite?.play(action: DFAnimation.DIG);
+                },
+              ),
+            ],
           ),
-        ),
-
-        Column(
-          children: [
-            Row(
-              children: [
-                SizedBox(width: 48),
-                Spacer(),
-                SizedBox(width: 48),
-              ],
-            ),
-          ],
         ),
       ]);
     });

@@ -47,7 +47,7 @@ class DFSpriteAnimation extends DFSprite {
     this.stepTime = 200,
     this.loop = true,
     DFSize size = const DFSize(128, 128),
-  }) : super(position:DFPosition(0, 0), size: size);
+  }) : super(position: DFPosition(0, 0), size: size);
 
   /// 将plist转换Json后读取精灵
   /// {
@@ -61,7 +61,7 @@ class DFSpriteAnimation extends DFSprite {
   ///   }
   /// }
   static Future<DFSpriteAnimation> load(String src, String plist) async {
-    DFSpriteAnimation spriteAnimation = DFSpriteAnimation(stepTime: 200, loop: true);
+    DFSpriteAnimation spriteAnimation = DFSpriteAnimation(stepTime: 100, loop: true);
 
     DFAnimation.sequence.forEach((element) {
       spriteAnimation.frames[element] = [];
@@ -82,17 +82,18 @@ class DFSpriteAnimation extends DFSprite {
 
       final frame = map['frame'] as String;
       final offset = map['offset'] as String;
-      List<String> frameText = frame.replaceAll("{{", "").replaceAll("},{", ",").replaceAll("}}", "").split(",");
+      List<String> frameText =
+          frame.replaceAll("{{", "").replaceAll("},{", ",").replaceAll("}}", "").split(",");
       List<String> offsetText = offset.replaceAll("{", "").replaceAll("}", "").split(",");
 
-      DFRect frameRect = DFRect(double.parse(frameText[0]), double.parse(frameText[1]), double.parse(frameText[2]),
-          double.parse(frameText[3]));
+      DFRect frameRect = DFRect(double.parse(frameText[0]), double.parse(frameText[1]),
+          double.parse(frameText[2]), double.parse(frameText[3]));
       DFOffset frameOffset = DFOffset(double.parse(offsetText[0]), double.parse(offsetText[1]));
 
       /// 如果是旋转的参数也修改一下
       if (rotated) {
-        frameRect = DFRect(double.parse(frameText[0]), double.parse(frameText[1]), double.parse(frameText[3]),
-            double.parse(frameText[2]));
+        frameRect = DFRect(double.parse(frameText[0]), double.parse(frameText[1]),
+            double.parse(frameText[3]), double.parse(frameText[2]));
         frameOffset = DFOffset(double.parse(offsetText[1]), double.parse(offsetText[0]));
       }
       //print("frameSize:" + frameRect.toString());
@@ -153,7 +154,8 @@ class DFSpriteAnimation extends DFSprite {
   /// 绑定动画同步子精灵
   void bindChild(DFSpriteAnimation sprite) {
     sprite.isBind = true;
-    sprite.position = DFPosition(sprite.position.x - size.width / 2, sprite.position.y - size.height / 2);
+    sprite.position =
+        DFPosition(sprite.position.x - size.width / 2, sprite.position.y - size.height / 2);
     this.bindSprites.add(sprite);
   }
 
@@ -162,7 +164,10 @@ class DFSpriteAnimation extends DFSprite {
     if (this.currentAnimation != animation) {
       this.currentIndex = 0;
       this.currentAnimation = animation;
-      print("Play:" + animation.toString() + ",frames:" + this.frames[this.currentAnimation]!.length.toString());
+      print("Play:" +
+          animation.toString() +
+          ",frames:" +
+          this.frames[this.currentAnimation]!.length.toString());
     }
   }
 
@@ -170,7 +175,8 @@ class DFSpriteAnimation extends DFSprite {
   @override
   void update(double dt) {
     /// 控制动画帧切换
-    if (this.frames[this.currentAnimation] != null && this.frames[this.currentAnimation]!.length > 0) {
+    if (this.frames[this.currentAnimation] != null &&
+        this.frames[this.currentAnimation]!.length > 0) {
       List<DFImageSprite> sprites = this.frames[this.currentAnimation]!;
 
       /// 控制动画帧按照stepTime进行更新
@@ -195,25 +201,19 @@ class DFSpriteAnimation extends DFSprite {
     /// 画布暂存
     canvas.save();
 
-    if (!isBind) {
-      /// 将子精灵转换为相对坐标
-      if (parent != null) {
-        DFPosition parentPosition =
-            DFPosition(parent!.position.x - parent!.size.width / 2, parent!.position.y - parent!.size.height / 2);
-        canvas.translate(parentPosition.x + position.x, parentPosition.y + position.y);
-      } else {
-        canvas.translate(position.x, position.y);
-      }
-    } else {
-      /// 将子精灵转换为相对坐标
+    /// 将子精灵转换为相对坐标
+    if (parent == null) {
       canvas.translate(position.x, position.y);
+    } else {
+      canvas.translate(position.x - parent!.size.width / 2, position.y - parent!.size.height / 2);
     }
 
     /// 精灵矩形边界
     //var paint = new Paint()..color = Color(0x6000FF00);
     //canvas.drawRect(Rect.fromLTWH(- size.width/2,- size.height/2, size.width, size.height), paint);
 
-    if (this.frames[this.currentAnimation] != null && this.frames[this.currentAnimation]!.length > 0) {
+    if (this.frames[this.currentAnimation] != null &&
+        this.frames[this.currentAnimation]!.length > 0) {
       List<DFImageSprite> sprites = this.frames[this.currentAnimation]!;
       sprites[this.currentIndex].flippedX = currentAnimationFlippedX;
       sprites[this.currentIndex].render(canvas);
