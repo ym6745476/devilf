@@ -1,4 +1,4 @@
-package com.ymbok.example;
+package dev.ym101.devilf;
 
 import android.os.Bundle;
 import android.util.Log;
