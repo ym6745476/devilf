@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:devilf/game/df_sprite.dart';
+import 'package:devilf/sprite/df_sprite.dart';
 import 'package:flutter/material.dart';
 import 'df_game_render_box.dart';
 

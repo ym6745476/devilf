@@ -1,14 +1,17 @@
 import 'package:devilf/game/df_game_widget.dart';
-import 'package:devilf/game/df_sprite_image.dart';
 import 'package:devilf/game/df_math_position.dart';
-import 'package:devilf/game/df_sprite_animation.dart';
 import 'package:devilf/game/df_animation.dart';
-import 'package:devilf/game/df_text_sprite.dart';
-import 'package:devilf/joystick/df_joystick.dart';
-import 'package:devilf/sprite/map_sprite.dart';
-import 'package:devilf/sprite/monster_sprite.dart';
-import 'package:devilf/sprite/player_sprite.dart';
+import 'package:devilf/sprite/df_sprite_animation.dart';
+import 'package:devilf/sprite/df_sprite_image.dart';
+import 'package:devilf/sprite/df_text_sprite.dart';
+import 'package:devilf/widget/df_joystick.dart';
+import 'package:example/player/player.dart';
+import 'package:example/player/player_sprite.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'map/map_sprite.dart';
+import 'monster/monster_sprite.dart';
 
 class GameScene extends StatefulWidget {
   final int map;
@@ -29,8 +32,8 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
   /// 加载状态
   bool _loading = true;
 
-  /// 当前主角的动画
-  int _currentAnimationIndex = 0;
+  /// 玩家
+  late Player _player;
 
   /// 创建主场景
   _GameSceneState();
@@ -39,74 +42,46 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
+    /// 强制横屏
+    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+
+    /// 加载游戏
     _loadGame();
-    print("GameScene initState  ok ");
-  }
-
-  /// 鼠标点击
-  void _pointerDown(PointerDownEvent event) {
-    print("鼠标点击：" + event.localPosition.toString());
-    _updatePlayerPosition(DFPosition(event.localPosition.dx, event.localPosition.dy));
-  }
-
-  /// 鼠标抬起
-  void _pointerUp(PointerUpEvent event) {
-    print("鼠标抬起：" + event.localPosition.toString());
-  }
-
-  /// 鼠标移动
-  void _pointerMove(PointerMoveEvent event) {
-    print("鼠标移动：" + event.localPosition.toString());
-    _updatePlayerPosition(DFPosition(event.localPosition.dx, event.localPosition.dy));
-  }
-
-  /// 鼠标取消
-  void _pointerCancel(PointerCancelEvent event) {
-    print("鼠标取消：" + event.localPosition.toString());
-  }
-
-  /// 玩家位置更新
-  void _updatePlayerPosition(DFPosition position) {
-    _playerSprite!.position = position;
   }
 
   /// 开始进入游戏
   void _loadGame() async {
-    try {
-      await Future.delayed(Duration(seconds: 2), () async {
-        /// 定义主界面
-        this._gameWidget = DFGameWidget();
+    /// 创建玩家类
+    _player = Player();
 
+    /// 定义主界面
+    this._gameWidget = DFGameWidget();
+    try {
+      await Future.delayed(Duration(seconds: 1), () async {
         /// 地图精灵
         MapSprite mapSprite = MapSprite();
 
-        /// 将地图精灵添加到主界面
-        this._gameWidget!.addChild(mapSprite);
-
-        /// 玩家精灵
+        /// 玩家精灵动画
         DFSpriteAnimation bodySprite =
             await DFSpriteAnimation.load("assets/images/role/man_01.png", "assets/images/role/man_01.json");
         DFSpriteAnimation weaponSprite =
             await DFSpriteAnimation.load("assets/images/weapon/weapon_01.png", "assets/images/weapon/weapon_01.json");
 
-        _playerSprite = PlayerSprite();
+        /// 创建玩家精灵
+        _playerSprite = PlayerSprite(_player);
         _playerSprite?.position =
             DFPosition(MediaQuery.of(context).size.width / 2, MediaQuery.of(context).size.height / 2);
 
         _playerSprite?.setBodySprite(bodySprite);
         _playerSprite?.setWeaponSprite(weaponSprite);
 
-        /// 将玩家精灵添加到主界面
-        //this._gameWidget!.addChild(_playerSprite);
-
         /// 怪物精灵
         List<MonsterSprite> _monsterSprites = [];
-        MonsterSprite monsterSprite = MonsterSprite(
-            position: DFPosition(MediaQuery.of(context).size.width / 2, MediaQuery.of(context).padding.top + 120));
+        MonsterSprite monsterSprite = MonsterSprite();
+        monsterSprite.position =
+            DFPosition(MediaQuery.of(context).size.width / 2, MediaQuery.of(context).padding.top + 120);
         _monsterSprites.add(monsterSprite);
-
-        /// 将怪物精灵添加到主界面
-        this._gameWidget!.addChildren(_monsterSprites);
 
         /// Logo精灵
         DFImageSprite logoSprite = await DFImageSprite.load("assets/images/sprite.png");
@@ -114,15 +89,24 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         logoSprite.position =
             DFPosition(MediaQuery.of(context).size.width / 2, MediaQuery.of(context).padding.top + 60);
 
-        /// 将Logo精灵添加到主界面
-        this._gameWidget!.addChild(logoSprite);
-
         /// 帧数精灵
-        DFTextSprite fpsSprite =
-            DFTextSprite("60 fps", position: DFPosition(MediaQuery.of(context).size.width - 100, 25));
+        DFTextSprite fpsSprite = DFTextSprite("60 fps");
+        fpsSprite.position = DFPosition(MediaQuery.of(context).size.width - 100, 25);
         fpsSprite.setOnUpdate((dt) {
           fpsSprite.text = DFGameWidget.fps;
         });
+
+        /// 将地图精灵添加到主界面
+        this._gameWidget!.addChild(mapSprite);
+
+        /// 将玩家精灵添加到主界面
+        this._gameWidget!.addChild(_playerSprite);
+
+        /// 将怪物精灵添加到主界面
+        this._gameWidget!.addChildren(_monsterSprites);
+
+        /// 将Logo精灵添加到主界面
+        this._gameWidget!.addChild(logoSprite);
 
         /// 将帧数精灵添加到主界面
         this._gameWidget!.addChild(fpsSprite);
@@ -131,10 +115,6 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         setState(() {
           _loading = false;
         });
-
-        ///自动播放玩家第一个动画
-        _currentAnimationIndex = 0;
-        _playerSprite?.play(DFAnimation.sequence[_currentAnimationIndex]);
 
         print("游戏加载完成...");
       });
@@ -174,18 +154,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             color: Colors.black87,
-            child: _loading
-                ? _loadingWidget()
-                : Listener(
-                    onPointerDown: (event) => _pointerDown(event),
-                    onPointerMove: (event) => _pointerMove(event),
-                    onPointerUp: (event) => _pointerUp(event),
-                    onPointerCancel: (event) => _pointerCancel(event),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      child: _gameWidget,
-                    )),
+            child: _loading ? _loadingWidget() : _gameWidget,
           ),
         ),
         Positioned(
@@ -199,74 +168,44 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
             ),
           ),
         ),
+
+        /// 摇杆
+        Positioned(
+          bottom: MediaQuery.of(context).padding.bottom + 20,
+          left: 20,
+          child: DFJoyStick(
+            //backgroundImage: "assets/images/ui/joystick.png",
+            //handleImage: "assets/images/ui/joystick_btn.png",
+            onChange: (double radians, String direction) {
+              _playerSprite?.play(DFAnimation.RUN + direction, radians: radians);
+            },
+            onCancel: (direction) {
+              _playerSprite?.play(DFAnimation.IDLE + direction);
+            },
+          ),
+        ),
+
         Positioned(
           bottom: MediaQuery.of(context).padding.bottom + 10,
           right: 20,
           child: Wrap(
             spacing: 5,
             runSpacing: 5,
-            children: [
-              ElevatedButton(
-                child: new Text('方向'),
-                onPressed: () {
-                  if (_currentAnimationIndex == 7) {
-                    _currentAnimationIndex = 0;
-                  } else if (_currentAnimationIndex == 39) {
-                    _currentAnimationIndex = 8;
-                  } else {
-                    _currentAnimationIndex += 1;
-                  }
-                  _playerSprite?.play(DFAnimation.sequence[_currentAnimationIndex]);
-                },
-              ),
-              ElevatedButton(
-                child: new Text('动作'),
-                onPressed: () {
-                  if (_currentAnimationIndex + 8 > 39) {
-                    _currentAnimationIndex = 0;
-                    _playerSprite?.play(DFAnimation.sequence[_currentAnimationIndex]);
-                  } else {
-                    _currentAnimationIndex += 8;
-                    _playerSprite?.play(DFAnimation.sequence[_currentAnimationIndex]);
-                  }
-                },
-              ),
-            ],
+            children: [],
           ),
         ),
 
         Column(
           children: [
-
-            Spacer(),
-            //发射按钮
             Row(
               children: [
                 SizedBox(width: 48),
-
                 Spacer(),
-
                 SizedBox(width: 48),
               ],
             ),
-            SizedBox(height: 20),
-
-            /// 摇杆
-            Row(
-              children: [
-                SizedBox(width: 48),
-                DFJoyStick(
-                  onChange: (Offset delta){
-
-                  },
-                ),
-                Spacer(),
-              ],
-            ),
-            SizedBox(height: 24)
           ],
         ),
-
       ]);
     });
   }

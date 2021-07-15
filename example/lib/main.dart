@@ -1,12 +1,12 @@
-import 'dart:ui';
-
 import 'package:example/game_scene.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 main() async {
-  // 游戏场景
+  /// 游戏场景
   GameScene gameScene = GameScene();
+
+  /// 运行游戏
   runApp(MyApp(gameScene));
 }
 

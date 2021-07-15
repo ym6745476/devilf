@@ -2,13 +2,13 @@ import 'dart:math';
 
 import 'package:devilf/game/df_assets_loader.dart';
 import 'package:devilf/game/df_math_position.dart';
-import 'package:devilf/game/df_sprite.dart';
+import 'package:devilf/sprite/df_sprite.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui' as ui;
 
-import 'df_math_offset.dart';
-import 'df_math_rect.dart';
-import 'df_math_size.dart';
+import '../game/df_math_offset.dart';
+import '../game/df_math_rect.dart';
+import '../game/df_math_size.dart';
 
 /// 图片精灵类
 class DFImageSprite extends DFSprite {
@@ -33,14 +33,13 @@ class DFImageSprite extends DFSprite {
   /// 创建图片精灵
   DFImageSprite(
     this.image, {
-    DFPosition position = const DFPosition(0, 0),
     DFSize size = const DFSize(64, 64),
     this.rect = const DFRect(0, 0, 64, 64),
     this.offset = const DFOffset(0, 0),
     this.rotated = false,
     this.flippedX = false,
     this.scale = 1,
-  }) : super(position: position, size: size);
+  }) : super(position: DFPosition(0,0), size: size);
 
   /// 加载图片资源
   static Future<DFImageSprite> load(String src) async {
@@ -123,8 +122,8 @@ class DFImageSprite extends DFSprite {
         height: dstRect.height * scale);
 
     /// 绘制图像
-    Paint paint5 = Paint()..color = Color(0xFFFFFFFF);
-    //canvas.drawRect(outputRect, paint5);
+    Paint paint5 = Paint()..color = Color(0x10FFFFFF);
+    canvas.drawRect(outputRect, paint5);
     canvas.drawImageRect(this.image, rect.toRect(), outputRect, paint5);
 
     /// 绘制子精灵

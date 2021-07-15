@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:devilf/game/df_math_position.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'df_math_size.dart';
+import '../game/df_math_size.dart';
 
 /// 基础精灵类
 class DFSprite {
@@ -25,7 +25,7 @@ class DFSprite {
   /// 创建精灵
   DFSprite({
     required this.position,
-    required this.size,
+    required this.size
   });
 
   /// 增加子精灵

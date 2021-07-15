@@ -50,6 +50,7 @@ flutter:
     - assets/audio/
     - assets/images/role/
     - assets/images/weapon/
+    - assets/images/ui/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -2,15 +2,14 @@ import 'dart:ui';
 
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_math_size.dart';
-import 'package:devilf/game/df_sprite.dart';
+import 'package:devilf/sprite/df_sprite.dart';
 import 'package:flutter/cupertino.dart';
 
 /// 地图精灵类
 class MapSprite extends DFSprite {
   MapSprite({
-    DFPosition position = const DFPosition(0, 0),
     DFSize size = const DFSize(64, 64),
-  }) : super(position: position, size: size);
+  }) : super(position:DFPosition(0, 0), size: size);
 
   @override
   void update(double dt) {}

@@ -3,13 +3,13 @@ import 'dart:ui';
 /// 位置
 class DFPosition {
   /// x坐标
-  final double x;
+  double x;
 
   /// y坐标
-  final double y;
+  double y;
 
   /// 创建坐标
-  const DFPosition(this.x, this.y);
+  DFPosition(this.x, this.y);
 
   @override
   String toString() {

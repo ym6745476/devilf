@@ -2,7 +2,7 @@ import 'dart:ui' as ui;
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_game_widget.dart';
 import 'package:devilf/game/df_math_size.dart';
-import 'package:devilf/game/df_sprite.dart';
+import 'package:devilf/sprite/df_sprite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,10 +16,11 @@ class DFTextSprite extends DFSprite {
 
   /// 创建文本精灵
   DFTextSprite(
-    this.text, {
-    DFPosition position = const DFPosition(0, 0),
-    DFSize size = const DFSize(100, 30),
-  }) : super(position: position, size: size);
+      this.text,
+      {
+        DFSize size = const DFSize(100, 30)
+      }
+  ):super(position:DFPosition(0, 0),size: size);
 
   /// 更新文本
   @override

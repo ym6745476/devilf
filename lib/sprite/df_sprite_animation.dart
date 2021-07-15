@@ -1,15 +1,14 @@
 import 'dart:collection';
 import 'dart:ui';
+import 'package:devilf/game/df_animation.dart';
 import 'package:devilf/game/df_assets_loader.dart';
+import 'package:devilf/game/df_math_offset.dart';
 import 'package:devilf/game/df_math_position.dart';
-import 'package:devilf/game/df_sprite_image.dart';
-import 'package:devilf/game/df_sprite.dart';
+import 'package:devilf/game/df_math_rect.dart';
+import 'package:devilf/game/df_math_size.dart';
+import 'package:devilf/sprite/df_sprite_image.dart';
+import 'package:devilf/sprite/df_sprite.dart';
 import 'dart:ui' as ui;
-
-import 'df_math_offset.dart';
-import 'df_math_rect.dart';
-import 'df_math_size.dart';
-import 'df_animation.dart';
 
 /// 动画精灵
 class DFSpriteAnimation extends DFSprite {
@@ -47,9 +46,8 @@ class DFSpriteAnimation extends DFSprite {
   DFSpriteAnimation({
     this.stepTime = 200,
     this.loop = true,
-    DFPosition position = const DFPosition(0, 0),
     DFSize size = const DFSize(128, 128),
-  }) : super(position: position, size: size);
+  }) : super(position:DFPosition(0, 0), size: size);
 
   /// 将plist转换Json后读取精灵
   /// {

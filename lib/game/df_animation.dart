@@ -63,6 +63,5 @@ class DFAnimation {
     DIG + DOWN_RIGHT, //37
     DIG + DOWN, //38
     DIG + DOWN_LEFT, //39
-
   ];
 }
