@@ -2,7 +2,7 @@
 A little game engine implemented with flutter.  
 
 <p align="center">
-    <img src="https://img.shields.io/badge/devilf-0.0.2-orange" />
+    <img src="https://img.shields.io/badge/devilf-0.0.4-orange" />
     <img src="https://img.shields.io/badge/flutter-2.2.3-green" />
 </p>
 
@@ -25,7 +25,7 @@ A little game engine implemented with flutter.
 https://ymbok.com/phone-3.html  
 
 ### 截图 
-<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/1.gif" width="300" height="617"/>  
+<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/demo.gif" width="600" height="292"/>  
 
 # 结构关系图  
 ---------------------------- GameScene -----------------------------  

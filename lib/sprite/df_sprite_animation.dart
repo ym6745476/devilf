@@ -82,18 +82,17 @@ class DFSpriteAnimation extends DFSprite {
 
       final frame = map['frame'] as String;
       final offset = map['offset'] as String;
-      List<String> frameText =
-          frame.replaceAll("{{", "").replaceAll("},{", ",").replaceAll("}}", "").split(",");
+      List<String> frameText = frame.replaceAll("{{", "").replaceAll("},{", ",").replaceAll("}}", "").split(",");
       List<String> offsetText = offset.replaceAll("{", "").replaceAll("}", "").split(",");
 
-      DFRect frameRect = DFRect(double.parse(frameText[0]), double.parse(frameText[1]),
-          double.parse(frameText[2]), double.parse(frameText[3]));
+      DFRect frameRect = DFRect(double.parse(frameText[0]), double.parse(frameText[1]), double.parse(frameText[2]),
+          double.parse(frameText[3]));
       DFOffset frameOffset = DFOffset(double.parse(offsetText[0]), double.parse(offsetText[1]));
 
       /// 如果是旋转的参数也修改一下
       if (rotated) {
-        frameRect = DFRect(double.parse(frameText[0]), double.parse(frameText[1]),
-            double.parse(frameText[3]), double.parse(frameText[2]));
+        frameRect = DFRect(double.parse(frameText[0]), double.parse(frameText[1]), double.parse(frameText[3]),
+            double.parse(frameText[2]));
         frameOffset = DFOffset(double.parse(offsetText[1]), double.parse(offsetText[0]));
       }
       //print("frameSize:" + frameRect.toString());
@@ -154,20 +153,17 @@ class DFSpriteAnimation extends DFSprite {
   /// 绑定动画同步子精灵
   void bindChild(DFSpriteAnimation sprite) {
     sprite.isBind = true;
-    sprite.position =
-        DFPosition(sprite.position.x - size.width / 2, sprite.position.y - size.height / 2);
+    sprite.position = DFPosition(sprite.position.x - size.width / 2, sprite.position.y - size.height / 2);
     this.bindSprites.add(sprite);
   }
 
   /// 播放动画
-  void play(String animation) {
+  void play(String animation,{stepTime = 200}) {
     if (this.currentAnimation != animation) {
       this.currentIndex = 0;
       this.currentAnimation = animation;
-      print("Play:" +
-          animation.toString() +
-          ",frames:" +
-          this.frames[this.currentAnimation]!.length.toString());
+      this.stepTime = stepTime;
+      print("Play:" + animation.toString() + ",frames:" + this.frames[this.currentAnimation]!.length.toString() + ",stepTime:" + stepTime.toString());
     }
   }
 
@@ -175,8 +171,7 @@ class DFSpriteAnimation extends DFSprite {
   @override
   void update(double dt) {
     /// 控制动画帧切换
-    if (this.frames[this.currentAnimation] != null &&
-        this.frames[this.currentAnimation]!.length > 0) {
+    if (this.frames[this.currentAnimation] != null && this.frames[this.currentAnimation]!.length > 0) {
       List<DFImageSprite> sprites = this.frames[this.currentAnimation]!;
 
       /// 控制动画帧按照stepTime进行更新
@@ -212,8 +207,7 @@ class DFSpriteAnimation extends DFSprite {
     //var paint = new Paint()..color = Color(0x6000FF00);
     //canvas.drawRect(Rect.fromLTWH(- size.width/2,- size.height/2, size.width, size.height), paint);
 
-    if (this.frames[this.currentAnimation] != null &&
-        this.frames[this.currentAnimation]!.length > 0) {
+    if (this.frames[this.currentAnimation] != null && this.frames[this.currentAnimation]!.length > 0) {
       List<DFImageSprite> sprites = this.frames[this.currentAnimation]!;
       sprites[this.currentIndex].flippedX = currentAnimationFlippedX;
       sprites[this.currentIndex].render(canvas);

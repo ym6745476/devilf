@@ -122,8 +122,7 @@ class DFJoyStickState extends State<DFJoyStick> {
     Offset offsetMove = offset - Offset(widget.size.width / 2, widget.size.height / 2);
 
     /// 更新摇杆位置 活动范围控制在Size之内
-    update(Offset.fromDirection(
-        offsetMove.direction, min(widget.size.width / 4, offsetMove.distance)));
+    update(Offset.fromDirection(offsetMove.direction, min(widget.size.width / 2, offsetMove.distance)));
 
     /// [-pi,pi]
     updateDirection(offsetMove.direction);

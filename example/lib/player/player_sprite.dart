@@ -56,7 +56,11 @@ class PlayerSprite extends DFSprite {
         }
         bodySprite!.currentAnimationFlippedX = flippedX;
         print("play:" + animation);
-        bodySprite!.play(animation);
+        if (this.action == DFAnimation.IDLE) {
+          bodySprite!.play(animation, stepTime: 300);
+        } else {
+          bodySprite!.play(animation, stepTime: 100);
+        }
       }
     }
   }
@@ -79,8 +83,7 @@ class PlayerSprite extends DFSprite {
     this.weaponSprite = sprite;
 
     /// 绑定动画同步
-    this.weaponSprite!.position =
-        DFPosition(this.bodySprite!.size.width / 2, this.bodySprite!.size.height / 2);
+    this.weaponSprite!.position = DFPosition(this.bodySprite!.size.width / 2, this.bodySprite!.size.height / 2);
     this.weaponSprite!.size = DFSize(120, 120);
     this.bodySprite?.bindChild(this.weaponSprite!);
   }
@@ -92,7 +95,7 @@ class PlayerSprite extends DFSprite {
       if (this.radians != 0) {
         this.position.x = this.position.x + this.player.moveSpeed * cos(this.radians);
         this.position.y = this.position.y + this.player.moveSpeed * sin(this.radians);
-        print("move:" + this.position.toString());
+        //print("move:" + this.position.toString());
       }
     }
     this.bodySprite?.update(dt);
