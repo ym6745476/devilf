@@ -92,7 +92,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
         /// 帧数精灵
         DFTextSprite fpsSprite = DFTextSprite("60 fps");
-        fpsSprite.position = DFPosition(MediaQuery.of(context).size.width - 100, 30);
+        fpsSprite.position = DFPosition(MediaQuery.of(context).size.width - 100, MediaQuery.of(context).padding.top + 20);
         fpsSprite.setOnUpdate((dt) {
           fpsSprite.text = DFGameWidget.fps;
         });
