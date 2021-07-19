@@ -21,7 +21,7 @@ A little game engine implemented with flutter.
 游戏支持：Tiled地图，Plist精灵，碰撞检测，遥杆控制器等。     
 
 ## 开发手册  
-开发手册：https://ymbok.com/book-111-146.html  
+https://ymbok.com/book-111-146.html  
 
 ## 在线体验    
 https://ymbok.com/phone-111.html  
