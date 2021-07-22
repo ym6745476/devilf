@@ -1,5 +1,6 @@
 # Devilf 游戏引擎  
-A little game engine implemented with flutter.  
+A little game engine implemented with flutter. 
+一款使用Flutter实现的小巧的游戏引擎。
 
 <p align="center">
     <img src="https://img.shields.io/badge/devilf-0.0.5-orange" />
@@ -13,7 +14,7 @@ A little game engine implemented with flutter.
 ## 引擎介绍  
 (Devil Fighter)
 自从有了Flutter，轻松实现了三端跨平台，并且不增加包体积，就能拥有一套Native游戏引擎，为APP游戏化提供了更多可能性。  
-开发这套引擎的同时，也会同时开发引擎对应的游戏demo，将以2d tiled rpg游戏作为示例来完善该引擎。  
+开发这套引擎的同时，也会同时开发引擎对应的游戏示例，将以2D Tiled RPG游戏作为示例来完善该引擎。  
 感谢大家关注，也欢迎贡献你的想法和技术。  
 
 适用范围：中小型游戏，APP内营销活动，小游戏；   
