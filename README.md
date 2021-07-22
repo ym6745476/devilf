@@ -27,6 +27,12 @@ https://ymbok.com/book-111-146.html
 ## 在线体验    
 https://ymbok.com/phone-111.html  
 
+## 安装控件
+```yaml
+dependencies:
+  devilf: ^0.0.5
+```
+
 ### 示例演示
 <img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/devilf.gif" width="600" height="292"/>  
 
