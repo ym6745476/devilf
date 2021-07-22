@@ -1,6 +1,6 @@
 # Devilf 游戏引擎  
-A little game engine implemented with flutter. 
-一款使用Flutter实现的小巧的游戏引擎。
+A little game engine implemented with flutter.  
+一款使用Flutter实现的小巧的游戏引擎。  
 
 <p align="center">
     <img src="https://img.shields.io/badge/devilf-0.0.5-orange" />
