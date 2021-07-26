@@ -7,6 +7,7 @@ class DFAnimation {
   static const String ATTACK = "ATTACK";
   static const String CASTING = "CASTING";
   static const String DIG = "DIG";
+  static const String DEATH = "DEATH";
 
   static const String LEFT = "_LEFT";
   static const String UP_LEFT = "_UP_LEFT";
@@ -63,5 +64,14 @@ class DFAnimation {
     DIG + DOWN_RIGHT, //37
     DIG + DOWN, //38
     DIG + DOWN_LEFT, //39
+
+    DEATH + LEFT, //40
+    DEATH + UP_LEFT, //41
+    DEATH + UP, //42
+    DEATH + UP_RIGHT, //43
+    DEATH + RIGHT, //44
+    DEATH + DOWN_RIGHT, //45
+    DEATH + DOWN, //46
+    DEATH + DOWN_LEFT, //47
   ];
 }

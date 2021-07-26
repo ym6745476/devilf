@@ -1,6 +1,7 @@
 import 'package:devilf/game/df_game_widget.dart';
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_animation.dart';
+import 'package:devilf/sprite/df_sprite.dart';
 import 'package:devilf/sprite/df_sprite_animation.dart';
 import 'package:devilf/sprite/df_sprite_image.dart';
 import 'package:devilf/sprite/df_text_sprite.dart';
@@ -10,7 +11,9 @@ import 'package:example/player/player_sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'game_manager.dart';
 import 'map/map_sprite.dart';
+import 'monster/monster.dart';
 import 'monster/monster_sprite.dart';
 
 class GameScene extends StatefulWidget {
@@ -32,9 +35,6 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
   /// 加载状态
   bool _loading = true;
 
-  /// 玩家
-  late Player _player;
-
   /// 创建主场景
   _GameSceneState();
 
@@ -53,8 +53,6 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
   /// 开始进入游戏
   void _loadGame() async {
-    /// 创建玩家类
-    _player = Player();
 
     /// 定义主界面
     this._gameWidget = DFGameWidget();
@@ -70,19 +68,28 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
             "assets/images/weapon/weapon_01.png", "assets/images/weapon/weapon_01.json");
 
         /// 创建玩家精灵
-        _playerSprite = PlayerSprite(_player);
+        _playerSprite = PlayerSprite(Player());
         _playerSprite?.position = DFPosition(
             MediaQuery.of(context).size.width / 2, MediaQuery.of(context).size.height / 2);
 
         _playerSprite?.setBodySprite(bodySprite);
         _playerSprite?.setWeaponSprite(weaponSprite);
 
+        /// 保存到管理器里
+        GameManager.playerSprite = _playerSprite;
+
         /// 怪物精灵
         List<MonsterSprite> _monsterSprites = [];
-        MonsterSprite monsterSprite = MonsterSprite();
+        MonsterSprite monsterSprite = MonsterSprite(Monster());
         monsterSprite.position = DFPosition(
             MediaQuery.of(context).size.width * 0.8, MediaQuery.of(context).padding.top + 120);
+        DFSpriteAnimation monsterBodySprite = await DFSpriteAnimation.load(
+            "assets/images/monster/spider.png", "assets/images/monster/spider.json");
+        monsterSprite.setBodySprite(monsterBodySprite);
         _monsterSprites.add(monsterSprite);
+
+        /// 保存到管理器里
+        GameManager.monsterSprites = _monsterSprites;
 
         /// Logo精灵
         DFImageSprite logoSprite = await DFImageSprite.load("assets/images/sprite.png");
@@ -111,6 +118,10 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
         /// 将帧数精灵添加到主界面
         this._gameWidget!.addChild(fpsSprite);
+
+
+        /// 保存到管理器里
+        GameManager.gameWidget = this._gameWidget!;
 
         /// Loading完成
         setState(() {

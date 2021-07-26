@@ -1,5 +1,5 @@
-/// 玩家类
-class Player {
+/// 怪物类
+class Monster {
   /// 生命值
   double hp = 100;
 
@@ -19,7 +19,7 @@ class Player {
   double maxAt = 100;
 
   /// 移动速度
-  double moveSpeed = 1;
+  double moveSpeed = 0.4;
 
   /// 视野范围
   double vision = 256;

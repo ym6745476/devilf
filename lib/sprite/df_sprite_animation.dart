@@ -40,7 +40,7 @@ class DFSpriteAnimation extends DFSprite {
   int clock = 0;
 
   /// 完成事件
-  Function? onComplete;
+  Function(DFSpriteAnimation)? onComplete;
 
   /// 创建动画精灵
   DFSpriteAnimation({
@@ -124,6 +124,9 @@ class DFSpriteAnimation extends DFSprite {
       } else if (key.contains("dig_")) {
         actionText = "dig_";
         action = DFAnimation.DIG;
+      }else if (key.contains("death_")) {
+        actionText = "death_";
+        action = DFAnimation.DEATH;
       }
 
       String keyNumber = key.replaceAll(actionText, "").replaceAll(".png", "");
@@ -158,11 +161,13 @@ class DFSpriteAnimation extends DFSprite {
   }
 
   /// 播放动画
-  void play(String animation,{stepTime = 200}) {
+  void play(String animation,{stepTime = 200,loop = true,onComplete}) {
     if (this.currentAnimation != animation) {
       this.currentIndex = 0;
       this.currentAnimation = animation;
       this.stepTime = stepTime;
+      this.loop = loop;
+      this.onComplete = onComplete;
       print("Play:" + animation.toString() + ",frames:" + this.frames[this.currentAnimation]!.length.toString() + ",stepTime:" + stepTime.toString());
     }
   }
@@ -184,6 +189,10 @@ class DFSpriteAnimation extends DFSprite {
           if (this.loop) {
             this.clock = DateTime.now().millisecondsSinceEpoch;
             this.currentIndex = 0;
+          }
+          /// 动画播放到结尾了
+          if(onComplete != null){
+            onComplete!(this);
           }
         }
       }

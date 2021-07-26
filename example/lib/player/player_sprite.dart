@@ -2,11 +2,16 @@ import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:devilf/game/df_animation.dart';
 import 'package:devilf/game/df_math_position.dart';
+import 'package:devilf/game/df_math_rect.dart';
 import 'package:devilf/game/df_math_size.dart';
 import 'package:devilf/sprite/df_sprite.dart';
 import 'package:devilf/sprite/df_sprite_animation.dart';
+import 'package:devilf/sprite/df_sprite_image.dart';
+import 'package:example/monster/monster_sprite.dart';
 import 'package:example/player/player.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../game_manager.dart';
 
 /// 玩家精灵类
 class PlayerSprite extends DFSprite {
@@ -55,11 +60,23 @@ class PlayerSprite extends DFSprite {
           flippedX = true;
         }
         bodySprite!.currentAnimationFlippedX = flippedX;
+
         print("play:" + animation);
+
+        bool loop = true;
+        if (this.action == DFAnimation.ATTACK ||
+            this.action == DFAnimation.CASTING ||
+            this.action == DFAnimation.DEATH) {
+          loop = false;
+        }
+
         if (this.action == DFAnimation.IDLE) {
-          bodySprite!.play(animation, stepTime: 300);
+          bodySprite!.play(animation, stepTime: 300,loop:loop);
         } else {
-          bodySprite!.play(animation, stepTime: 100);
+          bodySprite!.play(animation, stepTime: 100,loop:loop,onComplete: (sprite){
+            /// 动作完成回到IDLE
+            bodySprite!.play(DFAnimation.IDLE + this.direction, stepTime: 300,loop:true);
+          });
         }
       }
     }
@@ -88,6 +105,22 @@ class PlayerSprite extends DFSprite {
     this.bodySprite?.bindChild(this.weaponSprite!);
   }
 
+  /// 碰撞矩形
+  DFRect getCollisionRect() {
+    if (bodySprite != null) {
+      double scaleW = 0.5;
+      double scaleH = 0.5;
+      List<DFImageSprite> sprites = bodySprite!.frames[bodySprite!.currentAnimation]!;
+      return DFRect(
+          this.position.x - sprites[0].size.width / 2 * scaleW,
+          this.position.y - sprites[0].size.height / 2 * scaleH,
+          sprites[0].size.width * scaleW,
+          sprites[0].size.height * scaleH);
+    }
+    return DFRect(this.position.x - this.size.width / 2, this.position.y - this.size.height / 2, this.size.width,
+        this.size.height);
+  }
+
   /// 更新
   @override
   void update(double dt) {
@@ -99,6 +132,61 @@ class PlayerSprite extends DFSprite {
       }
     }
     this.bodySprite?.update(dt);
+
+    /// 判断给敌人发出伤害
+    if (bodySprite!.currentAnimation.contains(DFAnimation.ATTACK) &&
+        bodySprite!.currentIndex == bodySprite!.frames[bodySprite!.currentAnimation]!.length - 2) {
+      this.findEnemy(
+          found: (monsterSprites) {
+            monsterSprites.forEach((monsterSprite) {
+              if (!monsterSprite.monster.isDead) {
+                print("found Enemy");
+
+                /// 随机伤害  0.0~1.0
+                var random = new Random();
+                double newAt = player.maxAt * random.nextDouble();
+                monsterSprite.receiveDamage(player.minAt > newAt ? player.minAt : newAt, this);
+              }
+            });
+          },
+          notFound: () {
+            print("findEnemy notFound");
+          },
+          vision: 100);
+    }
+  }
+
+  /// 找敌人
+  void findEnemy({
+    required Function(List<MonsterSprite>) found,
+    required Function() notFound,
+    required double vision,
+  }) {
+    List<MonsterSprite> foundMonster = [];
+    if (GameManager.monsterSprites != null) {
+      GameManager.monsterSprites!.forEach((monsterSprite) {
+        if (!monsterSprite.monster.isDead) {
+          /// 玩家的伤害矩形
+          Rect visibleRect = Rect.fromLTWH(
+            this.position.x - vision / 2,
+            this.position.y - vision / 2,
+            vision,
+            vision,
+          );
+
+          Rect monsterCollision = monsterSprite.getCollisionRect().toRect();
+          if (visibleRect.overlaps(monsterCollision)) {
+            foundMonster.add(monsterSprite);
+          }
+        }
+      });
+    }
+
+    if (foundMonster.length > 0) {
+      found(foundMonster);
+    } else {
+      notFound();
+    }
   }
 
   /// 渲染
@@ -107,12 +195,12 @@ class PlayerSprite extends DFSprite {
     /// 画布暂存
     canvas.save();
 
+    /// 精灵矩形边界
+    var paint = new Paint()..color = Color(0x60bb505d);
+    canvas.drawRect(getCollisionRect().toRect(), paint);
+
     /// 移动画布
     canvas.translate(position.x, position.y);
-
-    /// 精灵矩形边界
-    //var paint = new Paint()..color =  Color(0x60000000);
-    //canvas.drawRect(Rect.fromLTWH(-size.width/2, -size.height/2, size.width, size.height), paint);
 
     /// 渲染身体精灵
     this.bodySprite?.render(canvas);

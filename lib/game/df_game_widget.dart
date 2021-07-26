@@ -27,6 +27,11 @@ class DFGameWidget extends LeafRenderObjectWidget {
     children.addAll(sprites);
   }
 
+  /// 删除精灵
+  void removeChild(DFSprite sprite) {
+    children.remove(sprite);
+  }
+
   /// 创建GameRenderBox
   @override
   RenderBox createRenderObject(BuildContext context) {

@@ -49,6 +49,7 @@ flutter:
     - assets/images/
     - assets/audio/
     - assets/images/role/
+    - assets/images/monster/
     - assets/images/weapon/
     - assets/images/ui/
 
