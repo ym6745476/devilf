@@ -99,6 +99,7 @@ class MonsterSprite extends DFSprite {
                 this.clock = DateTime.now().millisecondsSinceEpoch;
 
                 print("从场景移除吧");
+
                 /// 从场景移除
                 GameManager.gameWidget!.removeChild(this);
               } else {
@@ -201,10 +202,8 @@ class MonsterSprite extends DFSprite {
   /// 更新
   @override
   void update(double dt) {
-
     /// 找敌人
     if (!this.monster.isDead) {
-
       /// 更新位置
       if (bodySprite!.currentAnimation.contains(DFAnimation.RUN)) {
         this.position.x = this.position.x + this.monster.moveSpeed * cos(this.radians);
@@ -222,14 +221,13 @@ class MonsterSprite extends DFSprite {
             this.play(action: DFAnimation.IDLE, direction: this.direction, radians: this.radians);
           },
           vision: this.monster.vision);
-    }else{
+    } else {
       /// 重生
       print("重生计时：" + (DateTime.now().millisecondsSinceEpoch - this.clock).toStringAsFixed(0));
       if (DateTime.now().millisecondsSinceEpoch - this.clock > this.monster.rebornTime) {
         this.clock = DateTime.now().millisecondsSinceEpoch;
         this.reborn();
       }
-
     }
   }
 
@@ -297,7 +295,7 @@ class MonsterSprite extends DFSprite {
   }
 
   /// 重生
-  void reborn(){
+  void reborn() {
     /// 随机位置  0.0~1.0
     var random = new Random();
     double newX = GameManager.visibleWidth * random.nextDouble();

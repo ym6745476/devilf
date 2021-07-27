@@ -6,7 +6,7 @@ import 'package:devilf/game/df_math_size.dart';
 import 'package:devilf/sprite/df_sprite.dart';
 import 'package:flutter/cupertino.dart';
 
-/// 方块精灵类
+/// 块精灵类
 class BlankSprite extends DFSprite {
   BlankSprite({DFSize size = const DFSize(32, 32)}) : super(position: DFPosition(0, 0), size: size);
 

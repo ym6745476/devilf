@@ -1,6 +1,6 @@
 name: devilf
-description: (Devil Fighter) A little game engine implemented with flutter
-version: 0.0.5
+description: A RPG Game Engine Implemented With Flutter.
+version: 0.0.6
 homepage: https://github.com/ym6745476/devilf
 
 environment:

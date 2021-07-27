@@ -71,8 +71,7 @@ class DFImageSprite extends DFSprite {
       //Paint paint1 = Paint()..color = new Color(0x40FFFFFF); //白色
       //canvas.drawRect(Rect.fromLTWH(0,0, size.width, size.height), paint1);
 
-      dstRect = Rect.fromCenter(
-          center: Offset(0, 0), width: rect.width * scale, height: rect.height * scale);
+      dstRect = Rect.fromCenter(center: Offset(0, 0), width: rect.width * scale, height: rect.height * scale);
 
       //Paint paint2 = Paint()..color = Color(0x60444693);
       //canvas.drawRect(outputRect, paint2);
@@ -89,10 +88,8 @@ class DFImageSprite extends DFSprite {
       //Paint paint3 = Paint()..color = new Color(0x40FFFFFF); //白色
       //canvas.drawRect(Rect.fromLTWH(0,0, size.width, size.height), paint3);
 
-      dstRect = Rect.fromCenter(
-          center: Offset(0, -rect.height / 2),
-          width: rect.width * scale,
-          height: rect.height * scale);
+      dstRect =
+          Rect.fromCenter(center: Offset(0, -rect.height / 2), width: rect.width * scale, height: rect.height * scale);
 
       //Paint paint4 = Paint()..color = Color(0x60444693);
       //canvas.drawRect(outputRect, paint4);
@@ -109,11 +106,9 @@ class DFImageSprite extends DFSprite {
 
     /// 目标绘制位置
     if (rotated) {
-      dstRect = Rect.fromCenter(
-          center: Offset(offset.dx, offset.dy), width: rect.width, height: rect.height);
+      dstRect = Rect.fromCenter(center: Offset(offset.dx, offset.dy), width: rect.width, height: rect.height);
     } else {
-      dstRect = Rect.fromCenter(
-          center: Offset(offset.dx, -offset.dy), width: rect.width, height: rect.height);
+      dstRect = Rect.fromCenter(center: Offset(offset.dx, -offset.dy), width: rect.width, height: rect.height);
     }
 
     /// 处理缩放

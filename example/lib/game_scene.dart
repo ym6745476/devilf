@@ -44,8 +44,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
     super.initState();
 
     /// 强制横屏
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
 
     /// 加载游戏
     _loadGame();
@@ -53,7 +52,6 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
   /// 开始进入游戏
   void _loadGame() async {
-
     /// 定义主界面
     this._gameWidget = DFGameWidget();
     try {
@@ -62,15 +60,15 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         MapSprite mapSprite = MapSprite();
 
         /// 玩家精灵动画
-        DFSpriteAnimation bodySprite = await DFSpriteAnimation.load(
-            "assets/images/role/man_01.png", "assets/images/role/man_01.json");
-        DFSpriteAnimation weaponSprite = await DFSpriteAnimation.load(
-            "assets/images/weapon/weapon_01.png", "assets/images/weapon/weapon_01.json");
+        DFSpriteAnimation bodySprite =
+            await DFSpriteAnimation.load("assets/images/role/man_01.png", "assets/images/role/man_01.json");
+        DFSpriteAnimation weaponSprite =
+            await DFSpriteAnimation.load("assets/images/weapon/weapon_01.png", "assets/images/weapon/weapon_01.json");
 
         /// 创建玩家精灵
         _playerSprite = PlayerSprite(Player());
-        _playerSprite?.position = DFPosition(
-            MediaQuery.of(context).size.width / 2, MediaQuery.of(context).size.height / 2);
+        _playerSprite?.position =
+            DFPosition(MediaQuery.of(context).size.width / 2, MediaQuery.of(context).size.height / 2);
 
         _playerSprite?.setBodySprite(bodySprite);
         _playerSprite?.setWeaponSprite(weaponSprite);
@@ -81,10 +79,10 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 怪物精灵
         List<MonsterSprite> _monsterSprites = [];
         MonsterSprite monsterSprite = MonsterSprite(Monster());
-        monsterSprite.position = DFPosition(
-            MediaQuery.of(context).size.width * 0.8, MediaQuery.of(context).padding.top + 120);
-        DFSpriteAnimation monsterBodySprite = await DFSpriteAnimation.load(
-            "assets/images/monster/spider.png", "assets/images/monster/spider.json");
+        monsterSprite.position =
+            DFPosition(MediaQuery.of(context).size.width * 0.8, MediaQuery.of(context).padding.top + 120);
+        DFSpriteAnimation monsterBodySprite =
+            await DFSpriteAnimation.load("assets/images/monster/spider.png", "assets/images/monster/spider.json");
         monsterSprite.setBodySprite(monsterBodySprite);
         _monsterSprites.add(monsterSprite);
 
@@ -94,12 +92,13 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// Logo精灵
         DFImageSprite logoSprite = await DFImageSprite.load("assets/images/sprite.png");
         logoSprite.scale = 0.6;
-        logoSprite.position = DFPosition(
-            MediaQuery.of(context).size.width / 2, MediaQuery.of(context).padding.top + 60);
+        logoSprite.position =
+            DFPosition(MediaQuery.of(context).size.width / 2, MediaQuery.of(context).padding.top + 60);
 
         /// 帧数精灵
         DFTextSprite fpsSprite = DFTextSprite("60 fps");
-        fpsSprite.position = DFPosition(MediaQuery.of(context).size.width - 100, MediaQuery.of(context).padding.top + 12);
+        fpsSprite.position =
+            DFPosition(MediaQuery.of(context).size.width - 100, MediaQuery.of(context).padding.top + 12);
         fpsSprite.setOnUpdate((dt) {
           fpsSprite.text = DFGameWidget.fps;
         });
@@ -119,7 +118,6 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 将帧数精灵添加到主界面
         this._gameWidget!.addChild(fpsSprite);
 
-
         /// 保存到管理器里
         GameManager.gameWidget = this._gameWidget!;
 
@@ -138,28 +136,25 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
   /// Loading显示
   Widget _loadingWidget() {
     return Center(
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
-            Padding(
-              padding: EdgeInsets.only(top: 16),
-              child: Text(
-                "Loading...",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
-              ),
+      child:
+          Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+        CircularProgressIndicator(),
+        Padding(
+          padding: EdgeInsets.only(top: 16),
+          child: Text(
+            "Loading...",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14,
             ),
-          ]),
+          ),
+        ),
+      ]),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-
     /// 获取屏幕尺寸
     GameManager.visibleWidth = MediaQuery.of(context).size.width;
     GameManager.visibleHeight = MediaQuery.of(context).size.height;

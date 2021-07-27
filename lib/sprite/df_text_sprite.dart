@@ -15,8 +15,7 @@ class DFTextSprite extends DFSprite {
   void Function(double dt)? onUpdate;
 
   /// 创建文本精灵
-  DFTextSprite(this.text, {DFSize size = const DFSize(100, 30)})
-      : super(position: DFPosition(0, 0), size: size);
+  DFTextSprite(this.text, {DFSize size = const DFSize(100, 30)}) : super(position: DFPosition(0, 0), size: size);
 
   /// 更新文本
   @override

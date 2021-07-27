@@ -124,7 +124,7 @@ class DFSpriteAnimation extends DFSprite {
       } else if (key.contains("dig_")) {
         actionText = "dig_";
         action = DFAnimation.DIG;
-      }else if (key.contains("death_")) {
+      } else if (key.contains("death_")) {
         actionText = "death_";
         action = DFAnimation.DEATH;
       }
@@ -161,14 +161,19 @@ class DFSpriteAnimation extends DFSprite {
   }
 
   /// 播放动画
-  void play(String animation,{stepTime = 200,loop = true,onComplete}) {
+  void play(String animation, {stepTime = 200, loop = true, onComplete}) {
     if (this.currentAnimation != animation) {
       this.currentIndex = 0;
       this.currentAnimation = animation;
       this.stepTime = stepTime;
       this.loop = loop;
       this.onComplete = onComplete;
-      print("Play:" + animation.toString() + ",frames:" + this.frames[this.currentAnimation]!.length.toString() + ",stepTime:" + stepTime.toString());
+      print("Play:" +
+          animation.toString() +
+          ",frames:" +
+          this.frames[this.currentAnimation]!.length.toString() +
+          ",stepTime:" +
+          stepTime.toString());
     }
   }
 
@@ -189,8 +194,9 @@ class DFSpriteAnimation extends DFSprite {
           if (this.loop) {
             this.currentIndex = 0;
           }
+
           /// 动画播放到结尾了
-          if(onComplete != null){
+          if (onComplete != null) {
             onComplete!(this);
           }
         }

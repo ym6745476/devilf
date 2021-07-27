@@ -1,9 +1,15 @@
+## [0.0.6] - 2021/07/26. 
+* Add Monster Spider  
+* Finished Monster Auto Move To Player    
+* Finished Monster Auto Fight AI   
+* Finished Monster Dead Animation     
+
 ## [0.0.5] - 2021/07/16. 
 * Optimization engine
 
 ## [0.0.4] - 2021/07/15. 
 * Add Joystick Widget
-* ADD Joystick Example
+* Add Joystick Example
 
 ## [0.0.3] - 2021/07/11. 
 * Renamed All Class

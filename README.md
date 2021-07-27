@@ -1,6 +1,6 @@
 # DevilF 游戏引擎  
-A little game engine implemented with flutter.  
-一款使用Flutter实现的小巧的游戏引擎。  
+A RPG Game Engine Implemented With Flutter.  
+一款使用Flutter开发的RPG游戏引擎。  
 
 <p align="center">
     <img src="https://img.shields.io/badge/devilf-0.0.5-orange" />
@@ -30,7 +30,7 @@ https://ymbok.com/phone-111.html
 ## 安装控件
 ```yaml
 dependencies:
-  devilf: ^0.0.5
+  devilf: ^0.0.6
 ```
 
 ### 示例演示
@@ -39,7 +39,14 @@ dependencies:
 # 引擎框架
 <img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/doc_1.png" width="600" height="566"/>  
 
-# 功能说明
+# 示例功能  
+* GameManager：游戏管理器  
+* GameScene：游戏场景  
+* PlayerSprite：玩家精灵  
+* MonsterSprite：怪物精灵  
+* MapSprite：地图精灵  
+
+# 核心组件  
 * AssetsLoading：游戏资源加载  
 * GameScene：游戏场景（游戏界面）  
 * UI Widget：Flutter控件（游戏界面的控件）  
