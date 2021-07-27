@@ -73,9 +73,11 @@ class PlayerSprite extends DFSprite {
         if (this.action == DFAnimation.IDLE) {
           bodySprite!.play(animation, stepTime: 300,loop:loop);
         } else {
-          bodySprite!.play(animation, stepTime: 100,loop:loop,onComplete: (sprite){
-            /// 动作完成回到IDLE
-            bodySprite!.play(DFAnimation.IDLE + this.direction, stepTime: 300,loop:true);
+          bodySprite!.play(animation, stepTime: 100,loop:loop,onComplete: (DFSpriteAnimation sprite){
+            if(sprite.currentAnimation.contains(DFAnimation.ATTACK) || sprite.currentAnimation.contains(DFAnimation.CASTING)){
+              /// 动作完成回到IDLE
+              bodySprite!.play(DFAnimation.IDLE + this.direction, stepTime: 300,loop:true);
+            }
           });
         }
       }

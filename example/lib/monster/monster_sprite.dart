@@ -34,6 +34,9 @@ class MonsterSprite extends DFSprite {
   /// 当前方向
   String direction = DFAnimation.NONE;
 
+  /// 帧绘制时钟
+  int clock = 0;
+
   /// 创建怪物精灵
   MonsterSprite(
     this.monster, {
@@ -85,13 +88,25 @@ class MonsterSprite extends DFSprite {
         if (this.action == DFAnimation.IDLE) {
           bodySprite!.play(animation, stepTime: 300, loop: loop);
         } else {
-          bodySprite!.play(animation, stepTime: 100, loop: loop, onComplete:(sprite){
+          bodySprite!.play(
+            animation,
+            stepTime: 100,
+            loop: loop,
+            onComplete: (DFSpriteAnimation sprite) {
+              if (sprite.currentAnimation.contains(DFAnimation.DEATH)) {
+                /// 设置死亡状态
+                this.monster.isDead = true;
+                this.clock = DateTime.now().millisecondsSinceEpoch;
 
-            /// 从场景移除
-            print("从场景移除吧");
-            //GameManager.gameWidget!.removeChild(monsterSprite);
-
-          },);
+                print("从场景移除吧");
+                /// 从场景移除
+                GameManager.gameWidget!.removeChild(this);
+              } else {
+                /// 动作完成回到IDLE
+                bodySprite!.play(DFAnimation.IDLE + this.direction, stepTime: 300, loop: true);
+              }
+            },
+          );
         }
       }
     }
@@ -171,7 +186,6 @@ class MonsterSprite extends DFSprite {
 
     this.monster.hp = this.monster.hp - damage;
     if (this.monster.hp < 0) {
-      this.monster.isDead = true;
       this.play(action: DFAnimation.DEATH, direction: direction, radians: radians);
     }
     /*this.showDamage(
@@ -187,15 +201,18 @@ class MonsterSprite extends DFSprite {
   /// 更新
   @override
   void update(double dt) {
-    if (bodySprite!.currentAnimation.contains(DFAnimation.RUN)) {
-      this.position.x = this.position.x + this.monster.moveSpeed * cos(this.radians);
-      this.position.y = this.position.y + this.monster.moveSpeed * sin(this.radians);
-      //print("move:" + this.position.toString());
-    }
-    this.bodySprite?.update(dt);
 
     /// 找敌人
     if (!this.monster.isDead) {
+
+      /// 更新位置
+      if (bodySprite!.currentAnimation.contains(DFAnimation.RUN)) {
+        this.position.x = this.position.x + this.monster.moveSpeed * cos(this.radians);
+        this.position.y = this.position.y + this.monster.moveSpeed * sin(this.radians);
+        //print("move:" + this.position.toString());
+      }
+      this.bodySprite?.update(dt);
+
       this.findEnemy(
           found: (playerSprite) {
             /// 找到敌人
@@ -205,6 +222,14 @@ class MonsterSprite extends DFSprite {
             this.play(action: DFAnimation.IDLE, direction: this.direction, radians: this.radians);
           },
           vision: this.monster.vision);
+    }else{
+      /// 重生
+      print("重生计时：" + (DateTime.now().millisecondsSinceEpoch - this.clock).toStringAsFixed(0));
+      if (DateTime.now().millisecondsSinceEpoch - this.clock > this.monster.rebornTime) {
+        this.clock = DateTime.now().millisecondsSinceEpoch;
+        this.reborn();
+      }
+
     }
   }
 
@@ -261,10 +286,28 @@ class MonsterSprite extends DFSprite {
     }
 
     if (translateX == 0 && translateY == 0) {
-      this.play(action: DFAnimation.ATTACK, direction: direction, radians: radians);
+      /// 攻击间隔时间 控制动画帧按照stepTime进行更新
+      if (DateTime.now().millisecondsSinceEpoch - this.clock > this.monster.actionStepTime) {
+        this.clock = DateTime.now().millisecondsSinceEpoch;
+        this.play(action: DFAnimation.ATTACK, direction: direction, radians: radians);
+      }
     } else {
       this.play(action: DFAnimation.RUN, direction: direction, radians: radians);
     }
+  }
+
+  /// 重生
+  void reborn(){
+    /// 随机位置  0.0~1.0
+    var random = new Random();
+    double newX = GameManager.visibleWidth * random.nextDouble();
+    double newY = GameManager.visibleHeight * random.nextDouble();
+    this.position.x = newX;
+    this.position.y = newY;
+    this.bodySprite!.currentAnimation = DFAnimation.IDLE + DFAnimation.DOWN;
+    this.monster.isDead = false;
+    this.isUsed = true;
+    print("重生：" + this.position.toString());
   }
 
   /// 渲染

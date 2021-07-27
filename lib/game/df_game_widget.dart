@@ -29,7 +29,9 @@ class DFGameWidget extends LeafRenderObjectWidget {
 
   /// 删除精灵
   void removeChild(DFSprite sprite) {
-    children.remove(sprite);
+    /// 不能直接remove会并发修改错误
+    sprite.isUsed = false;
+    /// children.removeWhere((element) => element == sprite);
   }
 
   /// 创建GameRenderBox
@@ -47,14 +49,19 @@ class DFGameWidget extends LeafRenderObjectWidget {
   /// 更新界面
   void update(double dt) {
     children.forEach((sprite) {
-      sprite.update(dt);
+      /// 只更新不渲染
+      ///if(sprite.isUsed){
+        sprite.update(dt);
+      ///}
     });
   }
 
   /// 绘制界面
   void render(Canvas canvas) {
     children.forEach((sprite) {
-      sprite.render(canvas);
+      if(sprite.isUsed) {
+        sprite.render(canvas);
+      }
     });
   }
 

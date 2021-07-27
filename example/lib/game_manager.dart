@@ -6,7 +6,8 @@ import 'monster/monster_sprite.dart';
 
 /// 游戏管理器
 class GameManager {
-
+  static double visibleWidth = 600;
+  static double visibleHeight = 400;
   static DFGameWidget? gameWidget;
   static PlayerSprite? playerSprite;
   static List<MonsterSprite>? monsterSprites;

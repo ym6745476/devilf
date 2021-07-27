@@ -159,6 +159,12 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+
+    /// 获取屏幕尺寸
+    GameManager.visibleWidth = MediaQuery.of(context).size.width;
+    GameManager.visibleHeight = MediaQuery.of(context).size.height;
+    print("获取屏幕尺寸:" + GameManager.visibleWidth.toString() + "," + GameManager.visibleHeight.toString());
+
     return LayoutBuilder(builder: (context, constraints) {
       return Stack(fit: StackFit.expand, children: <Widget>[
         Positioned(

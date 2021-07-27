@@ -181,13 +181,12 @@ class DFSpriteAnimation extends DFSprite {
 
       /// 控制动画帧按照stepTime进行更新
       if (DateTime.now().millisecondsSinceEpoch - this.clock > this.stepTime) {
+        this.clock = DateTime.now().millisecondsSinceEpoch;
         if (sprites.length > this.currentIndex + 1) {
-          this.clock = DateTime.now().millisecondsSinceEpoch;
           this.currentIndex = this.currentIndex + 1;
         } else {
           /// 如果循环就从0再次开始
           if (this.loop) {
-            this.clock = DateTime.now().millisecondsSinceEpoch;
             this.currentIndex = 0;
           }
           /// 动画播放到结尾了

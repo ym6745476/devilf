@@ -22,8 +22,14 @@ class Monster {
   double moveSpeed = 0.4;
 
   /// 视野范围
-  double vision = 256;
+  double vision = 512;
 
   /// 是否死亡
   bool isDead = false;
+
+  /// 动作间隔
+  double actionStepTime = 1000;
+
+  /// 复活间隔
+  double rebornTime = 3000;
 }

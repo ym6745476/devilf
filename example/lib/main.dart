@@ -2,6 +2,8 @@ import 'package:example/game_scene.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'game_manager.dart';
+
 main() async {
   /// 游戏场景
   GameScene gameScene = GameScene();
@@ -18,6 +20,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Devilf',
       theme: ThemeData(

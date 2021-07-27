@@ -22,6 +22,9 @@ class DFSprite {
   /// 子精灵
   List<DFSprite> children = [];
 
+  /// 未使用的
+  bool isUsed = true;
+
   /// 创建精灵
   DFSprite({required this.position, required this.size});
 
