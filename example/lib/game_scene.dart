@@ -1,7 +1,6 @@
 import 'package:devilf/game/df_game_widget.dart';
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_animation.dart';
-import 'package:devilf/sprite/df_sprite.dart';
 import 'package:devilf/sprite/df_sprite_animation.dart';
 import 'package:devilf/sprite/df_sprite_image.dart';
 import 'package:devilf/sprite/df_text_sprite.dart';

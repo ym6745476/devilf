@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 /// 尺寸
 class DFSize {
   /// 宽度

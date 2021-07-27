@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui' as ui;
 import 'package:devilf/game/df_animation.dart';
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_math_rect.dart';

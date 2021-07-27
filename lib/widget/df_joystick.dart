@@ -4,6 +4,7 @@ import 'package:devilf/game/df_animation.dart';
 import 'package:flutter/material.dart';
 
 /// 摇杆控制
+// ignore: must_be_immutable
 class DFJoyStick extends StatefulWidget {
   /// 背景图
   final String? backgroundImage;
