@@ -3,7 +3,7 @@ A RPG Game Engine Implemented With Flutter.
 一款使用Flutter开发的RPG游戏引擎。  
 
 <p align="center">
-    <img src="https://img.shields.io/badge/devilf-0.0.5-orange" />
+    <img src="https://img.shields.io/badge/devilf-0.0.6-orange" />
     <img src="https://img.shields.io/badge/flutter-2.2.3-green" />
 </p>
 
