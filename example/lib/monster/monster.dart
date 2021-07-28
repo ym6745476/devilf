@@ -18,11 +18,8 @@ class Monster extends Living {
   /// 最大攻击力
   double maxAt = 100;
 
-  /// 移动速度
-  double moveSpeed = 0.4;
-
   /// 视野范围
-  double vision = 512;
+  double vision = 256;
 
   /// 动作间隔
   double actionStepTime = 1000;

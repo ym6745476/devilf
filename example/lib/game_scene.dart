@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:devilf/game/df_game_widget.dart';
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_animation.dart';
@@ -79,13 +81,18 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
         /// 怪物精灵
         List<MonsterSprite> _monsterSprites = [];
-        MonsterSprite monsterSprite = MonsterSprite(Monster("蜘蛛"));
-        monsterSprite.position =
-            DFPosition(MediaQuery.of(context).size.width * 0.8, MediaQuery.of(context).padding.top + 120);
-        DFSpriteAnimation monsterBodySprite =
-            await DFSpriteAnimation.load("assets/images/monster/spider.png", "assets/images/monster/spider.json");
-        monsterSprite.setBodySprite(monsterBodySprite);
-        _monsterSprites.add(monsterSprite);
+
+        for(int i=0;i<3;i++){
+          Monster monster = Monster("蜘蛛" + i.toString());
+          monster.moveSpeed = 0.4;
+          MonsterSprite monsterSprite = MonsterSprite(monster);
+
+          monsterSprite.position = DFPosition(MediaQuery.of(context).size.width * Random().nextDouble(), MediaQuery.of(context).size.height * Random().nextDouble());
+          DFSpriteAnimation monsterBodySprite =
+          await DFSpriteAnimation.load("assets/images/monster/spider.png", "assets/images/monster/spider.json");
+          monsterSprite.setBodySprite(monsterBodySprite);
+          _monsterSprites.add(monsterSprite);
+        }
 
         /// 保存到管理器里
         GameManager.monsterSprites = _monsterSprites;
@@ -195,6 +202,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
             onChange: (double radians, String direction) {
               /// 获取8方向的弧度
               radians = DFUtil.getRadians(direction);
+              _playerSprite?.startMoveToTarget = false;
               _playerSprite?.play(action: DFAnimation.RUN, direction: direction, radians: radians);
             },
             onCancel: (direction) {
@@ -217,7 +225,8 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                   effect.name = "1002";
                   effect.type = EffectType.ATTACK;
                   effect.damageRange = 100;
-                  _playerSprite?.lockAndMoveSprite(effect);
+                  effect.vision = 60;
+                  _playerSprite?.moveToAttack(effect);
 
                 },
               ),
@@ -228,7 +237,8 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                   effect.name = "2001";
                   effect.type = EffectType.TRACK;
                   effect.damageRange = 50;
-                  _playerSprite?.lockAndMoveSprite(effect);
+                  effect.vision = 300;
+                  _playerSprite?.moveToAttack(effect);
                 },
               ),
               ElevatedButton(

@@ -14,8 +14,6 @@ class Player extends Living {
   /// 最大攻击力
   double maxAt = 100;
 
-
-
   /// 视野范围
-  double vision = 256;
+  double vision = 512;
 }
