@@ -1,13 +1,13 @@
+import 'package:example/base/living.dart';
+
 /// 怪物类
-class Monster {
-  /// 生命值
-  double hp = 100;
+class Monster extends Living {
+
+  /// 名字
+  String name = "";
 
   /// 魔法值
   double mp = 100;
-
-  /// 最大生命值
-  double maxHp = 100;
 
   /// 最大魔法值
   double maxMp = 100;
@@ -24,12 +24,11 @@ class Monster {
   /// 视野范围
   double vision = 512;
 
-  /// 是否死亡
-  bool isDead = false;
-
   /// 动作间隔
   double actionStepTime = 1000;
 
   /// 复活间隔
   double rebornTime = 3000;
+
+  Monster(this.name);
 }

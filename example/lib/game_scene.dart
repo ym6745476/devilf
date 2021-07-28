@@ -4,12 +4,14 @@ import 'package:devilf/game/df_animation.dart';
 import 'package:devilf/sprite/df_sprite_animation.dart';
 import 'package:devilf/sprite/df_sprite_image.dart';
 import 'package:devilf/sprite/df_text_sprite.dart';
+import 'package:devilf/util/df_util.dart';
 import 'package:devilf/widget/df_joystick.dart';
 import 'package:example/player/player.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'effect/effect.dart';
 import 'game_manager.dart';
 import 'map/map_sprite.dart';
 import 'monster/monster.dart';
@@ -77,7 +79,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
         /// 怪物精灵
         List<MonsterSprite> _monsterSprites = [];
-        MonsterSprite monsterSprite = MonsterSprite(Monster());
+        MonsterSprite monsterSprite = MonsterSprite(Monster("蜘蛛"));
         monsterSprite.position =
             DFPosition(MediaQuery.of(context).size.width * 0.8, MediaQuery.of(context).padding.top + 120);
         DFSpriteAnimation monsterBodySprite =
@@ -191,6 +193,8 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
             //backgroundImage: "assets/images/ui/joystick.png",
             //handleImage: "assets/images/ui/joystick_btn.png",
             onChange: (double radians, String direction) {
+              /// 获取8方向的弧度
+              radians = DFUtil.getRadians(direction);
               _playerSprite?.play(action: DFAnimation.RUN, direction: direction, radians: radians);
             },
             onCancel: (direction) {
@@ -209,13 +213,22 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
               ElevatedButton(
                 child: new Text('攻击'),
                 onPressed: () {
-                  _playerSprite?.play(action: DFAnimation.ATTACK);
+                  Effect effect = Effect();
+                  effect.name = "1002";
+                  effect.type = EffectType.ATTACK;
+                  effect.damageRange = 100;
+                  _playerSprite?.lockAndMoveSprite(effect);
+
                 },
               ),
               ElevatedButton(
                 child: new Text('施法'),
                 onPressed: () {
-                  _playerSprite?.play(action: DFAnimation.CASTING);
+                  Effect effect = Effect();
+                  effect.name = "2001";
+                  effect.type = EffectType.TRACK;
+                  effect.damageRange = 50;
+                  _playerSprite?.lockAndMoveSprite(effect);
                 },
               ),
               ElevatedButton(

@@ -24,6 +24,9 @@ class DFSprite {
   /// 未使用的
   bool isUsed = true;
 
+  /// 未使用时是否回收
+  bool recyclable = true;
+
   /// 创建精灵
   DFSprite({required this.position, required this.size});
 

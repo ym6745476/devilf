@@ -28,10 +28,10 @@ class DFGameWidget extends LeafRenderObjectWidget {
   }
 
   /// 删除精灵
-  void removeChild(DFSprite sprite) {
+  void removeChild(DFSprite sprite,{recyclable = true}) {
     /// 不能直接remove会并发修改错误
     sprite.isUsed = false;
-    /// children.removeWhere((element) => element == sprite);
+    sprite.recyclable = recyclable;
   }
 
   /// 创建GameRenderBox
@@ -49,17 +49,21 @@ class DFGameWidget extends LeafRenderObjectWidget {
   /// 更新界面
   void update(double dt) {
     children.forEach((sprite) {
-      /// 只更新不渲染
-      ///if(sprite.isUsed){
+      if (!sprite.isUsed && sprite.recyclable) {
+        /// 将要回收的精灵
+      }else{
         sprite.update(dt);
-      ///}
+      }
     });
+
+    /// 清楚无用的精灵
+    children.removeWhere((sprite) => (sprite.isUsed == false && sprite.recyclable));
   }
 
   /// 绘制界面
   void render(Canvas canvas) {
     children.forEach((sprite) {
-      if(sprite.isUsed) {
+      if (sprite.isUsed) {
         sprite.render(canvas);
       }
     });

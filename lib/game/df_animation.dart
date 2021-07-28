@@ -9,6 +9,9 @@ class DFAnimation {
   static const String DIG = "DIG";
   static const String DEATH = "DEATH";
 
+  static const String TRACK = "TRACK";
+  static const String EXPLODE = "EXPLODE";
+
   static const String LEFT = "_LEFT";
   static const String UP_LEFT = "_UP_LEFT";
   static const String UP = "_UP";
@@ -73,5 +76,24 @@ class DFAnimation {
     DEATH + DOWN_RIGHT, //45
     DEATH + DOWN, //46
     DEATH + DOWN_LEFT, //47
+
+    TRACK + LEFT, //40
+    TRACK + UP_LEFT, //41
+    TRACK + UP, //42
+    TRACK + UP_RIGHT, //43
+    TRACK + RIGHT, //44
+    TRACK + DOWN_RIGHT, //45
+    TRACK + DOWN, //46
+    TRACK + DOWN_LEFT, //47
+
+    EXPLODE + LEFT, //40
+    EXPLODE + UP_LEFT, //41
+    EXPLODE + UP, //42
+    EXPLODE + UP_RIGHT, //43
+    EXPLODE + RIGHT, //44
+    EXPLODE + DOWN_RIGHT, //45
+    EXPLODE + DOWN, //46
+    EXPLODE + DOWN_LEFT, //47
+
   ];
 }

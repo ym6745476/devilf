@@ -99,8 +99,8 @@ class MonsterSprite extends DFSprite {
 
                 print("从场景移除吧");
 
-                /// 从场景移除
-                GameManager.gameWidget!.removeChild(this);
+                /// 从场景移除 可重生
+                GameManager.gameWidget!.removeChild(this,recyclable: false);
               } else {
                 /// 动作完成回到IDLE
                 bodySprite!.play(DFAnimation.IDLE + this.direction, stepTime: 300, loop: true);
@@ -121,7 +121,7 @@ class MonsterSprite extends DFSprite {
     /// 调用add产生层级关系进行坐标转换
     addChild(this.bodySprite!);
 
-    ///自动播放玩家第一个动画
+    /// 自动播放玩家第一个动画
     this.play(action: DFAnimation.IDLE, direction: DFAnimation.DOWN);
   }
 

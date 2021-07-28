@@ -60,7 +60,7 @@ class DFSpriteAnimation extends DFSprite {
   ///      }
   ///   }
   /// }
-  static Future<DFSpriteAnimation> load(String src, String plist) async {
+  static Future<DFSpriteAnimation> load(String src, String plist, {scale = 0.6}) async {
     DFSpriteAnimation spriteAnimation = DFSpriteAnimation(stepTime: 100, loop: true);
 
     DFAnimation.sequence.forEach((element) {
@@ -103,7 +103,7 @@ class DFSpriteAnimation extends DFSprite {
         offset: frameOffset,
         rect: frameRect,
         rotated: rotated,
-        scale: 0.6,
+        scale: scale,
       );
 
       //idle_00000.png
@@ -127,6 +127,12 @@ class DFSpriteAnimation extends DFSprite {
       } else if (key.contains("death_")) {
         actionText = "death_";
         action = DFAnimation.DEATH;
+      } else if (key.contains("track_")) {
+        actionText = "track_";
+        action = DFAnimation.TRACK;
+      } else if (key.contains("explode_")) {
+        actionText = "explode_";
+        action = DFAnimation.EXPLODE;
       }
 
       String keyNumber = key.replaceAll(actionText, "").replaceAll(".png", "");
@@ -193,11 +199,11 @@ class DFSpriteAnimation extends DFSprite {
           /// 如果循环就从0再次开始
           if (this.loop) {
             this.currentIndex = 0;
-          }
-
-          /// 动画播放到结尾了
-          if (onComplete != null) {
-            onComplete!(this);
+          } else {
+            /// 动画播放到完成
+            if (onComplete != null) {
+              onComplete!(this);
+            }
           }
         }
       }

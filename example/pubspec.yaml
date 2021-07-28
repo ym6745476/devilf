@@ -52,6 +52,7 @@ flutter:
     - assets/images/monster/
     - assets/images/weapon/
     - assets/images/ui/
+    - assets/images/effect/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

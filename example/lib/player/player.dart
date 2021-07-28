@@ -1,13 +1,9 @@
-/// 玩家类
-class Player {
-  /// 生命值
-  double hp = 100;
+import 'package:example/base/living.dart';
 
+/// 玩家类
+class Player extends Living {
   /// 魔法值
   double mp = 100;
-
-  /// 最大生命值
-  double maxHp = 100;
 
   /// 最大魔法值
   double maxMp = 100;
@@ -18,12 +14,8 @@ class Player {
   /// 最大攻击力
   double maxAt = 100;
 
-  /// 移动速度
-  double moveSpeed = 1;
+
 
   /// 视野范围
   double vision = 256;
-
-  /// 是否死亡
-  bool isDead = false;
 }
