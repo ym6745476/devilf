@@ -57,7 +57,7 @@ class DFProgressSprite extends DFSprite {
 
     ui.ParagraphConstraints pc = ui.ParagraphConstraints(width: size.width * scale * 1.5);
     ui.Paragraph paragraph = pb.build()..layout(pc);
-    canvas.drawParagraph(paragraph, Offset(-size.width / 2 * scale * 1.5, -size.height * scale * 2.2));
+    canvas.drawParagraph(paragraph, Offset(-size.width / 2 * scale * 1.5, -size.height * scale * 2.5));
 
     canvas.restore();
   }

@@ -27,6 +27,9 @@ class DFImageSprite extends DFSprite {
   /// x轴镜像
   bool flippedX;
 
+  /// 混合模式
+  BlendMode blendMode;
+
   /// 创建图片精灵
   DFImageSprite(
     this.image, {
@@ -35,6 +38,8 @@ class DFImageSprite extends DFSprite {
     this.offset = const DFOffset(0, 0),
     this.rotated = false,
     this.flippedX = false,
+    this.blendMode = BlendMode.srcOver,
+
   }) : super(position: DFPosition(0, 0), size: size);
 
   /// 加载图片资源
@@ -115,6 +120,7 @@ class DFImageSprite extends DFSprite {
 
     /// 绘制图像
     Paint paint5 = Paint()..color = Color(0xFFFFFFFF);
+    paint5.blendMode = this.blendMode;
     //canvas.drawRect(outputRect, paint5);
     canvas.drawImageRect(this.image, rect.toRect(), outputRect, paint5);
 

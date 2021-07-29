@@ -60,7 +60,7 @@ class DFSpriteAnimation extends DFSprite {
   ///      }
   ///   }
   /// }
-  static Future<DFSpriteAnimation> load(String json, {scale = 0.6}) async {
+  static Future<DFSpriteAnimation> load(String json, {scale = 0.6,blendMode = BlendMode.srcOver}) async {
     DFSpriteAnimation spriteAnimation = DFSpriteAnimation(stepTime: 100, loop: true);
 
     DFAnimation.sequence.forEach((element) {
@@ -104,6 +104,7 @@ class DFSpriteAnimation extends DFSprite {
         offset: frameOffset,
         rect: frameRect,
         rotated: rotated,
+        blendMode:blendMode,
       );
       sprite.scale = scale;
 
@@ -178,7 +179,6 @@ class DFSpriteAnimation extends DFSprite {
       this.stepTime = stepTime;
       this.loop = loop;
       this.onComplete = onComplete;
-      print(this.currentAnimation.toString());
       print("Play:" +
           animation.toString() +
           ",frames:" +

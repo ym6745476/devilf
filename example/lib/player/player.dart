@@ -34,7 +34,7 @@ class Player extends Living {
   double mf = 5;
 
   /// 警戒范围
-  double vision = 512;
+  double vision = 800;
 
   /// 创建玩家
   Player(name) : super(name);
