@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:devilf/game/df_game_widget.dart';
@@ -62,19 +63,14 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 地图精灵
         MapSprite mapSprite = MapSprite();
 
-        /// 玩家精灵动画
-        DFSpriteAnimation bodySprite =
-            await DFSpriteAnimation.load("assets/images/role/man_01.png", "assets/images/role/man_01.json");
-        DFSpriteAnimation weaponSprite =
-            await DFSpriteAnimation.load("assets/images/weapon/weapon_01.png", "assets/images/weapon/weapon_01.json");
-
         /// 创建玩家精灵
-        _playerSprite = PlayerSprite(Player());
+        Player player = Player("玩家1");
+        player.moveSpeed = 2;
+        player.clothes = "assets/images/player/man_01.json";
+        player.weapon = "assets/images/weapon/weapon_01.json";
+        _playerSprite = PlayerSprite(player);
         _playerSprite?.position =
             DFPosition(MediaQuery.of(context).size.width / 2, MediaQuery.of(context).size.height / 2);
-
-        _playerSprite?.setBodySprite(bodySprite);
-        _playerSprite?.setWeaponSprite(weaponSprite);
 
         /// 保存到管理器里
         GameManager.playerSprite = _playerSprite;
@@ -82,15 +78,13 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 怪物精灵
         List<MonsterSprite> _monsterSprites = [];
 
-        for(int i=0;i<3;i++){
+        for (int i = 0; i < 3; i++) {
           Monster monster = Monster("蜘蛛" + i.toString());
           monster.moveSpeed = 0.4;
+          monster.clothes = "assets/images/monster/spider.json";
           MonsterSprite monsterSprite = MonsterSprite(monster);
-
-          monsterSprite.position = DFPosition(MediaQuery.of(context).size.width * Random().nextDouble(), MediaQuery.of(context).size.height * Random().nextDouble());
-          DFSpriteAnimation monsterBodySprite =
-          await DFSpriteAnimation.load("assets/images/monster/spider.png", "assets/images/monster/spider.json");
-          monsterSprite.setBodySprite(monsterBodySprite);
+          monsterSprite.position = DFPosition(MediaQuery.of(context).size.width * Random().nextDouble(),
+              MediaQuery.of(context).size.height * Random().nextDouble());
           _monsterSprites.add(monsterSprite);
         }
 
@@ -184,7 +178,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
           left: 20,
           top: MediaQuery.of(context).padding.top + 20,
           child: Text(
-            "Devilf",
+            "DevilF",
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,
@@ -226,8 +220,9 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                   effect.type = EffectType.ATTACK;
                   effect.damageRange = 100;
                   effect.vision = 60;
+                  effect.delayTime = 10;
+                  effect.texture = "assets/images/effect/" + effect.name + ".json";
                   _playerSprite?.moveToAttack(effect);
-
                 },
               ),
               ElevatedButton(
@@ -238,7 +233,35 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                   effect.type = EffectType.TRACK;
                   effect.damageRange = 50;
                   effect.vision = 300;
+                  effect.delayTime = 300;
+                  effect.texture = "assets/images/effect/" + effect.name + ".json";
                   _playerSprite?.moveToAttack(effect);
+                },
+              ),
+              ElevatedButton(
+                child: new Text('自动1'),
+                onPressed: () {
+                  Effect effect = Effect();
+                  effect.name = "1002";
+                  effect.type = EffectType.ATTACK;
+                  effect.damageRange = 100;
+                  effect.vision = 60;
+                  effect.delayTime = 10;
+                  effect.texture = "assets/images/effect/" + effect.name + ".json";
+                  _playerSprite?.moveToAttack(effect, repeatMoveToAttack: true);
+                },
+              ),
+              ElevatedButton(
+                child: new Text('自动2'),
+                onPressed: () {
+                  Effect effect = Effect();
+                  effect.name = "2001";
+                  effect.type = EffectType.TRACK;
+                  effect.damageRange = 50;
+                  effect.vision = 300;
+                  effect.delayTime = 300;
+                  effect.texture = "assets/images/effect/" + effect.name + ".json";
+                  _playerSprite?.moveToAttack(effect, repeatMoveToAttack: true);
                 },
               ),
               ElevatedButton(

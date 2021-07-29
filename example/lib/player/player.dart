@@ -2,6 +2,13 @@ import 'package:example/base/living.dart';
 
 /// 玩家类
 class Player extends Living {
+
+  /// 衣服
+  String clothes = "";
+
+  /// 武器
+  String weapon = "";
+
   /// 魔法值
   double mp = 100;
 
@@ -9,11 +16,26 @@ class Player extends Living {
   double maxMp = 100;
 
   /// 最小攻击力
-  double minAt = 10;
+  double minAt = 5;
 
   /// 最大攻击力
-  double maxAt = 100;
+  double maxAt = 10;
 
-  /// 视野范围
+  /// 最小魔法攻击力
+  double minMt = 5;
+
+  /// 最大魔法攻击力
+  double maxMt = 10;
+
+  /// 物理防御
+  double df = 5;
+
+  /// 魔法防御
+  double mf = 5;
+
+  /// 警戒范围
   double vision = 512;
+
+  /// 创建玩家
+  Player(name) : super(name);
 }

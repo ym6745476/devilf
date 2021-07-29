@@ -18,6 +18,9 @@ class DFSprite {
   /// 角度
   double angle = 0;
 
+  /// 缩放比例
+  double scale = 1;
+
   /// 子精灵
   List<DFSprite> children = [];
 

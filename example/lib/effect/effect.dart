@@ -1,23 +1,29 @@
 /// 特效类
 class Effect {
 
+  /// 纹理
+  String texture = "";
+
   /// 特效名字
   String name = "";
 
-  /// 最小攻击力
-  double minAt = 10;
+  /// 物理攻击力百分比
+  double at = 1.2;
 
-  /// 最大攻击力
-  double maxAt = 100;
+  /// 魔法攻击力百分比
+  double mt = 1.2;
 
   /// 移动速度
-  double moveSpeed = 3;
+  double moveSpeed = 10;
 
   /// 可见范围
   double vision = 300;
 
   /// 伤害范围
   double damageRange = 100;
+
+  /// 释放延迟
+  int delayTime = 100;
 
   /// 特效类型
   EffectType type = EffectType.NONE;
@@ -30,9 +36,8 @@ class Effect {
 /// 特效类型
 enum EffectType {
   NONE,      /// 无
-  ATTACK,    /// 前方攻击
-  TRACK,     /// 弹道爆炸
-  SURROUND,  /// 环绕自己
-  AROUND,    /// 目标周围
+  ATTACK,    /// 攻击 5方向
+  TRACK,     /// 弹道 右方向 爆炸 上方向
+  SURROUND,  /// 环绕 上方向
 
 }

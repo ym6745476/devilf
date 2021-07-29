@@ -1,19 +1,19 @@
 import 'dart:math';
 import 'package:devilf/game/df_animation.dart';
+import 'package:devilf/game/df_assets_loader.dart';
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_math_rect.dart';
 import 'package:devilf/game/df_math_size.dart';
+import 'package:devilf/sprite/df_progress_sprite.dart';
 import 'package:devilf/sprite/df_sprite.dart';
 import 'package:devilf/sprite/df_sprite_animation.dart';
 import 'package:devilf/sprite/df_sprite_image.dart';
-import 'package:devilf/util/df_util.dart';
 import 'package:example/effect/effect.dart';
 import 'package:example/effect/effect_sprite.dart';
-import 'package:example/monster/monster.dart';
 import 'package:example/monster/monster_sprite.dart';
 import 'package:example/player/player.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'dart:ui' as ui;
 import '../game_manager.dart';
 
 /// 玩家精灵类
@@ -21,17 +21,23 @@ class PlayerSprite extends DFSprite {
   /// 玩家
   Player player;
 
-  /// 身体
-  DFSpriteAnimation? bodySprite;
+  /// 衣服
+  DFSpriteAnimation? clothesSprite;
 
   /// 武器
   DFSpriteAnimation? weaponSprite;
+
+  /// 血条
+  DFProgressSprite? hpBarSprite;
 
   /// 目标精灵
   DFSprite? targetSprite;
 
   /// 开始往目标移动
   bool startMoveToTarget = false;
+
+  /// 重复
+  bool repeatMoveToAttack = false;
 
   /// 当前目标特效
   Effect? targetEffect;
@@ -45,11 +51,58 @@ class PlayerSprite extends DFSprite {
   /// 当前方向
   String direction = DFAnimation.NONE;
 
+  /// 是否初始化
+  bool isInit = false;
+
   /// 创建玩家精灵
   PlayerSprite(
     this.player, {
     DFSize size = const DFSize(180, 180),
-  }) : super(position: DFPosition(0, 0), size: size);
+  }) : super(position: DFPosition(0, 0), size: size) {
+    _init();
+  }
+
+  /// 初始化
+  Future<void> _init() async {
+    try {
+      await Future.delayed(Duration.zero, () async {
+        /// 玩家精灵动画
+        DFSpriteAnimation clothesSprite = await DFSpriteAnimation.load(this.player.clothes);
+        this.clothesSprite = clothesSprite;
+        this.clothesSprite!.position = DFPosition(size.width / 2, size.height / 2);
+        this.clothesSprite!.size = DFSize(160, 160);
+
+        /// 调用add产生层级关系进行坐标转换
+        addChild(this.clothesSprite!);
+
+        if (this.player.weapon != "") {
+          DFSpriteAnimation weaponSprite = await DFSpriteAnimation.load(this.player.weapon);
+          this.weaponSprite = weaponSprite;
+
+          /// 绑定动画同步
+          this.weaponSprite!.position =
+              DFPosition(this.clothesSprite!.size.width / 2, this.clothesSprite!.size.height / 2);
+          this.weaponSprite!.size = DFSize(120, 120);
+          this.clothesSprite?.bindChild(this.weaponSprite!);
+        }
+
+        /// 自动播放玩家第一个动画
+        this.play(action: DFAnimation.IDLE, direction: DFAnimation.DOWN, radians: 90 * pi / 180.0);
+
+        /// 血条
+        ui.Image image = await DFAssetsLoader.loadImage("assets/images/ui/hp_bar_player.png");
+        this.hpBarSprite = DFProgressSprite(image);
+        this.hpBarSprite!.position = DFPosition(size.width / 2, 0);
+        this.hpBarSprite!.scale = 0.6;
+        addChild(this.hpBarSprite!);
+
+        /// 初始化完成
+        this.isInit = true;
+      });
+    } catch (e) {
+      print('(PlayerSprite _init) Error: $e');
+    }
+  }
 
   /// 播放动画
   void play({action = DFAnimation.IDLE, direction = DFAnimation.NONE, radians = 3.15, Effect? effect}) {
@@ -67,16 +120,14 @@ class PlayerSprite extends DFSprite {
 
     String animation = this.action + this.direction;
 
-    if (bodySprite != null) {
-      if (animation != bodySprite!.currentAnimation) {
+    if (clothesSprite != null) {
+      if (animation != clothesSprite!.currentAnimation) {
         /// 5方向转换为8方向
         bool flippedX = false;
         if (animation.contains("LEFT")) {
           flippedX = true;
         }
-        bodySprite!.currentAnimationFlippedX = flippedX;
-
-        print("play:" + animation);
+        clothesSprite!.currentAnimationFlippedX = flippedX;
 
         bool loop = true;
         if (this.action == DFAnimation.ATTACK ||
@@ -86,47 +137,32 @@ class PlayerSprite extends DFSprite {
         }
 
         if (this.action == DFAnimation.IDLE) {
-          bodySprite!.play(animation, stepTime: 300, loop: loop);
+          clothesSprite!.play(animation, stepTime: 200, loop: loop);
         } else if (this.action == DFAnimation.RUN) {
-          bodySprite!.play(animation, stepTime: 100, loop: loop);
+          clothesSprite!.play(animation, stepTime: 50, loop: loop);
         } else if (this.action == DFAnimation.ATTACK || this.action == DFAnimation.CASTING) {
-          bodySprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFSpriteAnimation sprite) {
+          clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFSpriteAnimation sprite) {
+            print("Play Attack Finished");
+
             /// 动作完成回到IDLE
-            bodySprite!.play(DFAnimation.IDLE + this.direction, stepTime: 300, loop: true);
+            clothesSprite!.play(DFAnimation.IDLE + this.direction, stepTime: 200, loop: false,
+                onComplete: (DFSpriteAnimation sprite) {
+              if (this.repeatMoveToAttack) {
+                this.targetEffect!.isDead = false;
+                this.moveToAttack(this.targetEffect!, repeatMoveToAttack: true);
+              }
+            });
           });
         } else {
-          bodySprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFSpriteAnimation sprite) {
+          clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFSpriteAnimation sprite) {
             if (sprite.currentAnimation.contains(DFAnimation.DIG)) {
               /// 动作完成回到IDLE
-              bodySprite!.play(DFAnimation.IDLE + this.direction, stepTime: 300, loop: true);
+              clothesSprite!.play(DFAnimation.IDLE + this.direction, stepTime: 300, loop: true);
             }
           });
         }
       }
     }
-  }
-
-  /// 设置身体
-  void setBodySprite(DFSpriteAnimation sprite) {
-    this.bodySprite = sprite;
-    this.bodySprite!.position = DFPosition(size.width / 2, size.height / 2);
-    this.bodySprite!.size = DFSize(160, 160);
-
-    /// 调用add产生层级关系进行坐标转换
-    addChild(this.bodySprite!);
-
-    ///自动播放玩家第一个动画
-    this.play(action: DFAnimation.IDLE, direction: DFAnimation.DOWN, radians: 90 * pi / 180.0);
-  }
-
-  /// 设置武器
-  void setWeaponSprite(DFSpriteAnimation sprite) {
-    this.weaponSprite = sprite;
-
-    /// 绑定动画同步
-    this.weaponSprite!.position = DFPosition(this.bodySprite!.size.width / 2, this.bodySprite!.size.height / 2);
-    this.weaponSprite!.size = DFSize(120, 120);
-    this.bodySprite?.bindChild(this.weaponSprite!);
   }
 
   /// 查看锁定目标
@@ -171,55 +207,47 @@ class PlayerSprite extends DFSprite {
         },
         notFound: () {
           print("没有找到目标");
-
-          /// 胡乱释放一下技能
-          if (effect.type == EffectType.ATTACK) {
-            this.play(action: DFAnimation.ATTACK, direction: direction, radians: radians, effect: effect);
-          } else if (effect.type == EffectType.TRACK) {
-            this.play(action: DFAnimation.CASTING, direction: direction, radians: radians, effect: effect);
-          }
-
-          /// 显示技能特效
-          this._addEffect(effect);
         },
         vision: player.vision);
   }
 
   /// 锁定目标并移动
-  void moveToAttack(Effect effect) {
+  void moveToAttack(Effect effect, {bool repeatMoveToAttack = false}) {
     /// 检查目标并锁定
     if (!checkTargetSprite(this.player.vision)) {
       lockTargetSprite(effect);
-      return;
     }
     this.targetEffect = effect;
-    this.startMoveToTarget = true;
-    this.play(action: DFAnimation.RUN, direction: direction, radians: radians);
+    if (this.targetSprite == null) {
+      if (!repeatMoveToAttack) {
+        /// 胡乱释放一下技能
+        if (effect.type == EffectType.ATTACK) {
+          this.play(action: DFAnimation.ATTACK, direction: direction, radians: radians, effect: effect);
+        } else if (effect.type == EffectType.TRACK) {
+          this.play(action: DFAnimation.CASTING, direction: direction, radians: radians, effect: effect);
+        }
+
+        /// 显示技能特效
+        this._addEffect(effect);
+      }
+    } else {
+      this.startMoveToTarget = true;
+      this.repeatMoveToAttack = repeatMoveToAttack;
+      this.play(action: DFAnimation.RUN, direction: direction, radians: radians);
+    }
   }
 
   /// 添加特效
-  void _addEffect(Effect effect) async {
-    try {
-      await Future.delayed(Duration.zero, () async {
-        EffectSprite effectSprite = EffectSprite(effect);
-        effectSprite.position = DFPosition(this.position.x, this.position.y);
-        DFSpriteAnimation effectBodySprite = await DFSpriteAnimation.load(
-            "assets/images/effect/" + effect.name + ".png", "assets/images/effect/" + effect.name + ".json",
-            scale: 0.4);
-        effectSprite.setBodySprite(effectBodySprite);
-        effectSprite.setTargetSprite(this, this.targetSprite);
-        GameManager.gameWidget!.addChild(effectSprite);
-
-        /// 播放动画
-        if (effect.type == EffectType.ATTACK) {
-          effectSprite.play(action: DFAnimation.ATTACK, direction: this.direction, radians: this.radians);
-        } else if (effect.type == EffectType.TRACK) {
-          effectSprite.play(action: DFAnimation.TRACK, direction: this.direction, radians: this.radians);
-        }
-      });
-    } catch (e) {
-      print('(GameScene _loadGame) Error: $e');
-    }
+  Future<void> _addEffect(Effect effect) async {
+    await Future.delayed(Duration(milliseconds: effect.delayTime), () async {
+      EffectSprite effectSprite = EffectSprite(effect);
+      effectSprite.position = DFPosition(this.position.x, this.position.y);
+      effectSprite.size = DFSize(effect.damageRange, effect.damageRange);
+      effectSprite.direction = this.direction;
+      effectSprite.radians = this.radians;
+      effectSprite.setTargetSprite(this, this.targetSprite);
+      GameManager.gameWidget!.addChild(effectSprite);
+    });
   }
 
   /// 在可视范围内找敌人
@@ -238,7 +266,7 @@ class PlayerSprite extends DFSprite {
     /// 目标列表
     List<DFSprite> foundMonster = [];
 
-    /// 优先找到锁定的目标
+    /// 优先找到已锁定的目标
     if (this.targetSprite != null) {
       if (this.targetSprite is MonsterSprite) {
         MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
@@ -271,10 +299,10 @@ class PlayerSprite extends DFSprite {
 
   /// 碰撞矩形
   DFRect getCollisionRect() {
-    if (bodySprite != null) {
+    if (clothesSprite != null && isInit) {
       double scaleW = 0.5;
       double scaleH = 0.5;
-      List<DFImageSprite> sprites = bodySprite!.frames[bodySprite!.currentAnimation]!;
+      List<DFImageSprite> sprites = clothesSprite!.frames[clothesSprite!.currentAnimation]!;
       return DFRect(
           this.position.x - sprites[0].size.width / 2 * scaleW,
           this.position.y - sprites[0].size.height / 2 * scaleH,
@@ -339,65 +367,61 @@ class PlayerSprite extends DFSprite {
       vision,
     );
 
-    if(translateX != 0 || translateY != 0){
+    if (translateX != 0 || translateY != 0) {
       if (targetSprite is MonsterSprite) {
         Rect targetCollision = targetSprite.getCollisionRect().toRect();
         if (visibleRect.overlaps(targetCollision)) {
-          if (translateX < translateY) {
-            if (translateX < 0) {
-              direction = DFAnimation.RIGHT;
-              radians = 0 * pi / 180.0;
-            } else if (translateX > 0) {
-              direction = DFAnimation.LEFT;
-              radians = 180 * pi / 180.0;
-            } else {
-              translateX = 0;
-              translateY = 0;
-            }
-          } else if (translateX > translateY) {
-            if (translateY < 0) {
-              direction = DFAnimation.DOWN;
-              radians = 90 * pi / 180.0;
-            } else if (translateY > 0) {
-              direction = DFAnimation.UP;
-              radians = 270 * pi / 180.0;
-            } else {
-              translateX = 0;
-              translateY = 0;
-            }
-          } else {
+          if (translateX.abs() == translateY.abs()) {
+            /// 45度 可以战斗
             translateX = 0;
             translateY = 0;
+          } else if(translateX == 0 || translateY == 0){
+            translateX = 0;
+            translateY = 0;
+          }else if (translateX.abs() < translateY.abs()) {
+            if (translateX > 0) {
+              direction = DFAnimation.RIGHT;
+              radians = 0 * pi / 180.0;
+            } else if (translateX < 0) {
+              direction = DFAnimation.LEFT;
+              radians = 180 * pi / 180.0;
+            }
+          } else if (translateX.abs() > translateY.abs()) {
+            if (translateY > 0) {
+              direction = DFAnimation.DOWN;
+              radians = 90 * pi / 180.0;
+            } else if (translateY < 0) {
+              direction = DFAnimation.UP;
+              radians = 270 * pi / 180.0;
+            }
           }
         }
       } else if (targetSprite is PlayerSprite) {
         Rect targetCollision = targetSprite.getCollisionRect().toRect();
         if (visibleRect.overlaps(targetCollision)) {
-          if (translateX < translateY) {
-            if (translateX < 0) {
-              direction = DFAnimation.RIGHT;
-              radians = 0 * pi / 180.0;
-            } else if (translateX > 0) {
-              direction = DFAnimation.LEFT;
-              radians = 180 * pi / 180.0;
-            } else {
-              translateX = 0;
-              translateY = 0;
-            }
-          } else if (translateX > translateY) {
-            if (translateY < 0) {
-              direction = DFAnimation.DOWN;
-              radians = 90 * pi / 180.0;
-            } else if (translateY > 0) {
-              direction = DFAnimation.UP;
-              radians = 270 * pi / 180.0;
-            } else {
-              translateX = 0;
-              translateY = 0;
-            }
-          } else {
+          if (translateX.abs() == translateY.abs()) {
+            /// 45度 可以战斗
             translateX = 0;
             translateY = 0;
+          } else if(translateX == 0 || translateY == 0){
+            translateX = 0;
+            translateY = 0;
+          } else if (translateX.abs() < translateY.abs()) {
+            if (translateX > 0) {
+              direction = DFAnimation.RIGHT;
+              radians = 0 * pi / 180.0;
+            } else if (translateX < 0) {
+              direction = DFAnimation.LEFT;
+              radians = 180 * pi / 180.0;
+            }
+          } else if (translateX.abs() > translateY.abs()) {
+            if (translateY > 0) {
+              direction = DFAnimation.DOWN;
+              radians = 90 * pi / 180.0;
+            } else if (translateY < 0) {
+              direction = DFAnimation.UP;
+              radians = 270 * pi / 180.0;
+            }
           }
         }
       }
@@ -412,16 +436,67 @@ class PlayerSprite extends DFSprite {
     }
   }
 
+  /// 接收伤害
+  void receiveDamage(DFSprite fromSprite,Effect effect) {
+
+    /// 随机伤害  0.0~1.0
+    var random = new Random();
+    if (fromSprite is MonsterSprite) {
+      double newMinAt = fromSprite.monster.minAt * random.nextDouble();
+      double newMaxAt = fromSprite.monster.maxAt * random.nextDouble();
+      double damageAt = newMinAt > newMaxAt ? newMinAt * effect.at : newMaxAt * effect.at - player.df;
+
+      double newMinMt = fromSprite.monster.minMt * random.nextDouble();
+      double newMaxMt = fromSprite.monster.maxMt * random.nextDouble();
+      double damageMt = newMinMt > newMaxMt ? newMinMt * effect.at : newMaxMt * effect.mt - player.mf;
+
+      double totalDamage = damageAt + damageMt;
+      if(totalDamage <= 0){
+        totalDamage = 1;
+      }
+
+      /// 真实伤害数值 攻击力 - 防御力 * 0.35
+      int hp = (totalDamage * 0.35 + 0.5).floor();
+
+      print("接收到伤害:" + totalDamage.toStringAsFixed(2));
+      print("伤害转化血量:" + hp.toString());
+
+      this.player.hp = this.player.hp - hp;
+      this.hpBarSprite!.progress = (this.player.hp/this.player.maxMp * 100).toInt();
+      if (this.player.hp < 0) {
+        print("玩家死亡");
+      }
+    }
+
+
+    /*this.showDamage(
+      damage,
+      config: TextPaintConfig(
+        fontSize: width / 3,
+        color: Colors.white,
+      ),
+    );
+    super.receiveDamage(damage, from);*/
+  }
+
   /// 更新
   @override
   void update(double dt) {
-    if (bodySprite!.currentAnimation.contains(DFAnimation.RUN)) {
+    if (clothesSprite == null) {
+      return;
+    }
+    if (clothesSprite!.currentAnimation.contains(DFAnimation.RUN)) {
       this.position.x = this.position.x + this.player.moveSpeed * cos(this.radians);
       this.position.y = this.position.y + this.player.moveSpeed * sin(this.radians);
       //print("move:" + this.position.toString());
 
       /// 向目标移动，移动到可释放攻击技能
-      if (startMoveToTarget && checkTargetSprite(player.vision)) {
+      if (startMoveToTarget) {
+        /// 检查目标
+        if (!checkTargetSprite(this.player.vision)) {
+          return;
+        }
+
         this.moveToTarget(this.targetSprite!, vision: targetEffect!.vision,
             arrived: (String direction, double radians) {
           /// 停止移动
@@ -437,7 +512,7 @@ class PlayerSprite extends DFSprite {
         });
       }
     }
-    this.bodySprite?.update(dt);
+    this.clothesSprite?.update(dt);
   }
 
   /// 渲染
@@ -454,7 +529,10 @@ class PlayerSprite extends DFSprite {
     canvas.translate(position.x, position.y);
 
     /// 渲染身体精灵
-    this.bodySprite?.render(canvas);
+    this.clothesSprite?.render(canvas);
+
+    /// 血条精灵
+    this.hpBarSprite?.render(canvas);
 
     ///恢复画布
     canvas.restore();

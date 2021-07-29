@@ -1,0 +1,67 @@
+{
+    "frames": {
+        "surround_00000.png": {
+            "frame": "{{1,1},{121,68}}",
+            "offset": "{1,-10}",
+            "rotated": false,
+            "sourceColorRect": "{{17,28},{121,68}}",
+            "sourceSize": "{153,104}"
+        },
+        "surround_00001.png": {
+            "frame": "{{124,1},{121,68}}",
+            "offset": "{0,-10}",
+            "rotated": false,
+            "sourceColorRect": "{{16,28},{121,68}}",
+            "sourceSize": "{153,104}"
+        },
+        "surround_00002.png": {
+            "frame": "{{1,71},{121,68}}",
+            "offset": "{0,-10}",
+            "rotated": true,
+            "sourceColorRect": "{{16,28},{121,68}}",
+            "sourceSize": "{153,104}"
+        },
+        "surround_00003.png": {
+            "frame": "{{71,71},{121,68}}",
+            "offset": "{0,-10}",
+            "rotated": false,
+            "sourceColorRect": "{{16,28},{121,68}}",
+            "sourceSize": "{153,104}"
+        },
+        "surround_00004.png": {
+            "frame": "{{71,141},{121,66}}",
+            "offset": "{0,-10}",
+            "rotated": false,
+            "sourceColorRect": "{{16,29},{121,66}}",
+            "sourceSize": "{153,104}"
+        },
+        "surround_00005.png": {
+            "frame": "{{71,71},{121,68}}",
+            "offset": "{0,-10}",
+            "rotated": false,
+            "sourceColorRect": "{{16,28},{121,68}}",
+            "sourceSize": "{153,104}"
+        },
+        "surround_00006.png": {
+            "frame": "{{1,71},{121,68}}",
+            "offset": "{0,-10}",
+            "rotated": true,
+            "sourceColorRect": "{{16,28},{121,68}}",
+            "sourceSize": "{153,104}"
+        },
+        "surround_00007.png": {
+            "frame": "{{124,1},{121,68}}",
+            "offset": "{0,-10}",
+            "rotated": false,
+            "sourceColorRect": "{{16,28},{121,68}}",
+            "sourceSize": "{153,104}"
+        }
+    },
+    "metadata": {
+        "format": 2,
+        "realTextureFileName": "select_monster.png",
+        "size": "{246,246}",
+        "smartupdate": "$TexturePacker:SmartUpdate:d29639d0fb4a8d7a0982f0f8f111ac81:a836e06d0736f514ff48e2640667c3cc:4fc569935ac86c9ebed00df8925c2183$",
+        "textureFileName": "select_monster.png"
+    }
+}

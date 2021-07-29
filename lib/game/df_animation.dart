@@ -1,6 +1,6 @@
 /// 动画常量
 class DFAnimation {
-  /// 动画类型
+  /// 角色动画类型
   static const String NONE = "NONE";
   static const String IDLE = "IDLE";
   static const String RUN = "RUN";
@@ -9,8 +9,10 @@ class DFAnimation {
   static const String DIG = "DIG";
   static const String DEATH = "DEATH";
 
+  /// 特效动画类型
   static const String TRACK = "TRACK";
   static const String EXPLODE = "EXPLODE";
+  static const String SURROUND = "SURROUND";
 
   static const String LEFT = "_LEFT";
   static const String UP_LEFT = "_UP_LEFT";
@@ -77,23 +79,10 @@ class DFAnimation {
     DEATH + DOWN, //46
     DEATH + DOWN_LEFT, //47
 
-    TRACK + LEFT, //40
-    TRACK + UP_LEFT, //41
-    TRACK + UP, //42
-    TRACK + UP_RIGHT, //43
-    TRACK + RIGHT, //44
-    TRACK + DOWN_RIGHT, //45
-    TRACK + DOWN, //46
-    TRACK + DOWN_LEFT, //47
 
-    EXPLODE + LEFT, //40
-    EXPLODE + UP_LEFT, //41
-    EXPLODE + UP, //42
-    EXPLODE + UP_RIGHT, //43
-    EXPLODE + RIGHT, //44
-    EXPLODE + DOWN_RIGHT, //45
-    EXPLODE + DOWN, //46
-    EXPLODE + DOWN_LEFT, //47
+    TRACK + UP, //48
+    EXPLODE + UP, //49
+    SURROUND + UP, //50
 
   ];
 }

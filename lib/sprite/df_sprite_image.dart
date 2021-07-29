@@ -27,9 +27,6 @@ class DFImageSprite extends DFSprite {
   /// x轴镜像
   bool flippedX;
 
-  /// 缩放比例
-  double scale;
-
   /// 创建图片精灵
   DFImageSprite(
     this.image, {
@@ -38,7 +35,6 @@ class DFImageSprite extends DFSprite {
     this.offset = const DFOffset(0, 0),
     this.rotated = false,
     this.flippedX = false,
-    this.scale = 1,
   }) : super(position: DFPosition(0, 0), size: size);
 
   /// 加载图片资源
