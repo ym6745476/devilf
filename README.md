@@ -34,7 +34,7 @@ dependencies:
 ```
 
 ### 示例演示
-<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/devilf.gif?z=6" width="600" height="292"/>  
+<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/devilf.gif?z=7" width="600" height="292"/>  
 
 # 引擎框架
 <img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/doc_1.png" width="600" height="566"/>  
@@ -63,4 +63,36 @@ dependencies:
 # 推荐Flutter开发框架（Http请求，各类UI组件全搞定）
 https://github.com/ym6745476/ym_flutter_widget  
 
+## [0.0.6] - 2021/07/30. 
+* 优化[核心] 摇杆不固定位置  
+* 新增[示例] 玩家和怪物增加血条显示  
+* 新增[核心] ProgressSprite  进度精灵   
+* 新增[示例] 目标锁定 自动移动 自动战斗   
+* 新增[示例] EffectSprite 攻杀剑术和小火球特效  
+* 新增[示例] 怪物死亡动画    
+* 新增[示例] 蜘蛛怪物    
 
+## [0.0.5] - 2021/07/16. 
+* 优化[核心] 引擎的结构和已有功能  
+
+## [0.0.4] - 2021/07/15. 
+* 新增[示例] 摇杆控制玩家移动   
+* 新增[核心] Joystick 摇杆控件   
+
+## [0.0.3] - 2021/07/11.  
+* 新增[示例] 精灵渲染
+* 优化[核心] 重命名全部类增加DF前缀   
+* 新增[核心] 读取TexturePacker导出的Plist转Json文件格式  
+* 新增[核心] AnimationSprite  
+* 新增[核心] ImageSprite  
+* 新增[核心] TextSprite  
+
+## [0.0.2] - 2021/07/07.  
+* 新增[核心] GameScene  游戏场景  
+* 新增[核心] AssetsLoader 资源读取  
+* 新增[核心] GameRenderBox 渲染盒子  
+
+## [0.0.1] - 2021/07/06.  
+* 新增[核心] GameLoop 游戏循环  
+* 新增[核心] GameWidget 游戏控件  
+* 新增[核心] Sprite 基础精灵类  
