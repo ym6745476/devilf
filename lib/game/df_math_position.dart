@@ -14,3 +14,21 @@ class DFPosition {
     return "x:" + x.toString() + ",y:" + y.toString();
   }
 }
+
+/// 方位
+enum DFGravity {
+  /// 左
+  left,
+
+  /// 右
+  right,
+
+  /// 上
+  top,
+
+  /// 中
+  center,
+
+  /// 下
+  bottom
+}

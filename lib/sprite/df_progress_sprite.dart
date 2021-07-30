@@ -17,11 +17,25 @@ class DFProgressSprite extends DFSprite {
   /// 最大进度
   int maxProgress = 100;
 
-  DFProgressSprite(this.image, {DFSize size = const DFSize(47, 8)}) : super(position: DFPosition(0, 0), size: size);
+  /// 显示进度文本
+  bool showText;
 
+  /// 文本位置
+  DFGravity gravity;
+
+  /// 文本位置偏移
+  double textOffset;
+
+  /// 创建
+  DFProgressSprite(this.image,
+      {this.showText = true, this.gravity = DFGravity.center, this.textOffset = 0, DFSize size = const DFSize(47, 8)})
+      : super(position: DFPosition(0, 0), size: size);
+
+  /// 精灵更新
   @override
   void update(double dt) {}
 
+  /// 精灵渲染
   @override
   void render(Canvas canvas) {
     canvas.save();
@@ -57,7 +71,16 @@ class DFProgressSprite extends DFSprite {
 
     ui.ParagraphConstraints pc = ui.ParagraphConstraints(width: size.width * scale * 1.5);
     ui.Paragraph paragraph = pb.build()..layout(pc);
-    canvas.drawParagraph(paragraph, Offset(-size.width / 2 * scale * 1.5, -size.height * scale * 2.5));
+
+    /// 精灵矩形边界
+    ///var paint5 = new Paint()..color =  Color(0x60000000);
+    ///canvas.drawRect(Rect.fromLTWH(-paragraph.width/2,-paragraph.height/2, paragraph.width, paragraph.height), paint5);
+
+    if (this.gravity == DFGravity.top) {
+      canvas.drawParagraph(paragraph, Offset(-paragraph.width / 2, -paragraph.height - textOffset));
+    } else if (this.gravity == DFGravity.center) {
+      canvas.drawParagraph(paragraph, Offset(-paragraph.width / 2, -paragraph.height / 2));
+    }
 
     canvas.restore();
   }

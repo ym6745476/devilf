@@ -80,7 +80,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         List<MonsterSprite> _monsterSprites = [];
 
         for (int i = 0; i < 3; i++) {
-          Monster monster = Monster("蜘蛛" + i.toString());
+          Monster monster = Monster("蜘蛛" + (i+1).toString());
           monster.moveSpeed = 0.4;
           monster.clothes = "assets/images/monster/spider.json";
           MonsterSprite monsterSprite = MonsterSprite(monster);
@@ -101,7 +101,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 帧数精灵
         DFTextSprite fpsSprite = DFTextSprite("60 fps");
         fpsSprite.position =
-            DFPosition(MediaQuery.of(context).size.width - 100, MediaQuery.of(context).padding.top + 12);
+            DFPosition(MediaQuery.of(context).size.width - 70, MediaQuery.of(context).padding.top + 30);
         fpsSprite.setOnUpdate((dt) {
           fpsSprite.text = DFGameWidget.fps;
         });

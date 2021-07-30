@@ -60,7 +60,7 @@ class PlayerSprite extends DFSprite {
   /// 创建玩家精灵
   PlayerSprite(
     this.player, {
-    DFSize size = const DFSize(180, 180),
+    DFSize size = const DFSize(120, 120),
   }) : super(position: DFPosition(0, 0), size: size) {
     _init();
   }
@@ -94,7 +94,7 @@ class PlayerSprite extends DFSprite {
 
         /// 血条
         ui.Image image = await DFAssetsLoader.loadImage("assets/images/ui/hp_bar_player.png");
-        this.hpBarSprite = DFProgressSprite(image);
+        this.hpBarSprite = DFProgressSprite(image,gravity: DFGravity.top,textOffset: 5);
         this.hpBarSprite!.position = DFPosition(size.width / 2, 0);
         this.hpBarSprite!.scale = 0.6;
         addChild(this.hpBarSprite!);
