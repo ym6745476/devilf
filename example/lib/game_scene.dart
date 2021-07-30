@@ -80,7 +80,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         List<MonsterSprite> _monsterSprites = [];
 
         for (int i = 0; i < 5; i++) {
-          Monster monster = Monster("蜘蛛" + (i+1).toString());
+          Monster monster = Monster("蜘蛛" + (i + 1).toString());
           monster.moveSpeed = 0.4;
           monster.clothes = "assets/images/monster/spider.json";
           MonsterSprite monsterSprite = MonsterSprite(monster);
