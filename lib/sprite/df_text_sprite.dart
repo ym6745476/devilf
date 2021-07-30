@@ -16,12 +16,15 @@ class DFTextSprite extends DFSprite {
   /// 文字大小
   Color color;
 
+  /// 背景颜色
+  Color background;
+
   /// 更新监听函数
   void Function(double dt)? onUpdate;
 
   /// 创建文本精灵
   DFTextSprite(this.text,
-      {this.fontSize = 14, this.color = const Color(0xFFFFFFFF), DFSize size = const DFSize(100, 20)})
+      {this.fontSize = 14, this.color = const Color(0xFFFFFFFF), this.background = const Color(0x00FFFFFF),DFSize size = const DFSize(80, 20)})
       : super(position: DFPosition(0, 0), size: size);
 
   /// 更新文本
@@ -65,8 +68,8 @@ class DFTextSprite extends DFSprite {
     canvas.drawParagraph(paragraph, Offset(-paragraph.width/2,-paragraph.height/2));
 
     /// 精灵矩形边界
-    ///var paint = new Paint()..color =  Color(0x60000000);
-    ///canvas.drawRect(Rect.fromLTWH(-paragraph.width/2,-paragraph.height/2, paragraph.width, paragraph.height), paint);
+    var paint = new Paint()..color =  background;
+    canvas.drawRect(Rect.fromLTWH(-paragraph.width/2,-paragraph.height/2, paragraph.width, paragraph.height), paint);
 
     ///恢复画布
     canvas.restore();

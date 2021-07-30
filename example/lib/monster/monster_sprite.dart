@@ -10,7 +10,6 @@ import 'package:devilf/sprite/df_sprite_animation.dart';
 import 'package:devilf/sprite/df_sprite_image.dart';
 import 'package:devilf/sprite/df_text_sprite.dart';
 import 'package:example/effect/effect.dart';
-import 'package:example/player/player.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui' as ui;
@@ -233,6 +232,7 @@ class MonsterSprite extends DFSprite {
       this.monster.hp = this.monster.hp - hp;
       this.hpBarSprite!.progress = (this.monster.hp / this.monster.maxMp * 100).toInt();
       if (this.monster.hp < 0) {
+        this.targetSprite = null;
         this.play(action: DFAnimation.DEATH, direction: direction, radians: radians);
       }
     }
@@ -335,14 +335,6 @@ class MonsterSprite extends DFSprite {
             return true;
           }
         }
-      } else if (this.targetSprite is MonsterSprite) {
-        MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
-        if (!monsterSprite.monster.isDead) {
-          Rect monsterCollision = monsterSprite.getCollisionRect().toRect();
-          if (visibleRect.overlaps(monsterCollision)) {
-            return true;
-          }
-        }
       }
     }
 
@@ -422,6 +414,7 @@ class MonsterSprite extends DFSprite {
     double newY = GameManager.visibleHeight * random.nextDouble();
     this.position.x = newX;
     this.position.y = newY;
+    this.action = DFAnimation.IDLE;
     this.clothesSprite!.currentAnimation = DFAnimation.IDLE + DFAnimation.DOWN;
     this.monster.isDead = false;
     this.monster.hp = this.monster.maxMp;
@@ -444,12 +437,14 @@ class MonsterSprite extends DFSprite {
   /// 更新
   @override
   void update(double dt) {
-    if (clothesSprite == null) {
-      return;
-    }
 
     /// 找敌人
     if (!this.monster.isDead) {
+
+      if (this.clothesSprite == null) {
+        return;
+      }
+
       /// 更新位置
       if (clothesSprite!.currentAnimation.contains(DFAnimation.RUN)) {
         this.position.x = this.position.x + this.monster.moveSpeed * cos(this.radians);
@@ -462,6 +457,7 @@ class MonsterSprite extends DFSprite {
       if (this.isSelected) {
         this.selectSprite?.update(dt);
       }
+
 
       /// 准备死亡
       if (this.action == DFAnimation.DEATH) {

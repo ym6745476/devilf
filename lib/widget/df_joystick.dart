@@ -21,6 +21,9 @@ class DFJoyStick extends StatefulWidget {
   /// 遥杆尺寸
   final Size size;
 
+  /// 监听区域
+  final Size areaSize;
+
   /// 当前方向
   String direction;
 
@@ -40,6 +43,7 @@ class DFJoyStick extends StatefulWidget {
     required this.onChange,
     required this.onCancel,
     this.size = const Size(100, 100),
+    this.areaSize = const Size(240, 240),
   });
 
   @override
@@ -48,14 +52,8 @@ class DFJoyStick extends StatefulWidget {
 
 class DFJoyStickState extends State<DFJoyStick> {
   /// 偏移量
+  Offset backgroundOffset = Offset.zero;
   Offset handleOffset = Offset.zero;
-
-  /// 更新位置
-  void update(Offset offset) {
-    setState(() {
-      handleOffset = offset;
-    });
-  }
 
   /// 更新位置
   void updateDirection(double radians) {
@@ -119,107 +117,86 @@ class DFJoyStickState extends State<DFJoyStick> {
   }
 
   /// 计算移动距离
-  void calculateDelta(Offset offset) {
-    Offset offsetMove = offset - Offset(widget.size.width / 2, widget.size.height / 2);
+  void calculateMove(Offset localPosition) {
+    /// 相对位置
+    Offset offset = localPosition - Offset(widget.areaSize.width / 2, widget.areaSize.height / 2) - backgroundOffset;
 
     /// 更新摇杆位置 活动范围控制在Size之内
-    update(Offset.fromDirection(offsetMove.direction, min(widget.size.width / 2, offsetMove.distance)));
+    Offset handle = Offset.fromDirection(offset.direction, min(widget.size.width / 2, offset.distance));
+    setState(() {
+      handleOffset = handle;
+    });
 
     /// [-pi,pi]
-    updateDirection(offsetMove.direction);
+    updateDirection(offset.direction);
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: widget.size.width,
-      height: widget.size.height,
-      child: widget.handleImage == null
-          ? Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(widget.size.width / 2)),
-              child: GestureDetector(
-                /// 摇杆背景
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: widget.backgroundColor,
-                    borderRadius: BorderRadius.circular(widget.size.width / 2),
-                  ),
-                  child: Center(
-                    child: Transform.translate(
-                      offset: handleOffset,
-
-                      /// 摇杆
-                      child: SizedBox(
-                        width: widget.size.width / 2,
-                        height: widget.size.height / 2,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: widget.handleColor,
-                            borderRadius: BorderRadius.circular(widget.size.width / 4),
-                          ),
-                        ),
+    return Container(
+      child: GestureDetector(
+        child: Container(
+          width: widget.areaSize.width,
+          height: widget.areaSize.height,
+          color: Color(0x00000000),
+          child: Center(
+            child: Transform.translate(
+              offset: backgroundOffset,
+              child: Container(
+                width: widget.size.width,
+                height: widget.size.height,
+                decoration: BoxDecoration(
+                  color: widget.backgroundColor,
+                  image: widget.backgroundImage != null
+                      ? DecorationImage(image: AssetImage(widget.backgroundImage!))
+                      : null,
+                  borderRadius: BorderRadius.circular(widget.size.width / 2),
+                ),
+                child: Center(
+                  child: Transform.translate(
+                    offset: handleOffset,
+                    child: Container(
+                      width: widget.size.width / 2,
+                      height: widget.size.height / 2,
+                      decoration: BoxDecoration(
+                        color: widget.handleColor,
+                        image:
+                            widget.handleImage != null ? DecorationImage(image: AssetImage(widget.handleImage!)) : null,
+                        borderRadius: BorderRadius.circular(widget.size.width / 4),
                       ),
                     ),
                   ),
                 ),
-                onPanDown: onDragDown,
-                onPanUpdate: onDragUpdate,
-                onPanEnd: onDragEnd,
-              ),
-            )
-          : Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(widget.size.width / 2)),
-              child: GestureDetector(
-                /// 摇杆背景
-                child: Stack(
-                  children: [
-                    Positioned(
-                      child: Image.asset(
-                        widget.backgroundImage!,
-                        width: widget.size.width,
-                        height: widget.size.height,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    Positioned(
-                      child: Center(
-                        child: Transform.translate(
-                          offset: handleOffset,
-
-                          /// 摇杆
-                          child: SizedBox(
-                            width: widget.size.width / 2,
-                            height: widget.size.height / 2,
-                            child: Image.asset(
-                              widget.handleImage!,
-                              width: widget.size.width / 4,
-                              height: widget.size.height / 4,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                onPanDown: onDragDown,
-                onPanUpdate: onDragUpdate,
-                onPanEnd: onDragEnd,
               ),
             ),
+          ),
+        ),
+        onPanDown: onDragDown,
+        onPanUpdate: onDragUpdate,
+        onPanEnd: onDragEnd,
+      ),
     );
   }
 
   void onDragDown(DragDownDetails details) {
-    calculateDelta(details.localPosition);
+    /// 按下
+    setState(() {
+      backgroundOffset = details.localPosition - Offset(widget.areaSize.width / 2, widget.areaSize.height / 2);
+      handleOffset = Offset.zero;
+    });
   }
 
   void onDragUpdate(DragUpdateDetails details) {
-    calculateDelta(details.localPosition);
+    /// 移动
+    calculateMove(details.localPosition);
   }
 
   void onDragEnd(DragEndDetails details) {
-    update(Offset.zero);
+    /// 抬起
+    setState(() {
+      backgroundOffset = Offset.zero;
+      handleOffset = Offset.zero;
+    });
 
     /// 返回结果
     widget.onCancel(widget.direction);

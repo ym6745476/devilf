@@ -8,6 +8,7 @@ import 'package:devilf/sprite/df_progress_sprite.dart';
 import 'package:devilf/sprite/df_sprite.dart';
 import 'package:devilf/sprite/df_sprite_animation.dart';
 import 'package:devilf/sprite/df_sprite_image.dart';
+import 'package:devilf/sprite/df_text_sprite.dart';
 import 'package:example/effect/effect.dart';
 import 'package:example/effect/effect_sprite.dart';
 import 'package:example/monster/monster_sprite.dart';
@@ -29,6 +30,9 @@ class PlayerSprite extends DFSprite {
 
   /// 血条
   DFProgressSprite? hpBarSprite;
+
+  /// 名字
+  DFTextSprite? nameSprite;
 
   /// 选中光圈
   DFSpriteAnimation? selectSprite;
@@ -98,6 +102,12 @@ class PlayerSprite extends DFSprite {
         this.hpBarSprite!.position = DFPosition(size.width / 2, 0);
         this.hpBarSprite!.scale = 0.6;
         addChild(this.hpBarSprite!);
+
+        /// 名字
+        this.nameSprite = DFTextSprite(this.player.name,fontSize: 10,background: Color(0x20000000));
+        this.nameSprite!.position = DFPosition(size.width / 2, -40);
+        this.nameSprite!.setOnUpdate((dt) {});
+        addChild(this.nameSprite!);
 
         /// 选择光圈
         DFSpriteAnimation selectSprite = await DFSpriteAnimation.load("assets/images/effect/select_player.json",scale: 0.6,blendMode: BlendMode.colorDodge);
@@ -292,15 +302,25 @@ class PlayerSprite extends DFSprite {
         }
       }
     } else {
+      /// 获取距离最近的
+      double distance = vision * vision;
+      MonsterSprite? preSprite;
       if (GameManager.monsterSprites != null) {
         GameManager.monsterSprites!.forEach((monsterSprite) {
           if (!monsterSprite.monster.isDead) {
-            Rect monsterCollision = monsterSprite.getCollisionRect().toRect();
-            if (visibleRect.overlaps(monsterCollision)) {
-              foundMonster.add(monsterSprite);
+            /// 距离
+            double dx = monsterSprite.position.x - this.position.x;
+            double dy = monsterSprite.position.y - this.position.y;
+            if(dx * dx + dy * dy <= distance){
+              preSprite = monsterSprite;
+              distance = dx * dx + dy * dy;
             }
           }
         });
+
+        if (preSprite!=null) {
+          foundMonster.add(preSprite!);
+        }
       }
     }
 
@@ -330,6 +350,8 @@ class PlayerSprite extends DFSprite {
   /// 向目标移动
   void moveToTarget(DFSprite targetSprite,
       {required double vision, required Function(String direction, double radians) arrived}) {
+
+    /// 距离
     double translateX = targetSprite.position.x - this.position.x;
     double translateY = targetSprite.position.y - this.position.y;
 
@@ -373,6 +395,47 @@ class PlayerSprite extends DFSprite {
       }
     }
 
+    /// 自动走位
+    bool needFarAway = false;
+    if(repeatMoveToAttack && targetEffect!=null){
+      if(translateX.abs() < targetEffect!.vision/2 && translateY.abs() < targetEffect!.vision/2){
+        print("自动走位与目标保持距离");
+        /// 往反方向移动
+        if(direction == DFAnimation.UP){
+          direction = DFAnimation.DOWN;
+          radians = 90 * pi / 180.0;
+        }else if(direction == DFAnimation.DOWN){
+          direction = DFAnimation.UP;
+          radians = 270 * pi / 180.0;
+        }else if(direction == DFAnimation.LEFT){
+          direction = DFAnimation.RIGHT;
+          radians = 0;
+        }else if(direction == DFAnimation.RIGHT){
+          direction = DFAnimation.LEFT;
+          radians = 180 * pi / 180.0;
+        }else if(direction == DFAnimation.DOWN_RIGHT){
+          direction = DFAnimation.UP_LEFT;
+          radians = 225 * pi / 180.0;
+        }else if(direction == DFAnimation.UP_LEFT){
+          direction = DFAnimation.DOWN_RIGHT;
+          radians = 45 * pi / 180.0;
+        }else if(direction == DFAnimation.UP_RIGHT){
+          direction = DFAnimation.DOWN_LEFT;
+          radians = 135 * pi / 180.0;
+        }else if(direction == DFAnimation.DOWN_LEFT){
+          direction = DFAnimation.UP_RIGHT;
+          radians = 315 * pi / 180.0;
+        }
+        needFarAway = true;
+      }
+    }
+
+    if(needFarAway){
+      /// 继续移动
+      this.play(action: DFAnimation.RUN, direction: direction, radians: radians);
+      return;
+    }
+
     /// 碰撞
     Rect visibleRect = Rect.fromLTWH(
       this.position.x - vision / 2,
@@ -385,58 +448,8 @@ class PlayerSprite extends DFSprite {
       if (targetSprite is MonsterSprite) {
         Rect targetCollision = targetSprite.getCollisionRect().toRect();
         if (visibleRect.overlaps(targetCollision)) {
-          if (translateX.abs() == translateY.abs()) {
-            /// 45度 可以战斗
-            translateX = 0;
-            translateY = 0;
-          } else if(translateX == 0 || translateY == 0){
-            translateX = 0;
-            translateY = 0;
-          }else if (translateX.abs() < translateY.abs()) {
-            if (translateX > 0) {
-              direction = DFAnimation.RIGHT;
-              radians = 0 * pi / 180.0;
-            } else if (translateX < 0) {
-              direction = DFAnimation.LEFT;
-              radians = 180 * pi / 180.0;
-            }
-          } else if (translateX.abs() > translateY.abs()) {
-            if (translateY > 0) {
-              direction = DFAnimation.DOWN;
-              radians = 90 * pi / 180.0;
-            } else if (translateY < 0) {
-              direction = DFAnimation.UP;
-              radians = 270 * pi / 180.0;
-            }
-          }
-        }
-      } else if (targetSprite is PlayerSprite) {
-        Rect targetCollision = targetSprite.getCollisionRect().toRect();
-        if (visibleRect.overlaps(targetCollision)) {
-          if (translateX.abs() == translateY.abs()) {
-            /// 45度 可以战斗
-            translateX = 0;
-            translateY = 0;
-          } else if(translateX == 0 || translateY == 0){
-            translateX = 0;
-            translateY = 0;
-          } else if (translateX.abs() < translateY.abs()) {
-            if (translateX > 0) {
-              direction = DFAnimation.RIGHT;
-              radians = 0 * pi / 180.0;
-            } else if (translateX < 0) {
-              direction = DFAnimation.LEFT;
-              radians = 180 * pi / 180.0;
-            }
-          } else if (translateX.abs() > translateY.abs()) {
-            if (translateY > 0) {
-              direction = DFAnimation.DOWN;
-              radians = 90 * pi / 180.0;
-            } else if (translateY < 0) {
-              direction = DFAnimation.UP;
-              radians = 270 * pi / 180.0;
-            }
-          }
+          translateX = 0;
+          translateY = 0;
         }
       }
     }
@@ -552,6 +565,9 @@ class PlayerSprite extends DFSprite {
 
       /// 血条精灵
       this.hpBarSprite?.render(canvas);
+
+      /// 名字
+      this.nameSprite?.render(canvas);
     }
 
     ///恢复画布

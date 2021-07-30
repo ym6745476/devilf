@@ -65,7 +65,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
         /// 创建玩家精灵
         Player player = Player("玩家1");
-        player.maxAt = 300;
+        player.maxAt = 120;
         player.moveSpeed = 2;
         player.clothes = "assets/images/player/man_01.json";
         player.weapon = "assets/images/weapon/weapon_01.json";
@@ -79,7 +79,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 怪物精灵
         List<MonsterSprite> _monsterSprites = [];
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 1; i++) {
           Monster monster = Monster("蜘蛛" + (i+1).toString());
           monster.moveSpeed = 0.4;
           monster.clothes = "assets/images/monster/spider.json";
@@ -189,11 +189,13 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
         /// 摇杆
         Positioned(
-          bottom: MediaQuery.of(context).padding.bottom + 30,
-          left: 30,
+          bottom: MediaQuery.of(context).padding.bottom,
+          left: 0,
           child: DFJoyStick(
-            //backgroundImage: "assets/images/ui/joystick.png",
-            //handleImage: "assets/images/ui/joystick_btn.png",
+            /// backgroundImage: "assets/images/ui/joystick.png",
+            /// handleImage: "assets/images/ui/joystick_btn.png",
+            handleColor: Color(0x60FFFFFF),
+            backgroundColor: Color(0x40FFFFFF),
             onChange: (double radians, String direction) {
               /// 获取8方向的弧度
               radians = DFUtil.getRadians(direction);
