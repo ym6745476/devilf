@@ -44,6 +44,7 @@ dependencies:
 * GameScene：游戏场景  
 * PlayerSprite：玩家精灵  
 * MonsterSprite：怪物精灵  
+* EffectSprite：特效精灵 
 * MapSprite：地图精灵  
 
 # 核心组件  
@@ -56,6 +57,7 @@ dependencies:
 * TextSprite：文本精灵  
 * ImageSprite：图片精灵  
 * AnimationSprite：动画精灵  
+* ProgressSprite：进度精灵  
 * Joystick：遥杆控件  
 
 # 推荐Flutter开发框架（Http请求，各类UI组件全搞定）
