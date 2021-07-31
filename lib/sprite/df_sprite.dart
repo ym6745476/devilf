@@ -24,6 +24,9 @@ class DFSprite {
   /// 子精灵
   List<DFSprite> children = [];
 
+  /// 显示
+  bool visible = true;
+
   /// 未使用的
   bool isUsed = true;
 

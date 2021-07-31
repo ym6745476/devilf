@@ -6,17 +6,18 @@ import 'package:devilf/game/df_math_offset.dart';
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_math_rect.dart';
 import 'package:devilf/game/df_math_size.dart';
-import 'package:devilf/sprite/df_sprite_image.dart';
 import 'package:devilf/sprite/df_sprite.dart';
 import 'dart:ui' as ui;
 
+import 'df_image_sprite.dart';
+
 /// 动画精灵
-class DFSpriteAnimation extends DFSprite {
+class DFAnimationSprite extends DFSprite {
   /// 这个动画的全部帧
   Map<String, List<DFImageSprite>> frames = HashMap<String, List<DFImageSprite>>();
 
   /// 绑定动画
-  List<DFSpriteAnimation> bindSprites = [];
+  List<DFAnimationSprite> bindSprites = [];
 
   /// 当前是的Index
   int currentIndex = 0;
@@ -40,10 +41,10 @@ class DFSpriteAnimation extends DFSprite {
   int clock = 0;
 
   /// 完成事件
-  Function(DFSpriteAnimation)? onComplete;
+  Function(DFAnimationSprite)? onComplete;
 
   /// 创建动画精灵
-  DFSpriteAnimation({
+  DFAnimationSprite({
     this.stepTime = 200,
     this.loop = true,
     DFSize size = const DFSize(128, 128),
@@ -60,11 +61,11 @@ class DFSpriteAnimation extends DFSprite {
   ///      }
   ///   }
   /// }
-  static Future<DFSpriteAnimation> load(String json, {scale = 0.6,blendMode = BlendMode.srcOver}) async {
-    DFSpriteAnimation spriteAnimation = DFSpriteAnimation(stepTime: 100, loop: true);
+  static Future<DFAnimationSprite> load(String json, {scale = 0.6,blendMode = BlendMode.srcOver}) async {
+    DFAnimationSprite animationSprite = DFAnimationSprite(stepTime: 100, loop: true);
 
     DFAnimation.sequence.forEach((element) {
-      spriteAnimation.frames[element] = [];
+      animationSprite.frames[element] = [];
     });
 
     Map<String, dynamic> jsonMap = await DFAssetsLoader.loadJson(json);
@@ -142,30 +143,30 @@ class DFSpriteAnimation extends DFSprite {
 
       String keyNumber = key.replaceAll(actionText, "").replaceAll(".png", "");
       if (keyNumber.startsWith("000")) {
-        spriteAnimation.frames[action + DFAnimation.UP]?.add(sprite);
+        animationSprite.frames[action + DFAnimation.UP]?.add(sprite);
       }
       if (keyNumber.startsWith("100")) {
-        spriteAnimation.frames[action + DFAnimation.UP_RIGHT]?.add(sprite);
-        spriteAnimation.frames[action + DFAnimation.UP_LEFT]?.add(sprite);
+        animationSprite.frames[action + DFAnimation.UP_RIGHT]?.add(sprite);
+        animationSprite.frames[action + DFAnimation.UP_LEFT]?.add(sprite);
       }
       if (keyNumber.startsWith("200")) {
-        spriteAnimation.frames[action + DFAnimation.RIGHT]?.add(sprite);
-        spriteAnimation.frames[action + DFAnimation.LEFT]?.add(sprite);
+        animationSprite.frames[action + DFAnimation.RIGHT]?.add(sprite);
+        animationSprite.frames[action + DFAnimation.LEFT]?.add(sprite);
       }
       if (keyNumber.startsWith("300")) {
-        spriteAnimation.frames[action + DFAnimation.DOWN_RIGHT]?.add(sprite);
-        spriteAnimation.frames[action + DFAnimation.DOWN_LEFT]?.add(sprite);
+        animationSprite.frames[action + DFAnimation.DOWN_RIGHT]?.add(sprite);
+        animationSprite.frames[action + DFAnimation.DOWN_LEFT]?.add(sprite);
       }
       if (keyNumber.startsWith("400")) {
-        spriteAnimation.frames[action + DFAnimation.DOWN]?.add(sprite);
+        animationSprite.frames[action + DFAnimation.DOWN]?.add(sprite);
       }
     });
 
-    return spriteAnimation;
+    return animationSprite;
   }
 
   /// 绑定动画同步子精灵
-  void bindChild(DFSpriteAnimation sprite) {
+  void bindChild(DFAnimationSprite sprite) {
     sprite.isBind = true;
     sprite.position = DFPosition(sprite.position.x - size.width / 2, sprite.position.y - size.height / 2);
     this.bindSprites.add(sprite);
@@ -240,8 +241,8 @@ class DFSpriteAnimation extends DFSprite {
 
     /// 绘制子精灵
     if (children.length > 0) {
-      children.forEach((element) {
-        element.render(canvas);
+      children.forEach((sprite) {
+        sprite.render(canvas);
       });
     }
 

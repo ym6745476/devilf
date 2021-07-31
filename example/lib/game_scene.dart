@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:devilf/game/df_game_widget.dart';
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_animation.dart';
-import 'package:devilf/sprite/df_sprite_animation.dart';
-import 'package:devilf/sprite/df_sprite_image.dart';
+import 'package:devilf/game/df_math_size.dart';
+import 'package:devilf/sprite/df_image_sprite.dart';
 import 'package:devilf/sprite/df_text_sprite.dart';
 import 'package:devilf/util/df_util.dart';
 import 'package:devilf/widget/df_joystick.dart';
@@ -61,7 +61,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
     try {
       await Future.delayed(Duration(seconds: 1), () async {
         /// 地图精灵
-        MapSprite mapSprite = MapSprite();
+        MapSprite mapSprite = MapSprite("落霞岛",map:"assets/images/map/lxd.json");
 
         /// 创建玩家精灵
         Player player = Player("玩家1");
@@ -95,6 +95,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// Logo精灵
         DFImageSprite logoSprite = await DFImageSprite.load("assets/images/sprite.png");
         logoSprite.scale = 0.6;
+        logoSprite.size = DFSize(200,200);
         logoSprite.position =
             DFPosition(MediaQuery.of(context).size.width / 2, MediaQuery.of(context).padding.top + 60);
 
@@ -199,7 +200,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
             onChange: (double radians, String direction) {
               /// 获取8方向的弧度
               radians = DFUtil.getRadians(direction);
-              _playerSprite?.startMoveToTarget = false;
+              _playerSprite?.startAutoMove = false;
               _playerSprite?.play(action: DFAnimation.RUN, direction: direction, radians: radians);
             },
             onCancel: (direction) {

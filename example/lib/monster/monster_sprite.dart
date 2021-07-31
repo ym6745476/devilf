@@ -4,10 +4,10 @@ import 'package:devilf/game/df_assets_loader.dart';
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_math_rect.dart';
 import 'package:devilf/game/df_math_size.dart';
+import 'package:devilf/sprite/df_animation_sprite.dart';
+import 'package:devilf/sprite/df_image_sprite.dart';
 import 'package:devilf/sprite/df_progress_sprite.dart';
 import 'package:devilf/sprite/df_sprite.dart';
-import 'package:devilf/sprite/df_sprite_animation.dart';
-import 'package:devilf/sprite/df_sprite_image.dart';
 import 'package:devilf/sprite/df_text_sprite.dart';
 import 'package:example/effect/effect.dart';
 import 'package:example/player/player_sprite.dart';
@@ -22,10 +22,10 @@ class MonsterSprite extends DFSprite {
   Monster monster;
 
   /// 衣服
-  DFSpriteAnimation? clothesSprite;
+  DFAnimationSprite? clothesSprite;
 
   /// 武器
-  DFSpriteAnimation? weaponSprite;
+  DFAnimationSprite? weaponSprite;
 
   /// 血条
   DFProgressSprite? hpBarSprite;
@@ -34,7 +34,7 @@ class MonsterSprite extends DFSprite {
   DFTextSprite? nameSprite;
 
   /// 选中光圈
-  DFSpriteAnimation? selectSprite;
+  DFAnimationSprite? selectSprite;
 
   /// 目标精灵
   DFSprite? targetSprite;
@@ -48,8 +48,11 @@ class MonsterSprite extends DFSprite {
   /// 当前方向
   String direction = DFAnimation.NONE;
 
-  /// 帧绘制时钟
-  int clock = 0;
+  /// 攻击时钟
+  int attackClock = 0;
+
+  /// 重生时钟
+  int rebornClock = 0;
 
   /// 是否被选择
   bool isSelected = false;
@@ -69,8 +72,15 @@ class MonsterSprite extends DFSprite {
   Future<void> _init() async {
     try {
       await Future.delayed(Duration.zero, () async {
+        /// 选择光圈
+        DFAnimationSprite selectSprite = await DFAnimationSprite.load("assets/images/effect/select_monster.json",
+            scale: 0.6, blendMode: BlendMode.colorDodge);
+        this.selectSprite = selectSprite;
+        this.selectSprite!.position = DFPosition(size.width / 2, size.height / 2 * 1.2);
+        addChild(this.selectSprite!);
+
         /// 玩家精灵动画
-        DFSpriteAnimation clothesSprite = await DFSpriteAnimation.load(this.monster.clothes);
+        DFAnimationSprite clothesSprite = await DFAnimationSprite.load(this.monster.clothes);
         this.clothesSprite = clothesSprite;
         this.clothesSprite!.position = DFPosition(size.width / 2, size.height / 2);
         this.clothesSprite!.size = DFSize(160, 160);
@@ -79,7 +89,7 @@ class MonsterSprite extends DFSprite {
         addChild(this.clothesSprite!);
 
         if (this.monster.weapon != "") {
-          DFSpriteAnimation weaponSprite = await DFSpriteAnimation.load(this.monster.weapon);
+          DFAnimationSprite weaponSprite = await DFAnimationSprite.load(this.monster.weapon);
           this.weaponSprite = weaponSprite;
 
           /// 绑定动画同步
@@ -94,23 +104,16 @@ class MonsterSprite extends DFSprite {
 
         /// 血条
         ui.Image image = await DFAssetsLoader.loadImage("assets/images/ui/hp_bar_monster.png");
-        this.hpBarSprite = DFProgressSprite(image,gravity: DFGravity.top,textOffset: 5);
+        this.hpBarSprite = DFProgressSprite(image, gravity: DFGravity.top, textOffset: 5);
         this.hpBarSprite!.position = DFPosition(size.width / 2, 0);
         this.hpBarSprite!.scale = 0.6;
         addChild(this.hpBarSprite!);
 
         /// 名字
-        this.nameSprite = DFTextSprite(this.monster.name,fontSize: 10);
+        this.nameSprite = DFTextSprite(this.monster.name, fontSize: 10);
         this.nameSprite!.position = DFPosition(size.width / 2, size.height / 2);
         this.nameSprite!.setOnUpdate((dt) {});
         addChild(this.nameSprite!);
-
-        /// 选择光圈
-        DFSpriteAnimation selectSprite = await DFSpriteAnimation.load("assets/images/effect/select_monster.json",
-            scale: 0.6, blendMode: BlendMode.colorDodge);
-        this.selectSprite = selectSprite;
-        this.selectSprite!.position = DFPosition(size.width / 2, size.height / 2 * 1.2);
-        addChild(this.selectSprite!);
 
         /// 初始化完成
         this.isInit = true;
@@ -168,12 +171,11 @@ class MonsterSprite extends DFSprite {
             animation,
             stepTime: 100,
             loop: loop,
-            onComplete: (DFSpriteAnimation sprite) {
+            onComplete: (DFAnimationSprite sprite) {
               if (sprite.currentAnimation.contains(DFAnimation.DEATH)) {
                 /// 设置死亡状态
                 this.monster.isDead = true;
-                this.clock = DateTime.now().millisecondsSinceEpoch;
-
+                this.rebornClock = DateTime.now().millisecondsSinceEpoch;
                 print("从场景移除吧");
 
                 /// 从场景移除 可重生
@@ -232,8 +234,7 @@ class MonsterSprite extends DFSprite {
       this.monster.hp = this.monster.hp - hp;
       this.hpBarSprite!.progress = (this.monster.hp / this.monster.maxMp * 100).toInt();
       if (this.monster.hp < 0) {
-        this.targetSprite = null;
-        this.play(action: DFAnimation.DEATH, direction: direction, radians: radians);
+        this.dead();
       }
     }
 
@@ -316,7 +317,7 @@ class MonsterSprite extends DFSprite {
     }
   }
 
-  /// 查看锁定目标
+  /// 检查当前目标
   bool checkTargetSprite(double vision) {
     Rect visibleRect = Rect.fromLTWH(
       this.position.x - vision / 2,
@@ -406,6 +407,14 @@ class MonsterSprite extends DFSprite {
     }
   }
 
+
+  /// 死亡
+  void dead() {
+    this.targetSprite = null;
+    this.unSelectThisSprite();
+    this.play(action: DFAnimation.DEATH, direction: direction, radians: radians);
+  }
+
   /// 重生
   void reborn() {
     /// 随机位置  0.0~1.0
@@ -426,21 +435,21 @@ class MonsterSprite extends DFSprite {
   /// 选择
   void selectThisSprite() {
     this.isSelected = true;
+    this.selectSprite?.visible = true;
     this.selectSprite?.play(DFAnimation.SURROUND + DFAnimation.UP, stepTime: 100, loop: true);
   }
 
   /// 取消选择
   void unSelectThisSprite() {
     this.isSelected = false;
+    this.selectSprite?.visible = true;
   }
 
   /// 更新
   @override
   void update(double dt) {
-
     /// 找敌人
     if (!this.monster.isDead) {
-
       if (this.clothesSprite == null) {
         return;
       }
@@ -457,7 +466,6 @@ class MonsterSprite extends DFSprite {
       if (this.isSelected) {
         this.selectSprite?.update(dt);
       }
-
 
       /// 准备死亡
       if (this.action == DFAnimation.DEATH) {
@@ -476,16 +484,16 @@ class MonsterSprite extends DFSprite {
       /// 找到敌人
       this.moveToTarget(this.targetSprite!, arrived: (String direction, double radians) {
         /// 攻击间隔时间 控制动画帧按照stepTime进行更新
-        if (DateTime.now().millisecondsSinceEpoch - this.clock > this.monster.actionStepTime) {
-          this.clock = DateTime.now().millisecondsSinceEpoch;
+        if (DateTime.now().millisecondsSinceEpoch - this.attackClock > this.monster.actionStepTime) {
+          this.attackClock = DateTime.now().millisecondsSinceEpoch;
           this.play(action: DFAnimation.ATTACK, direction: direction, radians: radians);
         }
       });
     } else {
       /// 重生
       /// print("重生计时：" + (DateTime.now().millisecondsSinceEpoch - this.clock).toStringAsFixed(0));
-      if (DateTime.now().millisecondsSinceEpoch - this.clock > this.monster.rebornTime) {
-        this.clock = DateTime.now().millisecondsSinceEpoch;
+      if (DateTime.now().millisecondsSinceEpoch - this.attackClock > this.monster.rebornTime) {
+        this.rebornClock = DateTime.now().millisecondsSinceEpoch;
         this.reborn();
       }
     }
@@ -504,20 +512,14 @@ class MonsterSprite extends DFSprite {
     /// 移动画布
     canvas.translate(position.x, position.y);
 
+    /// 活着
     if (!this.monster.isDead) {
-      /// 选择光圈
-      if (this.isSelected) {
-        this.selectSprite?.render(canvas);
-      }
-
-      /// 渲染身体精灵
-      this.clothesSprite?.render(canvas);
-
-      /// 血条精灵
-      this.hpBarSprite?.render(canvas);
-
-      /// 名字
-      this.nameSprite?.render(canvas);
+      /// 绘制子精灵
+      this.children.forEach((sprite) {
+        if (sprite.visible) {
+          sprite.render(canvas);
+        }
+      });
     }
 
     ///恢复画布

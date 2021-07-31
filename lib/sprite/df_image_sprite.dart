@@ -109,7 +109,7 @@ class DFImageSprite extends DFSprite {
     if (rotated) {
       dstRect = Rect.fromCenter(center: Offset(offset.dx, offset.dy), width: rect.width, height: rect.height);
     } else {
-      dstRect = Rect.fromCenter(center: Offset(offset.dx, -offset.dy), width: rect.width, height: rect.height);
+      dstRect = Rect.fromCenter(center: Offset(offset.dx, -offset.dy), width: rect.width-1, height: rect.height-1);
     }
 
     /// 处理缩放
@@ -121,7 +121,8 @@ class DFImageSprite extends DFSprite {
     /// 绘制图像
     Paint paint5 = Paint()..color = Color(0xFFFFFFFF);
     paint5.blendMode = this.blendMode;
-    //canvas.drawRect(outputRect, paint5);
+    canvas.drawRect(outputRect, paint5);
+
     canvas.drawImageRect(this.image, rect.toRect(), outputRect, paint5);
 
     /// 绘制子精灵

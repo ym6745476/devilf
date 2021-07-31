@@ -3,8 +3,8 @@ import 'package:devilf/game/df_animation.dart';
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_math_rect.dart';
 import 'package:devilf/game/df_math_size.dart';
+import 'package:devilf/sprite/df_animation_sprite.dart';
 import 'package:devilf/sprite/df_sprite.dart';
-import 'package:devilf/sprite/df_sprite_animation.dart';
 import 'package:example/monster/monster_sprite.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +18,7 @@ class EffectSprite extends DFSprite {
   Effect effect;
 
   /// 纹理精灵
-  DFSpriteAnimation? textureSprite;
+  DFAnimationSprite? textureSprite;
 
   /// 所属精灵
   DFSprite? fromSprite;
@@ -53,7 +53,7 @@ class EffectSprite extends DFSprite {
   Future<void> _init() async {
     await Future.delayed(Duration.zero, () async {
       /// 玩家精灵动画
-      DFSpriteAnimation textureSprite = await DFSpriteAnimation.load(this.effect.texture, scale: 0.4);
+      DFAnimationSprite textureSprite = await DFAnimationSprite.load(this.effect.texture, scale: 0.4);
       this.textureSprite = textureSprite;
       this.textureSprite!.position = DFPosition(size.width / 2, size.height / 2);
       this.textureSprite!.size = DFSize(100, 100);
@@ -117,7 +117,7 @@ class EffectSprite extends DFSprite {
           animation = action + DFAnimation.UP;
         }
 
-        textureSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFSpriteAnimation sprite) {
+        textureSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {
 
           print("onComplete:" + sprite.currentAnimation);
           if (sprite.currentAnimation.contains(DFAnimation.EXPLODE) || sprite.currentAnimation.contains(DFAnimation.ATTACK)) {

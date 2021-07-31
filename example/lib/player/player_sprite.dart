@@ -4,10 +4,10 @@ import 'package:devilf/game/df_assets_loader.dart';
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_math_rect.dart';
 import 'package:devilf/game/df_math_size.dart';
+import 'package:devilf/sprite/df_animation_sprite.dart';
+import 'package:devilf/sprite/df_image_sprite.dart';
 import 'package:devilf/sprite/df_progress_sprite.dart';
 import 'package:devilf/sprite/df_sprite.dart';
-import 'package:devilf/sprite/df_sprite_animation.dart';
-import 'package:devilf/sprite/df_sprite_image.dart';
 import 'package:devilf/sprite/df_text_sprite.dart';
 import 'package:example/effect/effect.dart';
 import 'package:example/effect/effect_sprite.dart';
@@ -23,10 +23,10 @@ class PlayerSprite extends DFSprite {
   Player player;
 
   /// 衣服
-  DFSpriteAnimation? clothesSprite;
+  DFAnimationSprite? clothesSprite;
 
   /// 武器
-  DFSpriteAnimation? weaponSprite;
+  DFAnimationSprite? weaponSprite;
 
   /// 血条
   DFProgressSprite? hpBarSprite;
@@ -35,13 +35,16 @@ class PlayerSprite extends DFSprite {
   DFTextSprite? nameSprite;
 
   /// 选中光圈
-  DFSpriteAnimation? selectSprite;
+  DFAnimationSprite? selectSprite;
 
   /// 目标精灵
   DFSprite? targetSprite;
 
-  /// 开始往目标移动
-  bool startMoveToTarget = false;
+  /// 开始自动移动
+  bool startAutoMove = false;
+
+  /// 自动移动时钟
+  int autoMoveClock = 0;
 
   /// 重复
   bool repeatMoveToAttack = false;
@@ -58,6 +61,7 @@ class PlayerSprite extends DFSprite {
   /// 当前方向
   String direction = DFAnimation.NONE;
 
+
   /// 是否初始化
   bool isInit = false;
 
@@ -73,8 +77,16 @@ class PlayerSprite extends DFSprite {
   Future<void> _init() async {
     try {
       await Future.delayed(Duration.zero, () async {
+        /// 选择光圈
+        DFAnimationSprite selectSprite = await DFAnimationSprite.load("assets/images/effect/select_player.json",
+            scale: 0.6, blendMode: BlendMode.colorDodge);
+        this.selectSprite = selectSprite;
+        this.selectSprite!.position = DFPosition(size.width / 2, size.height / 2 * 1.15);
+        addChild(this.selectSprite!);
+        this.selectSprite?.play(DFAnimation.SURROUND + DFAnimation.UP, stepTime: 100, loop: true);
+
         /// 玩家精灵动画
-        DFSpriteAnimation clothesSprite = await DFSpriteAnimation.load(this.player.clothes);
+        DFAnimationSprite clothesSprite = await DFAnimationSprite.load(this.player.clothes);
         this.clothesSprite = clothesSprite;
         this.clothesSprite!.position = DFPosition(size.width / 2, size.height / 2);
         this.clothesSprite!.size = DFSize(160, 160);
@@ -83,7 +95,7 @@ class PlayerSprite extends DFSprite {
         addChild(this.clothesSprite!);
 
         if (this.player.weapon != "") {
-          DFSpriteAnimation weaponSprite = await DFSpriteAnimation.load(this.player.weapon);
+          DFAnimationSprite weaponSprite = await DFAnimationSprite.load(this.player.weapon);
           this.weaponSprite = weaponSprite;
 
           /// 绑定动画同步
@@ -98,23 +110,16 @@ class PlayerSprite extends DFSprite {
 
         /// 血条
         ui.Image image = await DFAssetsLoader.loadImage("assets/images/ui/hp_bar_player.png");
-        this.hpBarSprite = DFProgressSprite(image,gravity: DFGravity.top,textOffset: 5);
+        this.hpBarSprite = DFProgressSprite(image, gravity: DFGravity.top, textOffset: 5);
         this.hpBarSprite!.position = DFPosition(size.width / 2, 0);
         this.hpBarSprite!.scale = 0.6;
         addChild(this.hpBarSprite!);
 
         /// 名字
-        this.nameSprite = DFTextSprite(this.player.name,fontSize: 10,background: Color(0x20000000));
+        this.nameSprite = DFTextSprite(this.player.name, fontSize: 10, background: Color(0x20000000));
         this.nameSprite!.position = DFPosition(size.width / 2, -40);
         this.nameSprite!.setOnUpdate((dt) {});
         addChild(this.nameSprite!);
-
-        /// 选择光圈
-        DFSpriteAnimation selectSprite = await DFSpriteAnimation.load("assets/images/effect/select_player.json",scale: 0.6,blendMode: BlendMode.colorDodge);
-        this.selectSprite = selectSprite;
-        this.selectSprite!.position = DFPosition(size.width / 2, size.height/2 * 1.15);
-        addChild(this.selectSprite!);
-        this.selectSprite?.play(DFAnimation.SURROUND + DFAnimation.UP,stepTime: 100,loop: true);
 
         /// 初始化完成
         this.isInit = true;
@@ -161,12 +166,12 @@ class PlayerSprite extends DFSprite {
         } else if (this.action == DFAnimation.RUN) {
           clothesSprite!.play(animation, stepTime: 50, loop: loop);
         } else if (this.action == DFAnimation.ATTACK || this.action == DFAnimation.CASTING) {
-          clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFSpriteAnimation sprite) {
+          clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {
             print("Play Attack Finished");
 
             /// 动作完成回到IDLE
             clothesSprite!.play(DFAnimation.IDLE + this.direction, stepTime: 200, loop: false,
-                onComplete: (DFSpriteAnimation sprite) {
+                onComplete: (DFAnimationSprite sprite) {
               if (this.repeatMoveToAttack) {
                 this.targetEffect!.isDead = false;
                 this.moveToAttack(this.targetEffect!, repeatMoveToAttack: true);
@@ -174,7 +179,7 @@ class PlayerSprite extends DFSprite {
             });
           });
         } else {
-          clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFSpriteAnimation sprite) {
+          clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {
             if (sprite.currentAnimation.contains(DFAnimation.DIG)) {
               /// 动作完成回到IDLE
               clothesSprite!.play(DFAnimation.IDLE + this.direction, stepTime: 300, loop: true);
@@ -185,7 +190,26 @@ class PlayerSprite extends DFSprite {
     }
   }
 
-  /// 查看锁定目标
+  /// 锁定目标
+  void lockTargetSprite(Effect effect) {
+    /// 玩家视野范围内有多个精灵，选取第一个作为目标
+    this.findEnemy(
+        found: (sprites) {
+          print("找到了" + sprites.length.toString() + "个目标");
+          this.targetSprite = sprites[0];
+          if (this.targetSprite is MonsterSprite) {
+            MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
+            print("锁定目标：" + monsterSprite.monster.name);
+            monsterSprite.selectThisSprite();
+          }
+        },
+        notFound: () {
+          print("没有找到目标");
+        },
+        vision: player.vision);
+  }
+
+  /// 检查当前目标
   bool checkTargetSprite(double vision) {
     Rect visibleRect = Rect.fromLTWH(
       this.position.x - vision / 2,
@@ -212,27 +236,8 @@ class PlayerSprite extends DFSprite {
 
     /// 放弃这个目标
     this.targetSprite = null;
-    this.startMoveToTarget = false;
+    this.startAutoMove = false;
     return false;
-  }
-
-  /// 锁定目标
-  void lockTargetSprite(Effect effect) {
-    /// 玩家视野范围内有多个精灵，选取第一个作为目标
-    this.findEnemy(
-        found: (sprites) {
-          print("找到了" + sprites.length.toString() + "个目标");
-          this.targetSprite = sprites[0];
-          if (this.targetSprite is MonsterSprite) {
-            MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
-            print("锁定目标：" + monsterSprite.monster.name);
-            monsterSprite.selectThisSprite();
-          }
-        },
-        notFound: () {
-          print("没有找到目标");
-        },
-        vision: player.vision);
   }
 
   /// 锁定目标并移动
@@ -244,21 +249,26 @@ class PlayerSprite extends DFSprite {
     this.targetEffect = effect;
     if (this.targetSprite == null) {
       if (!repeatMoveToAttack) {
-        /// 胡乱释放一下技能
-        if (effect.type == EffectType.ATTACK) {
-          this.play(action: DFAnimation.ATTACK, direction: direction, radians: radians, effect: effect);
-        } else if (effect.type == EffectType.TRACK) {
-          this.play(action: DFAnimation.CASTING, direction: direction, radians: radians, effect: effect);
-        }
-
-        /// 显示技能特效
-        this._addEffect(effect);
+        attack(effect);
       }
     } else {
-      this.startMoveToTarget = true;
+      this.startAutoMove = true;
+      this.autoMoveClock = 0;
       this.repeatMoveToAttack = repeatMoveToAttack;
       this.play(action: DFAnimation.RUN, direction: direction, radians: radians);
     }
+  }
+
+  /// 释放技能攻击
+  void attack(Effect effect){
+    if (effect.type == EffectType.ATTACK) {
+      this.play(action: DFAnimation.ATTACK, direction: direction, radians: radians, effect: effect);
+    } else if (effect.type == EffectType.TRACK) {
+      this.play(action: DFAnimation.CASTING, direction: direction, radians: radians, effect: effect);
+    }
+
+    /// 显示技能特效
+    this._addEffect(effect);
   }
 
   /// 添加特效
@@ -311,14 +321,14 @@ class PlayerSprite extends DFSprite {
             /// 距离
             double dx = monsterSprite.position.x - this.position.x;
             double dy = monsterSprite.position.y - this.position.y;
-            if(dx * dx + dy * dy <= distance){
+            if (dx * dx + dy * dy <= distance) {
               preSprite = monsterSprite;
               distance = dx * dx + dy * dy;
             }
           }
         });
 
-        if (preSprite!=null) {
+        if (preSprite != null) {
           foundMonster.add(preSprite!);
         }
       }
@@ -350,17 +360,16 @@ class PlayerSprite extends DFSprite {
   /// 向目标移动
   void moveToTarget(DFSprite targetSprite,
       {required double vision, required Function(String direction, double radians) arrived}) {
-
     /// 距离
     double translateX = targetSprite.position.x - this.position.x;
     double translateY = targetSprite.position.y - this.position.y;
 
     /// 范围防抖
-    if ((translateX < 0 && translateX > -player.moveSpeed) || (translateX > 0 && translateX < player.moveSpeed)) {
+    if ((translateX < 0 && translateX > - 10) || (translateX > 0 && translateX < 10)) {
       translateX = 0;
     }
 
-    if ((translateY < 0 && translateY > -player.moveSpeed) || (translateY > 0 && translateY < player.moveSpeed)) {
+    if ((translateY < 0 && translateY > -10) || (translateY > 0 && translateY < 10)) {
       translateY = 0;
     }
 
@@ -397,32 +406,33 @@ class PlayerSprite extends DFSprite {
 
     /// 自动走位
     bool needFarAway = false;
-    if(repeatMoveToAttack && targetEffect!=null){
-      if(translateX.abs() < targetEffect!.vision/2 && translateY.abs() < targetEffect!.vision/2){
+    if (repeatMoveToAttack && targetEffect != null) {
+      if (translateX.abs() < targetEffect!.vision / 4 && translateY.abs() < targetEffect!.vision / 4) {
         print("自动走位与目标保持距离");
+
         /// 往反方向移动
-        if(direction == DFAnimation.UP){
+        if (direction == DFAnimation.UP) {
           direction = DFAnimation.DOWN;
           radians = 90 * pi / 180.0;
-        }else if(direction == DFAnimation.DOWN){
+        } else if (direction == DFAnimation.DOWN) {
           direction = DFAnimation.UP;
           radians = 270 * pi / 180.0;
-        }else if(direction == DFAnimation.LEFT){
+        } else if (direction == DFAnimation.LEFT) {
           direction = DFAnimation.RIGHT;
           radians = 0;
-        }else if(direction == DFAnimation.RIGHT){
+        } else if (direction == DFAnimation.RIGHT) {
           direction = DFAnimation.LEFT;
           radians = 180 * pi / 180.0;
-        }else if(direction == DFAnimation.DOWN_RIGHT){
+        } else if (direction == DFAnimation.DOWN_RIGHT) {
           direction = DFAnimation.UP_LEFT;
           radians = 225 * pi / 180.0;
-        }else if(direction == DFAnimation.UP_LEFT){
+        } else if (direction == DFAnimation.UP_LEFT) {
           direction = DFAnimation.DOWN_RIGHT;
           radians = 45 * pi / 180.0;
-        }else if(direction == DFAnimation.UP_RIGHT){
+        } else if (direction == DFAnimation.UP_RIGHT) {
           direction = DFAnimation.DOWN_LEFT;
           radians = 135 * pi / 180.0;
-        }else if(direction == DFAnimation.DOWN_LEFT){
+        } else if (direction == DFAnimation.DOWN_LEFT) {
           direction = DFAnimation.UP_RIGHT;
           radians = 315 * pi / 180.0;
         }
@@ -430,7 +440,7 @@ class PlayerSprite extends DFSprite {
       }
     }
 
-    if(needFarAway){
+    if (needFarAway) {
       /// 继续移动
       this.play(action: DFAnimation.RUN, direction: direction, radians: radians);
       return;
@@ -448,8 +458,31 @@ class PlayerSprite extends DFSprite {
       if (targetSprite is MonsterSprite) {
         Rect targetCollision = targetSprite.getCollisionRect().toRect();
         if (visibleRect.overlaps(targetCollision)) {
-          translateX = 0;
-          translateY = 0;
+          if(translateX == 0 || translateY == 0){
+            translateX = 0;
+            translateY = 0;
+          }
+          else if ((translateX.abs() - translateY.abs()).abs() < 10) {
+            /// 45度 可以战斗
+            translateX = 0;
+            translateY = 0;
+          } else if (translateX < translateY) {
+            if (translateX > 0) {
+              direction = DFAnimation.RIGHT;
+              radians = 0 * pi / 180.0;
+            } else if (translateX < 0) {
+              direction = DFAnimation.LEFT;
+              radians = 180 * pi / 180.0;
+            }
+          } else if (translateX > translateY) {
+            if (translateY > 0) {
+              direction = DFAnimation.DOWN;
+              radians = 90 * pi / 180.0;
+            } else if (translateY < 0) {
+              direction = DFAnimation.UP;
+              radians = 270 * pi / 180.0;
+            }
+          }
         }
       }
     }
@@ -464,8 +497,7 @@ class PlayerSprite extends DFSprite {
   }
 
   /// 接收伤害
-  void receiveDamage(DFSprite fromSprite,Effect effect) {
-
+  void receiveDamage(DFSprite fromSprite, Effect effect) {
     /// 随机伤害  0.0~1.0
     var random = new Random();
     if (fromSprite is MonsterSprite) {
@@ -478,7 +510,7 @@ class PlayerSprite extends DFSprite {
       double damageMt = newMinMt > newMaxMt ? newMinMt * effect.at : newMaxMt * effect.mt - player.mf;
 
       double totalDamage = damageAt + damageMt;
-      if(totalDamage <= 0){
+      if (totalDamage <= 0) {
         totalDamage = 1;
       }
 
@@ -489,12 +521,11 @@ class PlayerSprite extends DFSprite {
       print("伤害转化血量:" + hp.toString());
 
       this.player.hp = this.player.hp - hp;
-      this.hpBarSprite!.progress = (this.player.hp/this.player.maxMp * 100).toInt();
+      this.hpBarSprite!.progress = (this.player.hp / this.player.maxMp * 100).toInt();
       if (this.player.hp < 0) {
         print("玩家死亡");
       }
     }
-
 
     /*this.showDamage(
       damage,
@@ -518,25 +549,24 @@ class PlayerSprite extends DFSprite {
       //print("move:" + this.position.toString());
 
       /// 向目标移动，移动到可释放攻击技能
-      if (startMoveToTarget) {
+      if (startAutoMove) {
         /// 检查目标
         if (!checkTargetSprite(this.player.vision)) {
           return;
         }
 
-        this.moveToTarget(this.targetSprite!, vision: targetEffect!.vision,
-            arrived: (String direction, double radians) {
-          /// 停止移动
-          this.startMoveToTarget = false;
-          if (targetEffect!.type == EffectType.ATTACK) {
-            this.play(action: DFAnimation.ATTACK, direction: direction, radians: radians, effect: targetEffect);
-          } else if (targetEffect!.type == EffectType.TRACK) {
-            this.play(action: DFAnimation.CASTING, direction: direction, radians: radians, effect: targetEffect);
-          }
-
-          /// 显示技能特效
-          this._addEffect(targetEffect!);
-        });
+        if (DateTime.now().millisecondsSinceEpoch - this.autoMoveClock > 200) {
+          this.autoMoveClock = DateTime.now().millisecondsSinceEpoch;
+          this.moveToTarget(this.targetSprite!, vision: targetEffect!.vision,
+              arrived: (String direction, double radians) {
+                /// 停止移动
+                this.startAutoMove = false;
+                this.direction = direction;
+                this.radians = radians;
+                this.attack(targetEffect!);
+              }
+          );
+        }
       }
     }
     this.clothesSprite?.update(dt);
@@ -555,19 +585,14 @@ class PlayerSprite extends DFSprite {
     /// 移动画布
     canvas.translate(position.x, position.y);
 
+    /// 活着
     if (!this.player.isDead) {
-
-      /// 选择光圈
-      this.selectSprite?.render(canvas);
-
-      /// 渲染身体精灵
-      this.clothesSprite?.render(canvas);
-
-      /// 血条精灵
-      this.hpBarSprite?.render(canvas);
-
-      /// 名字
-      this.nameSprite?.render(canvas);
+      /// 绘制子精灵
+      this.children.forEach((sprite) {
+        if (sprite.visible) {
+          sprite.render(canvas);
+        }
+      });
     }
 
     ///恢复画布

@@ -63,7 +63,7 @@ class DFGameWidget extends LeafRenderObjectWidget {
   /// 绘制界面
   void render(Canvas canvas) {
     children.forEach((sprite) {
-      if (sprite.isUsed) {
+      if (sprite.isUsed && sprite.visible) {
         sprite.render(canvas);
       }
     });

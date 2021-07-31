@@ -53,6 +53,8 @@ flutter:
     - assets/images/weapon/
     - assets/images/ui/
     - assets/images/effect/
+    - assets/images/map/
+    - assets/images/map/lxd/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
