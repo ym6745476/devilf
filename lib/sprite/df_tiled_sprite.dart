@@ -31,7 +31,7 @@ class DFTiledSprite extends DFSprite {
 
   /// 创建瓦片精灵
   DFTiledSprite({
-    DFSize size = const DFSize(240, 256),
+    DFSize size = const DFSize(100, 100),
   }) : super(position: DFPosition(0, 0), size: size);
 
   /// 读取tiled导出的json文件
@@ -91,7 +91,7 @@ class DFTiledSprite extends DFSprite {
     int row = 0;
     int column = 0;
     String imagePath = this.path + "/" + _pathTileset + "";
-    double scale = 0.05;
+    double scale = 0.3;
 
     if (tiles != null) {
       firstGid = findTileSet.firsTgId ?? 0;
@@ -99,13 +99,17 @@ class DFTiledSprite extends DFSprite {
       tileWidth = findTileSet.tileWidth!.toDouble() ;
       tileHeight = findTileSet.tileHeight!.toDouble();
 
-      /// 行列
-      row = _getX((index - firstGid), 8).toInt();
-      column = _getY((index - firstGid), 8).toInt();
-      print("row:" + row.toString() + ",column:" + column.toString());
+      int columnCount = (tiledMap!.width! * tiledMap!.tileWidth!) ~/ tileWidth;
+      print("columnCount:" + columnCount.toString());
 
-      print("index:" + index.toString());
+      /// 行列
+      row = _getY((index - firstGid), columnCount).toInt();
+      column = _getX((index - firstGid), columnCount).toInt();
+      ///print("index:" + index.toString());
+      ///print("row:" + row.toString() + ",column:" + column.toString());
+
       imagePath = this.path + "/" + _pathTileset + tile.image!;
+      ///print(imagePath);
     }
 
     /// "image":"lxd/1000_5#960_1024_480_512.jpg",
@@ -116,9 +120,10 @@ class DFTiledSprite extends DFSprite {
       rotated: false,
     );
     sprite.scale = scale;
-    sprite.position =  DFPosition(column * tileWidth * scale,row * tileHeight * scale);
+    sprite.position =  DFPosition(column * tileWidth * scale + tileWidth/2 * scale ,row * tileHeight * scale + tileHeight/2 * scale);
     return sprite;
   }
+
 
   double _getX(int index, int width) {
     return (index % width).toDouble();

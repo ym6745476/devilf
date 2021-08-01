@@ -180,12 +180,12 @@ class DFAnimationSprite extends DFSprite {
       this.stepTime = stepTime;
       this.loop = loop;
       this.onComplete = onComplete;
-      print("Play:" +
+      /*print("Play:" +
           animation.toString() +
           ",frames:" +
           this.frames[this.currentAnimation]!.length.toString() +
           ",stepTime:" +
-          stepTime.toString());
+          stepTime.toString());*/
     }
   }
 
