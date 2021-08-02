@@ -14,12 +14,12 @@ A Flutter RPG Game Engine.
 ## 引擎介绍  
 (Devil Fighter)
 自从有了Flutter，轻松实现了三端跨平台，并且不增加包体积，就能拥有一套Native游戏引擎，为APP游戏化提供了更多可能性。  
-开发这套引擎的同时，也会同时开发引擎对应的游戏示例，将以2D Tiled RPG游戏作为示例来完善该引擎。  
+开发这套引擎的同时，也会同时开发引擎对应的游戏示例，将以2D RPG游戏作为示例来完善该引擎。  
 感谢大家关注，也欢迎贡献你的想法和技术。  
 
-适用范围：中小型游戏，APP内营销活动，小游戏；   
-主要特性：游戏循环，精灵动画，交互控制；     
-游戏支持：Tiled地图，Plist精灵，碰撞检测，遥杆控制器等。     
+适用范围：中小型游戏，APP内营销活动，小游戏等；   
+主要特性：游戏循环，精灵动画，战斗系统；     
+游戏支持：摄像机，瓦片地图，精灵动画，碰撞检测，遥杆控制器等。     
 
 ## 开发手册  
 https://ymbok.com/book-111-146.html  
@@ -60,6 +60,7 @@ dependencies:
 * ProgressSprite：进度精灵  
 * TiledSprite：瓦片精灵  
 * Joystick：遥杆控件  
+* Camera：摄像机    
 
 # 推荐Flutter开发框架（Http请求，各类UI组件全搞定）
 https://github.com/ym6745476/ym_flutter_widget  
