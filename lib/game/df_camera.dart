@@ -15,6 +15,7 @@ class DFCamera {
   /// 创建矩形
   DFCamera({this.zoom = 1, this.rect = const DFRect(0, 0, 100, 100)});
 
+  /// 设置跟随目标
   void lookAt(DFSprite sprite) {
     this.sprite = sprite;
   }
