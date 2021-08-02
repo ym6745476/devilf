@@ -34,7 +34,7 @@ dependencies:
 ```
 
 ### 示例演示
-<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/devilf.gif" width="600" height="292"/>  
+<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/devilf.gif?z=6" width="600" height="292"/>  
 
 # 引擎框架
 <img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/doc_1.png" width="500" height="473"/>  
