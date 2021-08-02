@@ -61,7 +61,7 @@ class DFAnimationSprite extends DFSprite {
   ///      }
   ///   }
   /// }
-  static Future<DFAnimationSprite> load(String json, {scale = 0.6,blendMode = BlendMode.srcOver}) async {
+  static Future<DFAnimationSprite> load(String json, {scale = 0.5,blendMode = BlendMode.srcOver}) async {
     DFAnimationSprite animationSprite = DFAnimationSprite(stepTime: 100, loop: true);
 
     DFAnimation.sequence.forEach((element) {

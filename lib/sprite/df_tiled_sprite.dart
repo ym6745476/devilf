@@ -42,7 +42,7 @@ class DFTiledSprite extends DFSprite {
     tiledSprite.path = json.substring(0, json.lastIndexOf("/"));
     if (tiledSprite.tiledMap != null) {
       await Future.forEach<DFMapLayer>(tiledSprite.tiledMap!.layers ?? [], (layer) async {
-        await tiledSprite.loadLayer(layer);
+          await tiledSprite.loadLayer(layer);
       });
     }
 
@@ -75,48 +75,51 @@ class DFTiledSprite extends DFSprite {
   }
 
   Future<DFImageSprite> getTileImageSprite(int index) async {
+
+    ///print("index:" + index.toString());
+
     String _pathTileset = '';
 
     DFTileSet? findTileSet = tiledMap?.tileSets?.lastWhere((tileSet) {
-      return tileSet.tiles != null &&
-          tileSet.firsTgId != null &&
-          index >= tileSet.firsTgId!;
+      return tileSet.firsTgId != null && index >= tileSet.firsTgId!;
     });
 
     List<DFTile>? tiles = findTileSet!.tiles;
     DFTile? tile;
-    double tileWidth = 480;
-    double tileHeight = 512;
-    int firstGid = 0;
     int row = 0;
     int column = 0;
     String imagePath = this.path + "/" + _pathTileset + "";
-    double scale = 0.3;
+    double scale = 0.35;
+    int firstGid = findTileSet.firsTgId ?? 0;
+    double tileWidth = findTileSet.tileWidth!.toDouble() ;
+    double tileHeight = findTileSet.tileHeight!.toDouble();
+    int columnCount = (tiledMap!.width! * tiledMap!.tileWidth!) ~/ tileWidth;
+    //print("columnCount:" + columnCount.toString());
+    /// 行列
+    row = _getY((index - firstGid), columnCount).toInt();
+    column = _getX((index - firstGid), columnCount).toInt();
+    //print("index:" + index.toString() + ",firsTgId:" + firstGid.toString());
+    //print("row:" + row.toString() + ",column:" + column.toString());
+    double imageWidth = 0;
+    double imageHeight = 0;
 
     if (tiles != null) {
-      firstGid = findTileSet.firsTgId ?? 0;
       tile = tiles[index - firstGid];
-      tileWidth = findTileSet.tileWidth!.toDouble() ;
-      tileHeight = findTileSet.tileHeight!.toDouble();
-
-      int columnCount = (tiledMap!.width! * tiledMap!.tileWidth!) ~/ tileWidth;
-      print("columnCount:" + columnCount.toString());
-
-      /// 行列
-      row = _getY((index - firstGid), columnCount).toInt();
-      column = _getX((index - firstGid), columnCount).toInt();
-      ///print("index:" + index.toString());
-      ///print("row:" + row.toString() + ",column:" + column.toString());
-
+      imageWidth = tile.imageWidth!.toDouble() ;
+      imageHeight = tile.imageHeight!.toDouble();
       imagePath = this.path + "/" + _pathTileset + tile.image!;
-      ///print(imagePath);
+      //print(imagePath);
+    }else{
+      imageWidth = findTileSet.imageWidth!.toDouble() ;
+      imageHeight = findTileSet.imageHeight!.toDouble();
+      imagePath = this.path + "/" + _pathTileset + findTileSet.image!;
     }
 
     /// "image":"lxd/1000_5#960_1024_480_512.jpg",
     ui.Image image = await DFAssetsLoader.loadImage(imagePath);
     DFImageSprite sprite = DFImageSprite(
       image,
-      rect: DFRect(0, 0, tile!.imageWidth!.toDouble(), tile.imageHeight!.toDouble()),
+      rect: DFRect(0, 0, imageWidth, imageHeight),
       rotated: false,
     );
     sprite.scale = scale;

@@ -24,6 +24,9 @@ class DFSprite {
   /// 子精灵
   List<DFSprite> children = [];
 
+  /// 固定到屏幕
+  bool fixed = false;
+
   /// 显示
   bool visible = true;
 
@@ -37,10 +40,19 @@ class DFSprite {
   DFSprite({required this.position, required this.size});
 
   /// 增加子精灵
-  void addChild(DFSprite child) {
+  void addChild(DFSprite sprite) {
     /// 绑定父和子的关系
-    child.parent = this;
-    children.add(child);
+    sprite.parent = this;
+    children.add(sprite);
+  }
+
+  /// 增加精灵 增加进来精灵才能被绘制
+  void addChildren(List<DFSprite> sprites) {
+    sprites.forEach((sprite) {
+      /// 绑定父和子的关系
+      sprite.parent = this;
+    });
+    children.addAll(sprites);
   }
 
   /// 精灵更新

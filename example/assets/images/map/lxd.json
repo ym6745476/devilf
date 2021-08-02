@@ -3,8 +3,7 @@
     {
      "export":
         {
-         "format":"json",
-         "target":"lxd.json"
+         "format":"json"
         }
     },
  "height":176,
@@ -29,7 +28,7 @@
          "name":"block",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":140,
          "x":0,
          "y":0
@@ -41,7 +40,7 @@
          "name":"alpha",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":140,
          "x":0,
          "y":0
