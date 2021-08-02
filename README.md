@@ -1,5 +1,5 @@
 # DevilF 游戏引擎  
-A RPG Game Engine Implemented With Flutter.  
+A Flutter RPG Game Engine.  
 一款使用Flutter开发的RPG游戏引擎。  
 
 <p align="center">
@@ -58,12 +58,14 @@ dependencies:
 * ImageSprite：图片精灵  
 * AnimationSprite：动画精灵  
 * ProgressSprite：进度精灵  
+* TiledSprite：瓦片精灵  
 * Joystick：遥杆控件  
 
 # 推荐Flutter开发框架（Http请求，各类UI组件全搞定）
 https://github.com/ym6745476/ym_flutter_widget  
 
-## [0.0.6] - 2021/07/30. 
+## [0.0.6] - 2021/08/01.  
+* 新增[核心] 瓦片精灵    
 * 优化[核心] 摇杆不固定位置  
 * 新增[示例] 玩家和怪物增加血条显示  
 * 新增[核心] ProgressSprite  进度精灵   
