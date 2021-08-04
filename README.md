@@ -22,10 +22,10 @@ A Flutter RPG Game Engine.
 游戏支持：摄像机，瓦片地图，精灵动画，碰撞检测，遥杆控制器等。     
 
 ## 开发手册  
-https://ymbok.com/book-111-146.html  
+https://ymbok.com/book/devilf.html  
 
 ## 在线体验    
-https://ymbok.com/phone-111.html  
+https://ymbok.com/example/devilf.html  
 
 ## 安装控件
 ```yaml
