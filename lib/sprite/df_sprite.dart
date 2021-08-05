@@ -6,6 +6,10 @@ import '../game/df_math_size.dart';
 
 /// 基础精灵类
 class DFSprite {
+
+  /// 唯一标识
+  String? key;
+
   /// 相对坐标
   DFSprite? parent;
 

@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:ui';
 import 'package:devilf/game/df_animation.dart';
 import 'package:devilf/game/df_assets_loader.dart';
+import 'package:devilf/game/df_camera.dart';
 import 'package:devilf/game/df_math_offset.dart';
 import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/game/df_math_rect.dart';
@@ -29,6 +30,9 @@ class DFTiledSprite extends DFSprite {
   /// 需要绘制的瓦片
   List<DFImageSprite> sprites = [];
 
+  /// 摄像机位置
+  DFPosition? cameraPosition;
+
   /// 创建瓦片精灵
   DFTiledSprite({
     DFSize size = const DFSize(100, 100),
@@ -40,79 +44,115 @@ class DFTiledSprite extends DFSprite {
     Map<String, dynamic> jsonMap = await DFAssetsLoader.loadJson(json);
     tiledSprite.tiledMap = DFTiledMap.fromJson(jsonMap);
     tiledSprite.path = json.substring(0, json.lastIndexOf("/"));
-    if (tiledSprite.tiledMap != null) {
-      await Future.forEach<DFMapLayer>(tiledSprite.tiledMap!.layers ?? [], (layer) async {
-          await tiledSprite.loadLayer(layer);
-      });
-    }
-
+    tiledSprite.scale = 0.35;
     return tiledSprite;
   }
 
-  Future<void> loadLayer(DFMapLayer layer) async {
-    if (layer.visible != true) return;
+  /// 更细地图瓦片
+  Future<void> updateLayer(DFCamera camera) async {
 
-    if (layer is DFTileLayer) {
+    if (this.tiledMap == null) return;
+
+    /// 上一下刷新时摄像机的位置
+    if(this.cameraPosition != null){
+      if((this.cameraPosition!.x - camera.sprite!.position.x).abs() < 240 * scale && (this.cameraPosition!.y - camera.sprite!.position.y).abs() < 256 * scale){
+        return;
+      }
+    }
+    /// 保存上一下刷新时摄像机的位置
+    this.cameraPosition = DFPosition(camera.sprite!.position.x,camera.sprite!.position.y);
+    double drawX = camera.sprite!.position.x - camera.rect.width/2;
+    double drawY = camera.sprite!.position.y - camera.rect.height/2;
+
+    /// 可视区域
+    DFRect visibleRect = DFRect(drawX,drawY, camera.rect.width, camera.rect.height);
+    /// print("visibleRect:" + visibleRect.toString());
+
+    /// 将全部的瓦片设置为不可见
+    sprites.forEach((element) {
+      element.visible = false;
+    });
+
+    /// 遍历图层
+    await Future.forEach<DFMapLayer>(this.tiledMap!.layers ?? [], (layer) async {
       if (layer.visible != true) return;
 
-      await Future.forEach<int>(layer.data ?? [], (tile) async {
-        if (tile != 0) {
-            DFImageSprite imageSprite = await getTileImageSprite(tile);
-            sprites.add(imageSprite);
-        }
-      });
-    }
+      if (layer is DFTileLayer) {
+        if (layer.visible != true) return;
 
-    if (layer is DFObjectGroup) {
-      //_addObjects(layer);
-    }
+        await Future.forEach<int>(layer.data ?? [], (tile) async {
+          if (tile != 0) {
 
-    if (layer is DFGroupLayer) {
-      await Future.forEach<DFMapLayer>(layer.layers ?? [], (subLayer) async {
-        await loadLayer(subLayer);
-      });
-    }
+            DFTileSet? findTileSet = tiledMap?.tileSets?.lastWhere((tileSet) {
+              return tileSet.firsTgId != null && tile >= tileSet.firsTgId!;
+            });
+            int firstGid = findTileSet!.firsTgId ?? 0;
+            double tileWidth = findTileSet.tileWidth!.toDouble() ;
+            double tileHeight = findTileSet.tileHeight!.toDouble();
+            int columnCount = (tiledMap!.width! * tiledMap!.tileWidth!) ~/ tileWidth;
+            int row = _getY((tile - firstGid), columnCount).toInt();
+            int column = _getX((tile - firstGid), columnCount).toInt();
+            //print("row:" + row.toString() + ",column:" + column.toString() + ",scale:" + this.scale.toString());
+            Rect tileRect = Rect.fromLTWH(column * tileWidth * this.scale, row * tileHeight * this.scale, tileWidth * this.scale, tileHeight * this.scale);
+            //print("tileRect:" + tileRect.toString());
+            /// 在可视区域的瓦片设置为显示
+            if(visibleRect.toRect().overlaps(tileRect)){
+              DFImageSprite? imageSprite = existImageSprite(row,column);
+              if(imageSprite == null){
+                imageSprite = await getTileImageSprite(findTileSet,tile - firstGid,row,column);
+                sprites.add(imageSprite);
+              }else{
+                imageSprite.visible = true;
+              }
+            }
+          }
+        });
+
+      }else if (layer is DFObjectGroup) {
+
+      }else if (layer is DFGroupLayer) {
+
+      }
+
+    });
+
+    /// 删除不可见的精灵
+    sprites.removeWhere((element) => !element.visible);
   }
 
-  Future<DFImageSprite> getTileImageSprite(int index) async {
+  /// 获取存在的精灵
+  DFImageSprite? existImageSprite(int row,int column){
+    for (DFImageSprite sprite in sprites) {
+      if(row.toString() + "," + column.toString() == sprite.key){
+        return sprite;
+      }
+    }
+    return null;
+  }
+
+  /// 获取瓦片精灵的某个瓦片
+  Future<DFImageSprite> getTileImageSprite(DFTileSet tileSet,int tileIndex, int row,int column) async {
 
     ///print("index:" + index.toString());
 
-    String _pathTileset = '';
-
-    DFTileSet? findTileSet = tiledMap?.tileSets?.lastWhere((tileSet) {
-      return tileSet.firsTgId != null && index >= tileSet.firsTgId!;
-    });
-
-    List<DFTile>? tiles = findTileSet!.tiles;
+    List<DFTile>? tiles = tileSet.tiles;
     DFTile? tile;
-    int row = 0;
-    int column = 0;
-    String imagePath = this.path + "/" + _pathTileset + "";
-    double scale = 0.35;
-    int firstGid = findTileSet.firsTgId ?? 0;
-    double tileWidth = findTileSet.tileWidth!.toDouble() ;
-    double tileHeight = findTileSet.tileHeight!.toDouble();
-    int columnCount = (tiledMap!.width! * tiledMap!.tileWidth!) ~/ tileWidth;
-    //print("columnCount:" + columnCount.toString());
-    /// 行列
-    row = _getY((index - firstGid), columnCount).toInt();
-    column = _getX((index - firstGid), columnCount).toInt();
-    //print("index:" + index.toString() + ",firsTgId:" + firstGid.toString());
-    //print("row:" + row.toString() + ",column:" + column.toString());
+    String imagePath = this.path + "/";
+    double tileWidth = tileSet.tileWidth!.toDouble() ;
+    double tileHeight = tileSet.tileHeight!.toDouble();
     double imageWidth = 0;
     double imageHeight = 0;
 
     if (tiles != null) {
-      tile = tiles[index - firstGid];
+      tile = tiles[tileIndex];
       imageWidth = tile.imageWidth!.toDouble() ;
       imageHeight = tile.imageHeight!.toDouble();
-      imagePath = this.path + "/" + _pathTileset + tile.image!;
-      //print(imagePath);
+      imagePath = this.path + "/" + tile.image!;
+      print(imagePath);
     }else{
-      imageWidth = findTileSet.imageWidth!.toDouble() ;
-      imageHeight = findTileSet.imageHeight!.toDouble();
-      imagePath = this.path + "/" + _pathTileset + findTileSet.image!;
+      imageWidth = tileSet.imageWidth!.toDouble() ;
+      imageHeight = tileSet.imageHeight!.toDouble();
+      imagePath = this.path + "/" + tileSet.image!;
     }
 
     /// "image":"lxd/1000_5#960_1024_480_512.jpg",
@@ -124,14 +164,16 @@ class DFTiledSprite extends DFSprite {
     );
     sprite.scale = scale;
     sprite.position =  DFPosition(column * tileWidth * scale + tileWidth/2 * scale ,row * tileHeight * scale + tileHeight/2 * scale);
+    sprite.key = row.toString() + "," + column.toString();
     return sprite;
   }
 
-
+  /// 获取列
   double _getX(int index, int width) {
     return (index % width).toDouble();
   }
 
+  /// 获取行
   double _getY(int index, int width) {
     return (index / width).floor().toDouble();
   }
@@ -139,7 +181,7 @@ class DFTiledSprite extends DFSprite {
   /// 精灵更新
   @override
   void update(double dt) {
-    /// 控制动画帧切换
+
   }
 
   /// 精灵渲染
@@ -151,15 +193,19 @@ class DFTiledSprite extends DFSprite {
     /// 将子精灵转换为相对坐标
     canvas.translate(position.x, position.y);
 
-    /// 精灵矩形边界
-    //var paint = new Paint()..color = Color(0x6000FF00);
-    //canvas.drawRect(Rect.fromLTWH(- size.width/2,- size.height/2, size.width, size.height), paint);
-
     if (this.sprites.length > 0){
       this.sprites.forEach((sprite) {
         sprite.render(canvas);
       });
     }
+
+    /// 精灵矩形边界
+    /*if(this.cameraPosition!=null){
+      var paint = new Paint()..color = Color(0x6000FF00);
+      DFRect visibleRect = DFRect(this.cameraPosition!.x - 50,this.cameraPosition!.y -50, 100, 100);
+      canvas.drawRect(visibleRect.toRect(), paint);
+    }*/
+
     /// 画布恢复
     canvas.restore();
   }

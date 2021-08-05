@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:devilf/game/df_camera.dart';
 import 'package:devilf/game/df_math_position.dart';
+import 'package:devilf/game/df_math_rect.dart';
 import 'package:devilf/game/df_math_size.dart';
 import 'package:devilf/sprite/df_sprite.dart';
 import 'package:devilf/sprite/df_tiled_sprite.dart';
@@ -14,14 +16,19 @@ class MapSprite extends DFSprite {
   /// 地图文件
   String map = "";
 
+  /// 瓦片精灵
   DFTiledSprite? tiledSprite;
+
+  /// 摄像机
+  DFCamera camera;
 
   /// 是否初始化
   bool isInit = false;
 
   MapSprite(
     this.name, {
-    this.map = "",
+    required this.map,
+    required this.camera,
     DFSize size = const DFSize(48, 32),
   }) : super(position: DFPosition(0, 0), size: size) {
     _init();
@@ -44,10 +51,7 @@ class MapSprite extends DFSprite {
 
   @override
   void update(double dt) {
-    if (this.tiledSprite == null) {
-      return;
-    }
-    this.tiledSprite?.update(dt);
+    this.tiledSprite?.updateLayer(camera);
   }
 
   @override

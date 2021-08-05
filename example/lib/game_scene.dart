@@ -67,7 +67,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         this._gameWidget = DFGameWidget(camera: camera);
 
         /// 地图精灵
-        MapSprite mapSprite = MapSprite("落霞岛", map: "assets/images/map/lxd.json");
+        MapSprite mapSprite = MapSprite("落霞岛", map: "assets/images/map/lxd.json",camera: camera);
 
         /// 创建玩家精灵
         Player player = Player("玩家1");

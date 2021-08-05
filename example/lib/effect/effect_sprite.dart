@@ -255,10 +255,10 @@ class EffectSprite extends DFSprite {
     canvas.save();
 
     /// 精灵矩形边界
-    if (!effect.isDead) {
-      var paint = new Paint()..color = Color(0x60bb505d);
-      canvas.drawRect(getCollisionRect().toRect(), paint);
-    }
+    ///if (!effect.isDead) {
+    ///  var paint = new Paint()..color = Color(0x60bb505d);
+    ///  canvas.drawRect(getCollisionRect().toRect(), paint);
+    ///}
 
     /// 移动画布
     canvas.translate(position.x, position.y);

@@ -506,8 +506,8 @@ class MonsterSprite extends DFSprite {
     canvas.save();
 
     /// 精灵矩形边界
-    var paint = new Paint()..color = Color(0x60bb505d);
-    canvas.drawRect(getCollisionRect().toRect(), paint);
+    /// var paint = new Paint()..color = Color(0x60bb505d);
+    /// canvas.drawRect(getCollisionRect().toRect(), paint);
 
     /// 移动画布
     canvas.translate(position.x, position.y);
