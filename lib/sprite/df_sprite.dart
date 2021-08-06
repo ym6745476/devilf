@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:devilf/game/df_math_position.dart';
+import 'package:devilf/game/df_math_rect.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../game/df_math_size.dart';
@@ -57,6 +58,13 @@ class DFSprite {
       sprite.parent = this;
     });
     children.addAll(sprites);
+  }
+
+  /// 碰撞矩形
+  DFRect getCollisionRect() {
+    /// 子类覆盖
+    return DFRect(this.position.x - this.size.width / 2, this.position.y - this.size.height / 2, this.size.width,
+        this.size.height);
   }
 
   /// 精灵更新

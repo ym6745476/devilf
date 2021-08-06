@@ -40,7 +40,7 @@ class Monster extends Living {
   double actionStepTime = 1000;
 
   /// 复活间隔
-  double rebornTime = 3000;
+  double rebornTime = 5000;
 
   /// 创建怪物
   Monster(name) : super(name);

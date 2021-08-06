@@ -10,6 +10,7 @@ import 'package:devilf/game/df_math_size.dart';
 import 'package:devilf/sprite/df_image_sprite.dart';
 import 'package:devilf/sprite/df_text_sprite.dart';
 import 'package:devilf/util/df_util.dart';
+import 'package:devilf/widget/df_button.dart';
 import 'package:devilf/widget/df_joystick.dart';
 import 'package:example/player/player.dart';
 import 'package:example/player/player_sprite.dart';
@@ -67,7 +68,10 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         this._gameWidget = DFGameWidget(camera: camera);
 
         /// 地图精灵
-        MapSprite mapSprite = MapSprite("落霞岛", map: "assets/images/map/lxd.json",camera: camera);
+        MapSprite mapSprite = MapSprite("落霞岛", map: "assets/images/map/lxd.json", camera: camera);
+
+        /// 保存到管理器里
+        GameManager.mapSprite = mapSprite;
 
         /// 创建玩家精灵
         Player player = Player("玩家1");
@@ -222,14 +226,20 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         ),
 
         Positioned(
-          bottom: MediaQuery.of(context).padding.bottom + 10,
-          right: 20,
-          child: Wrap(
-            spacing: 5,
-            runSpacing: 5,
-            children: [
-              ElevatedButton(
-                child: new Text('攻击'),
+            bottom: MediaQuery.of(context).padding.bottom + 20,
+            right: 20,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/ui/skill_primary_bg.png"),
+                ),
+              ),
+              alignment: Alignment.center,
+              child: DFButton(
+                /// text: "攻击",
+                image: "assets/images/skill_icon/1002.png",
+                pressedImage: "assets/images/ui/1002.png",
+                size: Size(70, 70),
                 onPressed: () {
                   Effect effect = Effect();
                   effect.name = "1002";
@@ -241,8 +251,23 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                   _playerSprite?.moveToAttack(effect);
                 },
               ),
-              ElevatedButton(
-                child: new Text('施法'),
+            )),
+
+        Positioned(
+            bottom: MediaQuery.of(context).padding.bottom + 100,
+            right: 20,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/ui/skill_secondary_bg.png"),
+                ),
+              ),
+              alignment: Alignment.center,
+              child: DFButton(
+                /// text: "小火球",
+                image: "assets/images/skill_icon/2001.png",
+                pressedImage: "assets/images/ui/1002.png",
+                size: Size(50, 50),
                 onPressed: () {
                   Effect effect = Effect();
                   effect.name = "2001";
@@ -254,6 +279,29 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                   _playerSprite?.moveToAttack(effect);
                 },
               ),
+            )),
+
+        Positioned(
+          bottom: MediaQuery.of(context).padding.bottom + 20,
+          right: 120,
+          child: DFButton(
+            /// text: "拾取",
+            image: "assets/images/ui/pick.png",
+            pressedImage: "assets/images/ui/pick.png",
+            size: Size(40, 40),
+            onPressed: () {
+              _playerSprite?.play(action: DFAnimation.DIG);
+            },
+          ),
+        ),
+
+        Positioned(
+          bottom: MediaQuery.of(context).padding.bottom + 160,
+          right: 20,
+          child: Wrap(
+            spacing: 5,
+            runSpacing: 5,
+            children: [
               ElevatedButton(
                 child: new Text('自动1'),
                 onPressed: () {
@@ -278,12 +326,6 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
                   effect.delayTime = 300;
                   effect.texture = "assets/images/effect/" + effect.name + ".json";
                   _playerSprite?.moveToAttack(effect, repeatMoveToAttack: true);
-                },
-              ),
-              ElevatedButton(
-                child: new Text('挖'),
-                onPressed: () {
-                  _playerSprite?.play(action: DFAnimation.DIG);
                 },
               ),
             ],

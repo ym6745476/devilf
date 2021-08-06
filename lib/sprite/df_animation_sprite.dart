@@ -34,6 +34,9 @@ class DFAnimationSprite extends DFSprite {
   /// x轴镜像
   bool currentAnimationFlippedX = false;
 
+  /// 颜色
+  Color color;
+
   /// 被绑定状态
   bool isBind = false;
 
@@ -47,6 +50,7 @@ class DFAnimationSprite extends DFSprite {
   DFAnimationSprite({
     this.stepTime = 200,
     this.loop = true,
+    this.color = const Color(0xFFFFFFFF),
     DFSize size = const DFSize(128, 128),
   }) : super(position: DFPosition(0, 0), size: size);
 
@@ -236,6 +240,7 @@ class DFAnimationSprite extends DFSprite {
     if (this.frames[this.currentAnimation] != null && this.frames[this.currentAnimation]!.length > 0) {
       List<DFImageSprite> sprites = this.frames[this.currentAnimation]!;
       sprites[this.currentIndex].flippedX = currentAnimationFlippedX;
+      sprites[this.currentIndex].color = color;
       sprites[this.currentIndex].render(canvas);
     }
 

@@ -418,11 +418,10 @@ class MonsterSprite extends DFSprite {
   /// 重生
   void reborn() {
     /// 随机位置  0.0~1.0
-    var random = new Random();
-    double newX = GameManager.visibleWidth * random.nextDouble();
-    double newY = GameManager.visibleHeight * random.nextDouble();
-    this.position.x = newX;
-    this.position.y = newY;
+    int dirX = Random().nextBool() ? 1 : -1;
+    int dirY = Random().nextBool() ? 1 : -1;
+    this.position.x = this.position.x + dirX * 100 * Random().nextDouble();
+    this.position.y = this.position.y + dirY * 100 * Random().nextDouble();
     this.action = DFAnimation.IDLE;
     this.clothesSprite!.currentAnimation = DFAnimation.IDLE + DFAnimation.DOWN;
     this.monster.isDead = false;

@@ -30,12 +30,16 @@ class DFImageSprite extends DFSprite {
   /// 混合模式
   BlendMode blendMode;
 
+  /// 颜色
+  Color color;
+
   /// 创建图片精灵
   DFImageSprite(
     this.image, {
     DFSize size = const DFSize(64, 64),
     this.rect = const DFRect(0, 0, 64, 64),
     this.offset = const DFOffset(0, 0),
+    this.color = const Color(0xFFFFFFFF),
     this.rotated = false,
     this.flippedX = false,
     this.blendMode = BlendMode.srcOver,
@@ -69,13 +73,7 @@ class DFImageSprite extends DFSprite {
       /// 针对json中的图像旋转
       canvas.rotate(-90 * pi / 180); //弧度
 
-      //Paint paint1 = Paint()..color = new Color(0x40FFFFFF); //白色
-      //canvas.drawRect(Rect.fromLTWH(0,0, size.width, size.height), paint1);
-
       dstRect = Rect.fromCenter(center: Offset(0, 0), width: rect.width * scale, height: rect.height * scale);
-
-      //Paint paint2 = Paint()..color = Color(0x60444693);
-      //canvas.drawRect(outputRect, paint2);
 
     } else {
       /// 将子精灵转换为相对坐标
@@ -86,14 +84,9 @@ class DFImageSprite extends DFSprite {
       }
       canvas.rotate(this.angle * pi / 180); //弧度
 
-      //Paint paint3 = Paint()..color = new Color(0x40FFFFFF); //白色
-      //canvas.drawRect(Rect.fromLTWH(0,0, size.width, size.height), paint3);
-
       dstRect =
           Rect.fromCenter(center: Offset(0, -rect.height / 2), width: rect.width * scale, height: rect.height * scale);
 
-      //Paint paint4 = Paint()..color = Color(0x60444693);
-      //canvas.drawRect(outputRect, paint4);
     }
 
     /// 水平镜像
@@ -119,18 +112,10 @@ class DFImageSprite extends DFSprite {
         height: dstRect.height * scale);
 
     /// 绘制图像
-    Paint paint5 = Paint()..color = Color(0xFFFFFFFF);
-    paint5.blendMode = this.blendMode;
-    /// canvas.drawRect(outputRect, paint5);
+    Paint paintImage = Paint()..color = color;
+    paintImage.blendMode = this.blendMode;
+    canvas.drawImageRect(this.image, rect.toRect(), outputRect, paintImage);
 
-    canvas.drawImageRect(this.image, rect.toRect(), outputRect, paint5);
-
-    /// 绘制子精灵
-    if (children.length > 0) {
-      children.forEach((element) {
-        element.render(canvas);
-      });
-    }
 
     /// 画布恢复
     canvas.restore();

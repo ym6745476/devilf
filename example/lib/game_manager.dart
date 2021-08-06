@@ -1,5 +1,6 @@
 import 'package:devilf/game/df_game_widget.dart';
 import 'package:example/player/player_sprite.dart';
+import 'map/map_sprite.dart';
 import 'monster/monster_sprite.dart';
 
 /// 游戏管理器
@@ -12,6 +13,9 @@ class GameManager {
 
   /// 游戏组件
   static DFGameWidget? gameWidget;
+
+  /// 地图精灵
+  static MapSprite? mapSprite;
 
   /// 玩家精灵
   static PlayerSprite? playerSprite;
