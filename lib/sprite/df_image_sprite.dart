@@ -37,7 +37,7 @@ class DFImageSprite extends DFSprite {
   DFImageSprite(
     this.image, {
     DFSize size = const DFSize(64, 64),
-    this.rect = const DFRect(0, 0, 64, 64),
+    required this.rect,
     this.offset = const DFOffset(0, 0),
     this.color = const Color(0xFFFFFFFF),
     this.rotated = false,
@@ -49,7 +49,7 @@ class DFImageSprite extends DFSprite {
   /// 加载图片资源
   static Future<DFImageSprite> load(String src) async {
     ui.Image image = await DFAssetsLoader.loadImage(src);
-    return DFImageSprite(image);
+    return DFImageSprite(image,rect: DFRect(0,0,image.width.toDouble(),image.height.toDouble()));
   }
 
   /// 精灵渲染

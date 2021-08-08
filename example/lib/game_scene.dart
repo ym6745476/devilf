@@ -12,6 +12,7 @@ import 'package:devilf/sprite/df_text_sprite.dart';
 import 'package:devilf/util/df_util.dart';
 import 'package:devilf/widget/df_button.dart';
 import 'package:devilf/widget/df_joystick.dart';
+import 'package:example/layer/control_layer.dart';
 import 'package:example/player/player.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +89,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 怪物精灵
         List<MonsterSprite> _monsterSprites = [];
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
           Monster monster = Monster("蜘蛛" + (i + 1).toString());
           monster.moveSpeed = 0.4;
           monster.clothes = "assets/images/monster/spider.json";
@@ -120,6 +121,21 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
           fpsSprite.text = this._gameWidget!.fps.toStringAsFixed(0) + " fps";
         });
 
+        /// 玩家当前坐标
+        DFTextSprite positionSprite = DFTextSprite("0,0");
+        positionSprite.position =
+            DFPosition(MediaQuery.of(context).size.width - 70, MediaQuery.of(context).padding.top + 60);
+        positionSprite.fixed = true;
+        positionSprite.size = DFSize(120, 30);
+        positionSprite.setOnUpdate((dt) {
+          if (this._playerSprite != null) {
+            positionSprite.text = "x:" +
+                this._playerSprite!.position.x.toStringAsFixed(0) +
+                ",y:" +
+                this._playerSprite!.position.y.toStringAsFixed(0);
+          }
+        });
+
         /// 将地图精灵添加到主界面
         this._gameWidget!.addChild(mapSprite);
 
@@ -134,6 +150,9 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
         /// 将帧数精灵添加到主界面
         this._gameWidget!.addChild(fpsSprite);
+
+        /// 将坐标精灵添加到主界面
+        this._gameWidget!.addChild(positionSprite);
 
         /// 设置摄像机跟随
         camera.lookAt(_playerSprite!);
@@ -180,158 +199,43 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
     GameManager.visibleHeight = MediaQuery.of(context).size.height;
     print("获取屏幕尺寸:" + GameManager.visibleWidth.toString() + "," + GameManager.visibleHeight.toString());
 
-    return LayoutBuilder(builder: (context, constraints) {
-      return Stack(fit: StackFit.expand, children: <Widget>[
-        Positioned(
-          top: 0,
-          left: 0,
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            color: Colors.black87,
-            child: _loading ? _loadingWidget() : _gameWidget,
-          ),
-        ),
-        Positioned(
-          left: 20,
-          top: MediaQuery.of(context).padding.top + 20,
-          child: Text(
-            "DevilF",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-            ),
-          ),
-        ),
-
-        /// 摇杆
-        Positioned(
-          bottom: MediaQuery.of(context).padding.bottom,
-          left: 0,
-          child: DFJoyStick(
-            /// backgroundImage: "assets/images/ui/joystick.png",
-            /// handleImage: "assets/images/ui/joystick_btn.png",
-            handleColor: Color(0x60FFFFFF),
-            backgroundColor: Color(0x40FFFFFF),
-            onChange: (double radians, String direction) {
-              /// 获取8方向的弧度
-              radians = DFUtil.getRadians(direction);
-              _playerSprite?.startAutoMove = false;
-              _playerSprite?.play(action: DFAnimation.RUN, direction: direction, radians: radians);
-            },
-            onCancel: (direction) {
-              _playerSprite?.play(action: DFAnimation.IDLE, direction: direction);
-            },
-          ),
-        ),
-
-        Positioned(
-            bottom: MediaQuery.of(context).padding.bottom + 20,
-            right: 20,
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/ui/skill_primary_bg.png"),
+    return Container(
+      color: Colors.black87,
+      child: _loading
+          ? _loadingWidget()
+          : Stack(fit: StackFit.expand, children: <Widget>[
+              /// 游戏主界面
+              Positioned(
+                top: 0,
+                left: 0,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  color: Colors.black87,
+                  child: _gameWidget,
                 ),
               ),
-              alignment: Alignment.center,
-              child: DFButton(
-                /// text: "攻击",
-                image: "assets/images/skill_icon/1002.png",
-                pressedImage: "assets/images/ui/1002.png",
-                size: Size(70, 70),
-                onPressed: () {
-                  Effect effect = Effect();
-                  effect.name = "1002";
-                  effect.type = EffectType.ATTACK;
-                  effect.damageRange = 100;
-                  effect.vision = 60;
-                  effect.delayTime = 10;
-                  effect.texture = "assets/images/effect/" + effect.name + ".json";
-                  _playerSprite?.moveToAttack(effect);
-                },
-              ),
-            )),
 
-        Positioned(
-            bottom: MediaQuery.of(context).padding.bottom + 100,
-            right: 20,
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/ui/skill_secondary_bg.png"),
+              /// Logo
+              Positioned(
+                left: 20,
+                top: MediaQuery.of(context).padding.top + 20,
+                child: Text(
+                  "DevilF",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
                 ),
               ),
-              alignment: Alignment.center,
-              child: DFButton(
-                /// text: "小火球",
-                image: "assets/images/skill_icon/2001.png",
-                pressedImage: "assets/images/ui/1002.png",
-                size: Size(50, 50),
-                onPressed: () {
-                  Effect effect = Effect();
-                  effect.name = "2001";
-                  effect.type = EffectType.TRACK;
-                  effect.damageRange = 50;
-                  effect.vision = 300;
-                  effect.delayTime = 300;
-                  effect.texture = "assets/images/effect/" + effect.name + ".json";
-                  _playerSprite?.moveToAttack(effect);
-                },
-              ),
-            )),
 
-        Positioned(
-          bottom: MediaQuery.of(context).padding.bottom + 20,
-          right: 120,
-          child: DFButton(
-            /// text: "拾取",
-            image: "assets/images/ui/pick.png",
-            pressedImage: "assets/images/ui/pick.png",
-            size: Size(40, 40),
-            onPressed: () {
-              _playerSprite?.play(action: DFAnimation.DIG);
-            },
-          ),
-        ),
-
-        Positioned(
-          bottom: MediaQuery.of(context).padding.bottom + 160,
-          right: 20,
-          child: Wrap(
-            spacing: 5,
-            runSpacing: 5,
-            children: [
-              ElevatedButton(
-                child: new Text('自动1'),
-                onPressed: () {
-                  Effect effect = Effect();
-                  effect.name = "1002";
-                  effect.type = EffectType.ATTACK;
-                  effect.damageRange = 100;
-                  effect.vision = 60;
-                  effect.delayTime = 10;
-                  effect.texture = "assets/images/effect/" + effect.name + ".json";
-                  _playerSprite?.moveToAttack(effect, repeatMoveToAttack: true);
-                },
+              /// 控制按钮层
+              Positioned(
+                bottom: 0,
+                left: 0,
+                child: ControlLayer(),
               ),
-              ElevatedButton(
-                child: new Text('自动2'),
-                onPressed: () {
-                  Effect effect = Effect();
-                  effect.name = "2001";
-                  effect.type = EffectType.TRACK;
-                  effect.damageRange = 50;
-                  effect.vision = 300;
-                  effect.delayTime = 300;
-                  effect.texture = "assets/images/effect/" + effect.name + ".json";
-                  _playerSprite?.moveToAttack(effect, repeatMoveToAttack: true);
-                },
-              ),
-            ],
-          ),
-        ),
-      ]);
-    });
+            ]),
+    );
   }
 }

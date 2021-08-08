@@ -41,7 +41,7 @@ class PlayerSprite extends DFSprite {
   DFSprite? targetSprite;
 
   /// 开始自动移动
-  bool startAutoMove = false;
+  bool autoMove = false;
 
   /// 自动移动时钟
   int autoMoveClock = 0;
@@ -49,8 +49,8 @@ class PlayerSprite extends DFSprite {
   /// 判断碰撞时钟
   int collideClock = 0;
 
-  /// 重复
-  bool repeatMoveToAttack = false;
+  /// 重复动作
+  bool repeat = false;
 
   /// 当前目标特效
   Effect? targetEffect;
@@ -174,9 +174,9 @@ class PlayerSprite extends DFSprite {
             /// 动作完成回到IDLE
             clothesSprite!.play(DFAnimation.IDLE + this.direction, stepTime: 200, loop: false,
                 onComplete: (DFAnimationSprite sprite) {
-              if (this.repeatMoveToAttack) {
+              if (this.repeat) {
                 this.targetEffect!.isDead = false;
-                this.moveToAttack(this.targetEffect!, repeatMoveToAttack: true);
+                this.moveToAttack(this.targetEffect!, repeat: true);
               }
             });
           });
@@ -193,7 +193,7 @@ class PlayerSprite extends DFSprite {
   }
 
   /// 锁定目标
-  void lockTargetSprite(Effect effect) {
+  void lockTargetSprite() {
     /// 玩家视野范围内有多个精灵，选取第一个作为目标
     this.findEnemy(
         found: (sprites) {
@@ -213,7 +213,7 @@ class PlayerSprite extends DFSprite {
 
   /// 检查当前目标
   bool checkTargetSprite(double vision) {
-    Rect visibleRect = Rect.fromLTWH(
+    DFRect visibleRect = DFRect(
       this.position.x - vision / 2,
       this.position.y - vision / 2,
       vision,
@@ -225,8 +225,8 @@ class PlayerSprite extends DFSprite {
       if (this.targetSprite is MonsterSprite) {
         MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
         if (!monsterSprite.monster.isDead) {
-          Rect monsterCollision = monsterSprite.getCollisionRect().toRect();
-          if (visibleRect.overlaps(monsterCollision)) {
+          DFShape monsterCollision = monsterSprite.getCollisionShape();
+          if (monsterCollision.overlaps(visibleRect)) {
             return true;
           }
         }
@@ -238,25 +238,25 @@ class PlayerSprite extends DFSprite {
 
     /// 放弃这个目标
     this.targetSprite = null;
-    this.startAutoMove = false;
+    this.autoMove = false;
     return false;
   }
 
   /// 锁定目标并移动
-  void moveToAttack(Effect effect, {bool repeatMoveToAttack = false}) {
+  void moveToAttack(Effect effect, {bool repeat = false}) {
     /// 检查目标并锁定
     if (!checkTargetSprite(this.player.vision)) {
-      lockTargetSprite(effect);
+      lockTargetSprite();
     }
     this.targetEffect = effect;
     if (this.targetSprite == null) {
-      if (!repeatMoveToAttack) {
+      if (!repeat) {
         attack(effect);
       }
     } else {
-      this.startAutoMove = true;
+      this.autoMove = true;
       this.autoMoveClock = 0;
-      this.repeatMoveToAttack = repeatMoveToAttack;
+      this.repeat = repeat;
       this.play(action: DFAnimation.RUN, direction: direction, radians: radians);
     }
   }
@@ -292,7 +292,7 @@ class PlayerSprite extends DFSprite {
     required Function() notFound,
     required double vision,
   }) {
-    Rect visibleRect = Rect.fromLTWH(
+    DFRect visibleRect = DFRect(
       this.position.x - vision / 2,
       this.position.y - vision / 2,
       vision,
@@ -307,8 +307,8 @@ class PlayerSprite extends DFSprite {
       if (this.targetSprite is MonsterSprite) {
         MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
         if (!monsterSprite.monster.isDead) {
-          Rect monsterCollision = monsterSprite.getCollisionRect().toRect();
-          if (visibleRect.overlaps(monsterCollision)) {
+          DFShape monsterCollision = monsterSprite.getCollisionShape();
+          if (monsterCollision.overlaps(visibleRect)) {
             foundMonster.add(monsterSprite);
           }
         }
@@ -392,7 +392,7 @@ class PlayerSprite extends DFSprite {
 
     /// 自动走位
     bool needFarAway = false;
-    if (repeatMoveToAttack && targetEffect != null) {
+    if (repeat && targetEffect != null) {
       if (translateX.abs() < targetEffect!.vision / 4 && translateY.abs() < targetEffect!.vision / 4) {
         print("自动走位与目标保持距离");
 
@@ -433,7 +433,7 @@ class PlayerSprite extends DFSprite {
     }
 
     /// 碰撞
-    Rect visibleRect = Rect.fromLTWH(
+    DFRect visibleRect = DFRect(
       this.position.x - vision / 2,
       this.position.y - vision / 2,
       vision,
@@ -442,8 +442,8 @@ class PlayerSprite extends DFSprite {
 
     if (translateX != 0 || translateY != 0) {
       if (targetSprite is MonsterSprite) {
-        Rect targetCollision = targetSprite.getCollisionRect().toRect();
-        if (visibleRect.overlaps(targetCollision)) {
+        DFShape targetCollision = targetSprite.getCollisionShape();
+        if (targetCollision.overlaps(visibleRect)) {
           if (translateX == 0 || translateY == 0) {
             translateX = 0;
             translateY = 0;
@@ -522,18 +522,54 @@ class PlayerSprite extends DFSprite {
     super.receiveDamage(damage, from);*/
   }
 
+  /// 停止自动
+  void cancelAuto({bool idle = false}){
+    this.autoMove = false;
+    this.repeat = false;
+    if(idle){
+      this.play(action: DFAnimation.IDLE, direction:direction);
+    }
+
+  }
+
+  /// 碰撞后转换方向
+  void collidedChangeDirection() {
+    if (direction == DFAnimation.UP) {
+      direction = DFAnimation.UP_RIGHT;
+      radians = 315 * pi / 180.0;
+    } else if (direction == DFAnimation.DOWN) {
+      direction = DFAnimation.DOWN_LEFT;
+      radians = 135 * pi / 180.0;
+    } else if (direction == DFAnimation.LEFT) {
+      direction = DFAnimation.UP_LEFT;
+      radians = 225 * pi / 180.0;
+    } else if (direction == DFAnimation.RIGHT) {
+      direction = DFAnimation.DOWN_RIGHT;
+      radians = 45 * pi / 180.0;
+    } else if (direction == DFAnimation.DOWN_RIGHT) {
+      direction = DFAnimation.DOWN;
+      radians = 90 * pi / 180.0;
+    } else if (direction == DFAnimation.UP_LEFT) {
+      direction = DFAnimation.UP;
+      radians = 270 * pi / 180.0;
+    } else if (direction == DFAnimation.UP_RIGHT) {
+      direction = DFAnimation.RIGHT;
+      radians = 0;
+    } else if (direction == DFAnimation.DOWN_LEFT) {
+      direction = DFAnimation.LEFT;
+      radians = 180 * pi / 180.0;
+    }
+    this.play(action: DFAnimation.RUN, direction: direction, radians: radians);
+  }
+
   /// 碰撞矩形
   @override
-  DFRect getCollisionRect() {
+  DFShape getCollisionShape() {
     if (clothesSprite != null && isInit) {
       List<DFImageSprite> sprites = clothesSprite!.frames[clothesSprite!.currentAnimation]!;
-      return DFRect(
-          this.position.x - sprites[0].size.width / 4,
-          this.position.y - sprites[0].size.height / 4,
-          sprites[0].size.width * 0.5,
-          sprites[0].size.height * 0.5);
+      return DFCircle(DFPosition(this.position.x, this.position.y), sprites[0].size.width / 4);
     }
-    return super.getCollisionRect();
+    return super.getCollisionShape();
   }
 
   /// 更新
@@ -550,13 +586,15 @@ class PlayerSprite extends DFSprite {
           this.collideClock = DateTime.now().millisecondsSinceEpoch;
           double newX = this.position.x + this.player.moveSpeed * cos(this.radians);
           double newY = this.position.y + this.player.moveSpeed * sin(this.radians);
-          DFRect collisionRect = getCollisionRect();
-          DFRect rectNew =  DFRect(
-              newX - collisionRect.width/2,
-              newY - collisionRect.height/2,
-              collisionRect.width,
-              collisionRect.height);
-          isCollided = GameManager.mapSprite!.tiledSprite!.isCollided(rectNew);
+          DFShape shape = getCollisionShape();
+          if (shape is DFRect) {
+            DFRect rectNew = DFRect(newX - shape.width / 2, newY - shape.height / 2, shape.width, shape.height);
+            isCollided = GameManager.mapSprite!.tiledSprite!.isCollided(rectNew);
+          } else if (shape is DFCircle) {
+            DFCircle circleNew = DFCircle(DFPosition(newX, newY), shape.radius);
+            isCollided = GameManager.mapSprite!.tiledSprite!.isCollided(circleNew);
+          }
+
           if (isCollided == 2) {
             print("isCollided isCollided isCollided isCollided");
           }
@@ -564,21 +602,23 @@ class PlayerSprite extends DFSprite {
       }
 
       /// 被遮挡
-      if(isCollided == 1){
+      if (isCollided == 1) {
         this.clothesSprite!.color = Color(0x80FFFFFF);
-      }else{
+      } else {
         this.clothesSprite!.color = Color(0xFFFFFFFF);
       }
 
-      /// 没有碰撞
-      if(isCollided != 2){
+      if (isCollided == 2) {
+        this.autoMoveClock = DateTime.now().millisecondsSinceEpoch + 600;
+        collidedChangeDirection();
+      } else {
         this.position.x = this.position.x + this.player.moveSpeed * cos(this.radians);
         this.position.y = this.position.y + this.player.moveSpeed * sin(this.radians);
         //print("move:" + this.position.toString());
       }
 
       /// 向目标移动，移动到可释放攻击技能
-      if (startAutoMove) {
+      if (autoMove) {
         /// 检查目标
         if (!checkTargetSprite(this.player.vision)) {
           return;
@@ -589,7 +629,7 @@ class PlayerSprite extends DFSprite {
           this.moveToTarget(this.targetSprite!, vision: targetEffect!.vision,
               arrived: (String direction, double radians) {
             /// 停止移动
-            this.startAutoMove = false;
+            this.autoMove = false;
             this.direction = direction;
             this.radians = radians;
             this.attack(targetEffect!);
@@ -607,8 +647,13 @@ class PlayerSprite extends DFSprite {
     canvas.save();
 
     /// 精灵矩形边界
-    /// var paint = new Paint()..color = Color(0x60bb505d);
-    /// canvas.drawRect(getCollisionRect().toRect(), paint);
+    var paint = new Paint()..color = Color(0x60bb505d);
+    DFShape collisionShape = getCollisionShape();
+    if (collisionShape is DFCircle) {
+      canvas.drawCircle(collisionShape.center.toOffset(), collisionShape.radius, paint);
+    } else if (collisionShape is DFRect) {
+      canvas.drawRect(collisionShape.toRect(), paint);
+    }
 
     /// 移动画布
     canvas.translate(position.x, position.y);

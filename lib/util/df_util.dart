@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:devilf/game/df_animation.dart';
+import 'package:devilf/game/df_math_position.dart';
 
 /// 工具类
 class DFUtil {
@@ -86,5 +87,38 @@ class DFUtil {
 
     /// 返回结果
     return radians;
+  }
+
+  /// Get [o] point distance [o1] and [o2] line segment distance
+  static double getNearestDistance(DFPosition o1, DFPosition o2, DFPosition o) {
+    if (o1 == o || o2 == o) return 0;
+
+    final a = DFUtil.distanceTo(o2, o);
+    final b = DFUtil.distanceTo(o1, o);
+    final c = DFUtil.distanceTo(o1, o2);
+
+    if (a * a >= b * b + c * c) return b;
+    if (b * b >= a * a + c * c) return a;
+
+    // 海伦公式
+    final l = (a + b + c) / 2;
+    final area = sqrt(l * (l - a) * (l - b) * (l - c));
+    return 2 * area / c;
+  }
+
+  /// 获取距离
+  static double distanceTo(DFPosition point1, DFPosition point2) => sqrt(distanceToSquared(point1, point2));
+
+  /// 距离的平方
+  static double distanceToSquared(DFPosition point1, DFPosition point2) {
+    final dx = point1.x - point2.x;
+    final dy = point1.y - point2.y;
+
+    return dx * dx + dy * dy;
+  }
+
+  /// 将double转换为4位小数
+  static double fixDouble4(double value) {
+    return double.parse(value.toStringAsFixed(4));
   }
 }

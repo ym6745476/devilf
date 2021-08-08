@@ -22,4 +22,7 @@ class GameManager {
 
   /// 怪物精灵
   static List<MonsterSprite>? monsterSprites;
+
+  /// 自动战斗是否开启
+  static bool isAutoFight = false;
 }

@@ -118,9 +118,9 @@ class EffectSprite extends DFSprite {
         }
 
         textureSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {
-
           print("onComplete:" + sprite.currentAnimation);
-          if (sprite.currentAnimation.contains(DFAnimation.EXPLODE) || sprite.currentAnimation.contains(DFAnimation.ATTACK)) {
+          if (sprite.currentAnimation.contains(DFAnimation.EXPLODE) ||
+              sprite.currentAnimation.contains(DFAnimation.ATTACK)) {
             this.damageEnemy(
                 found: (sprites) {
                   sprites.forEach((sprite) {
@@ -134,8 +134,7 @@ class EffectSprite extends DFSprite {
                 notFound: () {
                   print("爆炸了没炸到怪物");
                 },
-                damage: this.effect.damageRange
-            );
+                damage: this.effect.damageRange);
           }
 
           /// 设置死亡状态
@@ -156,7 +155,8 @@ class EffectSprite extends DFSprite {
   }
 
   /// 碰撞矩形
-  DFRect getCollisionRect() {
+  @override
+  DFShape getCollisionShape() {
     return DFRect(this.position.x - this.size.width / 2, this.position.y - this.size.height / 2, this.size.width,
         this.size.height);
   }
@@ -196,8 +196,8 @@ class EffectSprite extends DFSprite {
     if (GameManager.monsterSprites != null) {
       GameManager.monsterSprites!.forEach((monsterSprite) {
         if (!monsterSprite.monster.isDead) {
-          Rect monsterCollision = monsterSprite.getCollisionRect().toRect();
-          if (this.getCollisionRect().toRect().overlaps(monsterCollision)) {
+          DFShape monsterCollision = monsterSprite.getCollisionShape();
+          if (monsterCollision.overlaps(this.getCollisionShape())) {
             foundMonster.add(monsterSprite);
           }
         }
@@ -215,17 +215,10 @@ class EffectSprite extends DFSprite {
   void checkTrackCollision() {
     if (targetSprite != null) {
       if (targetSprite is PlayerSprite) {
-        PlayerSprite playerSprite = targetSprite as PlayerSprite;
-        Rect playerCollision = playerSprite.getCollisionRect().toRect();
-        if (this.getCollisionRect().toRect().overlaps(playerCollision)) {
-          this.position.x = playerSprite.position.x;
-          this.position.y = playerSprite.position.y;
-          this.play(action: DFAnimation.EXPLODE);
-        }
       } else if (targetSprite is MonsterSprite) {
         MonsterSprite monsterSprite = targetSprite as MonsterSprite;
-        Rect monsterCollision = monsterSprite.getCollisionRect().toRect();
-        if (this.getCollisionRect().toRect().overlaps(monsterCollision)) {
+        DFShape monsterCollision = monsterSprite.getCollisionShape();
+        if (this.getCollisionShape().overlaps(monsterCollision)) {
           this.position.x = monsterSprite.position.x;
           this.position.y = monsterSprite.position.y;
           this.play(action: DFAnimation.EXPLODE);
@@ -236,8 +229,8 @@ class EffectSprite extends DFSprite {
       if (GameManager.monsterSprites != null) {
         GameManager.monsterSprites!.forEach((monsterSprite) {
           if (!monsterSprite.monster.isDead) {
-            Rect monsterCollision = monsterSprite.getCollisionRect().toRect();
-            if (getCollisionRect().toRect().overlaps(monsterCollision)) {
+            DFShape monsterCollision = monsterSprite.getCollisionShape();
+            if (this.getCollisionShape().overlaps(monsterCollision)) {
               this.position.x = monsterSprite.position.x;
               this.position.y = monsterSprite.position.y;
               this.play(action: DFAnimation.EXPLODE);

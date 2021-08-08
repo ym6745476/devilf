@@ -9,8 +9,12 @@ class DFButton extends StatefulWidget {
   final FontWeight fontWeight;
   final Size size;
   final String image;
-  final String pressedImage;
-  final Function() onPressed;
+  final String? pressedImage;
+  final void Function(DFButton button) onPressed;
+
+  Function setSelected = (bool selected) {
+    print("DFButton setSelected:" + selected.toString());
+  };
 
   DFButton({
     this.text,
@@ -19,7 +23,7 @@ class DFButton extends StatefulWidget {
     this.fontWeight = FontWeight.normal,
     this.size = const Size(80, 80),
     required this.image,
-    required this.pressedImage,
+    this.pressedImage,
     required this.onPressed,
   });
 
@@ -29,6 +33,20 @@ class DFButton extends StatefulWidget {
 
 class _DFButtonState extends State<DFButton> {
   Color? _color;
+  bool _isSelected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.setSelected = this.setSelected;
+  }
+
+  void setSelected(bool selected) {
+    print("setSelected:" + selected.toString());
+    setState(() {
+      _isSelected = selected;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +55,7 @@ class _DFButtonState extends State<DFButton> {
         height: widget.size.height,
         child: GestureDetector(
           onTap: () {
-            widget.onPressed();
+            widget.onPressed(widget);
           },
           onTapDown: (detail) {
             setState(() {
@@ -60,7 +78,7 @@ class _DFButtonState extends State<DFButton> {
               left: 0,
               child: Container(
                 child: Image.asset(
-                  widget.image,
+                  (_isSelected && widget.pressedImage != null) ? widget.pressedImage! : widget.image,
                   fit: BoxFit.fill,
                   width: widget.size.width,
                   height: widget.size.height,

@@ -61,7 +61,7 @@ class DFSprite {
   }
 
   /// 碰撞矩形
-  DFRect getCollisionRect() {
+  DFShape getCollisionShape() {
     /// 子类覆盖
     return DFRect(this.position.x - this.size.width / 2, this.position.y - this.size.height / 2, this.size.width,
         this.size.height);

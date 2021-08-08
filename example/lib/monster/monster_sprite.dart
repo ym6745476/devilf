@@ -192,16 +192,11 @@ class MonsterSprite extends DFSprite {
   }
 
   /// 碰撞矩形
-  DFRect getCollisionRect() {
+  @override
+  DFShape getCollisionShape() {
     if (clothesSprite != null && isInit) {
-      double scaleW = 0.5;
-      double scaleH = 0.5;
       List<DFImageSprite> sprites = clothesSprite!.frames[clothesSprite!.currentAnimation]!;
-      return DFRect(
-          this.position.x - sprites[0].size.width / 2 * scaleW,
-          this.position.y - sprites[0].size.height / 2 * scaleH,
-          sprites[0].size.width * scaleW,
-          sprites[0].size.height * scaleH);
+      return DFCircle(DFPosition(this.position.x, this.position.y), sprites[0].size.width / 4);
     }
     return DFRect(this.position.x - this.size.width / 2, this.position.y - this.size.height / 2, this.size.width,
         this.size.height);
@@ -253,7 +248,7 @@ class MonsterSprite extends DFSprite {
     /// 玩家视野范围内有多个精灵，选取第一个作为目标
     this.findEnemy(
         found: (sprites) {
-          ///print("找到了" + sprites.length.toString() + "个目标");
+          /// print("找到了" + sprites.length.toString() + "个目标");
           this.targetSprite = sprites[0];
 
           /// if (this.targetSprite is PlayerSprite) {
@@ -274,13 +269,13 @@ class MonsterSprite extends DFSprite {
     required double vision,
   }) {
     /// 目标列表
-    List<DFSprite> foundMonster = [];
+    List<DFSprite> foundEnemy = [];
 
     /// 优先找到已锁定的目标
     if (this.targetSprite != null) {
       if (this.targetSprite is PlayerSprite) {
         /// 有目标2倍的追踪范围
-        Rect visibleRect = Rect.fromLTWH(
+        DFRect visibleRect = DFRect(
           this.position.x - vision,
           this.position.y - vision,
           vision * 2,
@@ -288,14 +283,14 @@ class MonsterSprite extends DFSprite {
         );
         PlayerSprite playerSprite = this.targetSprite as PlayerSprite;
         if (!playerSprite.player.isDead) {
-          Rect playerCollision = playerSprite.getCollisionRect().toRect();
-          if (visibleRect.overlaps(playerCollision)) {
-            foundMonster.add(playerSprite);
+          DFShape playerCollision = playerSprite.getCollisionShape();
+          if (playerCollision.overlaps(visibleRect)) {
+            foundEnemy.add(playerSprite);
           }
         }
       }
     } else {
-      Rect visibleRect = Rect.fromLTWH(
+      DFRect visibleRect = DFRect(
         this.position.x - vision / 2,
         this.position.y - vision / 2,
         vision,
@@ -303,15 +298,15 @@ class MonsterSprite extends DFSprite {
       );
       PlayerSprite playerSprite = GameManager.playerSprite!;
       if (!playerSprite.player.isDead) {
-        Rect playerCollision = playerSprite.getCollisionRect().toRect();
-        if (visibleRect.overlaps(playerCollision)) {
-          foundMonster.add(playerSprite);
+        DFShape playerCollision = playerSprite.getCollisionShape();
+        if (playerCollision.overlaps(visibleRect)) {
+          foundEnemy.add(playerSprite);
         }
       }
     }
 
-    if (foundMonster.length > 0) {
-      found(foundMonster);
+    if (foundEnemy.length > 0) {
+      found(foundEnemy);
     } else {
       notFound();
     }
@@ -319,20 +314,20 @@ class MonsterSprite extends DFSprite {
 
   /// 检查当前目标
   bool checkTargetSprite(double vision) {
-    Rect visibleRect = Rect.fromLTWH(
+    DFRect visibleRect = DFRect(
       this.position.x - vision / 2,
       this.position.y - vision / 2,
       vision,
       vision,
     );
 
-    /// 是否还在特效视野内
+    /// 是否还在视野内
     if (this.targetSprite != null) {
       if (this.targetSprite is PlayerSprite) {
         PlayerSprite playerSprite = this.targetSprite as PlayerSprite;
         if (!playerSprite.player.isDead) {
-          Rect playerCollision = playerSprite.getCollisionRect().toRect();
-          if (visibleRect.overlaps(playerCollision)) {
+          DFShape playerCollision = playerSprite.getCollisionShape();
+          if (playerCollision.overlaps(visibleRect)) {
             return true;
           }
         }
@@ -391,8 +386,9 @@ class MonsterSprite extends DFSprite {
 
     /// 碰撞
     if (targetSprite is PlayerSprite) {
-      Rect playerCollision = targetSprite.getCollisionRect().toRect();
-      if (this.getCollisionRect().toRect().overlaps(playerCollision)) {
+      DFShape playerCollision = targetSprite.getCollisionShape();
+      DFShape monsterCollision = getCollisionShape();
+      if (monsterCollision.overlaps(playerCollision)) {
         translateX = 0;
         translateY = 0;
       }
@@ -406,7 +402,6 @@ class MonsterSprite extends DFSprite {
       this.play(action: DFAnimation.RUN, direction: direction, radians: radians);
     }
   }
-
 
   /// 死亡
   void dead() {
@@ -505,8 +500,13 @@ class MonsterSprite extends DFSprite {
     canvas.save();
 
     /// 精灵矩形边界
-    /// var paint = new Paint()..color = Color(0x60bb505d);
-    /// canvas.drawRect(getCollisionRect().toRect(), paint);
+    var paint = new Paint()..color = Color(0x60bb505d);
+    DFShape collisionShape = getCollisionShape();
+    if (collisionShape is DFCircle) {
+      canvas.drawCircle(collisionShape.center.toOffset(), collisionShape.radius, paint);
+    } else if (collisionShape is DFRect) {
+      canvas.drawRect(collisionShape.toRect(), paint);
+    }
 
     /// 移动画布
     canvas.translate(position.x, position.y);

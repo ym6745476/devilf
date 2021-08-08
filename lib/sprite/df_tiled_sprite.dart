@@ -196,7 +196,7 @@ class DFTiledSprite extends DFSprite {
   /// 遮挡1
   /// 碰撞2
   /// 没有0
-  int isCollided(DFRect rect) {
+  int isCollided(DFShape shape) {
     bool isBlock = false;
     bool isAlpha = false;
 
@@ -216,10 +216,10 @@ class DFTiledSprite extends DFSprite {
           int column = _getX(i, columnCount).toInt();
 
           /// print("row:" + row.toString() + ",column:" + column.toString() + ",scale:" + this.scale.toString());
-          Rect tileRect = Rect.fromLTWH(column * tileWidth, row * tileHeight, tileWidth, tileHeight);
+          DFRect tileRect = DFRect(column * tileWidth, row * tileHeight, tileWidth, tileHeight);
 
           /// 在可视区域的瓦片设置为显示
-          if (rect.toRect().overlaps(tileRect)) {
+          if (shape.overlaps(tileRect)) {
             isBlock = true;
             break;
           }
@@ -238,10 +238,10 @@ class DFTiledSprite extends DFSprite {
           int column = _getX(i, columnCount).toInt();
 
           /// print("row:" + row.toString() + ",column:" + column.toString() + ",scale:" + this.scale.toString());
-          Rect tileRect = Rect.fromLTWH(column * tileWidth, row * tileHeight, tileWidth, tileHeight);
+          DFRect tileRect = DFRect(column * tileWidth, row * tileHeight, tileWidth, tileHeight);
 
           /// 在可视区域的瓦片设置为显示
-          if (rect.toRect().overlaps(tileRect)) {
+          if (shape.overlaps(tileRect)) {
             isAlpha = true;
             break;
           }

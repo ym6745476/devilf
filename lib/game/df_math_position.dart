@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 /// 位置
 class DFPosition {
   /// x坐标
@@ -8,6 +10,9 @@ class DFPosition {
 
   /// 创建坐标
   DFPosition(this.x, this.y);
+
+  /// 转换为Offset
+  Offset toOffset() => Offset(x, y);
 
   @override
   String toString() {
