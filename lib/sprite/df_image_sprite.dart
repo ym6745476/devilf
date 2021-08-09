@@ -1,14 +1,13 @@
 import 'dart:math';
 
+import 'package:devilf/core/df_offset.dart';
+import 'package:devilf/core/df_position.dart';
+import 'package:devilf/core/df_rect.dart';
+import 'package:devilf/core/df_size.dart';
 import 'package:devilf/game/df_assets_loader.dart';
-import 'package:devilf/game/df_math_position.dart';
 import 'package:devilf/sprite/df_sprite.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui' as ui;
-
-import '../game/df_math_offset.dart';
-import '../game/df_math_rect.dart';
-import '../game/df_math_size.dart';
 
 /// 图片精灵类
 class DFImageSprite extends DFSprite {

@@ -1,9 +1,9 @@
 import 'dart:ui';
-import 'package:devilf/game/df_math_position.dart';
-import 'package:devilf/game/df_math_rect.dart';
+import 'package:devilf/core/df_rect.dart';
+import 'package:devilf/core/df_shape.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../game/df_math_size.dart';
+import 'package:devilf/core/df_position.dart';
+import 'package:devilf/core/df_size.dart';
 
 /// 基础精灵类
 class DFSprite {

@@ -15,6 +15,14 @@ class DFPosition {
   Offset toOffset() => Offset(x, y);
 
   @override
+  bool operator ==(Object other) {
+    if (other is DFPosition) {
+      return x == other.x && y == other.y;
+    }
+    return false;
+  }
+
+  @override
   String toString() {
     return "x:" + x.toString() + ",y:" + y.toString();
   }

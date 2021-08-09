@@ -1,16 +1,11 @@
-import 'dart:collection';
 import 'dart:ui';
-import 'package:devilf/game/df_animation.dart';
+import 'package:devilf/core/df_position.dart';
+import 'package:devilf/core/df_shape.dart';
+import 'package:devilf/core/df_size.dart';
 import 'package:devilf/game/df_assets_loader.dart';
 import 'package:devilf/game/df_camera.dart';
-import 'package:devilf/game/df_math_offset.dart';
-import 'package:devilf/game/df_math_position.dart';
-import 'package:devilf/game/df_math_rect.dart';
-import 'package:devilf/game/df_math_size.dart';
+import 'package:devilf/core/df_rect.dart';
 import 'package:devilf/sprite/df_sprite.dart';
-import 'package:devilf/tiled/df_group_layer.dart';
-import 'package:devilf/tiled/df_map_layer.dart';
-import 'package:devilf/tiled/df_object_group.dart';
 import 'package:devilf/tiled/df_tile.dart';
 import 'package:devilf/tiled/df_tile_layer.dart';
 import 'package:devilf/tiled/df_tile_set.dart';
@@ -48,12 +43,12 @@ class DFTiledSprite extends DFSprite {
   }) : super(position: DFPosition(0, 0), size: size);
 
   /// 读取tiled导出的json文件
-  static Future<DFTiledSprite> load(String json) async {
+  static Future<DFTiledSprite> load(String json,double scale) async {
     DFTiledSprite tiledSprite = DFTiledSprite();
     Map<String, dynamic> jsonMap = await DFAssetsLoader.loadJson(json);
     tiledSprite.tiledMap = DFTiledMap.fromJson(jsonMap);
     tiledSprite.path = json.substring(0, json.lastIndexOf("/"));
-    tiledSprite.scale = 0.35;
+    tiledSprite.scale = scale;
     tiledSprite.tiledMap!.layers!.forEach((layer) {
       if (layer is DFTileLayer && layer.name == "map" && layer.visible == true) {
         tiledSprite.mapLayer = layer;

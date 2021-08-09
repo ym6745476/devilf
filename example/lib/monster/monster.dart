@@ -34,7 +34,7 @@ class Monster extends Living {
   double mf = 5;
 
   /// 警戒范围
-  double vision = 300;
+  double vision = 200;
 
   /// 动作间隔
   double actionStepTime = 1000;

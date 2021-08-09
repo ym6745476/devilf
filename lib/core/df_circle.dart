@@ -1,83 +1,8 @@
 import 'dart:math';
-import 'dart:ui';
-
 import 'package:devilf/util/df_util.dart';
-
-import 'df_math_position.dart';
-
-/// 形状
-class DFShape {
-  /// 是否重叠
-  bool overlaps(DFShape other) {
-    print("00000000000000000000000000000000000000");
-    return false;
-  }
-}
-
-/// 矩形
-class DFRect extends DFShape {
-  /// 左坐标
-  final double left;
-
-  /// 上坐标
-  final double top;
-
-  /// 右坐标
-  double? right;
-
-  /// 下坐标
-  double? bottom;
-
-  /// 宽度
-  final double width;
-
-  /// 高度
-  final double height;
-
-  /// 创建矩形
-  DFRect(this.left, this.top, this.width, this.height) {
-    right = this.left + this.width;
-    bottom = this.top + this.height;
-  }
-
-  /// 转换为Rect
-  Rect toRect() => Rect.fromLTWH(this.left, this.top, width, height);
-
-  /// 中心坐标
-  DFPosition center() {
-    return DFPosition(this.left + this.width / 2, this.top + this.height / 2);
-  }
-
-  /// 是否重叠
-  @override
-  bool overlaps(DFShape other) {
-    if (other is DFRect) {
-      return rectToRect(other);
-    } else if (other is DFCircle) {
-      return other.circleToRect(this);
-    }
-    return false;
-  }
-
-  /// 矩形碰撞
-  bool rectToRect(DFRect other) {
-    if (right! <= other.left || other.right! <= left) return false;
-    if (bottom! <= other.top || other.bottom! <= top) return false;
-    return true;
-  }
-
-  @override
-  String toString() {
-    return "left:" +
-        left.toString() +
-        ",top:" +
-        top.toString() +
-        ",width:" +
-        width.toString() +
-        ",height:" +
-        height.toString();
-  }
-}
+import 'df_position.dart';
+import 'df_rect.dart';
+import 'df_shape.dart';
 
 /// 圆形
 class DFCircle extends DFShape {
@@ -126,10 +51,10 @@ class DFCircle extends DFShape {
       DFPosition(other.left, other.bottom!),
       DFPosition(other.left, other.top),
     ];
-    print(other.toString());
+    /// print(other.toString());
     for (var i = 0; i < points.length - 1; i++) {
       final distance = DFUtil.getNearestDistance(points[i], points[i + 1], this.center);
-      print((distance).toString());
+      /// print((distance).toString());
       if (DFUtil.fixDouble4(distance) <= this.radius) {
         return true;
       }

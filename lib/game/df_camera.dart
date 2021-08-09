@@ -1,4 +1,4 @@
-import 'package:devilf/game/df_math_rect.dart';
+import 'package:devilf/core/df_rect.dart';
 import 'package:devilf/sprite/df_sprite.dart';
 
 /// 摄像机

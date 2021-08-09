@@ -1,9 +1,7 @@
 import 'dart:ui';
-
+import 'package:devilf/core/df_position.dart';
+import 'package:devilf/core/df_size.dart';
 import 'package:devilf/game/df_camera.dart';
-import 'package:devilf/game/df_math_position.dart';
-import 'package:devilf/game/df_math_rect.dart';
-import 'package:devilf/game/df_math_size.dart';
 import 'package:devilf/sprite/df_sprite.dart';
 import 'package:devilf/sprite/df_tiled_sprite.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,6 +20,9 @@ class MapSprite extends DFSprite {
   /// 摄像机
   DFCamera camera;
 
+  /// 缩放比例
+  double scale = 0.35;
+
   /// 是否初始化
   bool isInit = false;
 
@@ -39,7 +40,7 @@ class MapSprite extends DFSprite {
     await Future.delayed(Duration.zero, () async {
 
       print("读取地图：" + map);
-      this.tiledSprite = await DFTiledSprite.load(map);
+      this.tiledSprite = await DFTiledSprite.load(map,scale);
 
       /// 调用add产生层级关系进行坐标转换
       addChild(this.tiledSprite!);

@@ -1,9 +1,11 @@
 import 'dart:math';
+import 'package:devilf/core/df_circle.dart';
+import 'package:devilf/core/df_position.dart';
+import 'package:devilf/core/df_rect.dart';
+import 'package:devilf/core/df_shape.dart';
+import 'package:devilf/core/df_size.dart';
 import 'package:devilf/game/df_animation.dart';
 import 'package:devilf/game/df_assets_loader.dart';
-import 'package:devilf/game/df_math_position.dart';
-import 'package:devilf/game/df_math_rect.dart';
-import 'package:devilf/game/df_math_size.dart';
 import 'package:devilf/sprite/df_animation_sprite.dart';
 import 'package:devilf/sprite/df_image_sprite.dart';
 import 'package:devilf/sprite/df_progress_sprite.dart';
@@ -436,7 +438,7 @@ class MonsterSprite extends DFSprite {
   /// 取消选择
   void unSelectThisSprite() {
     this.isSelected = false;
-    this.selectSprite?.visible = true;
+    this.selectSprite?.visible = false;
   }
 
   /// 更新

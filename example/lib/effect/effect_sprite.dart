@@ -1,12 +1,13 @@
 import 'dart:math';
+import 'package:devilf/core/df_circle.dart';
+import 'package:devilf/core/df_position.dart';
+import 'package:devilf/core/df_rect.dart';
+import 'package:devilf/core/df_shape.dart';
+import 'package:devilf/core/df_size.dart';
 import 'package:devilf/game/df_animation.dart';
-import 'package:devilf/game/df_math_position.dart';
-import 'package:devilf/game/df_math_rect.dart';
-import 'package:devilf/game/df_math_size.dart';
 import 'package:devilf/sprite/df_animation_sprite.dart';
 import 'package:devilf/sprite/df_sprite.dart';
 import 'package:example/monster/monster_sprite.dart';
-import 'package:example/player/player_sprite.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../game_manager.dart';
@@ -35,8 +36,8 @@ class EffectSprite extends DFSprite {
   /// 当前方向
   String direction = DFAnimation.NONE;
 
-  /// 帧绘制时钟
-  int clock = 0;
+  /// 过期时钟
+  int expireClock = 0;
 
   /// 是否初始化
   bool isInit = false;
@@ -65,9 +66,11 @@ class EffectSprite extends DFSprite {
       if (effect.type == EffectType.ATTACK) {
         this.play(action: DFAnimation.ATTACK, direction: this.direction, radians: this.radians);
       } else if (effect.type == EffectType.TRACK) {
+        this.expireClock = DateTime.now().millisecondsSinceEpoch;
         this.play(action: DFAnimation.TRACK, direction: this.direction, radians: this.radians);
       }
 
+      this.effect.isDead = false;
       /// 初始化完成
       this.isInit = true;
     });
@@ -157,8 +160,7 @@ class EffectSprite extends DFSprite {
   /// 碰撞矩形
   @override
   DFShape getCollisionShape() {
-    return DFRect(this.position.x - this.size.width / 2, this.position.y - this.size.height / 2, this.size.width,
-        this.size.height);
+    return DFCircle(DFPosition(this.position.x, this.position.y),this.size.width/2);
   }
 
   /// 更新
@@ -168,7 +170,6 @@ class EffectSprite extends DFSprite {
       return;
     }
 
-    /// 找敌人
     if (!this.effect.isDead) {
       /// 更新位置
       if (textureSprite!.currentAnimation.contains(DFAnimation.TRACK)) {
@@ -176,8 +177,12 @@ class EffectSprite extends DFSprite {
         this.position.y = this.position.y + this.effect.moveSpeed * sin(this.radians);
         //print("move:" + this.position.toString());
 
-        /// 判断碰撞
-        this.checkTrackCollision();
+        if(DateTime.now().millisecondsSinceEpoch - this.expireClock > 200){
+          this.play(action: DFAnimation.EXPLODE);
+        }else{
+          /// 判断碰撞
+          this.checkTrackCollision();
+        }
       }
       this.textureSprite?.update(dt);
     }
@@ -214,8 +219,7 @@ class EffectSprite extends DFSprite {
   /// 判断与目标碰撞
   void checkTrackCollision() {
     if (targetSprite != null) {
-      if (targetSprite is PlayerSprite) {
-      } else if (targetSprite is MonsterSprite) {
+      if (targetSprite is MonsterSprite) {
         MonsterSprite monsterSprite = targetSprite as MonsterSprite;
         DFShape monsterCollision = monsterSprite.getCollisionShape();
         if (this.getCollisionShape().overlaps(monsterCollision)) {
@@ -248,10 +252,13 @@ class EffectSprite extends DFSprite {
     canvas.save();
 
     /// 精灵矩形边界
-    ///if (!effect.isDead) {
-    ///  var paint = new Paint()..color = Color(0x60bb505d);
-    ///  canvas.drawRect(getCollisionRect().toRect(), paint);
-    ///}
+    /*var paint = new Paint()..color = Color(0x60bb505d);
+    DFShape collisionShape = getCollisionShape();
+    if (collisionShape is DFCircle) {
+      canvas.drawCircle(collisionShape.center.toOffset(), collisionShape.radius, paint);
+    } else if (collisionShape is DFRect) {
+      canvas.drawRect(collisionShape.toRect(), paint);
+    }*/
 
     /// 移动画布
     canvas.translate(position.x, position.y);

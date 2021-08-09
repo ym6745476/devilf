@@ -1,28 +1,23 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:devilf/core/df_rect.dart';
 import 'package:devilf/game/df_camera.dart';
 import 'package:devilf/game/df_game_widget.dart';
-import 'package:devilf/game/df_math_position.dart';
-import 'package:devilf/game/df_animation.dart';
-import 'package:devilf/game/df_math_rect.dart';
-import 'package:devilf/game/df_math_size.dart';
 import 'package:devilf/sprite/df_image_sprite.dart';
 import 'package:devilf/sprite/df_text_sprite.dart';
-import 'package:devilf/util/df_util.dart';
-import 'package:devilf/widget/df_button.dart';
-import 'package:devilf/widget/df_joystick.dart';
 import 'package:example/layer/control_layer.dart';
 import 'package:example/player/player.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'effect/effect.dart';
 import 'game_manager.dart';
 import 'map/map_sprite.dart';
 import 'monster/monster.dart';
 import 'monster/monster_sprite.dart';
+import 'package:devilf/core/df_position.dart';
+import 'package:devilf/core/df_size.dart';
 
 class GameScene extends StatefulWidget {
   final int map;
@@ -89,15 +84,15 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 怪物精灵
         List<MonsterSprite> _monsterSprites = [];
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 3; i++) {
           Monster monster = Monster("蜘蛛" + (i + 1).toString());
-          monster.moveSpeed = 0.4;
+          monster.moveSpeed = 0.2;
           monster.clothes = "assets/images/monster/spider.json";
           MonsterSprite monsterSprite = MonsterSprite(monster);
           int dirX = Random().nextBool() ? 1 : -1;
           int dirY = Random().nextBool() ? 1 : -1;
-          monsterSprite.position = DFPosition(_playerSprite!.position.x + dirX * 100 * Random().nextDouble(),
-              _playerSprite!.position.y + dirY * 100 * Random().nextDouble());
+          monsterSprite.position = DFPosition(_playerSprite!.position.x + dirX * 200 * Random().nextDouble(),
+              _playerSprite!.position.y + dirY * 200 * Random().nextDouble());
           _monsterSprites.add(monsterSprite);
         }
 

@@ -51,11 +51,11 @@ class _ControlLayerState extends State<ControlLayer> {
           effect2.name = "2001";
           effect2.type = EffectType.TRACK;
           effect2.damageRange = 50;
-          effect2.vision = 300;
-          effect2.delayTime = 300;
+          effect2.vision = 120;
+          effect2.delayTime = 400;
           effect2.texture = "assets/images/effect/" + effect2.name + ".json";
 
-          _playerSprite?.moveToAttack(effect2, repeat: true);
+          _playerSprite?.moveToAttack(effect2, autoFight: true);
         } else {
           _playerSprite?.cancelAuto(idle: true);
         }
@@ -82,6 +82,8 @@ class _ControlLayerState extends State<ControlLayer> {
               /// 获取8方向的弧度
               radians = DFUtil.getRadians(direction);
               _playerSprite?.cancelAuto();
+              GameManager.isAutoFight = false;
+              _autoButton!.setSelected(false);
               _playerSprite?.play(action: DFAnimation.RUN, direction: direction, radians: radians);
             },
             onCancel: (direction) {
@@ -136,8 +138,8 @@ class _ControlLayerState extends State<ControlLayer> {
                   effect.name = "2001";
                   effect.type = EffectType.TRACK;
                   effect.damageRange = 50;
-                  effect.vision = 300;
-                  effect.delayTime = 300;
+                  effect.vision = 120;
+                  effect.delayTime = 400;
                   effect.texture = "assets/images/effect/" + effect.name + ".json";
                   _playerSprite?.moveToAttack(effect);
                 },

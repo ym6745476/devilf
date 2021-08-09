@@ -2,11 +2,11 @@ import 'dart:collection';
 import 'dart:ui';
 import 'package:devilf/game/df_animation.dart';
 import 'package:devilf/game/df_assets_loader.dart';
-import 'package:devilf/game/df_math_offset.dart';
-import 'package:devilf/game/df_math_position.dart';
-import 'package:devilf/game/df_math_rect.dart';
-import 'package:devilf/game/df_math_size.dart';
+import 'package:devilf/core/df_offset.dart';
+import 'package:devilf/core/df_rect.dart';
 import 'package:devilf/sprite/df_sprite.dart';
+import 'package:devilf/core/df_position.dart';
+import 'package:devilf/core/df_size.dart';
 import 'dart:ui' as ui;
 
 import 'df_image_sprite.dart';

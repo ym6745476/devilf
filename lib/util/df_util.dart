@@ -1,7 +1,6 @@
 import 'dart:math';
-
+import 'package:devilf/core/df_position.dart';
 import 'package:devilf/game/df_animation.dart';
-import 'package:devilf/game/df_math_position.dart';
 
 /// 工具类
 class DFUtil {
