@@ -28,9 +28,6 @@ class Effect {
   /// 特效类型
   EffectType type = EffectType.NONE;
 
-  /// 是否死亡
-  bool isDead = false;
-
 }
 
 /// 特效类型

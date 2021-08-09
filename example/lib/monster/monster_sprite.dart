@@ -231,7 +231,7 @@ class MonsterSprite extends DFSprite {
       this.monster.hp = this.monster.hp - hp;
       this.hpBarSprite!.progress = (this.monster.hp / this.monster.maxMp * 100).toInt();
       if (this.monster.hp < 0) {
-        this.dead();
+        this.dead(fromSprite);
       }
     }
 
@@ -406,8 +406,11 @@ class MonsterSprite extends DFSprite {
   }
 
   /// 死亡
-  void dead() {
+  void dead(DFSprite fromSprite) {
     this.targetSprite = null;
+    if(fromSprite is PlayerSprite){
+      fromSprite.targetSprite = null;
+    }
     this.unSelectThisSprite();
     this.play(action: DFAnimation.DEATH, direction: direction, radians: radians);
   }

@@ -57,7 +57,7 @@ class _ControlLayerState extends State<ControlLayer> {
 
           _playerSprite?.moveToAttack(effect2, autoFight: true);
         } else {
-          _playerSprite?.cancelAuto(idle: true);
+          _playerSprite?.cancelAutoFight(idle: true);
         }
       },
     );
@@ -78,10 +78,10 @@ class _ControlLayerState extends State<ControlLayer> {
             /// handleImage: "assets/images/ui/joystick_btn.png",
             handleColor: Color(0x60FFFFFF),
             backgroundColor: Color(0x40FFFFFF),
-            onChange: (double radians, String direction) {
+            onChange: (String direction,double radians) {
               /// 获取8方向的弧度
               radians = DFUtil.getRadians(direction);
-              _playerSprite?.cancelAuto();
+              _playerSprite?.cancelAutoFight();
               GameManager.isAutoFight = false;
               _autoButton!.setSelected(false);
               _playerSprite?.play(action: DFAnimation.RUN, direction: direction, radians: radians);

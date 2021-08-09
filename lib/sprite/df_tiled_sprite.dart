@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:devilf/core/df_circle.dart';
 import 'package:devilf/core/df_position.dart';
 import 'package:devilf/core/df_shape.dart';
 import 'package:devilf/core/df_size.dart';
@@ -43,7 +44,7 @@ class DFTiledSprite extends DFSprite {
   }) : super(position: DFPosition(0, 0), size: size);
 
   /// 读取tiled导出的json文件
-  static Future<DFTiledSprite> load(String json,double scale) async {
+  static Future<DFTiledSprite> load(String json, double scale) async {
     DFTiledSprite tiledSprite = DFTiledSprite();
     Map<String, dynamic> jsonMap = await DFAssetsLoader.loadJson(json);
     tiledSprite.tiledMap = DFTiledMap.fromJson(jsonMap);
@@ -195,52 +196,37 @@ class DFTiledSprite extends DFSprite {
     bool isBlock = false;
     bool isAlpha = false;
 
-    /// 遍历图层
-    if (blockLayer != null) {
+    if (blockLayer != null && alphaLayer != null) {
+      ///
+      DFPosition center = DFPosition(0, 0);
+      if (shape is DFRect) {
+        center = shape.center();
+      } else if (shape is DFCircle) {
+        center = shape.center;
+      }
+
+      double realTiledWidth = this.tiledMap!.tileWidth! * this.scale;
+      double realTiledHeight = this.tiledMap!.tileHeight! * this.scale;
+      int column = (center.x / realTiledWidth).floor();
+      int row = (center.y / realTiledHeight).floor();
+      print("row:" + row.toString() + ",column:" + column.toString());
+      DFTileSet? tileSet;
       for (int i = 0; i < blockLayer!.data!.length; i++) {
         if (blockLayer!.data![i] != 0) {
-          DFTileSet? tileSet = tiledMap!.tileSets!.lastWhere((element) {
+          tileSet = tiledMap!.tileSets!.lastWhere((element) {
             return blockLayer!.data![i] >= element.firsTgId!;
           });
-
-          int columnCount = (tiledMap!.width! * tiledMap!.tileWidth!) ~/ tileSet.tileWidth!.toDouble();
-          double tileWidth = tileSet.tileWidth!.toDouble() * this.scale;
-          double tileHeight = tileSet.tileHeight!.toDouble() * this.scale;
-
-          int row = _getY(i, columnCount).toInt();
-          int column = _getX(i, columnCount).toInt();
-
-          /// print("row:" + row.toString() + ",column:" + column.toString() + ",scale:" + this.scale.toString());
-          DFRect tileRect = DFRect(column * tileWidth, row * tileHeight, tileWidth, tileHeight);
-
-          /// 在可视区域的瓦片设置为显示
-          if (shape.overlaps(tileRect)) {
-            isBlock = true;
-            break;
-          }
+          break;
         }
+      }
+      int firsTgId = tileSet!.firsTgId!;
+      print("firsTgId:" + firsTgId.toString());
+      if (blockLayer!.data![row * column + column + firsTgId] != 0) {
+        isBlock = true;
+      }
 
-        if (alphaLayer!.data![i] != 0) {
-          DFTileSet? tileSet = tiledMap!.tileSets!.lastWhere((element) {
-            return alphaLayer!.data![i] >= element.firsTgId!;
-          });
-
-          int columnCount = (tiledMap!.width! * tiledMap!.tileWidth!) ~/ tileSet.tileWidth!.toDouble();
-          double tileWidth = tileSet.tileWidth!.toDouble() * this.scale;
-          double tileHeight = tileSet.tileHeight!.toDouble() * this.scale;
-
-          int row = _getY(i, columnCount).toInt();
-          int column = _getX(i, columnCount).toInt();
-
-          /// print("row:" + row.toString() + ",column:" + column.toString() + ",scale:" + this.scale.toString());
-          DFRect tileRect = DFRect(column * tileWidth, row * tileHeight, tileWidth, tileHeight);
-
-          /// 在可视区域的瓦片设置为显示
-          if (shape.overlaps(tileRect)) {
-            isAlpha = true;
-            break;
-          }
-        }
+      if (alphaLayer!.data![row * column + column + firsTgId] != 0) {
+        isAlpha = true;
       }
     }
     if (isBlock) {
@@ -328,7 +314,7 @@ class DFTiledSprite extends DFSprite {
     }*/
 
     /// 绘制碰撞层和遮挡层
-    /// drawBlockAndAlphaLayer(canvas);
+    drawBlockAndAlphaLayer(canvas);
 
     /// 画布恢复
     canvas.restore();

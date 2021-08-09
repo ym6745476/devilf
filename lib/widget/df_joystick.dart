@@ -28,7 +28,7 @@ class DFJoyStick extends StatefulWidget {
   String direction;
 
   /// 方向更新
-  final void Function(double, String) onChange;
+  final void Function(String,double) onChange;
 
   /// 操作取消
   final void Function(String) onCancel;
@@ -112,7 +112,7 @@ class DFJoyStickState extends State<DFJoyStick> {
     /// 返回结果
     if (direction != widget.direction) {
       widget.direction = direction;
-      widget.onChange(radians, widget.direction);
+      widget.onChange(widget.direction,radians);
     }
   }
 

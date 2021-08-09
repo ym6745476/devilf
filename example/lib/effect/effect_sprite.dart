@@ -16,7 +16,7 @@ import 'effect.dart';
 /// 特效精灵类
 class EffectSprite extends DFSprite {
   /// 特效
-  Effect effect;
+  Effect? effect;
 
   /// 纹理精灵
   DFAnimationSprite? textureSprite;
@@ -54,7 +54,7 @@ class EffectSprite extends DFSprite {
   Future<void> _init() async {
     await Future.delayed(Duration.zero, () async {
       /// 玩家精灵动画
-      DFAnimationSprite textureSprite = await DFAnimationSprite.load(this.effect.texture, scale: 0.4);
+      DFAnimationSprite textureSprite = await DFAnimationSprite.load(this.effect!.texture, scale: 0.4);
       this.textureSprite = textureSprite;
       this.textureSprite!.position = DFPosition(size.width / 2, size.height / 2);
       this.textureSprite!.size = DFSize(100, 100);
@@ -63,14 +63,13 @@ class EffectSprite extends DFSprite {
       addChild(this.textureSprite!);
 
       /// 播放动画
-      if (effect.type == EffectType.ATTACK) {
+      if (effect!.type == EffectType.ATTACK) {
         this.play(action: DFAnimation.ATTACK, direction: this.direction, radians: this.radians);
-      } else if (effect.type == EffectType.TRACK) {
+      } else if (effect!.type == EffectType.TRACK) {
         this.expireClock = DateTime.now().millisecondsSinceEpoch;
         this.play(action: DFAnimation.TRACK, direction: this.direction, radians: this.radians);
       }
 
-      this.effect.isDead = false;
       /// 初始化完成
       this.isInit = true;
     });
@@ -97,7 +96,7 @@ class EffectSprite extends DFSprite {
 
     if (textureSprite != null) {
       if (animation != textureSprite!.currentAnimation) {
-        if (effect.type == EffectType.ATTACK) {
+        if (effect!.type == EffectType.ATTACK) {
           /// 5方向转换为8方向
           bool flippedX = false;
           if (animation.contains(DFAnimation.LEFT)) {
@@ -129,7 +128,7 @@ class EffectSprite extends DFSprite {
                   sprites.forEach((sprite) {
                     if (sprite is MonsterSprite) {
                       if (!sprite.monster.isDead) {
-                        sprite.receiveDamage(fromSprite!, effect);
+                        sprite.receiveDamage(fromSprite!, effect!);
                       }
                     }
                   });
@@ -137,11 +136,11 @@ class EffectSprite extends DFSprite {
                 notFound: () {
                   print("爆炸了没炸到怪物");
                 },
-                damage: this.effect.damageRange);
+                damage: this.effect!.damageRange);
           }
 
-          /// 设置死亡状态
-          this.effect.isDead = true;
+          /// 设置为空
+          this.effect = null;
           print("从场景移除这个特效");
 
           /// 从场景移除
@@ -170,11 +169,11 @@ class EffectSprite extends DFSprite {
       return;
     }
 
-    if (!this.effect.isDead) {
+    if (this.effect != null) {
       /// 更新位置
       if (textureSprite!.currentAnimation.contains(DFAnimation.TRACK)) {
-        this.position.x = this.position.x + this.effect.moveSpeed * cos(this.radians);
-        this.position.y = this.position.y + this.effect.moveSpeed * sin(this.radians);
+        this.position.x = this.position.x + this.effect!.moveSpeed * cos(this.radians);
+        this.position.y = this.position.y + this.effect!.moveSpeed * sin(this.radians);
         //print("move:" + this.position.toString());
 
         if(DateTime.now().millisecondsSinceEpoch - this.expireClock > 200){
@@ -264,7 +263,7 @@ class EffectSprite extends DFSprite {
     canvas.translate(position.x, position.y);
 
     /// 需要根据方向旋转的特效
-    if (effect.type == EffectType.TRACK) {
+    if (effect != null && effect!.type == EffectType.TRACK) {
       canvas.rotate(this.radians);
     }
 

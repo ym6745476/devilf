@@ -76,7 +76,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         player.clothes = "assets/images/player/man_01.json";
         player.weapon = "assets/images/weapon/weapon_01.json";
         _playerSprite = PlayerSprite(player);
-        _playerSprite?.position = DFPosition(800, 1200);
+        _playerSprite?.position = DFPosition(800, 1500);
 
         /// 保存到管理器里
         GameManager.playerSprite = _playerSprite;

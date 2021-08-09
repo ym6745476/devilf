@@ -50,9 +50,6 @@ class PlayerSprite extends DFSprite {
   /// 开始移动
   bool movePathStart = false;
 
-  /// 自动移动时钟
-  int autoMoveClock = 0;
-
   /// 自动战斗时钟
   int autoFightClock = 0;
 
@@ -200,7 +197,7 @@ class PlayerSprite extends DFSprite {
 
   /// 在范围内锁定目标
   void lockTargetSprite() {
-    double vision = player.vision;
+    double vision = this.player.vision;
     DFCircle visibleShape = DFCircle(DFPosition(this.position.x,this.position.y),vision);
 
     /// 当前目标是否还在视野内
@@ -239,6 +236,8 @@ class PlayerSprite extends DFSprite {
             print("没有找到目标");
           },
           vision: player.vision);
+    }else{
+      print("目标已存在");
     }
   }
 
@@ -300,8 +299,8 @@ class PlayerSprite extends DFSprite {
       DFNode startNode = DFNode(startX, startY);
       DFNode endNode = DFNode(endX, endY);
       print("起点坐标：" + startNode.coord.toString() + ",起点位置：" + this.position.toString());
-      print("终点坐标：" + endNode.coord.toString() + ",目标位置：" + this.targetPosition.toString());
-      if (startNode.coord == endNode.coord || isArrived(this.targetSprite!.position, this.targetEffect!.vision)) {
+      print("终点坐标：" + endNode.coord.toString() + ",目标位置：" + this.targetSprite!.position.toString());
+      if (startNode.coord == endNode.coord || isArrived(this.targetSprite!, this.targetEffect!.vision)) {
         /// 在可攻击范围
         this.attack(effect);
       } else {
@@ -310,18 +309,19 @@ class PlayerSprite extends DFSprite {
 
         if (aStar.pathList.length > 0) {
           DFCoord coord = aStar.pathList.removeLast();
-          this.targetPosition =
-              DFPosition((coord.x * realTiledWidth).toDouble(), (coord.y * realTiledHeight).toDouble());
+          this.targetPosition = getPosition(coord.x,coord.y);
+          this.updateDirection(this.targetPosition!);
           print("寻路坐标：" + coord.toString() + ",目标位置：" + this.targetPosition.toString());
+
+          /// 开始移动
+          this.play(action: DFAnimation.RUN, direction: this.direction, radians: this.radians);
 
           /// 启动寻路
           this.movePathStart = true;
-          this.autoMoveClock = 0;
 
-          /// 首次
-          this.run(this.targetPosition!);
         } else {
           /// 没有路径可到达
+          this.cancelAutoFight(idle:true);
         }
       }
     } else {
@@ -339,109 +339,96 @@ class PlayerSprite extends DFSprite {
     double translateY = targetPosition.y - this.position.y;
 
     /// 范围防抖
-    if ((translateX < 0 && translateX > -12) || (translateX > 0 && translateX < 12)) {
+    if ((translateX < 0 && translateX > -5) || (translateX > 0 && translateX < 5)) {
       translateX = 0;
     }
 
-    if ((translateY < 0 && translateY > -8) || (translateY > 0 && translateY < 8)) {
+    if ((translateY < 0 && translateY > -5) || (translateY > 0 && translateY < 5)) {
       translateY = 0;
     }
 
     if (translateX == 0 && translateY == 0) {
+      print("到达位置:" + targetPosition.toString());
       /// 到达位置
       if (arrived != null) {
         arrived();
       }
     } else {
-      /// 更改方向
-      this.changeDirection(targetPosition);
+      print("向位置移动:" + targetPosition.toString());
       /// 开始移动
-      this.play(action: DFAnimation.RUN, direction: direction, radians: radians);
+      this.play(action: DFAnimation.RUN, direction: this.direction, radians: this.radians);
     }
   }
 
-  /// 检查手否已提前到达攻击范围
-  bool isArrived(DFPosition targetPosition,double vision){
-    return false;
+  /// 更新方向
+  void updateDirection(DFPosition targetPosition){
     /// 距离
     double translateX = targetPosition.x - this.position.x;
     double translateY = targetPosition.y - this.position.y;
 
     /// 范围防抖
-    if ((translateX < 0 && translateX > -10) || (translateX > 0 && translateX < 10)) {
+    if ((translateX < 0 && translateX > -5) || (translateX > 0 && translateX < 5)) {
       translateX = 0;
     }
 
-    if ((translateY < 0 && translateY > -10) || (translateY > 0 && translateY < 10)) {
+    if ((translateY < 0 && translateY > -5) || (translateY > 0 && translateY < 5)) {
       translateY = 0;
     }
 
-    if (vision > 0 && this.targetSprite != null) {
+    Offset offset = targetPosition.toOffset() - this.position.toOffset();
+    /// print("targetPosition:" + targetPosition.toString());
+    /// print("playerPosition:" + this.position.toString());
+
+    this.radians = offset.direction;
+
+    /// 确定方向
+    if (translateX > 0 && translateY > 0) {
+      this.direction = DFAnimation.DOWN_RIGHT;
+      ///this.radians = 45 * pi / 180.0;
+    } else if (translateX < 0 && translateY < 0) {
+      this.direction = DFAnimation.UP_LEFT;
+      ///this.radians = 225 * pi / 180.0;
+    } else if (translateX > 0 && translateY < 0) {
+      this.direction = DFAnimation.UP_RIGHT;
+      ///this.radians = 315 * pi / 180.0;
+    } else if (translateX < 0 && translateY > 0) {
+      this.direction = DFAnimation.DOWN_LEFT;
+      ///this.radians = 135 * pi / 180.0;
+    } else {
+      if (translateX > 0) {
+        this.direction = DFAnimation.RIGHT;
+        ///this.radians = 0;
+      } else if (translateX < 0) {
+        this.direction = DFAnimation.LEFT;
+        ///this.radians = 180 * pi / 180.0;
+      }
+      if (translateY > 0) {
+        this.direction = DFAnimation.DOWN;
+        ///this.radians = 90 * pi / 180.0;
+      } else if (translateY < 0) {
+        this.direction = DFAnimation.UP;
+        ///this.radians = 270 * pi / 180.0;
+      }
+    }
+  }
+
+  /// 检查是否提前到达攻击范围
+  bool isArrived(DFSprite targetSprite,double vision){
+    if (vision > 0) {
         DFCircle visibleShape = DFCircle(DFPosition(this.position.x, this.position.y), vision);
         if (targetSprite is MonsterSprite) {
-          DFShape targetCollision = targetSprite!.getCollisionShape();
+          DFShape targetCollision = targetSprite.getCollisionShape();
           if (targetCollision.overlaps(visibleShape)) {
             print("已在攻击范围内");
-            if (translateX == 0 || translateY == 0) {
-              /// 任何一个方向为0 可以战斗
-              return true;
-            } else if (translateY.abs() - translateX.abs()  < 10) {
-              /// 约45度 可以战斗
-              return true;
-            }
+            return true;
         }
       }
     }
     return false;
   }
 
-  void changeDirection(DFPosition targetPosition) {
-    /// 距离
-    double translateX = targetPosition.x - this.position.x;
-    double translateY = targetPosition.y - this.position.y;
-
-    /// 范围防抖
-    if ((translateX < 0 && translateX > -10) || (translateX > 0 && translateX < 10)) {
-      translateX = 0;
-    }
-
-    if ((translateY < 0 && translateY > -10) || (translateY > 0 && translateY < 10)) {
-      translateY = 0;
-    }
-
-    /// 确定方向
-    if (translateX > 0 && translateY > 0) {
-      this.direction = DFAnimation.DOWN_RIGHT;
-      this.radians = 45 * pi / 180.0;
-    } else if (translateX < 0 && translateY < 0) {
-      this.direction = DFAnimation.UP_LEFT;
-      this.radians = 225 * pi / 180.0;
-    } else if (translateX > 0 && translateY < 0) {
-      this.direction = DFAnimation.UP_RIGHT;
-      this.radians = 315 * pi / 180.0;
-    } else if (translateX < 0 && translateY > 0) {
-      this.direction = DFAnimation.DOWN_LEFT;
-      this.radians = 135 * pi / 180.0;
-    } else {
-      if (translateX > 0) {
-        this.direction = DFAnimation.RIGHT;
-        this.radians = 0;
-      } else if (translateX < 0) {
-        this.direction = DFAnimation.LEFT;
-        this.radians = 180 * pi / 180.0;
-      }
-      if (translateY > 0) {
-        this.direction = DFAnimation.DOWN;
-        this.radians = 90 * pi / 180.0;
-      } else if (translateY < 0) {
-        this.direction = DFAnimation.UP;
-        this.radians = 270 * pi / 180.0;
-      }
-    }
-  }
-
   /// 下一个动作
-  void nextAction(Effect effect){
+  void nextAction(){
 
     /// 保持距离
 
@@ -476,7 +463,7 @@ class PlayerSprite extends DFSprite {
         radians = 315 * pi / 180.0;
       }
     }*/
-    this.attack(effect);
+    this.attack(this.targetEffect!);
   }
 
   /// 规划路径
@@ -506,6 +493,8 @@ class PlayerSprite extends DFSprite {
     print("起点:" + startNode.toString() + "->终点：" + endNode.toString());
     DFMap map = DFMap(maps, maps[0].length, maps.length, startNode, endNode);
     aStar.start(map);
+    /// 删掉起点
+    aStar.pathList.removeLast();
     for (DFCoord point in aStar.pathList) {
       print(point.toString());
     }
@@ -513,7 +502,10 @@ class PlayerSprite extends DFSprite {
 
   /// 释放技能攻击
   void attack(Effect effect) {
-    this.changeDirection(this.targetSprite!.position);
+
+    /// 更新方向
+    this.updateDirection(this.targetSprite!.position);
+
     if (effect.type == EffectType.ATTACK) {
       this.play(action: DFAnimation.ATTACK, direction: direction, radians: radians, effect: effect);
     } else if (effect.type == EffectType.TRACK) {
@@ -538,7 +530,7 @@ class PlayerSprite extends DFSprite {
   }
 
   /// 停止自动
-  void cancelAuto({bool idle = false}) {
+  void cancelAutoFight({bool idle = false}) {
     this.movePathStart = false;
     this.autoFight = false;
     if (idle) {
@@ -617,6 +609,14 @@ class PlayerSprite extends DFSprite {
     super.receiveDamage(damage, from);*/
   }
 
+  /// 获取坐标
+  DFPosition getPosition(int tiledX,int tiledY){
+    DFTiledMap tiledMap = GameManager.mapSprite!.tiledSprite!.tiledMap!;
+    double realTiledWidth = tiledMap.tileWidth!* GameManager.mapSprite!.scale;
+    double realTiledHeight = tiledMap.tileHeight!* GameManager.mapSprite!.scale;
+    return DFPosition(tiledX * realTiledWidth - realTiledWidth/2, tiledY * realTiledHeight - realTiledHeight/2);
+  }
+
   /// 碰撞矩形
   @override
   DFShape getCollisionShape() {
@@ -636,7 +636,7 @@ class PlayerSprite extends DFSprite {
     if (clothesSprite!.currentAnimation.contains(DFAnimation.RUN)) {
       /// 判断碰撞
       int isCollided = 0;
-      /*if (GameManager.mapSprite != null && GameManager.mapSprite!.tiledSprite != null) {
+      if (GameManager.mapSprite != null && GameManager.mapSprite!.tiledSprite != null) {
         if (DateTime.now().millisecondsSinceEpoch - this.collideClock > 10) {
           this.collideClock = DateTime.now().millisecondsSinceEpoch;
           double newX = this.position.x + this.player.moveSpeed * cos(this.radians);
@@ -654,7 +654,7 @@ class PlayerSprite extends DFSprite {
             print("isCollided isCollided isCollided isCollided");
           }
         }
-      }*/
+      }
 
       /// 被遮挡
       if (isCollided == 1) {
@@ -676,43 +676,40 @@ class PlayerSprite extends DFSprite {
 
       /// 自动寻路
       if (this.movePathStart && this.targetPosition != null) {
-        if (DateTime.now().millisecondsSinceEpoch - this.autoMoveClock > 100) {
-          this.autoMoveClock = DateTime.now().millisecondsSinceEpoch;
 
           this.run(this.targetPosition!,arrived: () {
 
             /// 检查是否在攻击范围
-            bool arrived = isArrived(this.targetPosition!,this.targetEffect!.vision);
+            bool arrived = isArrived(this.targetSprite!,this.targetEffect!.vision);
             if(arrived){
               /// 清除路径
               this.autoFightClock = DateTime.now().millisecondsSinceEpoch;
               this.targetPosition = null;
-              this.attack(this.targetEffect!);
+              this.nextAction();
             }else{
               if (aStar.pathList.length > 0) {
                 DFCoord coord = aStar.pathList.removeLast();
-                this.targetPosition = DFPosition(
-                    (coord.x * GameManager.mapSprite!.tiledSprite!.tiledMap!.tileWidth!).toDouble(),
-                    (coord.y * GameManager.mapSprite!.tiledSprite!.tiledMap!.tileHeight!).toDouble());
+                this.targetPosition = getPosition(coord.x,coord.y);
+                this.updateDirection(this.targetPosition!);
                 print("寻路,目标坐标：" + coord.toString() + ",目标位置：" + this.targetPosition.toString());
               }else{
                 print("寻路,结束.....................");
                 this.autoFightClock = DateTime.now().millisecondsSinceEpoch;
                 this.targetPosition = null;
+                this.nextAction();
               }
             }
 
           });
-        }
       }
     }
 
     /// 锁定目标
     if(this.autoFight && this.targetPosition == null){
-      if (DateTime.now().millisecondsSinceEpoch - this.autoFightClock > 1000) {
+      if (DateTime.now().millisecondsSinceEpoch - this.autoFightClock > 1200) {
         print("自动战斗 检查目标");
-        //this.autoFightClock = DateTime.now().millisecondsSinceEpoch;
-        //this.moveToAttack(this.targetEffect!, autoFight: true);
+        this.autoFightClock = DateTime.now().millisecondsSinceEpoch;
+        this.moveToAttack(this.targetEffect!, autoFight: true);
       }
     }
 
