@@ -37,18 +37,18 @@ class DFCircle extends DFShape {
     }
 
     /// 排除矩形包含了圆形
-    if (other.right! >= this.center.x + this.radius &&
+    if (other.right >= this.center.x + this.radius &&
         other.left <= this.center.x - this.radius &&
         other.top <= this.center.y - this.radius &&
-        other.bottom! >= this.center.y + this.radius) {
+        other.bottom >= this.center.y + this.radius) {
       return true;
     }
 
     final points = [
       DFPosition(other.left, other.top),
-      DFPosition(other.right!, other.top),
-      DFPosition(other.right!, other.bottom!),
-      DFPosition(other.left, other.bottom!),
+      DFPosition(other.right, other.top),
+      DFPosition(other.right, other.bottom),
+      DFPosition(other.left, other.bottom),
       DFPosition(other.left, other.top),
     ];
     /// print(other.toString());

@@ -29,7 +29,7 @@ class DFAnimationSprite extends DFSprite {
   int stepTime;
 
   /// 当前动画类型
-  String currentAnimation = DFAnimation.NONE;
+  String currentAnimation = DFAction.NONE + DFDirection.NONE;
 
   /// x轴镜像
   bool currentAnimationFlippedX = false;
@@ -41,7 +41,7 @@ class DFAnimationSprite extends DFSprite {
   bool isBind = false;
 
   /// 帧绘制时钟
-  int clock = 0;
+  int frameClock = 0;
 
   /// 完成事件
   Function(DFAnimationSprite)? onComplete;
@@ -65,7 +65,7 @@ class DFAnimationSprite extends DFSprite {
   ///      }
   ///   }
   /// }
-  static Future<DFAnimationSprite> load(String json, {scale = 0.5,blendMode = BlendMode.srcOver}) async {
+  static Future<DFAnimationSprite> load(String json, {scale = 0.5, blendMode = BlendMode.srcOver}) async {
     DFAnimationSprite animationSprite = DFAnimationSprite(stepTime: 100, loop: true);
 
     DFAnimation.sequence.forEach((element) {
@@ -76,6 +76,7 @@ class DFAnimationSprite extends DFSprite {
     ui.Image image = await DFAssetsLoader.loadImage(json.replaceAll(".json", ".png"));
 
     final jsonFrames = jsonMap['frames'] as Map<String, dynamic>;
+
     ///final jsonMetadata = jsonMap['metadata'] as Map<String, dynamic>;
 
     jsonFrames.forEach((key, value) {
@@ -109,60 +110,60 @@ class DFAnimationSprite extends DFSprite {
         offset: frameOffset,
         rect: frameRect,
         rotated: rotated,
-        blendMode:blendMode,
+        blendMode: blendMode,
       );
       sprite.scale = scale;
 
       //idle_00000.png
       String actionText = "idle_";
-      String action = DFAnimation.IDLE;
+      String action = DFAction.IDLE;
       if (key.contains("idle_")) {
         actionText = "idle_";
-        action = DFAnimation.IDLE;
+        action = DFAction.IDLE;
       } else if (key.contains("run_")) {
         actionText = "run_";
-        action = DFAnimation.RUN;
+        action = DFAction.RUN;
       } else if (key.contains("attack_")) {
         actionText = "attack_";
-        action = DFAnimation.ATTACK;
+        action = DFAction.ATTACK;
       } else if (key.contains("casting_")) {
         actionText = "casting_";
-        action = DFAnimation.CASTING;
+        action = DFAction.CASTING;
       } else if (key.contains("dig_")) {
         actionText = "dig_";
-        action = DFAnimation.DIG;
+        action = DFAction.DIG;
       } else if (key.contains("death_")) {
         actionText = "death_";
-        action = DFAnimation.DEATH;
+        action = DFAction.DEATH;
       } else if (key.contains("track_")) {
         actionText = "track_";
-        action = DFAnimation.TRACK;
+        action = DFAction.TRACK;
       } else if (key.contains("explode_")) {
         actionText = "explode_";
-        action = DFAnimation.EXPLODE;
-      }else if (key.contains("surround_")) {
+        action = DFAction.EXPLODE;
+      } else if (key.contains("surround_")) {
         actionText = "surround_";
-        action = DFAnimation.SURROUND;
+        action = DFAction.SURROUND;
       }
 
       String keyNumber = key.replaceAll(actionText, "").replaceAll(".png", "");
       if (keyNumber.startsWith("000")) {
-        animationSprite.frames[action + DFAnimation.UP]?.add(sprite);
+        animationSprite.frames[action + DFDirection.UP]?.add(sprite);
       }
       if (keyNumber.startsWith("100")) {
-        animationSprite.frames[action + DFAnimation.UP_RIGHT]?.add(sprite);
-        animationSprite.frames[action + DFAnimation.UP_LEFT]?.add(sprite);
+        animationSprite.frames[action + DFDirection.UP_RIGHT]?.add(sprite);
+        animationSprite.frames[action + DFDirection.UP_LEFT]?.add(sprite);
       }
       if (keyNumber.startsWith("200")) {
-        animationSprite.frames[action + DFAnimation.RIGHT]?.add(sprite);
-        animationSprite.frames[action + DFAnimation.LEFT]?.add(sprite);
+        animationSprite.frames[action + DFDirection.RIGHT]?.add(sprite);
+        animationSprite.frames[action + DFDirection.LEFT]?.add(sprite);
       }
       if (keyNumber.startsWith("300")) {
-        animationSprite.frames[action + DFAnimation.DOWN_RIGHT]?.add(sprite);
-        animationSprite.frames[action + DFAnimation.DOWN_LEFT]?.add(sprite);
+        animationSprite.frames[action + DFDirection.DOWN_RIGHT]?.add(sprite);
+        animationSprite.frames[action + DFDirection.DOWN_LEFT]?.add(sprite);
       }
       if (keyNumber.startsWith("400")) {
-        animationSprite.frames[action + DFAnimation.DOWN]?.add(sprite);
+        animationSprite.frames[action + DFDirection.DOWN]?.add(sprite);
       }
     });
 
@@ -201,8 +202,8 @@ class DFAnimationSprite extends DFSprite {
       List<DFImageSprite> sprites = this.frames[this.currentAnimation]!;
 
       /// 控制动画帧按照stepTime进行更新
-      if (DateTime.now().millisecondsSinceEpoch - this.clock > this.stepTime) {
-        this.clock = DateTime.now().millisecondsSinceEpoch;
+      if (DateTime.now().millisecondsSinceEpoch - this.frameClock > this.stepTime) {
+        this.frameClock = DateTime.now().millisecondsSinceEpoch;
         if (sprites.length > this.currentIndex + 1) {
           this.currentIndex = this.currentIndex + 1;
         } else {

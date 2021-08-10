@@ -2,7 +2,7 @@
 class Effect {
 
   /// 纹理
-  String texture = "";
+  String? texture;
 
   /// 特效名字
   String name = "";

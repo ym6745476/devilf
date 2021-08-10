@@ -4,10 +4,11 @@ import 'package:devilf/game/df_animation.dart';
 
 /// 工具类
 class DFUtil {
-  /// 获取方向
+
+  /// 获取标准8方向
   static String getDirection(double radians) {
     /// 判断8方向
-    String direction = DFAnimation.NONE;
+    String direction = DFDirection.NONE;
 
     /// 换算角度
     double angle = 180 / pi * radians;
@@ -20,42 +21,42 @@ class DFUtil {
 
     /// 右边
     if ((angle >= 0 && angle < 22.5) || (angle >= 337.5 && angle <= 360)) {
-      direction = DFAnimation.RIGHT;
+      direction = DFDirection.RIGHT;
     }
 
     /// 右下
     if (angle >= 22.5 && angle < 67.5) {
-      direction = DFAnimation.DOWN_RIGHT;
+      direction = DFDirection.DOWN_RIGHT;
     }
 
     /// 下
     if (angle >= 67.5 && angle < 112.5) {
-      direction = DFAnimation.DOWN;
+      direction = DFDirection.DOWN;
     }
 
     /// 左下
     if (angle >= 112.5 && angle < 157.5) {
-      direction = DFAnimation.DOWN_LEFT;
+      direction = DFDirection.DOWN_LEFT;
     }
 
     /// 左
     if (angle >= 157.5 && angle < 202.5) {
-      direction = DFAnimation.LEFT;
+      direction = DFDirection.LEFT;
     }
 
     /// 左上
     if (angle >= 202.5 && angle < 247.5) {
-      direction = DFAnimation.UP_LEFT;
+      direction = DFDirection.UP_LEFT;
     }
 
     /// 上
     if (angle >= 247.5 && angle < 292.5) {
-      direction = DFAnimation.UP;
+      direction = DFDirection.UP;
     }
 
     /// 右上
     if (angle >= 292.5 && angle < 337.5) {
-      direction = DFAnimation.UP_RIGHT;
+      direction = DFDirection.UP_RIGHT;
     }
 
     /// 返回结果
@@ -66,27 +67,28 @@ class DFUtil {
   static double getRadians(String direction) {
     double radians = 0;
 
-    if (direction == DFAnimation.DOWN_RIGHT) {
+    if (direction == DFDirection.DOWN_RIGHT) {
       radians = 45 * pi / 180.0;
-    } else if (direction == DFAnimation.UP_LEFT) {
+    } else if (direction == DFDirection.UP_LEFT) {
       radians = 225 * pi / 180.0;
-    } else if (direction == DFAnimation.UP_RIGHT) {
+    } else if (direction == DFDirection.UP_RIGHT) {
       radians = 315 * pi / 180.0;
-    } else if (direction == DFAnimation.DOWN_LEFT) {
+    } else if (direction == DFDirection.DOWN_LEFT) {
       radians = 135 * pi / 180.0;
-    } else if (direction == DFAnimation.RIGHT) {
+    } else if (direction == DFDirection.RIGHT) {
       radians = 0;
-    } else if (direction == DFAnimation.LEFT) {
+    } else if (direction == DFDirection.LEFT) {
       radians = 180 * pi / 180.0;
-    } else if (direction == DFAnimation.DOWN) {
+    } else if (direction == DFDirection.DOWN) {
       radians = 90 * pi / 180.0;
-    } else if (direction == DFAnimation.UP) {
+    } else if (direction == DFDirection.UP) {
       radians = 270 * pi / 180.0;
     }
 
     /// 返回结果
     return radians;
   }
+
 
   /// Get [o] point distance [o1] and [o2] line segment distance
   static double getNearestDistance(DFPosition o1, DFPosition o2, DFPosition o) {

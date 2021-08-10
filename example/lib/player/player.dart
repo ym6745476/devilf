@@ -36,6 +36,9 @@ class Player extends Living {
   /// 警戒范围
   double vision = 800;
 
+  /// 复活间隔
+  double rebornTime = 5000;
+
   /// 创建玩家
   Player(name) : super(name);
 }

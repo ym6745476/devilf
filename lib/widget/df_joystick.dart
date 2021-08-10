@@ -39,7 +39,7 @@ class DFJoyStick extends StatefulWidget {
     this.backgroundImage,
     this.handleColor = const Color(0x60FFFFFF),
     this.backgroundColor = const Color(0x40FFFFFF),
-    this.direction = DFAnimation.NONE,
+    this.direction = DFDirection.NONE,
     required this.onChange,
     required this.onCancel,
     this.size = const Size(100, 100),
@@ -58,7 +58,7 @@ class DFJoyStickState extends State<DFJoyStick> {
   /// 更新位置
   void updateDirection(double radians) {
     /// 判断8方向
-    String direction = DFAnimation.NONE;
+    String direction = DFDirection.NONE;
 
     /// 换算角度
     double angle = 180 / pi * radians;
@@ -71,42 +71,42 @@ class DFJoyStickState extends State<DFJoyStick> {
 
     /// 右边
     if ((angle >= 0 && angle < 22.5) || (angle >= 337.5 && angle <= 360)) {
-      direction = DFAnimation.RIGHT;
+      direction = DFDirection.RIGHT;
     }
 
     /// 右下
     if (angle >= 22.5 && angle < 67.5) {
-      direction = DFAnimation.DOWN_RIGHT;
+      direction = DFDirection.DOWN_RIGHT;
     }
 
     /// 下
     if (angle >= 67.5 && angle < 112.5) {
-      direction = DFAnimation.DOWN;
+      direction = DFDirection.DOWN;
     }
 
     /// 左下
     if (angle >= 112.5 && angle < 157.5) {
-      direction = DFAnimation.DOWN_LEFT;
+      direction = DFDirection.DOWN_LEFT;
     }
 
     /// 左
     if (angle >= 157.5 && angle < 202.5) {
-      direction = DFAnimation.LEFT;
+      direction = DFDirection.LEFT;
     }
 
     /// 左上
     if (angle >= 202.5 && angle < 247.5) {
-      direction = DFAnimation.UP_LEFT;
+      direction = DFDirection.UP_LEFT;
     }
 
     /// 上
     if (angle >= 247.5 && angle < 292.5) {
-      direction = DFAnimation.UP;
+      direction = DFDirection.UP;
     }
 
     /// 右上
     if (angle >= 292.5 && angle < 337.5) {
-      direction = DFAnimation.UP_RIGHT;
+      direction = DFDirection.UP_RIGHT;
     }
 
     /// 返回结果

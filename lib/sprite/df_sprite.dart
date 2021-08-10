@@ -60,7 +60,7 @@ class DFSprite {
     children.addAll(sprites);
   }
 
-  /// 碰撞矩形
+  /// 碰撞形状
   DFShape getCollisionShape() {
     /// 子类覆盖
     return DFRect(this.position.x - this.size.width / 2, this.position.y - this.size.height / 2, this.size.width,

@@ -22,15 +22,15 @@ class _ControlLayerState extends State<ControlLayer> {
   PlayerSprite? _playerSprite;
 
   /// 自动按钮
-  DFButton? _autoButton;
+  DFButton? _autoFightButton;
 
   @override
   void initState() {
     super.initState();
     _playerSprite = GameManager.playerSprite;
 
-    _autoButton = DFButton(
-      /// text: "自动攻击",
+    _autoFightButton = DFButton(
+      /// text: "自动战斗",
       image: "assets/images/ui/auto_off.png",
       pressedImage: "assets/images/ui/auto_on.png",
       size: Size(40, 40),
@@ -55,7 +55,9 @@ class _ControlLayerState extends State<ControlLayer> {
           effect2.delayTime = 400;
           effect2.texture = "assets/images/effect/" + effect2.name + ".json";
 
-          _playerSprite?.moveToAttack(effect2, autoFight: true);
+          _playerSprite?.moveToAction(DFAction.ATTACK,effect: effect1, autoFight: true);
+          _playerSprite?.moveToAction(DFAction.CASTING,effect: effect2, autoFight: true);
+
         } else {
           _playerSprite?.cancelAutoFight(idle: true);
         }
@@ -83,11 +85,11 @@ class _ControlLayerState extends State<ControlLayer> {
               radians = DFUtil.getRadians(direction);
               _playerSprite?.cancelAutoFight();
               GameManager.isAutoFight = false;
-              _autoButton!.setSelected(false);
-              _playerSprite?.play(action: DFAnimation.RUN, direction: direction, radians: radians);
+              _autoFightButton!.setSelected(false);
+              _playerSprite?.play(DFAction.RUN, direction: direction, radians: radians);
             },
             onCancel: (direction) {
-              _playerSprite?.play(action: DFAnimation.IDLE, direction: direction);
+              _playerSprite?.play(DFAction.IDLE, direction: direction);
             },
           ),
         ),
@@ -114,7 +116,7 @@ class _ControlLayerState extends State<ControlLayer> {
                   effect.vision = 60;
                   effect.delayTime = 10;
                   effect.texture = "assets/images/effect/" + effect.name + ".json";
-                  _playerSprite?.moveToAttack(effect);
+                  _playerSprite?.moveToAction(DFAction.ATTACK,effect: effect);
                 },
               ),
             )),
@@ -141,7 +143,7 @@ class _ControlLayerState extends State<ControlLayer> {
                   effect.vision = 120;
                   effect.delayTime = 400;
                   effect.texture = "assets/images/effect/" + effect.name + ".json";
-                  _playerSprite?.moveToAttack(effect);
+                  _playerSprite?.moveToAction(DFAction.CASTING,effect: effect);
                 },
               ),
             )),
@@ -197,7 +199,7 @@ class _ControlLayerState extends State<ControlLayer> {
             image: "assets/images/ui/skill_collect.png",
             size: Size(36, 36),
             onPressed: (button) {
-              _playerSprite?.play(action: DFAnimation.DIG);
+              _playerSprite?.play(DFAction.DIG);
             },
           ),
         ),
@@ -211,13 +213,13 @@ class _ControlLayerState extends State<ControlLayer> {
             image: "assets/images/ui/skill_pick.png",
             size: Size(40, 40),
             onPressed: (button) {
-
+              _playerSprite?.play(DFAction.DIG);
             },
           ),
         ),
 
 
-        /// 目标
+        /// 锁定目标
         Positioned(
           bottom: MediaQuery.of(context).padding.bottom + 18,
           right: 180,
@@ -231,12 +233,12 @@ class _ControlLayerState extends State<ControlLayer> {
           ),
         ),
 
-        /// 自动
-        _autoButton != null
+        /// 自动战斗
+        _autoFightButton != null
             ? Positioned(
                 bottom: MediaQuery.of(context).padding.bottom + 180,
                 right: 15,
-                child: _autoButton!,
+                child: _autoFightButton!,
               )
             : Container(),
       ]),

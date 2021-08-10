@@ -12,10 +12,10 @@ class DFRect extends DFShape {
   final double top;
 
   /// 右坐标
-  double? right;
+  double right = 0;
 
   /// 下坐标
-  double? bottom;
+  double bottom = 0;
 
   /// 宽度
   final double width;
@@ -50,8 +50,8 @@ class DFRect extends DFShape {
 
   /// 矩形碰撞
   bool rectToRect(DFRect other) {
-    if (right! <= other.left || other.right! <= left) return false;
-    if (bottom! <= other.top || other.bottom! <= top) return false;
+    if (right <= other.left || other.right <= left) return false;
+    if (bottom <= other.top || other.bottom <= top) return false;
     return true;
   }
 

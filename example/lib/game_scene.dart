@@ -86,7 +86,8 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
         for (int i = 0; i < 3; i++) {
           Monster monster = Monster("蜘蛛" + (i + 1).toString());
-          monster.moveSpeed = 0.2;
+          monster.moveSpeed = 0.4;
+          player.maxAt = 120;
           monster.clothes = "assets/images/monster/spider.json";
           MonsterSprite monsterSprite = MonsterSprite(monster);
           int dirX = Random().nextBool() ? 1 : -1;

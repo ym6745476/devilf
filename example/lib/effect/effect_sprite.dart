@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:devilf/core/df_circle.dart';
 import 'package:devilf/core/df_position.dart';
-import 'package:devilf/core/df_rect.dart';
 import 'package:devilf/core/df_shape.dart';
 import 'package:devilf/core/df_size.dart';
 import 'package:devilf/game/df_animation.dart';
@@ -21,8 +20,8 @@ class EffectSprite extends DFSprite {
   /// 纹理精灵
   DFAnimationSprite? textureSprite;
 
-  /// 所属精灵
-  DFSprite? fromSprite;
+  /// 归属精灵
+  DFSprite? ownerSprite;
 
   /// 目标精灵
   DFSprite? targetSprite;
@@ -31,10 +30,10 @@ class EffectSprite extends DFSprite {
   double radians = 0;
 
   /// 当前动作
-  String action = DFAnimation.NONE;
+  String action = DFAction.NONE;
 
   /// 当前方向
-  String direction = DFAnimation.NONE;
+  String direction = DFDirection.NONE;
 
   /// 过期时钟
   int expireClock = 0;
@@ -54,7 +53,7 @@ class EffectSprite extends DFSprite {
   Future<void> _init() async {
     await Future.delayed(Duration.zero, () async {
       /// 玩家精灵动画
-      DFAnimationSprite textureSprite = await DFAnimationSprite.load(this.effect!.texture, scale: 0.4);
+      DFAnimationSprite textureSprite = await DFAnimationSprite.load(this.effect!.texture!, scale: 0.4);
       this.textureSprite = textureSprite;
       this.textureSprite!.position = DFPosition(size.width / 2, size.height / 2);
       this.textureSprite!.size = DFSize(100, 100);
@@ -64,10 +63,10 @@ class EffectSprite extends DFSprite {
 
       /// 播放动画
       if (effect!.type == EffectType.ATTACK) {
-        this.play(action: DFAnimation.ATTACK, direction: this.direction, radians: this.radians);
+        this.play(DFAction.ATTACK, direction: this.direction, radians: this.radians);
       } else if (effect!.type == EffectType.TRACK) {
         this.expireClock = DateTime.now().millisecondsSinceEpoch;
-        this.play(action: DFAnimation.TRACK, direction: this.direction, radians: this.radians);
+        this.play(DFAction.TRACK, direction: this.direction, radians: this.radians);
       }
 
       /// 初始化完成
@@ -76,14 +75,14 @@ class EffectSprite extends DFSprite {
   }
 
   /// 播放动画
-  void play({action = DFAnimation.NONE, direction = DFAnimation.NONE, radians = 1.0}) {
+  void play(String action, {direction = DFDirection.NONE, radians = 1.0}) {
     /// 不传action,则使用上一次的动作
-    if (action != DFAnimation.NONE) {
+    if (action != DFAction.NONE) {
       this.action = action;
     }
 
     /// 不传direction,则使用上一次的方向
-    if (direction != DFAnimation.NONE) {
+    if (direction != DFDirection.NONE) {
       this.direction = direction;
     }
 
@@ -99,36 +98,35 @@ class EffectSprite extends DFSprite {
         if (effect!.type == EffectType.ATTACK) {
           /// 5方向转换为8方向
           bool flippedX = false;
-          if (animation.contains(DFAnimation.LEFT)) {
+          if (animation.contains(DFDirection.LEFT)) {
             flippedX = true;
           }
           textureSprite!.currentAnimationFlippedX = flippedX;
         }
 
         bool loop = true;
-        if (this.action == DFAnimation.ATTACK || this.action == DFAnimation.EXPLODE) {
+        if (this.action == DFAction.ATTACK || this.action == DFAction.EXPLODE) {
           loop = false;
         }
 
         /// 弹道的只有一个上方向的图
-        if (action == DFAnimation.TRACK) {
-          animation = action + DFAnimation.UP;
-        } else if (action == DFAnimation.EXPLODE) {
-          animation = action + DFAnimation.UP;
-        } else if (action == DFAnimation.SURROUND) {
-          animation = action + DFAnimation.UP;
+        if (action == DFAction.TRACK) {
+          animation = action + DFDirection.UP;
+        } else if (action == DFAction.EXPLODE) {
+          animation = action + DFDirection.UP;
+        } else if (action == DFAction.SURROUND) {
+          animation = action + DFDirection.UP;
         }
 
         textureSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {
           print("onComplete:" + sprite.currentAnimation);
-          if (sprite.currentAnimation.contains(DFAnimation.EXPLODE) ||
-              sprite.currentAnimation.contains(DFAnimation.ATTACK)) {
+          if (sprite.currentAnimation.contains(DFAction.EXPLODE) || sprite.currentAnimation.contains(DFAction.ATTACK)) {
             this.damageEnemy(
                 found: (sprites) {
                   sprites.forEach((sprite) {
                     if (sprite is MonsterSprite) {
                       if (!sprite.monster.isDead) {
-                        sprite.receiveDamage(fromSprite!, effect!);
+                        sprite.receiveDamage(ownerSprite!, effect!);
                       }
                     }
                   });
@@ -152,14 +150,14 @@ class EffectSprite extends DFSprite {
 
   /// 锁定目标
   void setTargetSprite(DFSprite fromSprite, DFSprite? targetSprite) {
-    this.fromSprite = fromSprite;
+    this.ownerSprite = fromSprite;
     this.targetSprite = targetSprite;
   }
 
   /// 碰撞矩形
   @override
   DFShape getCollisionShape() {
-    return DFCircle(DFPosition(this.position.x, this.position.y),this.size.width/2);
+    return DFCircle(DFPosition(this.position.x, this.position.y), this.size.width / 2);
   }
 
   /// 更新
@@ -171,14 +169,14 @@ class EffectSprite extends DFSprite {
 
     if (this.effect != null) {
       /// 更新位置
-      if (textureSprite!.currentAnimation.contains(DFAnimation.TRACK)) {
+      if (textureSprite!.currentAnimation.contains(DFAction.TRACK)) {
         this.position.x = this.position.x + this.effect!.moveSpeed * cos(this.radians);
         this.position.y = this.position.y + this.effect!.moveSpeed * sin(this.radians);
         //print("move:" + this.position.toString());
 
-        if(DateTime.now().millisecondsSinceEpoch - this.expireClock > 200){
-          this.play(action: DFAnimation.EXPLODE);
-        }else{
+        if (DateTime.now().millisecondsSinceEpoch - this.expireClock > 200) {
+          this.play(DFAction.EXPLODE);
+        } else {
           /// 判断碰撞
           this.checkTrackCollision();
         }
@@ -224,7 +222,7 @@ class EffectSprite extends DFSprite {
         if (this.getCollisionShape().overlaps(monsterCollision)) {
           this.position.x = monsterSprite.position.x;
           this.position.y = monsterSprite.position.y;
-          this.play(action: DFAnimation.EXPLODE);
+          this.play(DFAction.EXPLODE);
         }
       }
     } else {
@@ -236,7 +234,7 @@ class EffectSprite extends DFSprite {
             if (this.getCollisionShape().overlaps(monsterCollision)) {
               this.position.x = monsterSprite.position.x;
               this.position.y = monsterSprite.position.y;
-              this.play(action: DFAnimation.EXPLODE);
+              this.play(DFAction.EXPLODE);
             }
           }
         });

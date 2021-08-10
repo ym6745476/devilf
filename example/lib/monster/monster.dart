@@ -36,9 +36,6 @@ class Monster extends Living {
   /// 警戒范围
   double vision = 200;
 
-  /// 动作间隔
-  double actionStepTime = 1000;
-
   /// 复活间隔
   double rebornTime = 5000;
 

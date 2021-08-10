@@ -13,6 +13,7 @@ import 'package:devilf/tiled/df_tile_set.dart';
 import 'package:devilf/tiled/df_tiled_map.dart';
 import 'dart:ui' as ui;
 
+import '../df_config.dart';
 import 'df_image_sprite.dart';
 
 /// 瓦片精灵
@@ -197,36 +198,38 @@ class DFTiledSprite extends DFSprite {
     bool isAlpha = false;
 
     if (blockLayer != null && alphaLayer != null) {
-      ///
-      DFPosition center = DFPosition(0, 0);
+      List<DFPosition> points = [];
       if (shape is DFRect) {
-        center = shape.center();
+        points.add(DFPosition(shape.left, shape.top));
+        points.add(DFPosition(shape.right, shape.top));
+        points.add(DFPosition(shape.right, shape.bottom));
+        points.add(DFPosition(shape.left, shape.bottom));
       } else if (shape is DFCircle) {
-        center = shape.center;
+        points.add(DFPosition(shape.center.x - shape.radius, shape.center.y - shape.radius));
+        points.add(DFPosition(shape.center.x + shape.radius, shape.center.y - shape.radius));
+        points.add(DFPosition(shape.center.x - shape.radius, shape.center.y + shape.radius));
+        points.add(DFPosition(shape.center.x + shape.radius, shape.center.y + shape.radius));
       }
 
+      int columnCount = tiledMap!.width!;
       double realTiledWidth = this.tiledMap!.tileWidth! * this.scale;
       double realTiledHeight = this.tiledMap!.tileHeight! * this.scale;
-      int column = (center.x / realTiledWidth).floor();
-      int row = (center.y / realTiledHeight).floor();
-      print("row:" + row.toString() + ",column:" + column.toString());
-      DFTileSet? tileSet;
-      for (int i = 0; i < blockLayer!.data!.length; i++) {
-        if (blockLayer!.data![i] != 0) {
-          tileSet = tiledMap!.tileSets!.lastWhere((element) {
-            return blockLayer!.data![i] >= element.firsTgId!;
-          });
-          break;
-        }
-      }
-      int firsTgId = tileSet!.firsTgId!;
-      print("firsTgId:" + firsTgId.toString());
-      if (blockLayer!.data![row * column + column + firsTgId] != 0) {
-        isBlock = true;
-      }
 
-      if (alphaLayer!.data![row * column + column + firsTgId] != 0) {
-        isAlpha = true;
+      /// 获取形状的4个点进行判断碰撞，比遍历性能会高很多
+      for (int i = 0; i < points.length; i++) {
+        int row = (points[i].y / realTiledHeight).ceil() - 1;
+        int column = (points[i].x / realTiledWidth).ceil() - 1;
+
+        /// print("row:" + row.toString() + ",column:" + column.toString());
+        int index = row * columnCount + column;
+        /// print("index:" + index.toString());
+
+        if (blockLayer!.data![index] != 0) {
+          isBlock = true;
+          break;
+        } else if (alphaLayer!.data![index] != 0) {
+          isAlpha = true;
+        }
       }
     }
     if (isBlock) {
@@ -241,46 +244,36 @@ class DFTiledSprite extends DFSprite {
   void drawBlockAndAlphaLayer(Canvas canvas) {
     if (blockLayer != null && this.cameraPosition != null) {
       /// 可视区域
-      DFRect visibleRect = DFRect(this.cameraPosition!.x - 100, this.cameraPosition!.y - 100, 200, 200);
+      DFCircle visibleShape = DFCircle(this.cameraPosition!, 300);
 
       /// print("visibleRect:" + visibleRect.toString());
+      int columnCount = tiledMap!.width!;
+      double tileWidth = tiledMap!.tileWidth!.toDouble() * this.scale;
+      double tileHeight = tiledMap!.tileHeight!.toDouble() * this.scale;
 
       for (int i = 0; i < blockLayer!.data!.length; i++) {
         if (blockLayer!.data![i] != 0) {
-          DFTileSet? tileSet = tiledMap!.tileSets!.lastWhere((element) {
-            return blockLayer!.data![i] >= element.firsTgId!;
-          });
           var paint = new Paint()..color = Color(0x60f05b72);
-          int columnCount = (tiledMap!.width! * tiledMap!.tileWidth!) ~/ tileSet.tileWidth!.toDouble();
-          double tileWidth = tileSet.tileWidth!.toDouble() * this.scale;
-          double tileHeight = tileSet.tileHeight!.toDouble() * this.scale;
 
           int row = _getY(i, columnCount).toInt();
           int column = _getX(i, columnCount).toInt();
 
-          Rect tileRect = Rect.fromLTWH(column * tileWidth, row * tileHeight, tileWidth, tileHeight);
+          DFRect tileRect = DFRect(column * tileWidth, row * tileHeight, tileWidth, tileHeight);
 
-          if (visibleRect.toRect().overlaps(tileRect)) {
+          if (visibleShape.overlaps(tileRect)) {
             /// 在可视区域的瓦片设置为显示
-            canvas.drawRect(tileRect, paint);
+            canvas.drawRect(tileRect.toRect(), paint);
           }
         } else if (alphaLayer!.data![i] != 0) {
-          DFTileSet? tileSet = tiledMap!.tileSets!.lastWhere((element) {
-            return alphaLayer!.data![i] >= element.firsTgId!;
-          });
           var paint = new Paint()..color = Color(0x60426ab3);
-          int columnCount = (tiledMap!.width! * tiledMap!.tileWidth!) ~/ tileSet.tileWidth!.toDouble();
-          double tileWidth = tileSet.tileWidth!.toDouble() * this.scale;
-          double tileHeight = tileSet.tileHeight!.toDouble() * this.scale;
-
           int row = _getY(i, columnCount).toInt();
           int column = _getX(i, columnCount).toInt();
 
-          Rect tileRect = Rect.fromLTWH(column * tileWidth, row * tileHeight, tileWidth, tileHeight);
+          DFRect tileRect = DFRect(column * tileWidth, row * tileHeight, tileWidth, tileHeight);
 
-          if (visibleRect.toRect().overlaps(tileRect)) {
+          if (visibleShape.overlaps(tileRect)) {
             /// 在可视区域的瓦片设置为显示
-            canvas.drawRect(tileRect, paint);
+            canvas.drawRect(tileRect.toRect(), paint);
           }
         }
       }
@@ -314,7 +307,9 @@ class DFTiledSprite extends DFSprite {
     }*/
 
     /// 绘制碰撞层和遮挡层
-    drawBlockAndAlphaLayer(canvas);
+    if(DFConfig.debug){
+      drawBlockAndAlphaLayer(canvas);
+    }
 
     /// 画布恢复
     canvas.restore();
