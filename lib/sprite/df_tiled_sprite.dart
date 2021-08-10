@@ -81,7 +81,7 @@ class DFTiledSprite extends DFSprite {
     double drawY = camera.sprite!.position.y - camera.rect.height / 2;
 
     /// 可视区域
-    DFRect visibleRect = DFRect(drawX, drawY, camera.rect.width, camera.rect.height);
+    DFRect visibleRect = DFRect(drawX, drawY, camera.rect.width + this.tiledMap!.tileWidth! * 10 * scale, camera.rect.height + this.tiledMap!.tileHeight! * 10 * scale);
 
     /// print("visibleRect:" + visibleRect.toString());
 

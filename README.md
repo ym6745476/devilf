@@ -33,11 +33,12 @@ dependencies:
   devilf: ^0.0.7
 ```
 
-### 示例演示
-<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/devilf.gif" width="600" height="292"/>  
+### 示例演示  
+<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/devilf.jpg?v=7" width="600" height="292"/>  
+<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/devilf.gif?v=7" width="600" height="292"/>  
 
 # 引擎框架
-<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/doc_1.png" width="500" height="473"/>  
+<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/doc_1.png?v=7" width="600" height="552"/>  
 
 # 示例功能  
 * GameManager：游戏管理器  
