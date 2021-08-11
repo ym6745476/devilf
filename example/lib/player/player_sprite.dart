@@ -326,7 +326,7 @@ class PlayerSprite extends DFSprite {
         /// 规划路径
         aStar.start(GameManager.mapSprite!.mapInfo.blockMap!, startNode, endNode);
 
-        /*if (aStar.pathList.length > 0) {
+        if (aStar.pathList.length > 0) {
           DFCoord coord = aStar.pathList.removeLast();
           this.movePathPosition = getPosition(coord.x, coord.y);
           this.updateDirection(this.movePathPosition!);
@@ -337,7 +337,7 @@ class PlayerSprite extends DFSprite {
 
           /// 启动寻路
           this.movePathStart = true;
-        }*/
+        }
       }
     } else {
       if (!this.autoFight) {
