@@ -1,23 +1,22 @@
 import 'dart:async';
 import 'dart:math';
-
-import 'package:devilf/core/df_rect.dart';
-import 'package:devilf/game/df_camera.dart';
-import 'package:devilf/game/df_game_widget.dart';
-import 'package:devilf/sprite/df_image_sprite.dart';
-import 'package:devilf/sprite/df_text_sprite.dart';
+import 'package:devilf_engine/core/df_rect.dart';
+import 'package:devilf_engine/game/df_camera.dart';
+import 'package:devilf_engine/game/df_game_widget.dart';
+import 'package:devilf_engine/sprite/df_image_sprite.dart';
+import 'package:devilf_engine/sprite/df_text_sprite.dart';
 import 'package:example/layer/control_layer.dart';
-import 'package:example/player/player.dart';
+import 'package:example/map/map_info.dart';
+import 'package:example/player/player_info.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'game_manager.dart';
-import 'map/map_sprite.dart';
-import 'monster/monster.dart';
-import 'monster/monster_sprite.dart';
-import 'package:devilf/core/df_position.dart';
-import 'package:devilf/core/df_size.dart';
+import '../game_manager.dart';
+import '../map/map_sprite.dart';
+import '../monster/monster_info.dart';
+import '../monster/monster_sprite.dart';
+import 'package:devilf_engine/core/df_position.dart';
+import 'package:devilf_engine/core/df_size.dart';
 
 class GameScene extends StatefulWidget {
   final int map;
@@ -64,13 +63,16 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         this._gameWidget = DFGameWidget(camera: camera);
 
         /// 地图精灵
-        MapSprite mapSprite = MapSprite("落霞岛", map: "assets/images/map/lxd.json", camera: camera);
+        MapInfo mapInfo = MapInfo("落霞岛");
+        mapInfo.texture = "assets/images/map/lxd.json";
+        mapInfo.scale = 0.35;
+        MapSprite mapSprite = MapSprite(mapInfo, camera: camera);
 
         /// 保存到管理器里
         GameManager.mapSprite = mapSprite;
 
         /// 创建玩家精灵
-        Player player = Player("玩家1");
+        PlayerInfo player = PlayerInfo("玩家1");
         player.maxAt = 120;
         player.moveSpeed = 2;
         player.clothes = "assets/images/player/man_01.json";
@@ -85,7 +87,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         List<MonsterSprite> _monsterSprites = [];
 
         for (int i = 0; i < 3; i++) {
-          Monster monster = Monster("蜘蛛" + (i + 1).toString());
+          MonsterInfo monster = MonsterInfo("蜘蛛" + (i + 1).toString());
           monster.moveSpeed = 0.4;
           player.maxAt = 120;
           monster.clothes = "assets/images/monster/spider.json";

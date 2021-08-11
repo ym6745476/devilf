@@ -1,21 +1,22 @@
 import 'dart:math';
-import 'package:devilf/core/df_circle.dart';
-import 'package:devilf/core/df_position.dart';
-import 'package:devilf/core/df_shape.dart';
-import 'package:devilf/core/df_size.dart';
-import 'package:devilf/game/df_animation.dart';
-import 'package:devilf/sprite/df_animation_sprite.dart';
-import 'package:devilf/sprite/df_sprite.dart';
+import 'package:devilf_engine/core/df_circle.dart';
+import 'package:devilf_engine/core/df_position.dart';
+import 'package:devilf_engine/core/df_shape.dart';
+import 'package:devilf_engine/core/df_size.dart';
+import 'package:devilf_engine/devilf_engine.dart';
+import 'package:devilf_engine/game/df_animation.dart';
+import 'package:devilf_engine/sprite/df_animation_sprite.dart';
+import 'package:devilf_engine/sprite/df_sprite.dart';
 import 'package:example/monster/monster_sprite.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../game_manager.dart';
-import 'effect.dart';
+import 'effect_info.dart';
 
 /// 特效精灵类
 class EffectSprite extends DFSprite {
   /// 特效
-  Effect? effect;
+  EffectInfo? effect;
 
   /// 纹理精灵
   DFAnimationSprite? textureSprite;
@@ -248,14 +249,16 @@ class EffectSprite extends DFSprite {
     /// 画布暂存
     canvas.save();
 
-    /// 精灵矩形边界
-    /*var paint = new Paint()..color = Color(0x60bb505d);
-    DFShape collisionShape = getCollisionShape();
-    if (collisionShape is DFCircle) {
-      canvas.drawCircle(collisionShape.center.toOffset(), collisionShape.radius, paint);
-    } else if (collisionShape is DFRect) {
-      canvas.drawRect(collisionShape.toRect(), paint);
-    }*/
+    /// 精灵碰撞区域
+    if (DFConfig.debug) {
+      /*var paint = new Paint()..color = Color(0x60bb505d);
+      DFShape collisionShape = getCollisionShape();
+      if (collisionShape is DFCircle) {
+        canvas.drawCircle(collisionShape.center.toOffset(), collisionShape.radius, paint);
+      } else if (collisionShape is DFRect) {
+        canvas.drawRect(collisionShape.toRect(), paint);
+      }*/
+    }
 
     /// 移动画布
     canvas.translate(position.x, position.y);

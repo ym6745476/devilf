@@ -1,6 +1,5 @@
 /// 特效类
-class Effect {
-
+class EffectInfo {
   /// 纹理
   String? texture;
 
@@ -27,14 +26,19 @@ class Effect {
 
   /// 特效类型
   EffectType type = EffectType.NONE;
-
 }
 
 /// 特效类型
 enum EffectType {
-  NONE,      /// 无
-  ATTACK,    /// 攻击 5方向
-  TRACK,     /// 弹道 右方向 爆炸 上方向
-  SURROUND,  /// 环绕 上方向
+  /// 无
+  NONE,
 
+  /// 攻击 5方向
+  ATTACK,
+
+  /// 弹道 右方向 爆炸 上方向
+  TRACK,
+
+  /// 环绕 上方向
+  SURROUND,
 }

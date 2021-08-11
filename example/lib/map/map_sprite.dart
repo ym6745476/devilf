@@ -1,34 +1,29 @@
 import 'dart:ui';
-import 'package:devilf/core/df_position.dart';
-import 'package:devilf/core/df_size.dart';
-import 'package:devilf/game/df_camera.dart';
-import 'package:devilf/sprite/df_sprite.dart';
-import 'package:devilf/sprite/df_tiled_sprite.dart';
+import 'package:devilf_engine/core/df_position.dart';
+import 'package:devilf_engine/core/df_size.dart';
+import 'package:devilf_engine/game/df_camera.dart';
+import 'package:devilf_engine/sprite/df_sprite.dart';
+import 'package:devilf_engine/sprite/df_tile_map_sprite.dart';
+import 'package:devilf_engine/util/df_util.dart';
 import 'package:flutter/cupertino.dart';
+import 'map_info.dart';
 
 /// 地图精灵类
 class MapSprite extends DFSprite {
-  /// 名字
-  String name = "";
+  /// 地图
+  MapInfo mapInfo;
 
-  /// 地图文件
-  String map = "";
-
-  /// 瓦片精灵
-  DFTiledSprite? tiledSprite;
+  /// 地图精灵
+  DFTileMapSprite? tileMapSprite;
 
   /// 摄像机
   DFCamera camera;
-
-  /// 缩放比例
-  double scale = 0.35;
 
   /// 是否初始化
   bool isInit = false;
 
   MapSprite(
-    this.name, {
-    required this.map,
+    this.mapInfo, {
     required this.camera,
     DFSize size = const DFSize(48, 32),
   }) : super(position: DFPosition(0, 0), size: size) {
@@ -38,12 +33,16 @@ class MapSprite extends DFSprite {
   /// 初始化
   Future<void> _init() async {
     await Future.delayed(Duration.zero, () async {
-
-      print("读取地图：" + map);
-      this.tiledSprite = await DFTiledSprite.load(map,scale);
+      print("读取地图：" + this.mapInfo.texture);
+      this.tileMapSprite = await DFTileMapSprite.load(this.mapInfo.texture, this.mapInfo.scale);
+      /// 保存缩放后的tile宽度个高度
+      this.mapInfo.tileWidth = this.tileMapSprite!.tileMap!.tileWidth! * this.mapInfo.scale;
+      this.mapInfo.tileHeight = this.tileMapSprite!.tileMap!.tileHeight! * this.mapInfo.scale;
+      /// 将block转化为二维数组
+      this.mapInfo.blockMap = DFUtil.to2dList(this.tileMapSprite!.blockLayer!.data!, this.tileMapSprite!.tileMap!.width!, 1);
 
       /// 调用add产生层级关系进行坐标转换
-      addChild(this.tiledSprite!);
+      addChild(this.tileMapSprite!);
 
       /// 初始化完成
       this.isInit = true;
@@ -52,7 +51,7 @@ class MapSprite extends DFSprite {
 
   @override
   void update(double dt) {
-    this.tiledSprite?.updateLayer(camera);
+    this.tileMapSprite?.updateLayer(camera);
   }
 
   @override

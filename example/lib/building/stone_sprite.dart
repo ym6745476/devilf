@@ -1,13 +1,13 @@
 import 'dart:math';
 import 'dart:ui';
-import 'package:devilf/core/df_position.dart';
-import 'package:devilf/core/df_size.dart';
-import 'package:devilf/sprite/df_sprite.dart';
+import 'package:devilf_engine/core/df_position.dart';
+import 'package:devilf_engine/core/df_size.dart';
+import 'package:devilf_engine/sprite/df_sprite.dart';
 import 'package:flutter/cupertino.dart';
 
-/// 块精灵类
-class BlankSprite extends DFSprite {
-  BlankSprite({DFSize size = const DFSize(32, 32)}) : super(position: DFPosition(0, 0), size: size);
+/// 石头精灵类
+class StoneSprite extends DFSprite {
+  StoneSprite({DFSize size = const DFSize(32, 32)}) : super(position: DFPosition(0, 0), size: size);
 
   @override
   void update(double dt) {

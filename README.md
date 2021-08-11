@@ -1,22 +1,33 @@
 # DevilF 游戏引擎  
-A Flutter 2D RPG Game Engine.  
-一个基于Flutter的2D RPG游戏引擎。  
-
-<p align="center">
-    <img src="https://img.shields.io/badge/devilf-0.0.7-orange" />
-    <img src="https://img.shields.io/badge/flutter-2.2.3-green" />
-</p>
 
 <p align="center" >
     <img src="https://github.com/ym6745476/devilf/blob/master/logo.png?raw=true" />
 </p>
 
+<p align="center">
+    <img src="https://img.shields.io/badge/devilf-0.0.8-orange" />
+    <img src="https://img.shields.io/badge/flutter-2.2.3-green" />
+</p>
+
+<p align="center" >
+    A Flutter 2D RPG Game Engine On Web & Android & IOS.
+</p>
+<p align="center" >
+    一个基于Flutter的2D RPG游戏引擎。
+</p>
+  
+<p align="center" >
+   The Devilf Engine Is A Open Source 2D Game Engine.
+   The Engine Is Development Using Flutter & Dart Language.
+   You Can Use It Independently In Your Flutter Project.
+   Some Documentation Of How To Use It Can Be Found Here.
+</p>
+
 ## 引擎介绍  
-(Devil Fighter)
 自从有了Flutter，轻松实现了三端跨平台，并且不增加包体积，就能拥有一套Native游戏引擎，为APP游戏化提供了更多可能性。  
 开发这套引擎的同时，也会同时开发引擎对应的游戏示例，将以2D RPG游戏作为示例来完善该引擎。  
 感谢大家关注，也欢迎贡献你的想法和技术。  欢迎加QQ群讨论：687500695！！！
-
+(Devil Fighter)  
 适用范围：中型游戏，营销活动，小游戏等；   
 主要特性：游戏循环，精灵渲染，战斗系统；     
 游戏支持：精灵动画，摄像机，瓦片地图，碰撞检测，遥杆控制器等。     
@@ -27,17 +38,16 @@ https://ymbok.com/book/devilf.html
 ## 在线体验    
 https://ymbok.com/example/devilf.html  
 
-## 安装控件
+## 安装框架  
 ```yaml
 dependencies:
-  devilf: ^0.0.7
+  devilf: ^0.0.8
 ```
 
 ### 示例演示  
-<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/devilf.jpg?v=7" width="600" height="292"/>  
 <img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/devilf.gif?v=7" width="600" height="292"/>  
 
-# 引擎框架
+# 引擎框架  
 <img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/doc_1.png?v=7" width="600" height="552"/>  
 
 # 示例功能  
@@ -45,7 +55,7 @@ dependencies:
 * GameScene：游戏场景  
 * PlayerSprite：玩家精灵  
 * MonsterSprite：怪物精灵  
-* EffectSprite：特效精灵 
+* EffectSprite：特效精灵  
 * MapSprite：地图精灵  
 
 # 游戏组件  
@@ -67,8 +77,11 @@ dependencies:
 # 界面组件   
 * Button：按钮控件   
 
-# 推荐Flutter开发框架（Http请求，各类UI组件全搞定）
+# 同款Flutter APP开发框架（Http请求，各类UI组件全搞定）
 https://github.com/ym6745476/ym_flutter_widget  
+
+## [0.0.8] - 2021/08/15.  
+* 优化[示例] 引擎代码和示例      
 
 ## [0.0.7] - 2021/08/10.  
 * 优化[示例] 自动战斗逻辑优化   
@@ -93,7 +106,7 @@ https://github.com/ym6745476/ym_flutter_widget
 * 新增[示例] 新增蜘蛛怪物    
 
 ## [0.0.5] - 2021/07/16. 
-* 优化[核心] 引擎的结构和已开发功能  
+* 优化[核心] 引擎代码和示例    
 
 ## [0.0.4] - 2021/07/15. 
 * 新增[示例] 摇杆控制玩家移动   

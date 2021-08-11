@@ -1,24 +1,23 @@
 import 'dart:math';
-import 'package:devilf/core/df_circle.dart';
-import 'package:devilf/core/df_position.dart';
-import 'package:devilf/core/df_rect.dart';
-import 'package:devilf/core/df_shape.dart';
-import 'package:devilf/core/df_size.dart';
-import 'package:devilf/df_config.dart';
-import 'package:devilf/game/df_animation.dart';
-import 'package:devilf/game/df_assets_loader.dart';
-import 'package:devilf/sprite/df_animation_sprite.dart';
-import 'package:devilf/sprite/df_image_sprite.dart';
-import 'package:devilf/sprite/df_progress_sprite.dart';
-import 'package:devilf/sprite/df_sprite.dart';
-import 'package:devilf/sprite/df_text_sprite.dart';
-import 'package:devilf/tiled/df_tiled_map.dart';
-import 'package:devilf/util/df_astar.dart';
-import 'package:devilf/util/df_util.dart';
-import 'package:example/effect/effect.dart';
+import 'package:devilf_engine/core/df_circle.dart';
+import 'package:devilf_engine/core/df_position.dart';
+import 'package:devilf_engine/core/df_rect.dart';
+import 'package:devilf_engine/core/df_shape.dart';
+import 'package:devilf_engine/core/df_size.dart';
+import 'package:devilf_engine/devilf_engine.dart';
+import 'package:devilf_engine/game/df_animation.dart';
+import 'package:devilf_engine/game/df_assets_loader.dart';
+import 'package:devilf_engine/sprite/df_animation_sprite.dart';
+import 'package:devilf_engine/sprite/df_image_sprite.dart';
+import 'package:devilf_engine/sprite/df_progress_sprite.dart';
+import 'package:devilf_engine/sprite/df_sprite.dart';
+import 'package:devilf_engine/sprite/df_text_sprite.dart';
+import 'package:devilf_engine/util/df_astar.dart';
+import 'package:devilf_engine/util/df_util.dart';
+import 'package:example/effect/effect_info.dart';
 import 'package:example/effect/effect_sprite.dart';
 import 'package:example/monster/monster_sprite.dart';
-import 'package:example/player/player.dart';
+import 'package:example/player/player_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui' as ui;
 import '../game_manager.dart';
@@ -26,7 +25,7 @@ import '../game_manager.dart';
 /// 玩家精灵类
 class PlayerSprite extends DFSprite {
   /// 玩家
-  Player player;
+  PlayerInfo player;
 
   /// 衣服
   DFAnimationSprite? clothesSprite;
@@ -62,7 +61,7 @@ class PlayerSprite extends DFSprite {
   double radians = 0;
 
   /// 动作特效
-  Effect? effect;
+  EffectInfo? effect;
 
   /// 自动寻路
   bool movePathStart = false;
@@ -82,8 +81,8 @@ class PlayerSprite extends DFSprite {
   /// 路径规划
   DFAStar aStar = DFAStar();
 
-  /// 是否初始化
-  bool isInit = false;
+  /// 初始化完成
+  bool initOk = false;
 
   /// 创建玩家精灵
   PlayerSprite(
@@ -98,16 +97,14 @@ class PlayerSprite extends DFSprite {
     try {
       await Future.delayed(Duration.zero, () async {
         /// 选择光圈
-        DFAnimationSprite selectSprite = await DFAnimationSprite.load("assets/images/effect/select_player.json",
+        this.selectSprite = await DFAnimationSprite.load("assets/images/effect/select_player.json",
             scale: 0.6, blendMode: BlendMode.colorDodge);
-        this.selectSprite = selectSprite;
         this.selectSprite!.position = DFPosition(size.width / 2, size.height / 2 * 1.5);
         addChild(this.selectSprite!);
         this.selectSprite?.play(DFAction.SURROUND + DFDirection.UP, stepTime: 100, loop: true);
 
         /// 玩家精灵动画
-        DFAnimationSprite clothesSprite = await DFAnimationSprite.load(this.player.clothes);
-        this.clothesSprite = clothesSprite;
+        this.clothesSprite = await DFAnimationSprite.load(this.player.clothes);
         this.clothesSprite!.position = DFPosition(size.width / 2, size.height / 2);
         this.clothesSprite!.size = DFSize(160, 160);
 
@@ -115,9 +112,7 @@ class PlayerSprite extends DFSprite {
         addChild(this.clothesSprite!);
 
         if (this.player.weapon != "") {
-          DFAnimationSprite weaponSprite = await DFAnimationSprite.load(this.player.weapon);
-          this.weaponSprite = weaponSprite;
-
+          this.weaponSprite = await DFAnimationSprite.load(this.player.weapon);
           /// 绑定动画同步
           this.weaponSprite!.position =
               DFPosition(this.clothesSprite!.size.width / 2, this.clothesSprite!.size.height / 2);
@@ -142,7 +137,7 @@ class PlayerSprite extends DFSprite {
         addChild(this.nameSprite!);
 
         /// 初始化完成
-        this.isInit = true;
+        this.initOk = true;
       });
     } catch (e) {
       print('(PlayerSprite _init) Error: $e');
@@ -190,16 +185,17 @@ class PlayerSprite extends DFSprite {
             /// 动作完成回到IDLE
             clothesSprite!.play(DFAction.IDLE + this.direction, stepTime: 200, loop: false);
           });
-        }else if (this.action == DFAction.DEATH) {
-          clothesSprite!.play(animation, stepTime: 100, loop: loop,onComplete:(DFAnimationSprite sprite){
+        } else if (this.action == DFAction.DEATH) {
+          clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {
             /// 设置死亡状态
             this.player.isDead = true;
             this.rebornClock = DateTime.now().millisecondsSinceEpoch;
             print("从场景移除:" + this.player.name);
+
             /// 从场景移除 可重生
             GameManager.gameWidget!.removeChild(this, recyclable: false);
           });
-        }  else {
+        } else {
           clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {
             if (sprite.currentAnimation.contains(DFAction.DIG)) {
               /// 动作完成回到IDLE
@@ -299,7 +295,7 @@ class PlayerSprite extends DFSprite {
   }
 
   /// 锁定目标->移动到目标->动作
-  void moveToAction(String action, {Effect? effect, bool autoFight = false}) {
+  void moveToAction(String action, {EffectInfo? effect, bool autoFight = false}) {
     /// 移动后的动作
     this.autoFight = autoFight;
     this.nextAction = action;
@@ -309,13 +305,16 @@ class PlayerSprite extends DFSprite {
     lockTargetSprite();
 
     if (this.targetSprite != null) {
-      DFTiledMap tiledMap = GameManager.mapSprite!.tiledSprite!.tiledMap!;
-      double realTiledWidth = tiledMap.tileWidth! * GameManager.mapSprite!.scale;
-      double realTiledHeight = tiledMap.tileHeight! * GameManager.mapSprite!.scale;
-      int startX = (position.x / realTiledWidth).floor().toInt();
-      int startY = (position.y / realTiledHeight).floor().toInt();
-      int endX = (this.targetSprite!.position.x / realTiledWidth).floor().toInt();
-      int endY = (this.targetSprite!.position.y / realTiledHeight).floor().toInt();
+      double tileWidth = GameManager.mapSprite!.mapInfo.tileWidth;
+      double tileHeight = GameManager.mapSprite!.mapInfo.tileHeight;
+
+      int startX = (position.x / tileWidth).floor().toInt();
+      int startY = (position.y / tileHeight).floor().toInt();
+      int endX = (this.targetSprite!.position.x / tileWidth).floor().toInt();
+      int endY = (this.targetSprite!.position.y / tileHeight).floor().toInt();
+
+      ///int endX = (800 / tileWidth).floor().toInt();
+      ///int endY = (1500 / tileHeight).floor().toInt();
       DFNode startNode = DFNode(startX, startY);
       DFNode endNode = DFNode(endX, endY);
       print("起点坐标：" + startNode.coord.toString() + ",起点位置：" + this.position.toString());
@@ -325,9 +324,9 @@ class PlayerSprite extends DFSprite {
         this.doNextAction();
       } else {
         /// 规划路径
-        GameManager.planPath(aStar, startNode, endNode);
+        aStar.start(GameManager.mapSprite!.mapInfo.blockMap!, startNode, endNode);
 
-        if (aStar.pathList.length > 0) {
+        /*if (aStar.pathList.length > 0) {
           DFCoord coord = aStar.pathList.removeLast();
           this.movePathPosition = getPosition(coord.x, coord.y);
           this.updateDirection(this.movePathPosition!);
@@ -338,7 +337,7 @@ class PlayerSprite extends DFSprite {
 
           /// 启动寻路
           this.movePathStart = true;
-        }
+        }*/
       }
     } else {
       if (!this.autoFight) {
@@ -451,7 +450,7 @@ class PlayerSprite extends DFSprite {
   }
 
   /// 添加特效
-  Future<void> _addEffect(Effect effect) async {
+  Future<void> _addEffect(EffectInfo effect) async {
     await Future.delayed(Duration(milliseconds: effect.delayTime), () async {
       EffectSprite effectSprite = EffectSprite(effect);
       effectSprite.position = DFPosition(this.position.x, this.position.y);
@@ -504,7 +503,7 @@ class PlayerSprite extends DFSprite {
   }
 
   /// 接收伤害
-  void receiveDamage(DFSprite ownerSprite, Effect effect) {
+  void receiveDamage(DFSprite ownerSprite, EffectInfo effect) {
     /// 随机伤害  0.0~1.0
     var random = new Random();
     if (ownerSprite is MonsterSprite) {
@@ -547,7 +546,7 @@ class PlayerSprite extends DFSprite {
   /// 死亡
   void dead(DFSprite ownerSprite) {
     this.cancelAutoFight();
-    if(this.targetSprite is MonsterSprite){
+    if (this.targetSprite is MonsterSprite) {
       MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
       monsterSprite.unSelectThisSprite();
     }
@@ -574,18 +573,31 @@ class PlayerSprite extends DFSprite {
     print("重生：" + this.position.toString());
   }
 
-  /// 获取坐标
+  /// 根据瓦片位置获取实际坐标
   DFPosition getPosition(int tiledX, int tiledY) {
-    DFTiledMap tiledMap = GameManager.mapSprite!.tiledSprite!.tiledMap!;
-    double realTiledWidth = tiledMap.tileWidth! * GameManager.mapSprite!.scale;
-    double realTiledHeight = tiledMap.tileHeight! * GameManager.mapSprite!.scale;
-    return DFPosition(tiledX * realTiledWidth - realTiledWidth / 2, tiledY * realTiledHeight - realTiledHeight / 2);
+    double tileWidth = GameManager.mapSprite!.mapInfo.tileWidth;
+    double tileHeight = GameManager.mapSprite!.mapInfo.tileHeight;
+    return DFPosition(tiledX * tileWidth - tileWidth / 2, tiledY * tileHeight - tileHeight / 2);
+  }
+
+  /// 获取路径矩形
+  DFRect getRect(int tiledX, int tiledY) {
+    double tileWidth = GameManager.mapSprite!.mapInfo.tileWidth;
+    double tileHeight = GameManager.mapSprite!.mapInfo.tileHeight;
+    return DFRect(tiledX * tileWidth - tileWidth, tiledY * tileHeight - tileHeight,tileWidth,tileHeight);
+  }
+
+  /// 寻路的碰撞形状
+  DFCircle getPathCollisionShape(DFPosition position) {
+    double tileWidth = GameManager.mapSprite!.mapInfo.tileWidth;
+    double tileHeight = GameManager.mapSprite!.mapInfo.tileHeight;
+    return DFCircle(position, (tileWidth > tileHeight?tileHeight:tileWidth) / 2);
   }
 
   /// 碰撞形状
   @override
   DFShape getCollisionShape() {
-    if (clothesSprite != null && isInit) {
+    if (initOk) {
       List<DFImageSprite> sprites = clothesSprite!.frames[clothesSprite!.currentAnimation]!;
       return DFCircle(DFPosition(this.position.x, this.position.y), sprites[0].size.width / 4);
     }
@@ -595,27 +607,20 @@ class PlayerSprite extends DFSprite {
   /// 更新
   @override
   void update(double dt) {
-    if(!this.player.isDead){
+    if (!this.player.isDead) {
       if (clothesSprite == null) {
         return;
       }
       if (clothesSprite!.currentAnimation.contains(DFAction.RUN)) {
         /// 判断碰撞
         int isCollided = 0;
-        if (GameManager.mapSprite != null && GameManager.mapSprite!.tiledSprite != null) {
+        if (GameManager.mapSprite != null && GameManager.mapSprite!.tileMapSprite != null) {
           if (DateTime.now().millisecondsSinceEpoch - this.collideClock > 2) {
             this.collideClock = DateTime.now().millisecondsSinceEpoch;
             double newX = this.position.x + this.player.moveSpeed * cos(this.radians);
             double newY = this.position.y + this.player.moveSpeed * sin(this.radians);
-            DFShape shape = getCollisionShape();
-            if (shape is DFRect) {
-              DFRect rectNew = DFRect(newX - shape.width / 2, newY - shape.height / 2, shape.width, shape.height);
-              isCollided = GameManager.mapSprite!.tiledSprite!.isCollided(rectNew);
-            } else if (shape is DFCircle) {
-              DFCircle circleNew = DFCircle(DFPosition(newX, newY), shape.radius);
-              isCollided = GameManager.mapSprite!.tiledSprite!.isCollided(circleNew);
-            }
-
+            DFCircle circleShape = getPathCollisionShape(DFPosition(newX,newY));
+            isCollided = GameManager.mapSprite!.tileMapSprite!.isCollided(circleShape);
             if (isCollided == 2) {
               print("isCollided isCollided isCollided isCollided");
             }
@@ -676,7 +681,7 @@ class PlayerSprite extends DFSprite {
           this.moveToAction(this.nextAction, effect: effect, autoFight: true);
         }
       }
-    }else{
+    } else {
       /// 重生
       if (DateTime.now().millisecondsSinceEpoch - this.rebornClock > this.player.rebornTime) {
         this.rebornClock = DateTime.now().millisecondsSinceEpoch;
@@ -700,6 +705,12 @@ class PlayerSprite extends DFSprite {
       } else if (collisionShape is DFRect) {
         canvas.drawRect(collisionShape.toRect(), paint);
       }
+      /// 绘制路径
+      var paintPath = new Paint()..color = Color(0x601d953f);
+      aStar.pathList.forEach((element) {
+        DFRect rect = getRect(element.x,element.y);
+        canvas.drawRect(rect.toRect(), paintPath);
+      });
     }
 
     /// 移动画布

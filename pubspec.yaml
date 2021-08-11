@@ -1,6 +1,6 @@
 name: devilf
-description: A Flutter 2D RPG Game Engine.
-version: 0.0.7
+description: A Flutter 2D RPG Game Engine On Web & Android & IOS.
+version: 0.0.8
 homepage: https://github.com/ym6745476/devilf
 
 environment:

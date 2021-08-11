@@ -1,8 +1,7 @@
-import 'package:example/base/living.dart';
+import 'package:devilf_engine/core/df_living.dart';
 
-/// 怪物类
-class Monster extends Living {
-
+/// 玩家类
+class PlayerInfo extends DFLiving {
   /// 衣服
   String clothes = "";
 
@@ -34,11 +33,11 @@ class Monster extends Living {
   double mf = 5;
 
   /// 警戒范围
-  double vision = 200;
+  double vision = 800;
 
   /// 复活间隔
   double rebornTime = 5000;
 
-  /// 创建怪物
-  Monster(name) : super(name);
+  /// 创建玩家
+  PlayerInfo(name) : super(name);
 }
