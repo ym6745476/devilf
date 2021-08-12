@@ -1,3 +1,4 @@
+import 'package:devilf_engine/util/df_audio.dart';
 import 'package:example/scene/game_scene.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,6 @@ main() async {
 
 /// 主界面
 class MainApp extends StatelessWidget {
-
   /// 游戏场景
   final GameScene _gameScene;
 

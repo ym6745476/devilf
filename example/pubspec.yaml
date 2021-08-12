@@ -30,7 +30,7 @@ dependencies:
   audioplayers: ^0.19.1
   #devilf_engine: ^0.0.8
   devilf_engine:
-    path: E:/project/devilf/devilf_engine/
+    path: /Users/zhaoqipeng/project/devilf/devilf_engine/
 
 dev_dependencies:
   flutter_test:

@@ -165,7 +165,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         });
 
         /// 播放背景音乐
-        DFAudio.backgroundMusic.play("map/lxd.mp3",volume:0.6);
+        /// DFAudio.backgroundMusic.play("map/lxd.mp3", volume: 0.2);
 
         print("游戏加载完成...");
       });
@@ -201,44 +201,49 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
     GameManager.visibleHeight = MediaQuery.of(context).size.height;
     print("获取屏幕尺寸:" + GameManager.visibleWidth.toString() + "," + GameManager.visibleHeight.toString());
 
-    return Container(
-      color: Colors.black87,
-      child: _loading
-          ? _loadingWidget()
-          : Stack(fit: StackFit.expand, children: <Widget>[
-              /// 游戏主界面
-              Positioned(
-                top: 0,
-                left: 0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  color: Colors.black87,
-                  child: _gameWidget,
-                ),
-              ),
-
-              /// Logo
-              Positioned(
-                left: 20,
-                top: MediaQuery.of(context).padding.top + 20,
-                child: Text(
-                  "DevilF",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
+    return WillPopScope(
+        onWillPop: () async {
+          dispose();
+          return true;
+        },
+        child: Container(
+          color: Colors.black87,
+          child: _loading
+              ? _loadingWidget()
+              : Stack(fit: StackFit.expand, children: <Widget>[
+                  /// 游戏主界面
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      color: Colors.black87,
+                      child: _gameWidget,
+                    ),
                   ),
-                ),
-              ),
 
-              /// 控制按钮层
-              Positioned(
-                bottom: 0,
-                left: 0,
-                child: ControlLayer(),
-              ),
-            ]),
-    );
+                  /// Logo
+                  Positioned(
+                    left: 20,
+                    top: MediaQuery.of(context).padding.top + 20,
+                    child: Text(
+                      "DevilF",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+
+                  /// 控制按钮层
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    child: ControlLayer(),
+                  ),
+                ]),
+        ));
   }
 
   @override
