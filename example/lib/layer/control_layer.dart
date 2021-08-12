@@ -54,11 +54,9 @@ class _ControlLayerState extends State<ControlLayer> {
           effect2.vision = 120;
           effect2.delayTime = 400;
           effect2.texture = "assets/images/effect/" + effect2.name + ".json";
-
-          _playerSprite?.moveToAction(DFAction.ATTACK, effect: effect1, autoFight: true);
-          _playerSprite?.moveToAction(DFAction.CASTING, effect: effect2, autoFight: true);
+          _playerSprite?.startAutoFight(DFAction.CASTING,effect:effect2);
         } else {
-          _playerSprite?.cancelAutoFight(idle: true);
+          _playerSprite?.cancelAutoFight(action:DFAction.IDLE);
         }
       },
     );
@@ -205,7 +203,7 @@ class _ControlLayerState extends State<ControlLayer> {
 
         /// 拾取
         Positioned(
-          bottom: MediaQuery.of(context).padding.bottom + 18,
+          bottom: MediaQuery.of(context).padding.bottom + 16,
           right: 230,
           child: DFButton(
             /// text: "拾取",
@@ -219,7 +217,7 @@ class _ControlLayerState extends State<ControlLayer> {
 
         /// 锁定目标
         Positioned(
-          bottom: MediaQuery.of(context).padding.bottom + 18,
+          bottom: MediaQuery.of(context).padding.bottom + 16,
           right: 180,
           child: DFButton(
             /// text: "目标",

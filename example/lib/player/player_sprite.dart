@@ -45,9 +45,6 @@ class PlayerSprite extends DFSprite {
   /// 目标精灵
   DFSprite? targetSprite;
 
-  /// 判断碰撞时钟
-  int collideClock = 0;
-
   /// 当前动作
   String action = DFAction.NONE;
 
@@ -62,6 +59,9 @@ class PlayerSprite extends DFSprite {
 
   /// 动作特效
   EffectInfo? effect;
+
+  /// 碰撞检测时钟
+  int collideClock = 0;
 
   /// 自动寻路
   bool movePathStart = false;
@@ -99,24 +99,23 @@ class PlayerSprite extends DFSprite {
         /// 选择光圈
         this.selectSprite = await DFAnimationSprite.load("assets/images/effect/select_player.json",
             scale: 0.6, blendMode: BlendMode.colorDodge);
-        this.selectSprite!.position = DFPosition(size.width / 2, size.height / 2 * 1.5);
+        this.selectSprite!.position = DFPosition(size.width / 2, size.height / 2);
         addChild(this.selectSprite!);
         this.selectSprite?.play(DFAction.SURROUND + DFDirection.UP, stepTime: 100, loop: true);
 
         /// 玩家精灵动画
         this.clothesSprite = await DFAnimationSprite.load(this.player.clothes);
-        this.clothesSprite!.position = DFPosition(size.width / 2, size.height / 2);
-        this.clothesSprite!.size = DFSize(160, 160);
+        this.clothesSprite!.position = DFPosition(size.width / 2, size.height / 2 - 10);
 
         /// 调用add产生层级关系进行坐标转换
         addChild(this.clothesSprite!);
 
         if (this.player.weapon != "") {
           this.weaponSprite = await DFAnimationSprite.load(this.player.weapon);
+
           /// 绑定动画同步
           this.weaponSprite!.position =
               DFPosition(this.clothesSprite!.size.width / 2, this.clothesSprite!.size.height / 2);
-          this.weaponSprite!.size = DFSize(120, 120);
           this.clothesSprite?.bindChild(this.weaponSprite!);
         }
 
@@ -144,6 +143,34 @@ class PlayerSprite extends DFSprite {
     }
   }
 
+  /// 启动自动战斗
+  void startAutoFight(String action, {EffectInfo? effect}) {
+    /// 技能
+    if (effect == null) {
+      effect = EffectInfo();
+      effect.name = "1001";
+      effect.type = EffectType.ATTACK;
+      effect.damageRange = 100;
+      effect.vision = 40;
+      effect.delayTime = 10;
+
+      /// effect.texture = "assets/images/effect/" + effect.name + ".json";
+    }
+    this.autoFight = true;
+    this.nextAction = action;
+    this.effect = effect;
+  }
+
+  /// 停止自动
+  void cancelAutoFight({String? action}) {
+    this.movePathStart = false;
+    this.movePathPosition = null;
+    this.autoFight = false;
+    if (action != null) {
+      this.play(action, direction: direction);
+    }
+  }
+
   /// 播放动画
   void play(String action, {direction = DFDirection.NONE, radians = 3.15}) {
     this.action = action;
@@ -156,6 +183,15 @@ class PlayerSprite extends DFSprite {
     /// 不传弧度，则使用上一次的弧度
     if (radians != 3.15) {
       this.radians = radians;
+    }
+
+    /// 死亡只有一个方向的图
+    if (this.action == DFAction.DEATH) {
+      if (this.direction.contains(DFDirection.RIGHT)) {
+        this.direction = DFDirection.DOWN_RIGHT;
+      } else {
+        this.direction = DFDirection.DOWN_LEFT;
+      }
     }
 
     String animation = this.action + this.direction;
@@ -187,13 +223,8 @@ class PlayerSprite extends DFSprite {
           });
         } else if (this.action == DFAction.DEATH) {
           clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {
-            /// 设置死亡状态
-            this.player.isDead = true;
-            this.rebornClock = DateTime.now().millisecondsSinceEpoch;
-            print("从场景移除:" + this.player.name);
-
-            /// 从场景移除 可重生
-            GameManager.gameWidget!.removeChild(this, recyclable: false);
+            print("死亡动作结束隐藏:" + this.player.name);
+            this.visible = false;
           });
         } else {
           clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {
@@ -305,20 +336,14 @@ class PlayerSprite extends DFSprite {
     lockTargetSprite();
 
     if (this.targetSprite != null) {
-      double tileWidth = GameManager.mapSprite!.mapInfo.tileWidth;
-      double tileHeight = GameManager.mapSprite!.mapInfo.tileHeight;
+      /// 转换为瓦片坐标
+      DFPosition startPosition = GameManager.mapSprite!.mapInfo.getTilePosition(position);
+      DFPosition endPosition = GameManager.mapSprite!.mapInfo.getTilePosition(this.targetSprite!.position);
 
-      int startX = (position.x / tileWidth).floor().toInt();
-      int startY = (position.y / tileHeight).floor().toInt();
-      int endX = (this.targetSprite!.position.x / tileWidth).floor().toInt();
-      int endY = (this.targetSprite!.position.y / tileHeight).floor().toInt();
-
-      ///int endX = (800 / tileWidth).floor().toInt();
-      ///int endY = (1500 / tileHeight).floor().toInt();
-      DFNode startNode = DFNode(startX, startY);
-      DFNode endNode = DFNode(endX, endY);
-      print("起点坐标：" + startNode.coord.toString() + ",起点位置：" + this.position.toString());
-      print("终点坐标：" + endNode.coord.toString() + ",目标位置：" + this.targetSprite!.position.toString());
+      DFNode startNode = DFNode(startPosition.x.toInt(), startPosition.y.toInt());
+      DFNode endNode = DFNode(endPosition.x.toInt(), startPosition.y.toInt());
+      print("起点瓦片位置：" + startNode.toString() + ",起点位置：" + this.position.toString());
+      print("终点瓦片位置：" + endNode.toString() + ",目标位置：" + this.targetSprite!.position.toString());
       if (startNode.coord == endNode.coord || inEffectVision(this.targetSprite!)) {
         /// 在可攻击范围
         this.doNextAction();
@@ -327,10 +352,10 @@ class PlayerSprite extends DFSprite {
         aStar.start(GameManager.mapSprite!.mapInfo.blockMap!, startNode, endNode);
 
         if (aStar.pathList.length > 0) {
-          DFCoord coord = aStar.pathList.removeLast();
-          this.movePathPosition = getPosition(coord.x, coord.y);
+          DFPosition tilePosition = aStar.pathList.removeLast();
+          this.movePathPosition = GameManager.mapSprite!.mapInfo.getMapPosition(tilePosition);
           this.updateDirection(this.movePathPosition!);
-          print("寻路坐标：" + coord.toString() + ",目标位置：" + this.movePathPosition.toString());
+          print("寻路坐标：" + tilePosition.toString() + ",目标位置：" + this.movePathPosition.toString());
 
           /// 开始移动
           this.play(DFAction.RUN, direction: this.direction, radians: this.radians);
@@ -390,7 +415,7 @@ class PlayerSprite extends DFSprite {
 
   /// 检查是否提前到达攻击范围
   bool inEffectVision(DFSprite targetSprite) {
-    if (this.effect!.vision > 0) {
+    if (this.effect != null && this.effect!.vision > 0) {
       DFCircle visibleShape = DFCircle(DFPosition(this.position.x, this.position.y), this.effect!.vision);
       if (targetSprite is MonsterSprite) {
         DFShape targetCollision = targetSprite.getCollisionShape();
@@ -462,48 +487,11 @@ class PlayerSprite extends DFSprite {
     });
   }
 
-  /// 停止自动
-  void cancelAutoFight({bool idle = false}) {
-    this.movePathStart = false;
-    this.movePathPosition = null;
-    this.autoFight = false;
-    if (idle) {
-      this.play(DFAction.IDLE, direction: direction);
-    }
-  }
-
-  /// 碰撞后转换方向
-  void collidedChangeDirection() {
-    if (direction == DFDirection.UP) {
-      direction = DFDirection.UP_RIGHT;
-      radians = 315 * pi / 180.0;
-    } else if (direction == DFDirection.DOWN) {
-      direction = DFDirection.DOWN_LEFT;
-      radians = 135 * pi / 180.0;
-    } else if (direction == DFDirection.LEFT) {
-      direction = DFDirection.UP_LEFT;
-      radians = 225 * pi / 180.0;
-    } else if (direction == DFDirection.RIGHT) {
-      direction = DFDirection.DOWN_RIGHT;
-      radians = 45 * pi / 180.0;
-    } else if (direction == DFDirection.DOWN_RIGHT) {
-      direction = DFDirection.DOWN;
-      radians = 90 * pi / 180.0;
-    } else if (direction == DFDirection.UP_LEFT) {
-      direction = DFDirection.UP;
-      radians = 270 * pi / 180.0;
-    } else if (direction == DFDirection.UP_RIGHT) {
-      direction = DFDirection.RIGHT;
-      radians = 0;
-    } else if (direction == DFDirection.DOWN_LEFT) {
-      direction = DFDirection.LEFT;
-      radians = 180 * pi / 180.0;
-    }
-    this.play(DFAction.RUN, direction: direction, radians: radians);
-  }
-
   /// 接收伤害
   void receiveDamage(DFSprite ownerSprite, EffectInfo effect) {
+    if(!this.initOk){
+      return;
+    }
     /// 随机伤害  0.0~1.0
     var random = new Random();
     if (ownerSprite is MonsterSprite) {
@@ -546,6 +534,7 @@ class PlayerSprite extends DFSprite {
   /// 死亡
   void dead(DFSprite ownerSprite) {
     this.cancelAutoFight();
+    this.player.isDead = true;
     if (this.targetSprite is MonsterSprite) {
       MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
       monsterSprite.unSelectThisSprite();
@@ -555,6 +544,7 @@ class PlayerSprite extends DFSprite {
     }
     this.targetSprite = null;
     this.play(DFAction.DEATH, direction: direction, radians: radians);
+    this.rebornClock = DateTime.now().millisecondsSinceEpoch;
   }
 
   /// 重生
@@ -564,34 +554,50 @@ class PlayerSprite extends DFSprite {
     int dirY = Random().nextBool() ? 1 : -1;
     this.position.x = this.position.x + dirX * 200 * Random().nextDouble();
     this.position.y = this.position.y + dirY * 200 * Random().nextDouble();
-    this.action = DFAction.IDLE;
-    this.clothesSprite!.currentAnimation = DFAction.IDLE + this.direction;
-    this.player.isDead = false;
     this.player.hp = this.player.maxMp;
     this.hpBarSprite!.progress = 100;
-    this.isUsed = true;
+    this.player.isDead = false;
+    this.visible = true;
     print("重生：" + this.position.toString());
+    this.play(DFAction.IDLE, direction: DFDirection.DOWN, radians: 90 * pi / 180.0);
+    this.autoFight = true;
   }
 
-  /// 根据瓦片位置获取实际坐标
-  DFPosition getPosition(int tiledX, int tiledY) {
-    double tileWidth = GameManager.mapSprite!.mapInfo.tileWidth;
-    double tileHeight = GameManager.mapSprite!.mapInfo.tileHeight;
-    return DFPosition(tiledX * tileWidth - tileWidth / 2, tiledY * tileHeight - tileHeight / 2);
-  }
-
-  /// 获取路径矩形
-  DFRect getRect(int tiledX, int tiledY) {
-    double tileWidth = GameManager.mapSprite!.mapInfo.tileWidth;
-    double tileHeight = GameManager.mapSprite!.mapInfo.tileHeight;
-    return DFRect(tiledX * tileWidth - tileWidth, tiledY * tileHeight - tileHeight,tileWidth,tileHeight);
+  /// 碰撞后转换方向,避免卡住
+  void collidedChangeDirection() {
+    if (direction == DFDirection.UP) {
+      direction = DFDirection.UP_RIGHT;
+      radians = 315 * pi / 180.0;
+    } else if (direction == DFDirection.DOWN) {
+      direction = DFDirection.DOWN_LEFT;
+      radians = 135 * pi / 180.0;
+    } else if (direction == DFDirection.LEFT) {
+      direction = DFDirection.UP_LEFT;
+      radians = 225 * pi / 180.0;
+    } else if (direction == DFDirection.RIGHT) {
+      direction = DFDirection.DOWN_RIGHT;
+      radians = 45 * pi / 180.0;
+    } else if (direction == DFDirection.DOWN_RIGHT) {
+      direction = DFDirection.DOWN;
+      radians = 90 * pi / 180.0;
+    } else if (direction == DFDirection.UP_LEFT) {
+      direction = DFDirection.UP;
+      radians = 270 * pi / 180.0;
+    } else if (direction == DFDirection.UP_RIGHT) {
+      direction = DFDirection.RIGHT;
+      radians = 0;
+    } else if (direction == DFDirection.DOWN_LEFT) {
+      direction = DFDirection.LEFT;
+      radians = 180 * pi / 180.0;
+    }
+    this.play(DFAction.RUN, direction: direction, radians: radians);
   }
 
   /// 寻路的碰撞形状
   DFCircle getPathCollisionShape(DFPosition position) {
     double tileWidth = GameManager.mapSprite!.mapInfo.tileWidth;
     double tileHeight = GameManager.mapSprite!.mapInfo.tileHeight;
-    return DFCircle(position, (tileWidth > tileHeight?tileHeight:tileWidth) / 2);
+    return DFCircle(position, (tileWidth > tileHeight ? tileHeight : tileWidth) / 2);
   }
 
   /// 碰撞形状
@@ -607,19 +613,19 @@ class PlayerSprite extends DFSprite {
   /// 更新
   @override
   void update(double dt) {
-    if (!this.player.isDead) {
+    if (this.visible) {
       if (clothesSprite == null) {
         return;
       }
       if (clothesSprite!.currentAnimation.contains(DFAction.RUN)) {
         /// 判断碰撞
         int isCollided = 0;
-        if (GameManager.mapSprite != null && GameManager.mapSprite!.tileMapSprite != null) {
-          if (DateTime.now().millisecondsSinceEpoch - this.collideClock > 2) {
-            this.collideClock = DateTime.now().millisecondsSinceEpoch;
+        if(DateTime.now().millisecondsSinceEpoch - this.collideClock > 2){
+          this.collideClock = DateTime.now().millisecondsSinceEpoch;
+          if (GameManager.mapSprite != null && GameManager.mapSprite!.initOk) {
             double newX = this.position.x + this.player.moveSpeed * cos(this.radians);
             double newY = this.position.y + this.player.moveSpeed * sin(this.radians);
-            DFCircle circleShape = getPathCollisionShape(DFPosition(newX,newY));
+            DFCircle circleShape = getPathCollisionShape(DFPosition(newX, newY));
             isCollided = GameManager.mapSprite!.tileMapSprite!.isCollided(circleShape);
             if (isCollided == 2) {
               print("isCollided isCollided isCollided isCollided");
@@ -638,6 +644,7 @@ class PlayerSprite extends DFSprite {
         if (isCollided == 2) {
           /// 重新确定目标规划路径
           this.movePathPosition = null;
+          this.collidedChangeDirection();
         } else {
           this.position.x = this.position.x + this.player.moveSpeed * cos(this.radians);
           this.position.y = this.position.y + this.player.moveSpeed * sin(this.radians);
@@ -656,10 +663,10 @@ class PlayerSprite extends DFSprite {
               this.doNextAction();
             } else {
               if (aStar.pathList.length > 0) {
-                DFCoord coord = aStar.pathList.removeLast();
-                this.movePathPosition = getPosition(coord.x, coord.y);
+                DFPosition tilePosition = aStar.pathList.removeLast();
+                this.movePathPosition = GameManager.mapSprite!.mapInfo.getMapPosition(tilePosition);
                 this.updateDirection(this.movePathPosition!);
-                print("寻路,目标坐标：" + coord.toString() + ",目标位置：" + this.movePathPosition.toString());
+                print("寻路,目标坐标：" + tilePosition.toString() + ",目标位置：" + this.movePathPosition.toString());
               } else {
                 print("寻路,结束.....................");
                 this.autoFightClock = DateTime.now().millisecondsSinceEpoch;
@@ -699,16 +706,17 @@ class PlayerSprite extends DFSprite {
     /// 精灵碰撞区域
     if (DFConfig.debug) {
       var paint = new Paint()..color = Color(0x60bb505d);
-      DFShape collisionShape = getCollisionShape();
+      DFShape collisionShape = getPathCollisionShape(this.position);
       if (collisionShape is DFCircle) {
         canvas.drawCircle(collisionShape.center.toOffset(), collisionShape.radius, paint);
       } else if (collisionShape is DFRect) {
         canvas.drawRect(collisionShape.toRect(), paint);
       }
+
       /// 绘制路径
       var paintPath = new Paint()..color = Color(0x601d953f);
       aStar.pathList.forEach((element) {
-        DFRect rect = getRect(element.x,element.y);
+        DFRect rect = GameManager.mapSprite!.mapInfo.getTileRect(element);
         canvas.drawRect(rect.toRect(), paintPath);
       });
     }
@@ -717,7 +725,7 @@ class PlayerSprite extends DFSprite {
     canvas.translate(position.x, position.y);
 
     /// 活着
-    if (!this.player.isDead) {
+    if (this.visible) {
       /// 绘制子精灵
       this.children.forEach((sprite) {
         if (sprite.visible) {
