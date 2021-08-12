@@ -518,105 +518,105 @@
 			"sourceColorRect": "{{210,246},{114,62}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_00000.png": {
+		"collect_00000.png": {
 			"frame": "{{69,1},{54,96}}",
 			"offset": "{-10,3}",
 			"rotated": true,
 			"sourceColorRect": "{{219,205},{54,96}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_00001.png": {
+		"collect_00001.png": {
 			"frame": "{{167,1},{54,94}}",
 			"offset": "{-8,2}",
 			"rotated": true,
 			"sourceColorRect": "{{221,207},{54,94}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_00002.png": {
+		"collect_00002.png": {
 			"frame": "{{263,1},{54,92}}",
 			"offset": "{-10,1}",
 			"rotated": true,
 			"sourceColorRect": "{{219,209},{54,92}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_10000.png": {
+		"collect_10000.png": {
 			"frame": "{{1023,1},{62,90}}",
 			"offset": "{-4,2}",
 			"rotated": true,
 			"sourceColorRect": "{{221,209},{62,90}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_10001.png": {
+		"collect_10001.png": {
 			"frame": "{{1115,1},{62,88}}",
 			"offset": "{-4,1}",
 			"rotated": true,
 			"sourceColorRect": "{{221,211},{62,88}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_10002.png": {
+		"collect_10002.png": {
 			"frame": "{{645,1},{60,88}}",
 			"offset": "{-4,1}",
 			"rotated": true,
 			"sourceColorRect": "{{222,211},{60,88}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_20000.png": {
+		"collect_20000.png": {
 			"frame": "{{1845,71},{84,72}}",
 			"offset": "{-7,3}",
 			"rotated": false,
 			"sourceColorRect": "{{207,217},{84,72}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_20001.png": {
+		"collect_20001.png": {
 			"frame": "{{1931,71},{84,72}}",
 			"offset": "{-6,3}",
 			"rotated": false,
 			"sourceColorRect": "{{208,217},{84,72}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_20002.png": {
+		"collect_20002.png": {
 			"frame": "{{957,65},{84,70}}",
 			"offset": "{-6,2}",
 			"rotated": false,
 			"sourceColorRect": "{{208,219},{84,70}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_30000.png": {
+		"collect_30000.png": {
 			"frame": "{{1919,1},{78,68}}",
 			"offset": "{-6,-1}",
 			"rotated": false,
 			"sourceColorRect": "{{211,223},{78,68}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_30001.png": {
+		"collect_30001.png": {
 			"frame": "{{1547,1},{76,66}}",
 			"offset": "{-6,-2}",
 			"rotated": false,
 			"sourceColorRect": "{{212,225},{76,66}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_30002.png": {
+		"collect_30002.png": {
 			"frame": "{{1625,1},{74,66}}",
 			"offset": "{-7,-3}",
 			"rotated": false,
 			"sourceColorRect": "{{212,226},{74,66}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_40000.png": {
+		"collect_40000.png": {
 			"frame": "{{735,1},{60,72}}",
 			"offset": "{-6,-4}",
 			"rotated": true,
 			"sourceColorRect": "{{220,224},{60,72}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_40001.png": {
+		"collect_40001.png": {
 			"frame": "{{357,1},{56,68}}",
 			"offset": "{-5,-6}",
 			"rotated": true,
 			"sourceColorRect": "{{223,228},{56,68}}",
 			"sourceSize": "{512,512}"
 		},
-		"dig_40002.png": {
+		"collect_40002.png": {
 			"frame": "{{1,1},{52,66}}",
 			"offset": "{-6,-7}",
 			"rotated": true,

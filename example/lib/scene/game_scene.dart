@@ -5,6 +5,7 @@ import 'package:devilf_engine/game/df_camera.dart';
 import 'package:devilf_engine/game/df_game_widget.dart';
 import 'package:devilf_engine/sprite/df_image_sprite.dart';
 import 'package:devilf_engine/sprite/df_text_sprite.dart';
+import 'package:devilf_engine/util/df_audio.dart';
 import 'package:example/layer/control_layer.dart';
 import 'package:example/map/map_info.dart';
 import 'package:example/player/player_info.dart';
@@ -163,6 +164,9 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
           _loading = false;
         });
 
+        /// 播放背景音乐
+        DFAudio.backgroundMusic.play("map/lxd.mp3",volume:0.6);
+
         print("游戏加载完成...");
       });
     } catch (e) {
@@ -235,5 +239,13 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
               ),
             ]),
     );
+  }
+
+  @override
+  void dispose() {
+    /// 释放背景音乐
+    DFAudio.backgroundMusic.stop();
+    DFAudio.backgroundMusic.dispose();
+    super.dispose();
   }
 }

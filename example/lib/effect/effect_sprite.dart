@@ -126,7 +126,7 @@ class EffectSprite extends DFSprite {
                 found: (sprites) {
                   sprites.forEach((sprite) {
                     if (sprite is MonsterSprite) {
-                      if (!sprite.monster.isDead) {
+                      if (!sprite.monster.isDeath) {
                         sprite.receiveDamage(ownerSprite!, effect!);
                       }
                     }
@@ -198,7 +198,7 @@ class EffectSprite extends DFSprite {
     /// 有目标
     if (GameManager.monsterSprites != null) {
       GameManager.monsterSprites!.forEach((monsterSprite) {
-        if (!monsterSprite.monster.isDead) {
+        if (!monsterSprite.monster.isDeath) {
           DFShape monsterCollision = monsterSprite.getCollisionShape();
           if (monsterCollision.overlaps(this.getCollisionShape())) {
             foundMonster.add(monsterSprite);
@@ -230,7 +230,7 @@ class EffectSprite extends DFSprite {
       /// 无目标
       if (GameManager.monsterSprites != null) {
         GameManager.monsterSprites!.forEach((monsterSprite) {
-          if (!monsterSprite.monster.isDead) {
+          if (!monsterSprite.monster.isDeath) {
             DFShape monsterCollision = monsterSprite.getCollisionShape();
             if (this.getCollisionShape().overlaps(monsterCollision)) {
               this.position.x = monsterSprite.position.x;

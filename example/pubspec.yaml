@@ -27,6 +27,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  audioplayers: ^0.19.1
   #devilf_engine: ^0.0.8
   devilf_engine:
     path: E:/project/devilf/devilf_engine/
@@ -48,6 +49,10 @@ flutter:
   assets:
     - assets/images/
     - assets/audio/
+    - assets/audio/action/
+    - assets/audio/effect/
+    - assets/audio/map/
+    - assets/audio/monster/spider/
     - assets/images/player/
     - assets/images/monster/
     - assets/images/weapon/

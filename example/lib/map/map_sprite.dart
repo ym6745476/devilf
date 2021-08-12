@@ -5,6 +5,7 @@ import 'package:devilf_engine/game/df_camera.dart';
 import 'package:devilf_engine/sprite/df_sprite.dart';
 import 'package:devilf_engine/sprite/df_tile_map_sprite.dart';
 import 'package:devilf_engine/tiled/df_tile_map.dart';
+import 'package:devilf_engine/util/df_audio.dart';
 import 'package:devilf_engine/util/df_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'map_info.dart';
@@ -37,13 +38,16 @@ class MapSprite extends DFSprite {
       print("读取地图：" + this.mapInfo.texture);
       this.tileMapSprite = await DFTileMapSprite.load(this.mapInfo.texture, this.mapInfo.scale);
       DFTileMap tileMap = this.tileMapSprite!.tileMap!;
+
       /// 保存缩放后的tile宽度个高度
       this.mapInfo.tileWidth = tileMap.tileWidth! * this.mapInfo.scale;
       this.mapInfo.tileHeight = tileMap.tileHeight! * this.mapInfo.scale;
-      this.mapInfo.width = tileMap.width! *  tileMap.tileWidth! * this.mapInfo.scale;
+      this.mapInfo.width = tileMap.width! * tileMap.tileWidth! * this.mapInfo.scale;
       this.mapInfo.height = tileMap.height! * tileMap.tileHeight! * this.mapInfo.scale;
+
       /// 将block转化为二维数组
-      this.mapInfo.blockMap = DFUtil.to2dList(this.tileMapSprite!.blockLayer!.data!,tileMap.width!, 1);
+      this.mapInfo.blockMap = DFUtil.to2dList(this.tileMapSprite!.blockLayer!.data!, tileMap.width!, 1);
+
       /// 调用add产生层级关系进行坐标转换
       addChild(this.tileMapSprite!);
 

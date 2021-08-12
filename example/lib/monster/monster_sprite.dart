@@ -13,6 +13,7 @@ import 'package:devilf_engine/sprite/df_progress_sprite.dart';
 import 'package:devilf_engine/sprite/df_sprite.dart';
 import 'package:devilf_engine/sprite/df_text_sprite.dart';
 import 'package:devilf_engine/util/df_astar.dart';
+import 'package:devilf_engine/util/df_audio.dart';
 import 'package:devilf_engine/util/df_util.dart';
 import 'package:example/effect/effect_info.dart';
 import 'package:example/effect/effect_sprite.dart';
@@ -81,6 +82,9 @@ class MonsterSprite extends DFSprite {
   /// 路径规划
   DFAStar aStar = DFAStar();
 
+  /// 动作音频
+  DFAudio? actionAudio;
+
   /// 是否被选择
   bool isSelected = false;
 
@@ -98,7 +102,7 @@ class MonsterSprite extends DFSprite {
   /// 初始化
   Future<void> _init() async {
     try {
-      await Future.delayed(Duration.zero, () async {
+      await Future.delayed(Duration(seconds: 1), () async {
         /// 选择光圈
         this.selectSprite = await DFAnimationSprite.load("assets/images/effect/select_monster.json",
             scale: 0.6, blendMode: BlendMode.colorDodge);
@@ -121,9 +125,6 @@ class MonsterSprite extends DFSprite {
           this.clothesSprite?.bindChild(this.weaponSprite!);
         }
 
-        ///自动播放第一个动画
-        this.play(DFAction.IDLE, direction: DFDirection.DOWN, radians: 90 * pi / 180.0);
-
         /// 血条
         ui.Image image = await DFAssetsLoader.loadImage("assets/images/ui/hp_bar_monster.png");
         this.hpBarSprite = DFProgressSprite(image, gravity: DFGravity.top, textOffset: 5);
@@ -137,8 +138,14 @@ class MonsterSprite extends DFSprite {
         this.nameSprite!.setOnUpdate((dt) {});
         addChild(this.nameSprite!);
 
+        /// 动作音频
+        this.actionAudio = DFAudio();
+
         /// 初始化完成
         this.initOk = true;
+
+        ///自动播放第一个动画
+        this.play(DFAction.IDLE, direction: DFDirection.DOWN, radians: 90 * pi / 180.0);
 
         /// 启动自动战斗
         this.startAutoFight(DFAction.ATTACK);
@@ -214,7 +221,8 @@ class MonsterSprite extends DFSprite {
         if (this.action == DFAction.ATTACK || this.action == DFAction.CASTING || this.action == DFAction.DEATH) {
           loop = false;
         }
-
+        /// 停止正在播放的动作音频
+        this.actionAudio!.stopPlay();
         if (this.action == DFAction.IDLE) {
           clothesSprite!.play(animation, stepTime: 300, loop: loop);
         } else if (this.action == DFAction.RUN) {
@@ -229,6 +237,11 @@ class MonsterSprite extends DFSprite {
             print("死亡动作结束隐藏:" + this.monster.name);
             this.visible = false;
           });
+          /// 播放音频
+          this.actionAudio!.startPlay([
+            "monster/spider/death_1.mp3",
+            "monster/spider/death_2.mp3"
+          ], loop: false);
         } else {
           clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {});
         }
@@ -258,7 +271,7 @@ class MonsterSprite extends DFSprite {
     if (this.targetSprite != null) {
       if (this.targetSprite is PlayerSprite) {
         PlayerSprite playerSprite = this.targetSprite as PlayerSprite;
-        if (!playerSprite.player.isDead) {
+        if (!playerSprite.player.isDeath) {
           DFShape playerCollision = playerSprite.getCollisionShape();
           if (playerCollision.overlaps(visibleShape)) {
             return true;
@@ -280,7 +293,7 @@ class MonsterSprite extends DFSprite {
 
     DFCircle visibleShape = DFCircle(DFPosition(this.position.x, this.position.y), vision);
     PlayerSprite playerSprite = GameManager.playerSprite!;
-    if (!playerSprite.player.isDead) {
+    if (!playerSprite.player.isDeath) {
       DFShape playerCollision = playerSprite.getCollisionShape();
       if (playerCollision.overlaps(visibleShape)) {
         foundEnemy.add(playerSprite);
@@ -457,6 +470,11 @@ class MonsterSprite extends DFSprite {
 
       this.monster.hp = this.monster.hp - hp;
       this.hpBarSprite!.progress = (this.monster.hp / this.monster.maxMp * 100).toInt();
+
+      /// 播放音频
+      DFAudio.play("monster/spider/hurt.mp3");
+
+      /// 判断死亡
       if (this.monster.hp < 0) {
         this.dead(ownerSprite);
       }
@@ -475,7 +493,7 @@ class MonsterSprite extends DFSprite {
   /// 死亡
   void dead(DFSprite ownerSprite) {
     this.cancelAutoFight();
-    this.monster.isDead = true;
+    this.monster.isDeath = true;
     this.targetSprite = null;
     if (ownerSprite is PlayerSprite) {
       ownerSprite.targetSprite = null;
@@ -494,7 +512,7 @@ class MonsterSprite extends DFSprite {
     this.position.y = this.position.y + dirY * 200 * Random().nextDouble();
     this.monster.hp = this.monster.maxMp;
     this.hpBarSprite!.progress = 100;
-    this.monster.isDead = false;
+    this.monster.isDeath = false;
     this.visible = true;
     print("重生：" + this.position.toString());
     this.play(DFAction.IDLE, direction: DFDirection.DOWN, radians: 90 * pi / 180.0);
@@ -564,6 +582,9 @@ class MonsterSprite extends DFSprite {
   /// 更新
   @override
   void update(double dt) {
+    if(!initOk){
+      return;
+    }
     if (this.visible) {
       if (this.clothesSprite == null) {
         return;
@@ -637,7 +658,7 @@ class MonsterSprite extends DFSprite {
       }
 
       /// 活着的
-      if(!this.monster.isDead){
+      if(!this.monster.isDeath){
         /// 检查目标
         if (!inVision()) {
           this.movePathPosition = null;
@@ -655,7 +676,7 @@ class MonsterSprite extends DFSprite {
       }
     }else{
       /// 重生
-      if(this.monster.isDead){
+      if(this.monster.isDeath){
         if (DateTime.now().millisecondsSinceEpoch - this.rebornClock > this.monster.rebornTime) {
           this.reborn();
         }

@@ -196,7 +196,7 @@ class _ControlLayerState extends State<ControlLayer> {
             image: "assets/images/ui/skill_collect.png",
             size: Size(36, 36),
             onPressed: (button) {
-              _playerSprite?.play(DFAction.DIG);
+              _playerSprite?.play(DFAction.COLLECT);
             },
           ),
         ),
@@ -210,7 +210,7 @@ class _ControlLayerState extends State<ControlLayer> {
             image: "assets/images/ui/skill_pick.png",
             size: Size(40, 40),
             onPressed: (button) {
-              _playerSprite?.play(DFAction.DIG);
+              _playerSprite?.play(DFAction.COLLECT);
             },
           ),
         ),
