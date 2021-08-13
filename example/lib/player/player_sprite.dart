@@ -65,7 +65,10 @@ class PlayerSprite extends DFSprite {
   int collideClock = 0;
 
   /// 自动寻路
-  bool movePathStart = false;
+  bool autoMove = false;
+
+  /// 当前路径
+  List<DFMapPosition> pathList = [];
 
   /// 寻路坐标
   DFPosition? movePathPosition;
@@ -166,7 +169,7 @@ class PlayerSprite extends DFSprite {
 
   /// 停止自动
   void cancelAutoFight({String? action}) {
-    this.movePathStart = false;
+    this.autoMove = false;
     this.movePathPosition = null;
     this.autoFight = false;
     if (action != null) {
@@ -344,7 +347,7 @@ class PlayerSprite extends DFSprite {
   }
 
   /// 锁定目标->移动到目标->动作
-  void moveToAction(String action, {EffectInfo? effect, bool autoFight = false}) {
+  Future<void> moveToAction(String action, {EffectInfo? effect, bool autoFight = false}) async {
     /// 移动后的动作
     this.autoFight = autoFight;
     this.nextAction = action;
@@ -355,24 +358,24 @@ class PlayerSprite extends DFSprite {
 
     if (this.targetSprite != null) {
       /// 转换为瓦片坐标
-      DFPosition startPosition = GameManager.mapSprite!.mapInfo.getTilePosition(position);
-      DFPosition endPosition = GameManager.mapSprite!.mapInfo.getTilePosition(this.targetSprite!.position);
+      DFMapPosition startPosition = GameManager.mapSprite!.mapInfo.getMapPosition(position);
+      DFMapPosition endPosition = GameManager.mapSprite!.mapInfo.getMapPosition(this.targetSprite!.position);
 
-      DFNode startNode = DFNode(startPosition.x.toInt(), startPosition.y.toInt());
-      DFNode endNode = DFNode(endPosition.x.toInt(), endPosition.y.toInt());
+      DFMapNode startNode = DFMapNode(startPosition.x, startPosition.y);
+      DFMapNode endNode = DFMapNode(endPosition.x, endPosition.y);
 
       /// print("起点瓦片位置：" + startNode.toString() + ",起点位置：" + this.position.toString());
       /// print("终点瓦片位置：" + endNode.toString() + ",目标位置：" + this.targetSprite!.position.toString());
-      if (startNode.coord == endNode.coord || inEffectVision(this.targetSprite!)) {
+      if (startNode.position == endNode.position || inEffectVision(this.targetSprite!)) {
         /// 在可攻击范围
         this.doNextAction();
       } else {
         /// 规划路径
-        aStar.start(GameManager.mapSprite!.mapInfo.blockMap!, startNode, endNode);
+        this.pathList = await aStar.start(GameManager.mapSprite!.mapInfo.blockMap!, startNode, endNode);
 
-        if (aStar.pathList.length > 0) {
-          DFPosition tilePosition = aStar.pathList.removeLast();
-          this.movePathPosition = GameManager.mapSprite!.mapInfo.getMapPosition(tilePosition);
+        if (this.pathList.length > 0) {
+          DFMapPosition mapPosition = this.pathList.removeLast();
+          this.movePathPosition = GameManager.mapSprite!.mapInfo.getPosition(mapPosition);
           this.updateDirection(this.movePathPosition!);
 
           /// print("寻路坐标：" + tilePosition.toString() + ",目标位置：" + this.movePathPosition.toString());
@@ -381,7 +384,7 @@ class PlayerSprite extends DFSprite {
           this.play(DFAction.RUN, direction: this.direction, radians: this.radians);
 
           /// 启动寻路
-          this.movePathStart = true;
+          this.autoMove = true;
         }
       }
     } else {
@@ -674,7 +677,7 @@ class PlayerSprite extends DFSprite {
         }
 
         /// 自动寻路
-        if (this.movePathStart && this.movePathPosition != null) {
+        if (this.autoMove && this.movePathPosition != null) {
           this.run(this.movePathPosition!, arrived: () {
             /// 检查是否在攻击范围
             bool arrived = this.inEffectVision(this.targetSprite!);
@@ -684,9 +687,9 @@ class PlayerSprite extends DFSprite {
               this.movePathPosition = null;
               this.doNextAction();
             } else {
-              if (aStar.pathList.length > 0) {
-                DFPosition tilePosition = aStar.pathList.removeLast();
-                this.movePathPosition = GameManager.mapSprite!.mapInfo.getMapPosition(tilePosition);
+              if (this.pathList.length > 0) {
+                DFMapPosition mapPosition = this.pathList.removeLast();
+                this.movePathPosition = GameManager.mapSprite!.mapInfo.getPosition(mapPosition);
                 this.updateDirection(this.movePathPosition!);
 
                 /// print("寻路,目标坐标：" + tilePosition.toString() + ",目标位置：" + this.movePathPosition.toString());
@@ -738,8 +741,8 @@ class PlayerSprite extends DFSprite {
 
       /// 绘制路径
       var paintPath = new Paint()..color = Color(0x601d953f);
-      aStar.pathList.forEach((element) {
-        DFRect rect = GameManager.mapSprite!.mapInfo.getTileRect(element);
+      this.pathList.forEach((element) {
+        DFRect rect = GameManager.mapSprite!.mapInfo.getPathRect(element);
         canvas.drawRect(rect.toRect(), paintPath);
       });
     }

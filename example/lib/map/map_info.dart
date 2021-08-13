@@ -1,5 +1,6 @@
 import 'package:devilf_engine/core/df_position.dart';
 import 'package:devilf_engine/core/df_rect.dart';
+import 'package:devilf_engine/util/df_astar.dart';
 
 /// 地图信息类
 class MapInfo {
@@ -31,19 +32,19 @@ class MapInfo {
   MapInfo(this.name);
 
   /// 根据瓦片位置获取地图上坐标
-  DFPosition getMapPosition(DFPosition tilePosition) {
-    return DFPosition(tilePosition.x * tileWidth + tileWidth / 2, tilePosition.y * tileHeight + tileHeight / 2);
+  DFPosition getPosition(DFMapPosition mapPosition) {
+    return DFPosition(mapPosition.x * tileWidth + tileWidth / 2, mapPosition.y * tileHeight + tileHeight / 2);
   }
 
   /// 根据地图上坐标获取瓦片位置
-  DFPosition getTilePosition(DFPosition mapPosition) {
-    int tileX = (mapPosition.x / tileWidth).floor();
-    int tileY = (mapPosition.y / tileHeight).floor();
-    return DFPosition(tileX.toDouble(), tileY.toDouble());
+  DFMapPosition getMapPosition(DFPosition position) {
+    int x = (position.x / tileWidth).floor();
+    int y = (position.y / tileHeight).floor();
+    return DFMapPosition(x, y);
   }
 
   /// 获取路径矩形
-  DFRect getTileRect(DFPosition tilePosition) {
-    return DFRect(tilePosition.x * tileWidth, tilePosition.y * tileHeight,tileWidth,tileHeight);
+  DFRect getPathRect(DFMapPosition mapPosition) {
+    return DFRect(mapPosition.x * tileWidth, mapPosition.y * tileHeight,tileWidth,tileHeight);
   }
 }

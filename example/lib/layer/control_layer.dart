@@ -54,9 +54,9 @@ class _ControlLayerState extends State<ControlLayer> {
           effect2.vision = 120;
           effect2.delayTime = 400;
           effect2.texture = "assets/images/effect/" + effect2.name + ".json";
-          _playerSprite?.startAutoFight(DFAction.CASTING,effect:effect2);
+          _playerSprite?.startAutoFight(DFAction.CASTING, effect: effect2);
         } else {
-          _playerSprite?.cancelAutoFight(action:DFAction.IDLE);
+          _playerSprite?.cancelAutoFight(action: DFAction.IDLE);
         }
       },
     );
@@ -79,6 +79,7 @@ class _ControlLayerState extends State<ControlLayer> {
             backgroundColor: Color(0x40FFFFFF),
             onChange: (String direction, double radians) {
               /// 获取8方向的弧度
+              print("JoyStick Direction:" + direction);
               radians = DFUtil.getRadians(direction);
               _playerSprite?.cancelAutoFight();
               GameManager.isAutoFight = false;
