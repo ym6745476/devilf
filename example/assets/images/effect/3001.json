@@ -1,0 +1,181 @@
+{
+    "frames": {
+        "track_00000.png": {
+            "frame": "{{145,431},{80,36}}",
+            "offset": "{2,2}",
+            "rotated": false,
+            "sourceColorRect": "{{12,5},{80,36}}",
+            "sourceSize": "{100,50}"
+        },
+        "explode_00000.png": {
+            "frame": "{{661,585},{104,110}}",
+            "offset": "{4,3}",
+            "rotated": true,
+            "sourceColorRect": "{{80,70},{104,110}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00001.png": {
+            "frame": "{{393,585},{166,174}}",
+            "offset": "{3,7}",
+            "rotated": false,
+            "sourceColorRect": "{{48,34},{166,174}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00002.png": {
+            "frame": "{{613,253},{160,168}}",
+            "offset": "{5,4}",
+            "rotated": false,
+            "sourceColorRect": "{{53,40},{160,168}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00003.png": {
+            "frame": "{{609,423},{160,168}}",
+            "offset": "{5,4}",
+            "rotated": true,
+            "sourceColorRect": "{{53,40},{160,168}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00004.png": {
+            "frame": "{{613,1},{160,164}}",
+            "offset": "{6,3}",
+            "rotated": true,
+            "sourceColorRect": "{{54,43},{160,164}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00005.png": {
+            "frame": "{{1,201},{148,152}}",
+            "offset": "{3,8}",
+            "rotated": true,
+            "sourceColorRect": "{{57,44},{148,152}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00006.png": {
+            "frame": "{{281,351},{128,128}}",
+            "offset": "{8,10}",
+            "rotated": false,
+            "sourceColorRect": "{{72,54},{128,128}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00007.png": {
+            "frame": "{{1,351},{114,142}}",
+            "offset": "{13,15}",
+            "rotated": true,
+            "sourceColorRect": "{{84,42},{114,142}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00008.png": {
+            "frame": "{{1,481},{102,152}}",
+            "offset": "{7,18}",
+            "rotated": true,
+            "sourceColorRect": "{{84,34},{102,152}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00009.png": {
+            "frame": "{{155,481},{100,94}}",
+            "offset": "{5,8}",
+            "rotated": true,
+            "sourceColorRect": "{{83,73},{100,94}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00000.png": {
+            "frame": "{{613,163},{164,88}}",
+            "offset": "{-2,-32}",
+            "rotated": false,
+            "sourceColorRect": "{{44,116},{164,88}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00001.png": {
+            "frame": "{{251,481},{156,90}}",
+            "offset": "{0,-33}",
+            "rotated": false,
+            "sourceColorRect": "{{50,116},{156,90}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00002.png": {
+            "frame": "{{561,585},{166,98}}",
+            "offset": "{1,-33}",
+            "rotated": true,
+            "sourceColorRect": "{{46,112},{166,98}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00003.png": {
+            "frame": "{{1,585},{180,188}}",
+            "offset": "{2,7}",
+            "rotated": false,
+            "sourceColorRect": "{{40,27},{180,188}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00004.png": {
+            "frame": "{{413,343},{194,190}}",
+            "offset": "{1,3}",
+            "rotated": false,
+            "sourceColorRect": "{{32,30},{194,190}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00005.png": {
+            "frame": "{{1,1},{210,198}}",
+            "offset": "{2,0}",
+            "rotated": false,
+            "sourceColorRect": "{{25,29},{210,198}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00006.png": {
+            "frame": "{{213,1},{198,196}}",
+            "offset": "{2,5}",
+            "rotated": false,
+            "sourceColorRect": "{{31,25},{198,196}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00007.png": {
+            "frame": "{{213,199},{198,150}}",
+            "offset": "{2,-18}",
+            "rotated": false,
+            "sourceColorRect": "{{31,71},{198,150}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00008.png": {
+            "frame": "{{413,173},{198,168}}",
+            "offset": "{2,-9}",
+            "rotated": false,
+            "sourceColorRect": "{{31,53},{198,168}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00009.png": {
+            "frame": "{{413,1},{198,170}}",
+            "offset": "{2,-8}",
+            "rotated": false,
+            "sourceColorRect": "{{31,51},{198,170}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00010.png": {
+            "frame": "{{281,585},{180,110}}",
+            "offset": "{1,-32}",
+            "rotated": true,
+            "sourceColorRect": "{{39,105},{180,110}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00011.png": {
+            "frame": "{{183,585},{182,96}}",
+            "offset": "{2,-34}",
+            "rotated": true,
+            "sourceColorRect": "{{39,114},{182,96}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00012.png": {
+            "frame": "{{145,351},{132,78}}",
+            "offset": "{-5,-35}",
+            "rotated": false,
+            "sourceColorRect": "{{57,124},{132,78}}",
+            "sourceSize": "{256,256}"
+        }
+    },
+    "metadata": {
+        "format": 2,
+        "pixelFormat": "RGBA8888",
+        "premultiplyAlpha": false,
+        "realTextureFileName": "3001.png",
+        "size": "{778,778}",
+        "smartupdate": "$TexturePacker:SmartUpdate:2002bc94ef04b04b851d108b973a45cc:3827d0fddad9ab76b7fcd8757eb486c9:f5b45b661f69819e7ab60483f5119970$",
+        "textureFileName": "3001.png"
+    }
+}

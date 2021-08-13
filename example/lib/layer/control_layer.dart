@@ -2,7 +2,7 @@ import 'package:devilf_engine/game/df_animation.dart';
 import 'package:devilf_engine/util/df_util.dart';
 import 'package:devilf_engine/widget/df_button.dart';
 import 'package:devilf_engine/widget/df_joystick.dart';
-import 'package:example/effect/effect_info.dart';
+import 'package:example/data/effect_data.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -37,24 +37,8 @@ class _ControlLayerState extends State<ControlLayer> {
       onPressed: (button) {
         GameManager.isAutoFight = !GameManager.isAutoFight;
         button.setSelected(GameManager.isAutoFight);
-
         if (GameManager.isAutoFight) {
-          EffectInfo effect1 = EffectInfo();
-          effect1.name = "1002";
-          effect1.type = EffectType.ATTACK;
-          effect1.damageRange = 100;
-          effect1.vision = 60;
-          effect1.delayTime = 10;
-          effect1.texture = "assets/images/effect/" + effect1.name + ".json";
-
-          EffectInfo effect2 = EffectInfo();
-          effect2.name = "2001";
-          effect2.type = EffectType.TRACK;
-          effect2.damageRange = 50;
-          effect2.vision = 120;
-          effect2.delayTime = 400;
-          effect2.texture = "assets/images/effect/" + effect2.name + ".json";
-          _playerSprite?.startAutoFight(DFAction.CASTING, effect: effect2);
+          _playerSprite?.startAutoFight(DFAction.CASTING, effect: EffectData.items["2001"]!);
         } else {
           _playerSprite?.cancelAutoFight(action: DFAction.IDLE);
         }
@@ -103,18 +87,10 @@ class _ControlLayerState extends State<ControlLayer> {
               ),
               alignment: Alignment.center,
               child: DFButton(
-                /// text: "攻击",
-                image: "assets/images/skill_icon/1002.png",
+                image: EffectData.items["1001"]!.icon!,
                 size: Size(70, 70),
                 onPressed: (button) {
-                  EffectInfo effect = EffectInfo();
-                  effect.name = "1002";
-                  effect.type = EffectType.ATTACK;
-                  effect.damageRange = 100;
-                  effect.vision = 60;
-                  effect.delayTime = 10;
-                  effect.texture = "assets/images/effect/" + effect.name + ".json";
-                  _playerSprite?.moveToAction(DFAction.ATTACK, effect: effect);
+                  _playerSprite?.moveToAction(DFAction.ATTACK, effect: EffectData.items["1001"]);
                 },
               ),
             )),
@@ -130,18 +106,10 @@ class _ControlLayerState extends State<ControlLayer> {
               ),
               alignment: Alignment.center,
               child: DFButton(
-                /// text: "小火球",
-                image: "assets/images/skill_icon/2001.png",
+                image: EffectData.items["1002"]!.icon!,
                 size: Size(50, 50),
                 onPressed: (button) {
-                  EffectInfo effect = EffectInfo();
-                  effect.name = "2001";
-                  effect.type = EffectType.TRACK;
-                  effect.damageRange = 50;
-                  effect.vision = 120;
-                  effect.delayTime = 400;
-                  effect.texture = "assets/images/effect/" + effect.name + ".json";
-                  _playerSprite?.moveToAction(DFAction.CASTING, effect: effect);
+                  _playerSprite?.moveToAction(DFAction.ATTACK, effect: EffectData.items["1002"]);
                 },
               ),
             )),
@@ -150,43 +118,64 @@ class _ControlLayerState extends State<ControlLayer> {
             bottom: MediaQuery.of(context).padding.bottom + 105,
             right: 65,
             child: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/ui/skill_secondary_bg.png"),
-                  ),
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/ui/skill_secondary_bg.png"),
                 ),
-                alignment: Alignment.center,
-                child: Container())),
+              ),
+              alignment: Alignment.center,
+              child: DFButton(
+                image: EffectData.items["2001"]!.icon!,
+                size: Size(50, 50),
+                onPressed: (button) {
+                  _playerSprite?.moveToAction(DFAction.CASTING, effect: EffectData.items["2001"]);
+                },
+              ),
+            )),
 
         Positioned(
             bottom: MediaQuery.of(context).padding.bottom + 63,
             right: 105,
             child: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/ui/skill_secondary_bg.png"),
-                  ),
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/ui/skill_secondary_bg.png"),
                 ),
-                alignment: Alignment.center,
-                child: Container())),
+              ),
+              alignment: Alignment.center,
+              child: DFButton(
+                image: EffectData.items["3001"]!.icon!,
+                size: Size(50, 50),
+                onPressed: (button) {
+                  _playerSprite?.moveToAction(DFAction.CASTING, effect: EffectData.items["3001"]);
+                },
+              ),
+            )),
 
         Positioned(
             bottom: MediaQuery.of(context).padding.bottom + 10,
             right: 120,
             child: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/ui/skill_secondary_bg.png"),
-                  ),
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/ui/skill_secondary_bg.png"),
                 ),
-                alignment: Alignment.center,
-                child: Container())),
+              ),
+              alignment: Alignment.center,
+              child: DFButton(
+                image: EffectData.items["3002"]!.icon!,
+                size: Size(50, 50),
+                onPressed: (button) {
+                  _playerSprite?.moveToAction(DFAction.CASTING, effect: EffectData.items["3002"]);
+                },
+              ),
+            )),
 
         /// 采集
         Positioned(

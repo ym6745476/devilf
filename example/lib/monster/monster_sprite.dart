@@ -15,6 +15,7 @@ import 'package:devilf_engine/sprite/df_text_sprite.dart';
 import 'package:devilf_engine/util/df_astar.dart';
 import 'package:devilf_engine/util/df_audio.dart';
 import 'package:devilf_engine/util/df_util.dart';
+import 'package:example/data/effect_data.dart';
 import 'package:example/effect/effect_info.dart';
 import 'package:example/effect/effect_sprite.dart';
 import 'package:example/player/player_sprite.dart';
@@ -151,7 +152,7 @@ class MonsterSprite extends DFSprite {
         this.play(DFAction.IDLE, direction: DFDirection.DOWN, radians: 90 * pi / 180.0);
 
         /// 启动自动战斗
-        this.startAutoFight(DFAction.ATTACK);
+        this.startAutoFight(DFAction.ATTACK, effect: EffectData.items["1001"]!);
       });
     } catch (e) {
       print('(MonsterSprite _init) Error: $e');
@@ -159,18 +160,7 @@ class MonsterSprite extends DFSprite {
   }
 
   /// 启动自动战斗
-  void startAutoFight(String action, {EffectInfo? effect}) {
-    /// 技能
-    if (effect == null) {
-      effect = EffectInfo();
-      effect.name = "1001";
-      effect.type = EffectType.ATTACK;
-      effect.damageRange = 100;
-      effect.vision = 30;
-      effect.delayTime = 10;
-
-      /// effect.texture = "assets/images/effect/" + effect.name + ".json";
-    }
+  void startAutoFight(String action, {required EffectInfo effect}) {
     this.autoFight = true;
     this.nextAction = action;
     this.effect = effect;
@@ -402,7 +392,10 @@ class MonsterSprite extends DFSprite {
   }
 
   /// 检查是否提前到达攻击范围
-  bool inEffectVision(DFSprite targetSprite) {
+  bool inEffectVision(DFSprite? targetSprite) {
+    if(targetSprite == null){
+      return false;
+    }
     if (this.effect != null && this.effect!.vision > 0) {
       DFCircle visibleShape = DFCircle(DFPosition(this.position.x, this.position.y), this.effect!.vision);
       if (targetSprite is PlayerSprite) {
@@ -429,7 +422,7 @@ class MonsterSprite extends DFSprite {
       this._addEffect(this.effect!);
     } else {
       /// 没特效直接出伤害
-      if (this.targetSprite != null) {
+      if (this.targetSprite != null && effect!=null) {
         if (this.targetSprite is PlayerSprite) {
           PlayerSprite playerSprite = this.targetSprite as PlayerSprite;
           playerSprite.receiveDamage(this, effect!);

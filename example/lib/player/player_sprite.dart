@@ -150,18 +150,7 @@ class PlayerSprite extends DFSprite {
   }
 
   /// 启动自动战斗
-  void startAutoFight(String action, {EffectInfo? effect}) {
-    /// 技能
-    if (effect == null) {
-      effect = EffectInfo();
-      effect.name = "1001";
-      effect.type = EffectType.ATTACK;
-      effect.damageRange = 100;
-      effect.vision = 40;
-      effect.delayTime = 10;
-
-      /// effect.texture = "assets/images/effect/" + effect.name + ".json";
-    }
+  void startAutoFight(String action, {required EffectInfo effect}) {
     this.autoFight = true;
     this.nextAction = action;
     this.effect = effect;
@@ -239,7 +228,10 @@ class PlayerSprite extends DFSprite {
           });
 
           /// 播放音频
-          DFAudio.play("effect/" + effect!.name + ".mp3");
+          if(effect!=null){
+            DFAudio.play("effect/" + effect!.id.toString() + ".mp3");
+          }
+
         } else if (this.action == DFAction.DEATH) {
           clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {
             /// print("死亡动作结束隐藏:" + this.player.name);
@@ -437,7 +429,10 @@ class PlayerSprite extends DFSprite {
   }
 
   /// 检查是否提前到达攻击范围
-  bool inEffectVision(DFSprite targetSprite) {
+  bool inEffectVision(DFSprite? targetSprite) {
+    if(targetSprite == null){
+      return false;
+    }
     if (this.effect != null && this.effect!.vision > 0) {
       DFCircle visibleShape = DFCircle(DFPosition(this.position.x, this.position.y), this.effect!.vision);
       if (targetSprite is MonsterSprite) {
@@ -453,37 +448,6 @@ class PlayerSprite extends DFSprite {
 
   /// 下一个动作
   void doNextAction() {
-    /// 保持距离
-    /*if (translateX.abs() < keepDistance / 2 && translateY.abs() < keepDistance / 2) {
-      print("自动走位与目标保持距离");
-
-      /// 往反方向移动
-      if (direction == DFAnimation.UP) {
-        direction = DFAnimation.DOWN;
-        radians = 90 * pi / 180.0;
-      } else if (direction == DFAnimation.DOWN) {
-        direction = DFAnimation.UP;
-        radians = 270 * pi / 180.0;
-      } else if (direction == DFAnimation.LEFT) {
-        direction = DFAnimation.RIGHT;
-        radians = 0;
-      } else if (direction == DFAnimation.RIGHT) {
-        direction = DFAnimation.LEFT;
-        radians = 180 * pi / 180.0;
-      } else if (direction == DFAnimation.DOWN_RIGHT) {
-        direction = DFAnimation.UP_LEFT;
-        radians = 225 * pi / 180.0;
-      } else if (direction == DFAnimation.UP_LEFT) {
-        direction = DFAnimation.DOWN_RIGHT;
-        radians = 45 * pi / 180.0;
-      } else if (direction == DFAnimation.UP_RIGHT) {
-        direction = DFAnimation.DOWN_LEFT;
-        radians = 135 * pi / 180.0;
-      } else if (direction == DFAnimation.DOWN_LEFT) {
-        direction = DFAnimation.UP_RIGHT;
-        radians = 315 * pi / 180.0;
-      }
-    }*/
 
     /// 更新方向
     this.updateDirection(this.targetSprite!.position);
@@ -492,8 +456,16 @@ class PlayerSprite extends DFSprite {
     this.play(this.nextAction, direction: direction, radians: radians);
 
     /// 显示技能特效
-    if (this.effect != null) {
+    if (this.effect != null && this.effect!.texture != null) {
       this._addEffect(this.effect!);
+    } else {
+      /// 没特效直接出伤害
+      if (this.targetSprite != null && effect!=null) {
+        if (this.targetSprite is MonsterSprite) {
+          MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
+          monsterSprite.receiveDamage(this, effect!);
+        }
+      }
     }
   }
 
@@ -680,7 +652,7 @@ class PlayerSprite extends DFSprite {
         if (this.autoMove && this.movePathPosition != null) {
           this.run(this.movePathPosition!, arrived: () {
             /// 检查是否在攻击范围
-            bool arrived = this.inEffectVision(this.targetSprite!);
+            bool arrived = this.inEffectVision(this.targetSprite);
             if (arrived) {
               /// 清除路径
               this.autoFightClock = DateTime.now().millisecondsSinceEpoch;

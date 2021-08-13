@@ -61,7 +61,7 @@ flutter:
     - assets/images/effect/
     - assets/images/map/
     - assets/images/map/lxd/
-    - assets/images/skill_icon/
+    - assets/images/icon/effect/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

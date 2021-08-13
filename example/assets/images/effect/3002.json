@@ -1,0 +1,179 @@
+{
+    "frames": {
+        "explode_00000.png": {
+            "frame": "{{265,391},{162,134}}",
+            "offset": "{8,4}",
+            "rotated": false,
+            "sourceColorRect": "{{55,57},{162,134}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00001.png": {
+            "frame": "{{1,215},{208,182}}",
+            "offset": "{14,18}",
+            "rotated": false,
+            "sourceColorRect": "{{38,19},{208,182}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00002.png": {
+            "frame": "{{1,1},{256,212}}",
+            "offset": "{0,18}",
+            "rotated": false,
+            "sourceColorRect": "{{0,4},{256,212}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00003.png": {
+            "frame": "{{435,449},{92,136}}",
+            "offset": "{1,29}",
+            "rotated": false,
+            "sourceColorRect": "{{83,31},{92,136}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00004.png": {
+            "frame": "{{453,259},{108,140}}",
+            "offset": "{-2,28}",
+            "rotated": true,
+            "sourceColorRect": "{{72,30},{108,140}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00005.png": {
+            "frame": "{{1,599},{114,162}}",
+            "offset": "{-1,33}",
+            "rotated": true,
+            "sourceColorRect": "{{70,14},{114,162}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00006.png": {
+            "frame": "{{265,527},{120,168}}",
+            "offset": "{1,34}",
+            "rotated": true,
+            "sourceColorRect": "{{69,10},{120,168}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00007.png": {
+            "frame": "{{259,1},{128,200}}",
+            "offset": "{2,25}",
+            "rotated": false,
+            "sourceColorRect": "{{66,3},{128,200}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00008.png": {
+            "frame": "{{1,399},{130,198}}",
+            "offset": "{3,27}",
+            "rotated": false,
+            "sourceColorRect": "{{66,2},{130,198}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00009.png": {
+            "frame": "{{521,1},{128,192}}",
+            "offset": "{4,26}",
+            "rotated": true,
+            "sourceColorRect": "{{68,6},{128,192}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00010.png": {
+            "frame": "{{521,131},{126,192}}",
+            "offset": "{6,28}",
+            "rotated": true,
+            "sourceColorRect": "{{71,4},{126,192}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00011.png": {
+            "frame": "{{133,399},{130,194}}",
+            "offset": "{5,29}",
+            "rotated": false,
+            "sourceColorRect": "{{68,2},{130,194}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00012.png": {
+            "frame": "{{389,1},{130,196}}",
+            "offset": "{5,30}",
+            "rotated": false,
+            "sourceColorRect": "{{68,0},{130,196}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00013.png": {
+            "frame": "{{319,203},{132,186}}",
+            "offset": "{4,26}",
+            "rotated": false,
+            "sourceColorRect": "{{66,9},{132,186}}",
+            "sourceSize": "{256,256}"
+        },
+        "explode_00014.png": {
+            "frame": "{{211,215},{106,170}}",
+            "offset": "{-4,19}",
+            "rotated": false,
+            "sourceColorRect": "{{71,24},{106,170}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00000.png": {
+            "frame": "{{609,443},{82,130}}",
+            "offset": "{-2,-5}",
+            "rotated": false,
+            "sourceColorRect": "{{85,68},{82,130}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00001.png": {
+            "frame": "{{599,357},{84,104}}",
+            "offset": "{2,14}",
+            "rotated": true,
+            "sourceColorRect": "{{88,62},{84,104}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00002.png": {
+            "frame": "{{435,587},{92,88}}",
+            "offset": "{2,33}",
+            "rotated": false,
+            "sourceColorRect": "{{84,51},{92,88}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00003.png": {
+            "frame": "{{611,575},{94,90}}",
+            "offset": "{1,40}",
+            "rotated": true,
+            "sourceColorRect": "{{82,43},{94,90}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00004.png": {
+            "frame": "{{595,259},{96,114}}",
+            "offset": "{0,56}",
+            "rotated": true,
+            "sourceColorRect": "{{80,15},{96,114}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00005.png": {
+            "frame": "{{529,583},{80,130}}",
+            "offset": "{4,54}",
+            "rotated": false,
+            "sourceColorRect": "{{92,9},{80,130}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00006.png": {
+            "frame": "{{453,369},{78,144}}",
+            "offset": "{4,52}",
+            "rotated": true,
+            "sourceColorRect": "{{93,4},{78,144}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00007.png": {
+            "frame": "{{529,449},{78,132}}",
+            "offset": "{4,58}",
+            "rotated": false,
+            "sourceColorRect": "{{93,4},{78,132}}",
+            "sourceSize": "{256,256}"
+        },
+        "casting_00008.png": {
+            "frame": "{{165,595},{78,98}}",
+            "offset": "{5,75}",
+            "rotated": true,
+            "sourceColorRect": "{{94,4},{78,98}}",
+            "sourceSize": "{256,256}"
+        }
+    },
+    "metadata": {
+        "format": 2,
+        "realTextureFileName": "3002.png",
+        "size": "{714,714}",
+        "smartupdate": "$TexturePacker:SmartUpdate:18e7baee680d7c3f67e4510f5ae60acb:43e4dfd03e303ecf608550037ad27d95:7ceeec8bc4c2a9e019d89349360aba72$",
+        "textureFileName": "3002.png"
+    }
+}
