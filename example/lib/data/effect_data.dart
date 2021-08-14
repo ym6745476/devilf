@@ -4,14 +4,17 @@ import 'package:example/effect/effect_info.dart';
 class EffectData {
   static String iconPath = "assets/images/icon/effect/";
   static String texturePath = "assets/images/effect/";
-  static String audioPath = "assets/audio/effect/";
+
+  /// 默认前缀 assets/audio/
+  static String audioPath = "effect/";
 
   static Map<String, EffectInfo> items = {
     "1001": EffectInfo(1001, "普通攻击", EffectType.ATTACK,
-        icon: icon(1001), frameSpeed: 10, vision: 40, damageRange: 80, delayTime: 10),
+        icon: icon(1001), audio: audio(1001), frameSpeed: 10, vision: 40, damageRange: 80, delayTime: 10),
     "1002": EffectInfo(1002, "初级剑法", EffectType.ATTACK,
         texture: texture(1002),
         icon: icon(1002),
+        audio: audio(1002),
         at: 1.2,
         mt: 1.2,
         frameSpeed: 10,
@@ -21,35 +24,39 @@ class EffectData {
     "2001": EffectInfo(2001, "火球术", EffectType.TRACK,
         texture: texture(2001),
         icon: icon(2001),
+        audio: audio(2001),
         at: 1.2,
         mt: 1.2,
         frameSpeed: 10,
-        moveSpeed: 10,
+        moveSpeed: 6,
         vision: 120,
         damageRange: 50,
         delayTime: 400),
-
     "3001": EffectInfo(3001, "火符术", EffectType.TRACK,
         texture: texture(3001),
         icon: icon(3001),
+        audio: audio(3001),
         at: 1.2,
         mt: 1.2,
         frameSpeed: 10,
-        moveSpeed: 10,
+        moveSpeed: 6,
+        vision: 120,
+        damageRange: 50,
+        delayTime: 400),
+    "3002": EffectInfo(3002, "施毒术", EffectType.CASTING,
+        texture: texture(3002),
+        icon: icon(3002),
+        audio: audio(3002),
+        at: 1.2,
+        mt: 1.2,
+        frameSpeed: 10,
+        moveSpeed: 6,
         vision: 120,
         damageRange: 50,
         delayTime: 400),
 
-    "3002": EffectInfo(3002, "施毒术", EffectType.CASTING,
-        texture: texture(3002),
-        icon: icon(3002),
-        at: 1.2,
-        mt: 1.2,
-        frameSpeed: 10,
-        moveSpeed: 10,
-        vision: 120,
-        damageRange: 50,
-        delayTime: 400),
+    "4001": EffectInfo(4001, "怪物攻击", EffectType.ATTACK,
+        audio: audio(4001), frameSpeed: 10, vision: 40, damageRange: 80, delayTime: 10),
   };
 
   static String icon(int id) {

@@ -1111,9 +1111,9 @@
         "format": 2,
         "pixelFormat": "RGBA8888",
         "premultiplyAlpha": false,
-        "realTextureFileName": "weapon_01.png",
+        "realTextureFileName": "1000.png",
         "size": "{2048,1024}",
         "smartupdate": "$TexturePacker:SmartUpdate:1638ef1b99ede0de86b3bf939b4b13e8:9a47ead207b6f55d442b78a4ff4254ac:6e3103bb03ec46ae756b7cdce268fc67$",
-        "textureFileName": "weapon_01.png"
+        "textureFileName": "1000.png"
     }
 }

@@ -1,9 +1,7 @@
-package dev.ym101.devilf;
+package com.devilf.slayer;
 
 import android.os.Bundle;
 import android.util.Log;
-
-import org.json.JSONStringer;
 
 import java.util.HashMap;
 
@@ -12,12 +10,6 @@ import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.embedding.engine.dart.DartExecutor;
 import io.flutter.plugin.common.MethodChannel;
 
-/**
- *  如果从其他页面进入Flutter页面可以像下面这样写：
- *  Intent intent = new Intent(activity, MainActivity.class);
- *  intent.putExtra("route","/hello");
- *  startActivity(intent);
- */
 public class MainActivity extends FlutterActivity {
 
     private static final String FLUTTER_CHANNEL = "sample.flutter.io/flutter";
@@ -31,15 +23,9 @@ public class MainActivity extends FlutterActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        //从Intent里获取route 路径
-        String route = getIntent().getStringExtra("route");
-        if(route == null || route == ""){
-            route = "/";
-        }
-
         //InitialRoute
         flutterEngine = getFlutterEngine();
-        flutterEngine.getNavigationChannel().setInitialRoute(route);
+        flutterEngine.getNavigationChannel().setInitialRoute("/");
         flutterEngine.getDartExecutor().executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault());
 
         //监听Flutter调用Native
@@ -86,7 +72,7 @@ public class MainActivity extends FlutterActivity {
     }
 
     /**
-     * 你的代码写处理逻辑
+     * 处理Flutter过来的数据
      * @param messageMap
      * @param result
      */

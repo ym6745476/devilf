@@ -1,55 +1,55 @@
 {
     "frames": {
-        "surround_00000.png": {
+        "idle_00000.png": {
             "frame": "{{1,1},{121,68}}",
             "offset": "{1,-10}",
             "rotated": false,
             "sourceColorRect": "{{17,28},{121,68}}",
             "sourceSize": "{153,104}"
         },
-        "surround_00001.png": {
+        "idle_00001.png": {
             "frame": "{{124,1},{121,68}}",
             "offset": "{0,-10}",
             "rotated": false,
             "sourceColorRect": "{{16,28},{121,68}}",
             "sourceSize": "{153,104}"
         },
-        "surround_00002.png": {
+        "idle_00002.png": {
             "frame": "{{1,71},{121,68}}",
             "offset": "{0,-10}",
             "rotated": true,
             "sourceColorRect": "{{16,28},{121,68}}",
             "sourceSize": "{153,104}"
         },
-        "surround_00003.png": {
+        "idle_00003.png": {
             "frame": "{{71,71},{121,68}}",
             "offset": "{0,-10}",
             "rotated": false,
             "sourceColorRect": "{{16,28},{121,68}}",
             "sourceSize": "{153,104}"
         },
-        "surround_00004.png": {
+        "idle_00004.png": {
             "frame": "{{71,141},{121,66}}",
             "offset": "{0,-10}",
             "rotated": false,
             "sourceColorRect": "{{16,29},{121,66}}",
             "sourceSize": "{153,104}"
         },
-        "surround_00005.png": {
+        "idle_00005.png": {
             "frame": "{{71,71},{121,68}}",
             "offset": "{0,-10}",
             "rotated": false,
             "sourceColorRect": "{{16,28},{121,68}}",
             "sourceSize": "{153,104}"
         },
-        "surround_00006.png": {
+        "idle_00006.png": {
             "frame": "{{1,71},{121,68}}",
             "offset": "{0,-10}",
             "rotated": true,
             "sourceColorRect": "{{16,28},{121,68}}",
             "sourceSize": "{153,104}"
         },
-        "surround_00007.png": {
+        "idle_00007.png": {
             "frame": "{{124,1},{121,68}}",
             "offset": "{0,-10}",
             "rotated": false,

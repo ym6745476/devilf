@@ -6,6 +6,9 @@ import 'package:devilf_engine/game/df_game_widget.dart';
 import 'package:devilf_engine/sprite/df_image_sprite.dart';
 import 'package:devilf_engine/sprite/df_text_sprite.dart';
 import 'package:devilf_engine/util/df_audio.dart';
+import 'package:example/data/effect_data.dart';
+import 'package:example/data/monster_data.dart';
+import 'package:example/data/player_data.dart';
 import 'package:example/layer/control_layer.dart';
 import 'package:example/map/map_info.dart';
 import 'package:example/player/player_info.dart';
@@ -55,7 +58,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
   /// 开始进入游戏
   void _loadGame() async {
-    try {
+    ///try {
       await Future.delayed(Duration(seconds: 1), () async {
         /// 摄像机
         DFCamera camera = DFCamera(rect: DFRect(0, 0, GameManager.visibleWidth, GameManager.visibleHeight));
@@ -73,13 +76,15 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         GameManager.mapSprite = mapSprite;
 
         /// 创建玩家精灵
-        PlayerInfo player = PlayerInfo("玩家1");
+        PlayerInfo player = PlayerData.newPlayer("1001");
+        player.clothes = PlayerData.getClothes("man_01");
+        player.weapon = PlayerData.getWeapon("1001");
         player.maxAt = 120;
         player.moveSpeed = 2;
-        player.clothes = "assets/images/player/man_01.json";
-        player.weapon = "assets/images/weapon/weapon_01.json";
+        player.df = 6;
+        player.mf = 6;
         _playerSprite = PlayerSprite(player);
-        _playerSprite?.position = DFPosition(800, 1500);
+        _playerSprite!.position = DFPosition(800, 1500);
 
         /// 保存到管理器里
         GameManager.playerSprite = _playerSprite;
@@ -87,18 +92,41 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 怪物精灵
         List<MonsterSprite> _monsterSprites = [];
 
+        /// 蜘蛛
         for (int i = 0; i < 3; i++) {
-          MonsterInfo monster = MonsterInfo("蜘蛛" + (i + 1).toString());
-          monster.moveSpeed = 0.4;
-          player.maxAt = 150;
-          monster.clothes = "assets/images/monster/spider.json";
+          MonsterInfo monster = MonsterData.newMonster("1001");
+          monster.id = i+1;
           MonsterSprite monsterSprite = MonsterSprite(monster);
           int dirX = Random().nextBool() ? 1 : -1;
           int dirY = Random().nextBool() ? 1 : -1;
-          monsterSprite.position = DFPosition(_playerSprite!.position.x + dirX * 200 * Random().nextDouble(),
-              _playerSprite!.position.y + dirY * 200 * Random().nextDouble());
+          monsterSprite.position = DFPosition(700 + dirX * 200 * Random().nextDouble(),
+              1500 + dirY * 200 * Random().nextDouble());
           _monsterSprites.add(monsterSprite);
         }
+
+        /// 蛇
+        for (int i = 0; i < 3; i++) {
+          MonsterInfo monster = MonsterData.newMonster("1002");
+          monster.id = i+1;
+          MonsterSprite monsterSprite = MonsterSprite(monster);
+          int dirX = Random().nextBool() ? 1 : -1;
+          int dirY = Random().nextBool() ? 1 : -1;
+          monsterSprite.position = DFPosition(1000 + dirX * 200 * Random().nextDouble(),
+              1400 + dirY * 200 * Random().nextDouble());
+          _monsterSprites.add(monsterSprite);
+        }
+
+        /// 1级女妖精
+        MonsterInfo monster = MonsterData.newMonster("3001");
+        /// monster.clothes = PlayerData.getClothes("woman_01");
+        /// monster.weapon = PlayerData.getWeapon("2001");
+        /// monster.effects = [EffectData.items["2001"]!];
+        MonsterSprite monsterSprite = MonsterSprite(monster);
+        int dirX = Random().nextBool() ? 1 : -1;
+        int dirY = Random().nextBool() ? 1 : -1;
+        monsterSprite.position = DFPosition(1000 + dirX * 200 * Random().nextDouble(),
+            1400 + dirY * 200 * Random().nextDouble());
+        _monsterSprites.add(monsterSprite);
 
         /// 保存到管理器里
         GameManager.monsterSprites = _monsterSprites;
@@ -169,9 +197,9 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
         print("游戏加载完成...");
       });
-    } catch (e) {
-      print('(GameScene _loadGame) Error: $e');
-    }
+    ///} catch (e) {
+      ///print('(GameScene _loadGame) Error: $e');
+    ///}
   }
 
   /// Loading显示

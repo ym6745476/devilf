@@ -1,13 +1,16 @@
 import 'dart:math';
 import 'package:devilf_engine/core/df_circle.dart';
 import 'package:devilf_engine/core/df_position.dart';
+import 'package:devilf_engine/core/df_rect.dart';
 import 'package:devilf_engine/core/df_shape.dart';
 import 'package:devilf_engine/core/df_size.dart';
 import 'package:devilf_engine/devilf_engine.dart';
 import 'package:devilf_engine/game/df_animation.dart';
 import 'package:devilf_engine/sprite/df_animation_sprite.dart';
 import 'package:devilf_engine/sprite/df_sprite.dart';
+import 'package:devilf_engine/util/df_audio.dart';
 import 'package:example/monster/monster_sprite.dart';
+import 'package:example/player/player_sprite.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../game_manager.dart';
@@ -45,7 +48,7 @@ class EffectSprite extends DFSprite {
   /// 创建怪物精灵
   EffectSprite(
     this.effect, {
-    DFSize size = const DFSize(50, 50),
+    DFSize size = const DFSize(48, 48),
   }) : super(position: DFPosition(0, 0), size: size) {
     _init();
   }
@@ -57,7 +60,6 @@ class EffectSprite extends DFSprite {
       DFAnimationSprite textureSprite = await DFAnimationSprite.load(this.effect.texture!, scale: 0.4,blendMode: BlendMode.colorDodge);
       this.textureSprite = textureSprite;
       this.textureSprite!.position = DFPosition(size.width / 2, size.height / 2);
-      this.textureSprite!.size = DFSize(100, 100);
 
       /// 调用add产生层级关系进行坐标转换
       addChild(this.textureSprite!);
@@ -71,6 +73,11 @@ class EffectSprite extends DFSprite {
       }else if (effect.type == EffectType.CASTING) {
         this.castingClock = DateTime.now().millisecondsSinceEpoch;
         this.play(DFAction.CASTING, direction: this.direction, radians: this.radians);
+      }
+
+      /// 播放音频
+      if(effect.audio!=null){
+        DFAudio.play(effect.audio!);
       }
 
       /// 初始化完成
@@ -189,11 +196,23 @@ class EffectSprite extends DFSprite {
     if (targetSprite != null) {
       if (targetSprite is MonsterSprite) {
         MonsterSprite monsterSprite = targetSprite as MonsterSprite;
-        DFShape monsterCollision = monsterSprite.getCollisionShape();
-        if (this.getCollisionShape().overlaps(monsterCollision)) {
-          this.position.x = monsterSprite.position.x;
-          this.position.y = monsterSprite.position.y;
-          this.play(DFAction.EXPLODE);
+        if (!monsterSprite.monster.isDeath) {
+          DFShape shape = monsterSprite.getCollisionShape();
+          if (this.getCollisionShape().overlaps(shape)) {
+            this.position.x = monsterSprite.position.x;
+            this.position.y = monsterSprite.position.y - DFConfig.effectOffset;
+            this.play(DFAction.EXPLODE);
+          }
+        }
+      }else if(targetSprite is PlayerSprite){
+        PlayerSprite playerSprite = targetSprite as PlayerSprite;
+        if (!playerSprite.player.isDeath) {
+          DFShape shape = playerSprite.getCollisionShape();
+          if (this.getCollisionShape().overlaps(shape)) {
+            this.position.x = playerSprite.position.x;
+            this.position.y = playerSprite.position.y - DFConfig.effectOffset;
+            this.play(DFAction.EXPLODE);
+          }
         }
       }
     } else {
@@ -201,10 +220,10 @@ class EffectSprite extends DFSprite {
       if (GameManager.monsterSprites != null) {
         GameManager.monsterSprites!.forEach((monsterSprite) {
           if (!monsterSprite.monster.isDeath) {
-            DFShape monsterCollision = monsterSprite.getCollisionShape();
-            if (this.getCollisionShape().overlaps(monsterCollision)) {
+            DFShape shape = monsterSprite.getCollisionShape();
+            if (this.getCollisionShape().overlaps(shape)) {
               this.position.x = monsterSprite.position.x;
-              this.position.y = monsterSprite.position.y;
+              this.position.y = monsterSprite.position.y - DFConfig.effectOffset;
               this.play(DFAction.EXPLODE);
             }
           }
@@ -216,7 +235,7 @@ class EffectSprite extends DFSprite {
   /// 碰撞矩形
   @override
   DFShape getCollisionShape() {
-    return DFCircle(DFPosition(this.position.x, this.position.y), this.size.width / 2);
+    return DFCircle(DFPosition(this.position.x, this.position.y), this.size.width / 4);
   }
 
   /// 更新
@@ -232,14 +251,14 @@ class EffectSprite extends DFSprite {
       this.position.y = this.position.y + this.effect.moveSpeed * sin(this.radians);
       //print("move:" + this.position.toString());
 
-      if (DateTime.now().millisecondsSinceEpoch - this.castingClock > 200) {
+      if (DateTime.now().millisecondsSinceEpoch - this.castingClock > 400) {
         this.play(DFAction.EXPLODE);
       } else {
         /// 判断碰撞
         this.checkTrackCollision();
       }
     }else if(textureSprite!.currentAnimation.contains(DFAction.CASTING)){
-      if (DateTime.now().millisecondsSinceEpoch - this.castingClock > 200) {
+      if (DateTime.now().millisecondsSinceEpoch - this.castingClock > 400) {
         if(this.targetSprite!=null){
           this.position = this.targetSprite!.position;
         }
@@ -256,15 +275,15 @@ class EffectSprite extends DFSprite {
     canvas.save();
 
     /// 精灵碰撞区域
-    if (DFConfig.debug) {
-      /*var paint = new Paint()..color = Color(0x60bb505d);
+    /*if (DFConfig.debug) {
+      var paint = new Paint()..color = Color(0x60bb505d);
       DFShape collisionShape = getCollisionShape();
       if (collisionShape is DFCircle) {
         canvas.drawCircle(collisionShape.center.toOffset(), collisionShape.radius, paint);
       } else if (collisionShape is DFRect) {
         canvas.drawRect(collisionShape.toRect(), paint);
-      }*/
-    }
+      }
+    }*/
 
     /// 移动画布
     canvas.translate(position.x, position.y);

@@ -50,10 +50,11 @@ flutter:
   assets:
     - assets/images/
     - assets/audio/
-    - assets/audio/action/
+    - assets/audio/player/
     - assets/audio/effect/
     - assets/audio/map/
     - assets/audio/monster/spider/
+    - assets/audio/monster/snake/
     - assets/images/player/
     - assets/images/monster/
     - assets/images/weapon/

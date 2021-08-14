@@ -1,55 +1,55 @@
 {
     "frames": {
-        "surround_00000.png": {
+        "idle_00000.png": {
             "frame": "{{1,1},{134,72}}",
             "offset": "{0,0}",
             "rotated": true,
             "sourceColorRect": "{{0,0},{134,72}}",
             "sourceSize": "{134,72}"
         },
-        "surround_00001.png": {
+        "idle_00001.png": {
             "frame": "{{1,137},{134,72}}",
             "offset": "{0,0}",
             "rotated": false,
             "sourceColorRect": "{{0,0},{134,72}}",
             "sourceSize": "{134,72}"
         },
-        "surround_00002.png": {
+        "idle_00002.png": {
             "frame": "{{75,1},{134,72}}",
             "offset": "{0,0}",
             "rotated": true,
             "sourceColorRect": "{{0,0},{134,72}}",
             "sourceSize": "{134,72}"
         },
-        "surround_00003.png": {
+        "idle_00003.png": {
             "frame": "{{137,137},{134,72}}",
             "offset": "{0,0}",
             "rotated": false,
             "sourceColorRect": "{{0,0},{134,72}}",
             "sourceSize": "{134,72}"
         },
-        "surround_00004.png": {
+        "idle_00004.png": {
             "frame": "{{149,1},{134,72}}",
             "offset": "{0,0}",
             "rotated": true,
             "sourceColorRect": "{{0,0},{134,72}}",
             "sourceSize": "{134,72}"
         },
-        "surround_00005.png": {
+        "idle_00005.png": {
             "frame": "{{223,1},{134,72}}",
             "offset": "{0,0}",
             "rotated": true,
             "sourceColorRect": "{{0,0},{134,72}}",
             "sourceSize": "{134,72}"
         },
-        "surround_00006.png": {
+        "idle_00006.png": {
             "frame": "{{273,137},{134,72}}",
             "offset": "{0,0}",
             "rotated": false,
             "sourceColorRect": "{{0,0},{134,72}}",
             "sourceSize": "{134,72}"
         },
-        "surround_00007.png": {
+        "idle_00007.png": {
             "frame": "{{297,1},{134,72}}",
             "offset": "{0,0}",
             "rotated": true,

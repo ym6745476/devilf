@@ -1,13 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.ym101.devilf">
+    package="com.devilf.slayer">
 
    <uses-permission android:name="android.permission.INTERNET"/>
 
    <application
-        android:label="DevilF"
+        android:label="屠魔世界"
         android:icon="@mipmap/ic_launcher">
         <activity
-            android:name="dev.ym101.devilf.MainActivity"
+            android:name="com.devilf.slayer.MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

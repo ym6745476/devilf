@@ -34,11 +34,11 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "dev.ym101.devilf"
+        applicationId "com.devilf.slayer"
         minSdkVersion 20
         targetSdkVersion 30
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 1
+        versionName "1.0.0"
     }
 
     signingConfigs {

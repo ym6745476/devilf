@@ -107,17 +107,17 @@ class PlayerSprite extends DFSprite {
           scale: 0.6, blendMode: BlendMode.colorDodge);
       this.selectSprite!.position = DFPosition(size.width / 2, size.height / 2);
       addChild(this.selectSprite!);
-      this.selectSprite?.play(DFAction.SURROUND + DFDirection.UP, stepTime: 100, loop: true);
+      this.selectSprite?.play(DFAction.IDLE + DFDirection.UP, stepTime: 100, loop: true);
 
       /// 玩家精灵动画
-      this.clothesSprite = await DFAnimationSprite.load(this.player.clothes);
+      this.clothesSprite = await DFAnimationSprite.load(this.player.clothes!);
       this.clothesSprite!.position = DFPosition(size.width / 2, size.height / 2 - 10);
 
       /// 调用add产生层级关系进行坐标转换
       addChild(this.clothesSprite!);
 
-      if (this.player.weapon != "") {
-        this.weaponSprite = await DFAnimationSprite.load(this.player.weapon);
+      if (this.player.weapon != null) {
+        this.weaponSprite = await DFAnimationSprite.load(this.player.weapon!);
 
         /// 绑定动画同步
         this.weaponSprite!.position =
@@ -128,7 +128,7 @@ class PlayerSprite extends DFSprite {
       /// 血条
       ui.Image image = await DFAssetsLoader.loadImage("assets/images/ui/hp_bar_player.png");
       this.hpBarSprite = DFProgressSprite(image, gravity: DFGravity.top, textOffset: 5);
-      this.hpBarSprite!.position = DFPosition(size.width / 2, -30);
+      this.hpBarSprite!.position = DFPosition(size.width / 2, -40);
       this.hpBarSprite!.scale = 0.6;
       addChild(this.hpBarSprite!);
 
@@ -189,6 +189,7 @@ class PlayerSprite extends DFSprite {
       }
     }
 
+    /// 动画名称
     String animation = this.action + this.direction;
 
     if (clothesSprite != null) {
@@ -213,14 +214,7 @@ class PlayerSprite extends DFSprite {
           clothesSprite!.play(animation, stepTime: 50, loop: loop);
 
           /// 播放音频
-          this.actionAudio!.startPlay([
-            "action/run_1.mp3",
-            "action/run_2.mp3",
-            "action/run_3.mp3",
-            "action/run_4.mp3",
-            "action/run_5.mp3",
-            "action/run_6.mp3"
-          ], loop: true);
+          this.actionAudio!.startPlay(this.player.runAudio, loop: true);
         } else if (this.action == DFAction.ATTACK || this.action == DFAction.CASTING) {
           clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {
             /// 动作完成回到IDLE
@@ -228,10 +222,7 @@ class PlayerSprite extends DFSprite {
           });
 
           /// 播放音频
-          if(effect!=null){
-            DFAudio.play("effect/" + effect!.id.toString() + ".mp3");
-          }
-
+          DFAudio.play(this.player.attackAudio[0]);
         } else if (this.action == DFAction.DEATH) {
           clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {
             /// print("死亡动作结束隐藏:" + this.player.name);
@@ -239,12 +230,12 @@ class PlayerSprite extends DFSprite {
           });
 
           /// 播放音频
-          DFAudio.play("action/dead_man.mp3");
+          DFAudio.play(this.player.deathAudio[0]);
         } else if (this.action == DFAction.COLLECT) {
           clothesSprite!.play(animation, stepTime: 100, loop: loop);
 
           /// 播放音频
-          DFAudio.play("action/collect.mp3");
+          DFAudio.play(this.player.collectAudio[0]);
         }
       }
     }
@@ -430,7 +421,7 @@ class PlayerSprite extends DFSprite {
 
   /// 检查是否提前到达攻击范围
   bool inEffectVision(DFSprite? targetSprite) {
-    if(targetSprite == null){
+    if (targetSprite == null) {
       return false;
     }
     if (this.effect != null && this.effect!.vision > 0) {
@@ -448,9 +439,10 @@ class PlayerSprite extends DFSprite {
 
   /// 下一个动作
   void doNextAction() {
-
     /// 更新方向
-    this.updateDirection(this.targetSprite!.position);
+    if (this.targetSprite != null) {
+      this.updateDirection(this.targetSprite!.position);
+    }
 
     /// 角色动作
     this.play(this.nextAction, direction: direction, radians: radians);
@@ -460,7 +452,7 @@ class PlayerSprite extends DFSprite {
       this._addEffect(this.effect!);
     } else {
       /// 没特效直接出伤害
-      if (this.targetSprite != null && effect!=null) {
+      if (this.targetSprite != null && effect != null) {
         if (this.targetSprite is MonsterSprite) {
           MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
           monsterSprite.receiveDamage(this, effect!);
@@ -473,7 +465,7 @@ class PlayerSprite extends DFSprite {
   Future<void> _addEffect(EffectInfo effect) async {
     await Future.delayed(Duration(milliseconds: effect.delayTime), () async {
       EffectSprite effectSprite = EffectSprite(effect);
-      effectSprite.position = DFPosition(this.position.x, this.position.y);
+      effectSprite.position = DFPosition(this.position.x, this.position.y - DFConfig.effectOffset);
       effectSprite.size = DFSize(effect.damageRange, effect.damageRange);
       effectSprite.direction = this.direction;
       effectSprite.radians = this.radians;
@@ -512,6 +504,10 @@ class PlayerSprite extends DFSprite {
 
       this.player.hp = this.player.hp - hp;
       this.hpBarSprite!.progress = (this.player.hp / this.player.maxMp * 100).toInt();
+
+      /// 播放音频
+      DFAudio.play(this.player.hurtAudio[0]);
+
       if (this.player.hp < 0) {
         this.dead(ownerSprite);
       }
@@ -602,7 +598,11 @@ class PlayerSprite extends DFSprite {
   DFShape getCollisionShape() {
     if (initOk) {
       List<DFImageSprite> sprites = clothesSprite!.frames[clothesSprite!.currentAnimation]!;
-      return DFCircle(DFPosition(this.position.x, this.position.y), sprites[0].size.width / 4);
+      return DFRect(
+          this.position.x - sprites[0].size.width / 4,
+          this.position.y - sprites[0].size.height / 4 - DFConfig.effectOffset,
+          sprites[0].size.width / 2,
+          sprites[0].size.height / 2);
     }
     return super.getCollisionShape();
   }
@@ -704,7 +704,7 @@ class PlayerSprite extends DFSprite {
     /// 精灵碰撞区域
     if (DFConfig.debug) {
       var paint = new Paint()..color = Color(0x60bb505d);
-      DFShape collisionShape = getPathCollisionShape(this.position);
+      DFShape collisionShape = getCollisionShape();
       if (collisionShape is DFCircle) {
         canvas.drawCircle(collisionShape.center.toOffset(), collisionShape.radius, paint);
       } else if (collisionShape is DFRect) {
@@ -718,6 +718,10 @@ class PlayerSprite extends DFSprite {
         canvas.drawRect(rect.toRect(), paintPath);
       });
     }
+
+    /*var paint = new Paint()..color = Color(0x60bb505d);
+    DFRect rect = DFRect(this.position.x - size.width/2,this.position.y - size.height/2,size.width,size.height);
+    canvas.drawRect(rect.toRect(), paint);*/
 
     /// 移动画布
     canvas.translate(position.x, position.y);
