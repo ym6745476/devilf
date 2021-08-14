@@ -57,7 +57,8 @@ class EffectSprite extends DFSprite {
   Future<void> _init() async {
     await Future.delayed(Duration.zero, () async {
       /// 玩家精灵动画
-      DFAnimationSprite textureSprite = await DFAnimationSprite.load(this.effect.texture!, scale: 0.4,blendMode: BlendMode.colorDodge);
+      DFAnimationSprite textureSprite =
+          await DFAnimationSprite.load(this.effect.texture!, scale: 0.4, blendMode: BlendMode.colorDodge);
       this.textureSprite = textureSprite;
       this.textureSprite!.position = DFPosition(size.width / 2, size.height / 2);
 
@@ -70,13 +71,13 @@ class EffectSprite extends DFSprite {
       } else if (effect.type == EffectType.TRACK) {
         this.castingClock = DateTime.now().millisecondsSinceEpoch;
         this.play(DFAction.TRACK, direction: this.direction, radians: this.radians);
-      }else if (effect.type == EffectType.CASTING) {
+      } else if (effect.type == EffectType.CASTING) {
         this.castingClock = DateTime.now().millisecondsSinceEpoch;
         this.play(DFAction.CASTING, direction: this.direction, radians: this.radians);
       }
 
       /// 播放音频
-      if(effect.audio!=null){
+      if (effect.audio != null) {
         DFAudio.play(effect.audio!);
       }
 
@@ -204,7 +205,7 @@ class EffectSprite extends DFSprite {
             this.play(DFAction.EXPLODE);
           }
         }
-      }else if(targetSprite is PlayerSprite){
+      } else if (targetSprite is PlayerSprite) {
         PlayerSprite playerSprite = targetSprite as PlayerSprite;
         if (!playerSprite.player.isDeath) {
           DFShape shape = playerSprite.getCollisionShape();
@@ -257,9 +258,9 @@ class EffectSprite extends DFSprite {
         /// 判断碰撞
         this.checkTrackCollision();
       }
-    }else if(textureSprite!.currentAnimation.contains(DFAction.CASTING)){
+    } else if (textureSprite!.currentAnimation.contains(DFAction.CASTING)) {
       if (DateTime.now().millisecondsSinceEpoch - this.castingClock > 400) {
-        if(this.targetSprite!=null){
+        if (this.targetSprite != null) {
           this.position = this.targetSprite!.position;
         }
         this.play(DFAction.EXPLODE);
