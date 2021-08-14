@@ -36,7 +36,7 @@
 https://ymbok.com/book/devilf.html  
 
 ## 在线体验    
-https://ymbok.com/example/devilf.html  
+https://ymbok.com/download/devilf.html  
 
 ## 安装框架  
 ```yaml
