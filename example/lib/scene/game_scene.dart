@@ -60,8 +60,16 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
   void _loadGame() async {
     ///try {
       await Future.delayed(Duration(seconds: 1), () async {
+
+        /// 获取屏幕尺寸
+        GameManager.visibleWidth = MediaQuery.of(context).size.width;
+        GameManager.visibleHeight = MediaQuery.of(context).size.height;
+        print("获取屏幕尺寸:" + GameManager.visibleWidth.toString() + "," + GameManager.visibleHeight.toString());
+
         /// 摄像机
         DFCamera camera = DFCamera(rect: DFRect(0, 0, GameManager.visibleWidth, GameManager.visibleHeight));
+
+        print("Camera Size:" + camera.rect.toString());
 
         /// 定义主界面
         this._gameWidget = DFGameWidget(camera: camera);
@@ -70,6 +78,8 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         MapInfo mapInfo = MapInfo("落霞岛");
         mapInfo.texture = "assets/images/map/lxd.json";
         mapInfo.scale = 0.35;
+        mapInfo.width = 6720 - 215;
+        mapInfo.height = 5632 - 329;
         MapSprite mapSprite = MapSprite(mapInfo, camera: camera);
 
         /// 保存到管理器里
@@ -224,10 +234,6 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    /// 获取屏幕尺寸
-    GameManager.visibleWidth = MediaQuery.of(context).size.width;
-    GameManager.visibleHeight = MediaQuery.of(context).size.height;
-    print("获取屏幕尺寸:" + GameManager.visibleWidth.toString() + "," + GameManager.visibleHeight.toString());
 
     return WillPopScope(
         onWillPop: () async {

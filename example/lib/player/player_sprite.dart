@@ -588,8 +588,8 @@ class PlayerSprite extends DFSprite {
 
   /// 寻路的碰撞形状
   DFCircle getPathCollisionShape(DFPosition position) {
-    double tileWidth = GameManager.mapSprite!.mapInfo.tileWidth;
-    double tileHeight = GameManager.mapSprite!.mapInfo.tileHeight;
+    double tileWidth = GameManager.mapSprite!.mapInfo.scaledTileWidth;
+    double tileHeight = GameManager.mapSprite!.mapInfo.scaledTileHeight;
     return DFCircle(position, (tileWidth > tileHeight ? tileHeight : tileWidth) / 2);
   }
 

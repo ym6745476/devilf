@@ -4,7 +4,7 @@
    <uses-permission android:name="android.permission.INTERNET"/>
 
    <application
-        android:label="屠魔世界"
+        android:label="屠魔传奇"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name="com.devilf.slayer.MainActivity"

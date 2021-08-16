@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:devilf_engine/core/df_offset.dart';
 import 'package:devilf_engine/core/df_position.dart';
 import 'package:devilf_engine/core/df_size.dart';
 import 'package:devilf_engine/game/df_camera.dart';
@@ -39,17 +40,20 @@ class MapSprite extends DFSprite {
       this.tileMapSprite = await DFTileMapSprite.load(this.mapInfo.texture, this.mapInfo.scale);
       DFTileMap tileMap = this.tileMapSprite!.tileMap!;
 
-      /// 保存缩放后的tile宽度个高度
-      this.mapInfo.tileWidth = tileMap.tileWidth! * this.mapInfo.scale;
-      this.mapInfo.tileHeight = tileMap.tileHeight! * this.mapInfo.scale;
-      this.mapInfo.width = tileMap.width! * tileMap.tileWidth! * this.mapInfo.scale;
-      this.mapInfo.height = tileMap.height! * tileMap.tileHeight! * this.mapInfo.scale;
+      /// 保存缩放后的tile宽度和高度
+      this.mapInfo.scaledWidth = this.mapInfo.width * this.mapInfo.scale;
+      this.mapInfo.scaledHeight = this.mapInfo.height * this.mapInfo.scale;
+      this.mapInfo.scaledTileWidth = tileMap.tileWidth! * this.mapInfo.scale;
+      this.mapInfo.scaledTileHeight = tileMap.tileHeight! * this.mapInfo.scale;
 
       /// 将block转化为二维数组
       this.mapInfo.blockMap = DFUtil.to2dList(this.tileMapSprite!.blockLayer!.data!, tileMap.width!, 1);
 
       /// 调用add产生层级关系进行坐标转换
       addChild(this.tileMapSprite!);
+
+      /// 设置跟随限制
+      camera.setLimit(DFOffset(this.mapInfo.scaledWidth,this.mapInfo.scaledHeight));
 
       /// 初始化完成
       this.initOk = true;

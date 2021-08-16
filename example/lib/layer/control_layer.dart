@@ -9,7 +9,7 @@ import 'package:flutter/rendering.dart';
 
 import '../game_manager.dart';
 
-/// 控制器层
+/// 控制界面
 class ControlLayer extends StatefulWidget {
   ControlLayer();
 

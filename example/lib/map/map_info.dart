@@ -11,16 +11,28 @@ class MapInfo {
   String texture = "";
 
   /// 宽度
-  double width = 10;
+  double width = 1;
 
   /// 高度
-  double height = 10;
+  double height = 1;
+
+  /// 宽度
+  double scaledWidth = 1;
+
+  /// 高度
+  double scaledHeight = 1;
 
   /// tile宽度
-  double tileWidth = 10;
+  double tileWidth = 48;
 
   /// tile高度
-  double tileHeight = 10;
+  double tileHeight = 32;
+
+  /// 宽度
+  double scaledTileWidth = 1;
+
+  /// 高度
+  double scaledTileHeight = 1;
 
   /// 缩放
   double scale = 1;
@@ -33,18 +45,18 @@ class MapInfo {
 
   /// 根据瓦片位置获取地图上坐标
   DFPosition getPosition(DFMapPosition mapPosition) {
-    return DFPosition(mapPosition.x * tileWidth + tileWidth / 2, mapPosition.y * tileHeight + tileHeight / 2);
+    return DFPosition(mapPosition.x * scaledTileWidth + scaledTileWidth / 2, mapPosition.y * scaledTileHeight + scaledTileHeight / 2);
   }
 
   /// 根据地图上坐标获取瓦片位置
   DFMapPosition getMapPosition(DFPosition position) {
-    int x = (position.x / tileWidth).floor();
-    int y = (position.y / tileHeight).floor();
+    int x = (position.x / scaledTileWidth).floor();
+    int y = (position.y / scaledTileHeight).floor();
     return DFMapPosition(x, y);
   }
 
   /// 获取路径矩形
   DFRect getPathRect(DFMapPosition mapPosition) {
-    return DFRect(mapPosition.x * tileWidth, mapPosition.y * tileHeight,tileWidth,tileHeight);
+    return DFRect(mapPosition.x * scaledTileWidth, mapPosition.y * scaledTileHeight,scaledTileWidth,scaledTileHeight);
   }
 }
