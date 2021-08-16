@@ -49,9 +49,6 @@ dependencies:
 ## 示例演示  
 <img src="https://github.com/ym6745476/devilf/blob/master/screenshot/devilf.gif?v=9" width="600" height="292"/>  
 
-## 引擎框架  
-<img src="https://github.com/ym6745476/devilf/blob/master/screenshot/doc.png?v=9" width="600" height="552"/>  
-
 ## 示例功能  
 * GameManager：游戏管理器  
 * GameScene：游戏场景  
