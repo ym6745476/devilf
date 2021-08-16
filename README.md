@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/devilf-0.0.8-orange" />
+    <img src="https://img.shields.io/badge/devilf-0.0.9-orange" />
     <img src="https://img.shields.io/badge/flutter-2.2.3-green" />
 </p>
 
@@ -27,30 +27,32 @@
 自从有了Flutter，轻松实现了三端跨平台，并且不增加包体积，就能拥有一套Native游戏引擎，为APP游戏化提供了更多可能性。  
 开发这套引擎的同时，也会同时开发引擎对应的游戏示例，将以2D RPG游戏作为示例来完善该引擎。  
 感谢大家关注，也欢迎贡献你的想法和技术。  欢迎加QQ群讨论：687500695！！！
-(Devil Fighter)  
-适用范围：中型游戏，营销活动，小游戏等；   
-主要特性：游戏循环，精灵渲染，战斗系统；     
-游戏支持：精灵动画，摄像机，瓦片地图，碰撞检测，遥杆控制器等。     
+
+## 适用范围：
+中型游戏，营销活动，小游戏。  
+
+## 主要特性：
+游戏循环，精灵渲染，精灵动画，摄像机，瓦片地图，碰撞检测等。   
 
 ## 开发手册  
 https://ymbok.com/book/devilf.html  
 
 ## 在线体验    
-https://ymbok.com/download/devilf.html  
+https://ymbok.com/download/slayer.html  
 
-## 安装框架  
+## 安装引擎  
 ```yaml
 dependencies:
-  devilf: ^0.0.8
+  devilf: ^0.0.9
 ```
 
-### 示例演示  
-<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/devilf.gif?v=7" width="600" height="292"/>  
+## 示例演示  
+<img src="https://github.com/ym6745476/devilf/blob/master/screenshot/devilf.gif?v=9" width="600" height="292"/>  
 
-# 引擎框架  
-<img src="https://raw.githubusercontent.com/ym6745476/devilf/master/screenshot/doc_1.png?v=7" width="600" height="552"/>  
+## 引擎框架  
+<img src="https://github.com/ym6745476/devilf/blob/master/screenshot/doc.png?v=9" width="600" height="552"/>  
 
-# 示例功能  
+## 示例功能  
 * GameManager：游戏管理器  
 * GameScene：游戏场景  
 * PlayerSprite：玩家精灵  
@@ -58,33 +60,43 @@ dependencies:
 * EffectSprite：特效精灵  
 * MapSprite：地图精灵  
 
-# 游戏组件  
-* AssetsLoading：游戏资源加载  
-* GameScene：游戏场景（游戏界面）  
-* UI Widget：Flutter控件（游戏界面的控件）  
-* GameWidget：游戏主控件（管理游戏精灵）  
-* GameLoop：游戏循环（更新和渲染精灵）   
+## 核心组件    
+* GameScene：游戏场景  
+* GameWidget：游戏控件  
+* GameRenderBox：渲染控件  
+* GameLoop：游戏循环  
 * Sprite：精灵类  
+* Camera：摄像机    
+* Audio：音效    
+
+## 精灵渲染    
 * TextSprite：文本精灵  
 * ImageSprite：图片精灵  
 * AnimationSprite：动画精灵  
 * ProgressSprite：进度精灵  
-* TiledSprite：瓦片精灵  
-* Joystick：遥杆控件  
-* Camera：摄像机    
-* AStar：A*最佳路径算法   
+* TileMapSprite：瓦片精灵  
 
-# 界面组件   
+## 游戏控件   
+* Joystick：遥杆控件  
 * Button：按钮控件   
 
-# 同款Flutter APP开发框架（Http请求，各类UI组件全搞定）
-https://github.com/ym6745476/ym_flutter_widget  
+## 游戏功能   
+* 资源加载  
+* 碰撞检测  
+* 坐标转换  
+* A*寻路算法  
 
-## [0.0.8] - 2021/08/15.  
-* 优化[示例] 修复BUG    
+## [0.0.9] - 2021/08/16.   
+* 优化[示例] 修复BUG  
 * 新增[示例] 数据配置文件  
+* 优化[示例] 地图移动范围限制    
 * 新增[示例] 怪物蛇，假人，两把武器素材  
-* 新增[示例] 玩家和怪物动作和战斗音效        
+* 新增[示例] 玩家和怪物动作和战斗音效  
+
+## [0.0.8] - 2021/08/15.   
+* 优化[示例] 修复BUG  
+* 优化[核心] 代码逻辑优化  
+* 新增[核心] 音效类       
 
 ## [0.0.7] - 2021/08/10.  
 * 优化[示例] 自动战斗逻辑优化   
