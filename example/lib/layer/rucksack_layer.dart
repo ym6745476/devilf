@@ -47,9 +47,11 @@ class _RucksackLayerState extends State<RucksackLayer> {
             margin: EdgeInsets.only(top: 40),
             child: DFButton(
               /// text: "关闭",
-              image: "assets/images/ui/btn_close_02.png",
+              image: "assets/images/ui/btn_close_01.png",
               size: Size(36, 36),
-              onPressed: (button) {},
+              onPressed: (button) {
+                Navigator.pop(context);
+              },
             ),
           ),
         ],
