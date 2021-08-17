@@ -1,8 +1,10 @@
 import 'package:devilf_engine/game/df_animation.dart';
+import 'package:devilf_engine/util/df_ui_util.dart';
 import 'package:devilf_engine/util/df_util.dart';
 import 'package:devilf_engine/widget/df_button.dart';
 import 'package:devilf_engine/widget/df_joystick.dart';
 import 'package:example/data/effect_data.dart';
+import 'package:example/layer/rucksack_layer.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -227,6 +229,36 @@ class _ControlLayerState extends State<ControlLayer> {
                 child: _autoFightButton!,
               )
             : Container(),
+
+        /// 菜单
+        Positioned(
+          bottom: MediaQuery.of(context).padding.bottom + 16,
+          right: 300,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              DFButton(
+                /// text: "角色",
+                image: "assets/images/ui/menu_01.png",
+                pressedImage: "assets/images/ui/menu_01_pressed.png",
+                size: Size(50, 50),
+                onPressed: (button) {
+                  DFUiUtil.showLayer(context, RucksackLayer());
+                },
+              ),
+              DFButton(
+                /// text: "背包",
+                image: "assets/images/ui/menu_02.png",
+                pressedImage: "assets/images/ui/menu_02_pressed.png",
+                size: Size(50, 50),
+                onPressed: (button) {
+                  DFUiUtil.showLayer(context, RucksackLayer());
+                },
+              ),
+            ],
+          ),
+        ),
       ]),
     );
   }
