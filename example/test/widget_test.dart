@@ -5,4 +5,5 @@ void main() {
   List<int> data = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0];
   List<List<int>> newData = DFUtil.to2dList(data, 5, 1);
   print(newData.toString());
+
 }

@@ -33,6 +33,9 @@ class EffectInfo {
   /// 伤害范围
   double damageRange;
 
+  /// 销毁时间
+  int destroyTime;
+
   /// 释放延迟
   int delayTime;
 
@@ -50,6 +53,7 @@ class EffectInfo {
       this.frameSpeed = 5,
       this.vision = 0,
       this.delayTime = 0,
+      this.destroyTime = 400,
       this.damageRange = 0});
 }
 

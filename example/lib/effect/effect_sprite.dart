@@ -236,7 +236,14 @@ class EffectSprite extends DFSprite {
   /// 碰撞矩形
   @override
   DFShape getCollisionShape() {
-    return DFCircle(DFPosition(this.position.x, this.position.y), this.size.width / 4);
+    if(effect.type == EffectType.ATTACK){
+      double x = this.position.x + this.effect.damageRange * cos(this.radians);
+      double y = this.position.y + this.effect.damageRange * sin(this.radians);
+      return DFCircle(DFPosition(x, y), this.size.width / 4);
+    }else{
+      return DFCircle(DFPosition(this.position.x, this.position.y), this.size.width / 4);
+    }
+
   }
 
   /// 更新
@@ -252,14 +259,14 @@ class EffectSprite extends DFSprite {
       this.position.y = this.position.y + this.effect.moveSpeed * sin(this.radians);
       //print("move:" + this.position.toString());
 
-      if (DateTime.now().millisecondsSinceEpoch - this.castingClock > 400) {
+      if (DateTime.now().millisecondsSinceEpoch - this.castingClock > effect.destroyTime) {
         this.play(DFAction.EXPLODE);
       } else {
         /// 判断碰撞
         this.checkTrackCollision();
       }
     } else if (textureSprite!.currentAnimation.contains(DFAction.CASTING)) {
-      if (DateTime.now().millisecondsSinceEpoch - this.castingClock > 400) {
+      if (DateTime.now().millisecondsSinceEpoch - this.castingClock > effect.destroyTime) {
         if (this.targetSprite != null) {
           this.position = this.targetSprite!.position;
         }
@@ -276,7 +283,7 @@ class EffectSprite extends DFSprite {
     canvas.save();
 
     /// 精灵碰撞区域
-    /*if (DFConfig.debug) {
+    ///if (DFConfig.debug) {
       var paint = new Paint()..color = Color(0x60bb505d);
       DFShape collisionShape = getCollisionShape();
       if (collisionShape is DFCircle) {
@@ -284,7 +291,7 @@ class EffectSprite extends DFSprite {
       } else if (collisionShape is DFRect) {
         canvas.drawRect(collisionShape.toRect(), paint);
       }
-    }*/
+    ///}
 
     /// 移动画布
     canvas.translate(position.x, position.y);

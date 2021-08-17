@@ -465,7 +465,11 @@ class PlayerSprite extends DFSprite {
   Future<void> _addEffect(EffectInfo effect) async {
     await Future.delayed(Duration(milliseconds: effect.delayTime), () async {
       EffectSprite effectSprite = EffectSprite(effect);
-      effectSprite.position = DFPosition(this.position.x, this.position.y - DFConfig.effectOffset);
+      if(effect.type == EffectType.ATTACK){
+        effectSprite.position = DFPosition(this.position.x, this.position.y);
+      }else{
+        effectSprite.position = DFPosition(this.position.x, this.position.y - DFConfig.effectOffset);
+      }
       effectSprite.size = DFSize(effect.damageRange, effect.damageRange);
       effectSprite.direction = this.direction;
       effectSprite.radians = this.radians;
