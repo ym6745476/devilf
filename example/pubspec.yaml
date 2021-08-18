@@ -55,7 +55,7 @@ flutter:
     - assets/audio/map/
     - assets/audio/monster/spider/
     - assets/audio/monster/snake/
-    - assets/images/player/
+    - assets/images/clothes/
     - assets/images/monster/
     - assets/images/weapon/
     - assets/images/ui/

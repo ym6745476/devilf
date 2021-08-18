@@ -1,13 +1,14 @@
 import 'package:devilf_engine/core/df_living.dart';
 import 'package:example/effect/effect_info.dart';
+import 'package:example/model/item_info.dart';
 
 /// 怪物类
 class MonsterInfo extends DFLiving {
   /// 衣服
-  String? clothes;
+  ItemInfo? clothes;
 
   /// 武器
-  String? weapon;
+  ItemInfo? weapon;
 
   /// 生命值
   double hp;

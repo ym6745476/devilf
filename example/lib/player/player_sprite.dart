@@ -17,6 +17,7 @@ import 'package:devilf_engine/util/df_audio.dart';
 import 'package:devilf_engine/util/df_util.dart';
 import 'package:example/effect/effect_info.dart';
 import 'package:example/effect/effect_sprite.dart';
+import 'package:example/model/item_info.dart';
 import 'package:example/monster/monster_sprite.dart';
 import 'package:example/player/player_info.dart';
 import 'package:flutter/cupertino.dart';
@@ -110,14 +111,14 @@ class PlayerSprite extends DFSprite {
       this.selectSprite?.play(DFAction.IDLE + DFDirection.UP, stepTime: 100, loop: true);
 
       /// 玩家精灵动画
-      this.clothesSprite = await DFAnimationSprite.load(this.player.clothes!);
+      this.clothesSprite = await DFAnimationSprite.load(this.player.clothes!.texture!);
       this.clothesSprite!.position = DFPosition(size.width / 2, size.height / 2 - 10);
 
       /// 调用add产生层级关系进行坐标转换
       addChild(this.clothesSprite!);
 
       if (this.player.weapon != null) {
-        this.weaponSprite = await DFAnimationSprite.load(this.player.weapon!);
+        this.weaponSprite = await DFAnimationSprite.load(this.player.weapon!.texture!);
 
         /// 绑定动画同步
         this.weaponSprite!.position =
@@ -461,6 +462,36 @@ class PlayerSprite extends DFSprite {
     }
   }
 
+  /// 更换衣服
+  Future<void> changeClothes(ItemInfo clothes) async {
+    this.initOk = false;
+    if(this.clothesSprite != null){
+      this.removeChild(this.clothesSprite!);
+    }
+    this.player.clothes = clothes;
+    print("更换衣服:" + this.player.clothes!.texture!);
+    this.clothesSprite = await DFAnimationSprite.load(this.player.clothes!.texture!);
+    this.clothesSprite!.position = DFPosition(size.width / 2, size.height / 2 - 10);
+    addChild(this.clothesSprite!);
+    if(this.weaponSprite != null){
+      this.clothesSprite?.bindChild(this.weaponSprite!);
+    }
+    this.play(this.action, direction: this.direction, radians: this.radians);
+    this.initOk = true;
+  }
+
+  /// 更换武器
+  Future<void> changeWeapon(ItemInfo weapon) async {
+    if(this.weaponSprite != null){
+      this.clothesSprite?.removeBindChild(this.weaponSprite!);
+    }
+    this.player.weapon = weapon;
+    this.weaponSprite = await DFAnimationSprite.load(this.player.weapon!.texture!);
+    this.weaponSprite!.position =
+        DFPosition(this.clothesSprite!.size.width / 2, this.clothesSprite!.size.height / 2);
+    this.clothesSprite?.bindChild(this.weaponSprite!);
+  }
+
   /// 添加特效
   Future<void> _addEffect(EffectInfo effect) async {
     await Future.delayed(Duration(milliseconds: effect.delayTime), () async {
@@ -697,6 +728,9 @@ class PlayerSprite extends DFSprite {
         this.reborn();
       }
     }
+
+    /// 必须在最后调用
+    super.update(dt);
   }
 
   /// 渲染

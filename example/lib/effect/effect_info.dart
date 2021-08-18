@@ -6,11 +6,11 @@ class EffectInfo {
   /// 特效名字
   String name;
 
-  /// 纹理
-  String? texture;
-
   /// 图标
   String? icon;
+
+  /// 纹理
+  String? texture;
 
   /// 音效
   String? audio;
@@ -44,8 +44,9 @@ class EffectInfo {
 
   /// 创建特效
   EffectInfo(this.id, this.name, this.type,
-      {this.texture,
+      {
       this.icon,
+      this.texture,
       this.audio,
       this.at = 1,
       this.mt = 1,

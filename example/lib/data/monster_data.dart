@@ -1,12 +1,13 @@
 import 'package:example/data/player_data.dart';
+import 'package:example/model/item_info.dart';
 import 'package:example/monster/monster_info.dart';
 
 import 'effect_data.dart';
+import 'item_data.dart';
 
 /// 怪物数据
 class MonsterData {
   static String clothesPath = "assets/images/monster/";
-  static String weaponPath = "assets/images/weapon/";
 
   /// 默认前缀 assets/audio/
   static String audioPath = "monster/";
@@ -16,7 +17,7 @@ class MonsterData {
     "1001": MonsterInfo(
       1001,
       "蜘蛛",
-      clothes: "spider",
+      clothes: ItemInfo(1,"",texture: getClothes("spider")),
       moveSpeed: 0.4,
       maxAt: 40,
       attackAudio: ["spider/attack_1", "spider/attack_2", "spider/attack_3"],
@@ -27,7 +28,7 @@ class MonsterData {
     "1002": MonsterInfo(
       1002,
       "蛇",
-      clothes: "snake",
+      clothes: ItemInfo(1,"",texture: getClothes("snake")),
       moveSpeed: 0.4,
       maxAt: 40,
       attackAudio: ["snake/attack_1", "snake/attack_2", "snake/attack_3"],
@@ -35,11 +36,11 @@ class MonsterData {
       deathAudio: ["snake/death_1", "snake/death_2", "snake/death_3"],
       effects: [EffectData.items["4001"]!],
     ),
-    "3001": MonsterInfo(
-      3001,
+    "2001": MonsterInfo(
+      2001,
       "妖精",
-      clothes: "woman_01",
-      weapon: "2001",
+      clothes: ItemData.newItemInfo("1200"),
+      weapon: ItemData.newItemInfo("2001"),
       moveSpeed: 1.2,
       maxAt: 40,
       runAudio: ["player/run_1", "player/run_2", "player/run_3", "player/run_4", "player/run_5", "player/run_6"],
@@ -56,8 +57,8 @@ class MonsterData {
     return MonsterInfo(
       template.id,
       template.name,
-      clothes: getClothes(template.clothes!),
-      weapon: template.weapon != null ? getWeapon(template.weapon!) : template.weapon,
+      clothes: template.clothes,
+      weapon: template.weapon,
       moveSpeed: template.moveSpeed,
       maxAt: template.maxAt,
       runAudio: List.generate(template.runAudio.length, (index) => getAudio(template.runAudio[index])),
@@ -69,14 +70,7 @@ class MonsterData {
   }
 
   static String getClothes(String name) {
-    if (name.contains("man_") || name.contains("woman_")) {
-      return PlayerData.clothesPath + name + ".json";
-    }
     return clothesPath + name + ".json";
-  }
-
-  static String getWeapon(String name) {
-    return weaponPath + name + ".json";
   }
 
   static String getAudio(String name) {

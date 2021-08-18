@@ -7,6 +7,7 @@ import 'package:devilf_engine/sprite/df_image_sprite.dart';
 import 'package:devilf_engine/sprite/df_text_sprite.dart';
 import 'package:devilf_engine/util/df_audio.dart';
 import 'package:example/data/effect_data.dart';
+import 'package:example/data/item_data.dart';
 import 'package:example/data/monster_data.dart';
 import 'package:example/data/player_data.dart';
 import 'package:example/layer/control_layer.dart';
@@ -87,8 +88,8 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
         /// 创建玩家精灵
         PlayerInfo player = PlayerData.newPlayer("1001");
-        player.clothes = PlayerData.getClothes("man_01");
-        player.weapon = PlayerData.getWeapon("1001");
+        player.clothes = ItemData.newItemInfo("1100");
+        player.weapon = ItemData.newItemInfo("1001");
         player.maxAt = 120;
         player.moveSpeed = 2;
         player.df = 6;
@@ -127,9 +128,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         }
 
         /// 1级女妖精
-        MonsterInfo monster = MonsterData.newMonster("3001");
-        /// monster.clothes = PlayerData.getClothes("woman_01");
-        /// monster.weapon = PlayerData.getWeapon("2001");
+        MonsterInfo monster = MonsterData.newMonster("2001");
         /// monster.effects = [EffectData.items["2001"]!];
         MonsterSprite monsterSprite = MonsterSprite(monster);
         int dirX = Random().nextBool() ? 1 : -1;

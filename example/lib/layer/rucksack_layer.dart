@@ -1,4 +1,5 @@
 import 'package:devilf_engine/widget/df_button.dart';
+import 'package:example/data/item_data.dart';
 import 'package:example/model/item_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -27,17 +28,10 @@ class _RucksackLayerState extends State<RucksackLayer> {
     this._width = GameManager.visibleWidth * 0.70;
     this._scale = this._width / 1031;
 
-    _items.add(ItemInfo(1000, "木剑",icon:"assets/images/icon/item/1000.png"));
-    _items.add(ItemInfo(1001, "修罗战斧",icon:"assets/images/icon/item/1001.png"));
-    _items.add(ItemInfo(2001, "偃月刀",icon:"assets/images/icon/item/2001.png"));
-    _items.add(ItemInfo(3001, "降魔剑",icon:"assets/images/icon/item/3001.png"));
+    ItemData.items.forEach((key, value) {
+      _items.add(ItemData.newItemInfo(key));
+    });
 
-    for(int i = 20;i<100;i++){
-      _items.add(ItemInfo(1000, "木剑",icon:"assets/images/icon/item/1000.png"));
-      _items.add(ItemInfo(1001, "修罗战斧",icon:"assets/images/icon/item/1001.png"));
-      _items.add(ItemInfo(2001, "偃月刀",icon:"assets/images/icon/item/2001.png"));
-      _items.add(ItemInfo(3001, "降魔剑",icon:"assets/images/icon/item/3001.png"));
-    }
   }
 
   List<Widget> _getItemList() {
@@ -56,9 +50,22 @@ class _RucksackLayerState extends State<RucksackLayer> {
         child: Container(
           width: itemWidth,
           height: itemWidth,
-          child: Image.asset(
-            item.icon!,
-            fit: BoxFit.fill,
+          padding: EdgeInsets.all(5),
+          child: GestureDetector(
+            child: Image.asset(
+              item.icon!,
+              fit: BoxFit.fill,
+            ),
+            onTap: (){
+              print("点击：" + item.name);
+              if(item.type == ItemType.CLOTHES){
+                GameManager.playerSprite!.changeClothes(item);
+              }else if(item.type == ItemType.WEAPON){
+                GameManager.playerSprite!.changeWeapon(item);
+              }else{
+
+              }
+            },
           ),
         ),
       ));

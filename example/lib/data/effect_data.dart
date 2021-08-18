@@ -10,11 +10,11 @@ class EffectData {
 
   static Map<String, EffectInfo> items = {
     "1001": EffectInfo(1001, "普通攻击", EffectType.ATTACK,
-        icon: icon(1001), audio: audio(1001), frameSpeed: 10, vision: 40, damageRange: 60, delayTime: 10),
+        icon: getIcon(1001), audio: getAudio(1001), frameSpeed: 10, vision: 40, damageRange: 60, delayTime: 10),
     "1002": EffectInfo(1002, "初级剑法", EffectType.ATTACK,
-        texture: texture(1002),
-        icon: icon(1002),
-        audio: audio(1002),
+        texture: getTexture(1002),
+        icon: getIcon(1002),
+        audio: getAudio(1002),
         at: 1.2,
         mt: 1.2,
         frameSpeed: 10,
@@ -25,9 +25,9 @@ class EffectData {
       2001,
       "火球术",
       EffectType.TRACK,
-      texture: texture(2001),
-      icon: icon(2001),
-      audio: audio(2001),
+      texture: getTexture(2001),
+      icon: getIcon(2001),
+      audio: getAudio(2001),
       at: 1.2,
       mt: 1.2,
       frameSpeed: 10,
@@ -41,9 +41,9 @@ class EffectData {
       3001,
       "火符术",
       EffectType.TRACK,
-      texture: texture(3001),
-      icon: icon(3001),
-      audio: audio(3001),
+      texture: getTexture(3001),
+      icon: getIcon(3001),
+      audio: getAudio(3001),
       at: 1.2,
       mt: 1.2,
       frameSpeed: 10,
@@ -57,9 +57,9 @@ class EffectData {
       3002,
       "施毒术",
       EffectType.CASTING,
-      texture: texture(3002),
-      icon: icon(3002),
-      audio: audio(3002),
+      texture: getTexture(3002),
+      icon: getIcon(3002),
+      audio: getAudio(3002),
       at: 1.2,
       mt: 1.2,
       frameSpeed: 10,
@@ -70,18 +70,18 @@ class EffectData {
       destroyTime: 400,
     ),
     "4001": EffectInfo(4001, "怪物攻击", EffectType.ATTACK,
-        audio: audio(4001), frameSpeed: 10, vision: 40, damageRange: 80, delayTime: 10),
+        audio: getAudio(4001), frameSpeed: 10, vision: 40, damageRange: 80, delayTime: 10),
   };
 
-  static String icon(int id) {
+  static String getIcon(int id) {
     return iconPath + id.toString() + ".png";
   }
 
-  static String texture(int id) {
+  static String getTexture(int id) {
     return texturePath + id.toString() + ".json";
   }
 
-  static String audio(int id) {
+  static String getAudio(int id) {
     return audioPath + id.toString() + ".mp3";
   }
 }

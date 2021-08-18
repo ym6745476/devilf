@@ -113,14 +113,14 @@ class MonsterSprite extends DFSprite {
         addChild(this.selectSprite!);
 
         /// 玩家精灵动画
-        this.clothesSprite = await DFAnimationSprite.load(this.monster.clothes!);
+        this.clothesSprite = await DFAnimationSprite.load(this.monster.clothes!.texture!);
         this.clothesSprite!.position = DFPosition(size.width / 2, size.height / 2 - 10);
 
         /// 调用add产生层级关系进行坐标转换
         addChild(this.clothesSprite!);
 
         if (this.monster.weapon != null) {
-          this.weaponSprite = await DFAnimationSprite.load(this.monster.weapon!);
+          this.weaponSprite = await DFAnimationSprite.load(this.monster.weapon!.texture!);
 
           /// 绑定动画同步
           this.weaponSprite!.position =

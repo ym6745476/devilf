@@ -1186,9 +1186,9 @@
     },
     "metadata": {
         "format": 2,
-        "realTextureFileName": "woman_01.png",
+        "realTextureFileName": "1200.png",
         "size": "{2048,1024}",
         "smartupdate": "$TexturePacker:SmartUpdate:d13b9eb50a8fe3115ebf62535acad111:f6a75da5bbab4449b42a97d1e9ad744f:36d39236967bdd0e4d66427329150c9e$",
-        "textureFileName": "woman_01.png"
+        "textureFileName": "1200.png"
     }
 }
