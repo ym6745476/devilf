@@ -54,7 +54,8 @@ class _ControlLayerState extends State<ControlLayer> {
       width: GameManager.visibleWidth,
       height: GameManager.visibleHeight,
       child: Stack(fit: StackFit.expand, children: <Widget>[
-        /// 摇杆
+
+       /* /// 摇杆
         Positioned(
           bottom: MediaQuery.of(context).padding.bottom,
           left: 0,
@@ -228,7 +229,7 @@ class _ControlLayerState extends State<ControlLayer> {
                 right: 15,
                 child: _autoFightButton!,
               )
-            : Container(),
+            : Container(),*/
 
         /// 菜单
         Positioned(

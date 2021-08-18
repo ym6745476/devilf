@@ -173,7 +173,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
           }
         });
 
-        /// 将地图精灵添加到主界面
+        /*/// 将地图精灵添加到主界面
         this._gameWidget!.addChild(mapSprite);
 
         /// 将玩家精灵添加到主界面
@@ -189,7 +189,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         this._gameWidget!.addChild(fpsSprite);
 
         /// 将坐标精灵添加到主界面
-        this._gameWidget!.addChild(positionSprite);
+        this._gameWidget!.addChild(positionSprite);*/
 
         /// 设置摄像机跟随
         camera.lookAt(_playerSprite!);
