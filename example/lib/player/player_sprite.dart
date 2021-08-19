@@ -15,6 +15,7 @@ import 'package:devilf_engine/sprite/df_text_sprite.dart';
 import 'package:devilf_engine/util/df_astar.dart';
 import 'package:devilf_engine/util/df_audio.dart';
 import 'package:devilf_engine/util/df_util.dart';
+import 'package:example/data/item_data.dart';
 import 'package:example/effect/effect_info.dart';
 import 'package:example/effect/effect_sprite.dart';
 import 'package:example/model/item_info.dart';
@@ -463,6 +464,19 @@ class PlayerSprite extends DFSprite {
     }
   }
 
+  /// 更换武器
+  Future<void> changeWeapon(ItemInfo weapon) async {
+    if(this.weaponSprite != null){
+      this.clothesSprite?.removeBindChild(this.weaponSprite!);
+    }
+    this.player.weapon = weapon;
+    print("更换武器:" + this.player.weapon!.name);
+    this.weaponSprite = await DFAnimationSprite.load(this.player.weapon!.texture!);
+    this.weaponSprite!.position =
+        DFPosition(this.clothesSprite!.size.width / 2, this.clothesSprite!.size.height / 2);
+    this.clothesSprite?.bindChild(this.weaponSprite!);
+  }
+
   /// 更换衣服
   Future<void> changeClothes(ItemInfo clothes) async {
     this.initOk = false;
@@ -470,7 +484,7 @@ class PlayerSprite extends DFSprite {
       this.removeChild(this.clothesSprite!);
     }
     this.player.clothes = clothes;
-    print("更换衣服:" + this.player.clothes!.texture!);
+    print("更换衣服:" + this.player.clothes!.name);
     this.clothesSprite = await DFAnimationSprite.load(this.player.clothes!.texture!);
     this.clothesSprite!.position = DFPosition(size.width / 2, size.height / 2 - 10);
     addChild(this.clothesSprite!);
@@ -483,17 +497,22 @@ class PlayerSprite extends DFSprite {
     this.initOk = true;
   }
 
-  /// 更换武器
-  Future<void> changeWeapon(ItemInfo weapon) async {
+  /// 卸下衣服
+  Future<void> removeClothes() async {
+    if(this.player.gender == 1){
+      this.changeClothes(ItemData.newItemInfo("1100"));
+    }else{
+      this.changeClothes(ItemData.newItemInfo("1200"));
+    }
+  }
+
+  /// 卸下武器
+  Future<void> removeWeapon() async {
     if(this.weaponSprite != null){
       this.clothesSprite?.removeBindChild(this.weaponSprite!);
     }
-    this.player.weapon = weapon;
-    print("更换武器:" + this.player.weapon!.texture!);
-    this.weaponSprite = await DFAnimationSprite.load(this.player.weapon!.texture!);
-    this.weaponSprite!.position =
-        DFPosition(this.clothesSprite!.size.width / 2, this.clothesSprite!.size.height / 2);
-    this.clothesSprite?.bindChild(this.weaponSprite!);
+    print("卸下武器:" + this.player.weapon!.name);
+    this.player.weapon = null;
   }
 
   /// 添加特效

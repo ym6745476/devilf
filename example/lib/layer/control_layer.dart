@@ -2,6 +2,7 @@ import 'package:devilf_engine/game/df_animation.dart';
 import 'package:devilf_engine/util/df_ui_util.dart';
 import 'package:devilf_engine/util/df_util.dart';
 import 'package:devilf_engine/widget/df_button.dart';
+import 'package:devilf_engine/widget/df_check_button.dart';
 import 'package:devilf_engine/widget/df_joystick.dart';
 import 'package:example/data/effect_data.dart';
 import 'package:example/layer/character_layer.dart';
@@ -25,22 +26,25 @@ class _ControlLayerState extends State<ControlLayer> {
   PlayerSprite? _playerSprite;
 
   /// 自动按钮
-  DFButton? _autoFightButton;
+  DFCheckButton? _autoFightButton;
+
+  /// 自动战斗状态
+  bool _autoFight = false;
 
   @override
   void initState() {
     super.initState();
     _playerSprite = GameManager.playerSprite;
 
-    _autoFightButton = DFButton(
+    _autoFightButton = DFCheckButton(
       /// text: "自动战斗",
+      value: 1,
       image: "assets/images/ui/auto_off.png",
-      pressedImage: "assets/images/ui/auto_on.png",
+      checkedImage: "assets/images/ui/auto_on.png",
       size: Size(40, 40),
-      onPressed: (button) {
-        GameManager.isAutoFight = !GameManager.isAutoFight;
-        button.setSelected(GameManager.isAutoFight);
-        if (GameManager.isAutoFight) {
+      onChanged: (DFCheckButton button, bool checked, int value) {
+        _autoFight = checked;
+        if (checked) {
           _playerSprite?.startAutoFight(DFAction.CASTING, effect: EffectData.items["2001"]!);
         } else {
           _playerSprite?.cancelAutoFight(action: DFAction.IDLE);
@@ -55,7 +59,6 @@ class _ControlLayerState extends State<ControlLayer> {
       width: GameManager.visibleWidth,
       height: GameManager.visibleHeight,
       child: Stack(fit: StackFit.expand, children: <Widget>[
-
         /// 摇杆
         Positioned(
           bottom: MediaQuery.of(context).padding.bottom,
@@ -70,8 +73,7 @@ class _ControlLayerState extends State<ControlLayer> {
               print("JoyStick Direction:" + direction);
               radians = DFUtil.getRadians(direction);
               _playerSprite?.cancelAutoFight();
-              GameManager.isAutoFight = false;
-              _autoFightButton!.setSelected(false);
+              _autoFightButton!.setChecked(false);
               _playerSprite?.play(DFAction.RUN, direction: direction, radians: radians);
             },
             onCancel: (direction) {
@@ -261,7 +263,6 @@ class _ControlLayerState extends State<ControlLayer> {
                   },
                 ),
               ),
-
             ],
           ),
         ),

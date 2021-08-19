@@ -58,6 +58,9 @@ flutter:
     - assets/images/clothes/
     - assets/images/monster/
     - assets/images/weapon/
+    - assets/images/show/
+    - assets/images/show/clothes/
+    - assets/images/show/weapon/
     - assets/images/ui/
     - assets/images/effect/
     - assets/images/map/

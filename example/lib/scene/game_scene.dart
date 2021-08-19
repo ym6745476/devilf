@@ -193,6 +193,11 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 设置摄像机跟随
         camera.lookAt(_playerSprite!);
 
+        /// 背包物品
+        ItemData.items.forEach((key, value) {
+          GameManager.items.add(ItemData.newItemInfo(key));
+        });
+
         /// 保存到管理器里
         GameManager.gameWidget = this._gameWidget!;
 

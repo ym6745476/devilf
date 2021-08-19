@@ -12,16 +12,29 @@ class ItemInfo {
   /// 图标
   String? icon;
 
+  /// 预览
+  String? show;
+
   /// 物品类型
   ItemType type;
 
-  /// 创建特效
-  ItemInfo(this.id, this.name, {this.icon,this.texture,this.type = ItemType.NONE});
+  /// 创建物品
+  ItemInfo(this.id, this.name, {this.icon,this.show,this.texture,this.type = ItemType.NONE});
 }
 
 /// 物品类型
 enum ItemType{
   NONE,
-  CLOTHES,
   WEAPON,
+  CLOTHES,
+  HELMET,
+  NECKLACE,
+  BRACELET,
+  RING,
+  BELT,
+  BOOTS,
+  MEDAL,
+  GEMSTONE,
+  SKILL,
+  PET,
 }

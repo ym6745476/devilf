@@ -1,6 +1,7 @@
 import 'package:devilf_engine/game/df_game_widget.dart';
 import 'package:example/player/player_sprite.dart';
 import 'map/map_sprite.dart';
+import 'model/item_info.dart';
 import 'monster/monster_sprite.dart';
 
 /// 游戏管理器
@@ -23,7 +24,7 @@ class GameManager {
   /// 怪物精灵
   static List<MonsterSprite>? monsterSprites;
 
-  /// 自动战斗是否开启
-  static bool isAutoFight = false;
+  /// 背包物品
+  static List<ItemInfo> items = [];
 
 }
