@@ -89,7 +89,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 创建玩家精灵
         PlayerInfo player = PlayerData.newPlayer("1001");
         player.clothes = ItemData.newItemInfo("1100");
-        player.weapon = ItemData.newItemInfo("1001");
+        player.weapon = ItemData.newItemInfo("2001");
         player.maxAt = 120;
         player.moveSpeed = 2;
         player.df = 6;

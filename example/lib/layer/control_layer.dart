@@ -4,6 +4,7 @@ import 'package:devilf_engine/util/df_util.dart';
 import 'package:devilf_engine/widget/df_button.dart';
 import 'package:devilf_engine/widget/df_joystick.dart';
 import 'package:example/data/effect_data.dart';
+import 'package:example/layer/character_layer.dart';
 import 'package:example/layer/rucksack_layer.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/material.dart';
@@ -245,18 +246,22 @@ class _ControlLayerState extends State<ControlLayer> {
                 pressedImage: "assets/images/ui/menu_01_pressed.png",
                 size: Size(50, 50),
                 onPressed: (button) {
-                  DFUiUtil.showLayer(context, RucksackLayer());
+                  DFUiUtil.showLayer(context, CharacterLayer());
                 },
               ),
-              DFButton(
-                /// text: "背包",
-                image: "assets/images/ui/menu_02.png",
-                pressedImage: "assets/images/ui/menu_02_pressed.png",
-                size: Size(50, 50),
-                onPressed: (button) {
-                  DFUiUtil.showLayer(context, RucksackLayer());
-                },
+              Container(
+                margin: EdgeInsets.only(left: 10),
+                child: DFButton(
+                  /// text: "背包",
+                  image: "assets/images/ui/menu_02.png",
+                  pressedImage: "assets/images/ui/menu_02_pressed.png",
+                  size: Size(50, 50),
+                  onPressed: (button) {
+                    DFUiUtil.showLayer(context, RucksackLayer());
+                  },
+                ),
               ),
+
             ],
           ),
         ),

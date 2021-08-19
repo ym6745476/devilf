@@ -117,6 +117,7 @@ class PlayerSprite extends DFSprite {
       /// 调用add产生层级关系进行坐标转换
       addChild(this.clothesSprite!);
 
+      /// 武器
       if (this.player.weapon != null) {
         this.weaponSprite = await DFAnimationSprite.load(this.player.weapon!.texture!);
 
@@ -474,6 +475,8 @@ class PlayerSprite extends DFSprite {
     this.clothesSprite!.position = DFPosition(size.width / 2, size.height / 2 - 10);
     addChild(this.clothesSprite!);
     if(this.weaponSprite != null){
+      this.weaponSprite!.position =
+          DFPosition(this.clothesSprite!.size.width / 2, this.clothesSprite!.size.height / 2);
       this.clothesSprite?.bindChild(this.weaponSprite!);
     }
     this.play(this.action, direction: this.direction, radians: this.radians);
@@ -486,6 +489,7 @@ class PlayerSprite extends DFSprite {
       this.clothesSprite?.removeBindChild(this.weaponSprite!);
     }
     this.player.weapon = weapon;
+    print("更换武器:" + this.player.weapon!.texture!);
     this.weaponSprite = await DFAnimationSprite.load(this.player.weapon!.texture!);
     this.weaponSprite!.position =
         DFPosition(this.clothesSprite!.size.width / 2, this.clothesSprite!.size.height / 2);
