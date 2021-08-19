@@ -47,7 +47,7 @@ dependencies:
 ```
 
 ## 示例演示  
-<img src="https://github.com/ym6745476/devilf/blob/master/screenshot/devilf.gif?v=9" width="600" height="292"/>  
+<img src="https://github.com/ym6745476/devilf/blob/master/screenshot/slayer.gif?v=9" width="600" height="292"/>  
 
 ## 示例功能  
 * GameManager：游戏管理器  
