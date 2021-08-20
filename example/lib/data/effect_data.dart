@@ -8,6 +8,7 @@ class EffectData {
   /// 默认前缀 assets/audio/
   static String audioPath = "effect/";
 
+  /// 数据
   static Map<String, EffectInfo> items = {
     "1001": EffectInfo(1001, "普通攻击", EffectType.ATTACK,
         icon: getIcon(1001), audio: getAudio(1001), frameSpeed: 10, vision: 40, damageRange: 60, delayTime: 10),

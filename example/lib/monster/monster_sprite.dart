@@ -464,13 +464,23 @@ class MonsterSprite extends DFSprite {
     /// 随机伤害  0.0~1.0
     var random = new Random();
     if (ownerSprite is PlayerSprite) {
-      double newMinAt = ownerSprite.player.minAt * random.nextDouble();
-      double newMaxAt = ownerSprite.player.maxAt * random.nextDouble();
-      double damageAt = newMinAt > newMaxAt ? newMinAt * effect.at : newMaxAt * effect.at - monster.df;
+      int newMinAt = ownerSprite.player.minAt;
+      int newMaxAt = (ownerSprite.player.maxAt * random.nextDouble()).round();
+      int at = newMinAt > newMaxAt ? newMinAt : newMaxAt ;
 
-      double newMinMt = ownerSprite.player.minMt * random.nextDouble();
-      double newMaxMt = ownerSprite.player.maxMt * random.nextDouble();
-      double damageMt = newMinMt > newMaxMt ? newMinMt * effect.at : newMaxMt * effect.mt - monster.mf;
+      int newMinDf = ownerSprite.player.minDf;
+      int newMaxDf = (ownerSprite.player.maxDf * random.nextDouble()).round();
+      int df = newMinDf > newMaxDf ? newMinDf : newMaxAt ;
+      double damageAt = at * effect.at - df;
+
+      int newMinMt = ownerSprite.player.minMt;
+      int newMaxMt = (ownerSprite.player.maxMt * random.nextDouble()).round();
+      int mt = newMinMt > newMaxMt ? newMinMt : newMaxMt ;
+
+      int newMinMf = ownerSprite.player.minMf;
+      int newMaxMf = (ownerSprite.player.maxMf * random.nextDouble()).round();
+      int mf = newMinMf > newMaxMf ? newMinMf : newMaxMf ;
+      double damageMt = mt * effect.mt - mf;
 
       double totalDamage = damageAt + damageMt;
       if (totalDamage <= 0) {

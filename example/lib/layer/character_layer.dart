@@ -1,12 +1,15 @@
 import 'package:devilf_engine/core/df_position.dart';
+import 'package:devilf_engine/util/df_ui_util.dart';
 import 'package:devilf_engine/widget/df_button.dart';
 import 'package:example/data/effect_data.dart';
 import 'package:example/data/item_data.dart';
+import 'package:example/data/job_data.dart';
 import 'package:example/model/item_info.dart';
 import 'package:example/player/player_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import '../game_manager.dart';
+import 'item_layer.dart';
 
 /// 人物界面
 class CharacterLayer extends StatefulWidget {
@@ -39,22 +42,22 @@ class _CharacterLayerState extends State<CharacterLayer> {
 
     _playerInfo = GameManager.playerSprite!.player;
 
-    _items.add(ItemInfo(1, "武器", icon: "", type: ItemType.WEAPON));
-    _items.add(ItemInfo(2, "衣服", icon: "", type: ItemType.CLOTHES));
-    _items.add(ItemInfo(3, "手镯", icon: "", type: ItemType.BRACELET));
-    _items.add(ItemInfo(4, "戒子", icon: "", type: ItemType.RING));
-    _items.add(ItemInfo(5, "腰带", icon: "", type: ItemType.BELT));
+    _items.add(ItemInfo(1, type: ItemType.WEAPON));
+    _items.add(ItemInfo(2, type: ItemType.CLOTHES));
+    _items.add(ItemInfo(3, type: ItemType.BRACELET));
+    _items.add(ItemInfo(4, type: ItemType.RING));
+    _items.add(ItemInfo(5, type: ItemType.BELT));
 
-    _items.add(ItemInfo(6, "头盔", icon: "", type: ItemType.HELMET));
-    _items.add(ItemInfo(7, "项链", icon: "", type: ItemType.NECKLACE));
-    _items.add(ItemInfo(8, "手镯", icon: "", type: ItemType.BRACELET));
-    _items.add(ItemInfo(9, "戒子", icon: "", type: ItemType.RING));
-    _items.add(ItemInfo(10, "靴子", icon: "", type: ItemType.BOOTS));
+    _items.add(ItemInfo(6, type: ItemType.HELMET));
+    _items.add(ItemInfo(7, type: ItemType.NECKLACE));
+    _items.add(ItemInfo(8, type: ItemType.BRACELET));
+    _items.add(ItemInfo(9, type: ItemType.RING));
+    _items.add(ItemInfo(10, type: ItemType.BOOTS));
 
-    _items.add(ItemInfo(11, "勋章", icon: "", type: ItemType.MEDAL));
-    _items.add(ItemInfo(12, "宝石", icon: "", type: ItemType.GEMSTONE));
-    _items.add(ItemInfo(13, "特技", icon: "", type: ItemType.SKILL));
-    _items.add(ItemInfo(14, "宠物", icon: "", type: ItemType.PET));
+    _items.add(ItemInfo(11, type: ItemType.MEDAL));
+    _items.add(ItemInfo(12, type: ItemType.GEMSTONE));
+    _items.add(ItemInfo(13, type: ItemType.SKILL));
+    _items.add(ItemInfo(14, type: ItemType.PET));
 
     double bottom = this._containerHeight - 65;
 
@@ -77,7 +80,7 @@ class _CharacterLayerState extends State<CharacterLayer> {
     _itemsPosition.add(DFPosition(right - 50, bottom));
   }
 
-  Widget _getCharacter() {
+  Widget _getCharacterWidget() {
     return Container(
       width: this._containerWidth * 0.65,
       height: this._containerHeight,
@@ -140,23 +143,58 @@ class _CharacterLayerState extends State<CharacterLayer> {
     );
   }
 
-  Widget _getProperty() {
+  Widget _getPropertyWidget() {
+    double width = this._containerWidth * 0.35 - 26;
     return Container(
-      width: this._containerWidth * 0.35 - 26,
+      width: width,
       height: this._containerHeight,
-      color: Color(0xFF000000),
-      child: Stack(
+      color: Color(0xFF060606),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          /*Positioned(
-            left:0,
-            top: 0,
-            width: 320 * this._scale,
-            height: 400 * this._scale,
-            child: Image.asset(
-              _playerInfo.clothes!.show!,
-              fit: BoxFit.fitHeight,
+          Container(
+            width: width,
+            padding: EdgeInsets.only(top: 5, bottom: 5),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.fitWidth,
+                image: AssetImage("assets/images/ui/power_bg.png"),
+              ),
             ),
-          ),*/
+            child: Center(
+              child: Text(
+                "战斗力：" + _playerInfo.battle.toString(),
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Color(0xFFffc20e),
+                  shadows: [Shadow(color: Color(0xFF222222), offset: Offset(0.5, 0.5), blurRadius: 0.2)],
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            width: width,
+            height: this._containerHeight - 100 * this._scale,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _getPropertyItem("等级：", _playerInfo.level.toString()),
+                  _getPropertyItem("职业：", JobData.items[_playerInfo.job.toString()]!),
+                  _getPropertyItem("生命：", _playerInfo.hp.toString() + "/" + _playerInfo.maxHp.toString()),
+                  _getPropertyItem("魔法：", _playerInfo.mp.toString() + "/" + _playerInfo.maxMp.toString()),
+                  _getPropertyItem("经验：", _playerInfo.exp.toString()),
+                  _getPropertyItem("物攻：", _playerInfo.minAt.toString() + "-" + _playerInfo.maxAt.toString()),
+                  _getPropertyItem("魔攻：", _playerInfo.minMt.toString() + "-" + _playerInfo.maxMt.toString()),
+                  _getPropertyItem("物防：", _playerInfo.minDf.toString() + "-" + _playerInfo.maxDf.toString()),
+                  _getPropertyItem("魔防：", _playerInfo.minMf.toString() + " -" + _playerInfo.maxMf.toString()),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -164,9 +202,12 @@ class _CharacterLayerState extends State<CharacterLayer> {
 
   Widget _getEquipItem(int index) {
     String? itemIcon;
+    ItemInfo item = _items[index];
     if (index == 0 && _playerInfo.weapon != null) {
+      item = _playerInfo.weapon!;
       itemIcon = _playerInfo.weapon!.icon!;
     } else if (index == 1 && _playerInfo.clothes != null) {
+      item = _playerInfo.clothes!;
       itemIcon = _playerInfo.clothes!.icon!;
     }
     return Positioned(
@@ -192,40 +233,53 @@ class _CharacterLayerState extends State<CharacterLayer> {
                 : BoxDecoration(),
             alignment: Alignment.center,
             child: DFButton(
-              text: itemIcon != null ? null : _items[index].name,
+              text: itemIcon != null ? null : ItemType.getName(_items[index].type),
               image: itemIcon,
               size: Size(30, 30),
               textColor: Color(0xFFc37e00),
               fontSize: 12,
               onPressed: (button) {
-                _onItemClick(_items[index]);
+                _onItemClick(item);
               },
             ),
           ),
         ));
   }
 
+  Widget _getPropertyItem(String label, String text) {
+    return Container(
+      width: this._containerWidth * 0.35 - 26,
+      padding: EdgeInsets.only(left: 10, top: 5, bottom: 5),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: Color(0xFFad8b3d),
+              shadows: [Shadow(color: Color(0xFF222222), offset: Offset(0.5, 0.5), blurRadius: 0.2)],
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 12,
+              color: Color(0xFFa1a3a6),
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _onItemClick(ItemInfo item) {
-    ItemType type = item.type;
-    if (type == ItemType.WEAPON) {
-      if(_playerInfo.weapon != null){
-        /// 卸下武器
-        GameManager.items.add(_playerInfo.weapon!);
-        GameManager.playerSprite!.removeWeapon();
-
-      }
-
-    } else if (type == ItemType.CLOTHES) {
-      if(_playerInfo.clothes != null) {
-        /// 卸下衣服
-        GameManager.items.add(_playerInfo.clothes!);
-        GameManager.playerSprite!.removeClothes();
-
-      }
-    }
-    setState(() {
-
-    });
+    DFUiUtil.showLayer(context,
+        ItemLayer(item,onRefresh: (){
+           setState(() {});
+        },)
+    );
   }
 
   @override
@@ -234,77 +288,79 @@ class _CharacterLayerState extends State<CharacterLayer> {
       width: GameManager.visibleWidth,
       height: GameManager.visibleHeight,
       decoration: BoxDecoration(color: Color(0x60000000)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 0, left: 18),
-            width: this._width,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.fitWidth,
-                image: AssetImage("assets/images/ui/bg_01.png"),
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 0, left: 18),
+              width: this._width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: AssetImage("assets/images/ui/bg_01.png"),
+                ),
               ),
-            ),
-            alignment: Alignment.center,
-            child: Stack(
-              children: [
-                /// 标题
-                Positioned(
-                  top: 60 * this._scale,
-                  width: this._width,
-                  child: Center(
-                    child: Text(
-                      "角色",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFFc37e00),
-                        fontWeight: FontWeight.bold,
+              alignment: Alignment.center,
+              child: Stack(
+                children: [
+                  /// 标题
+                  Positioned(
+                    top: 60 * this._scale,
+                    width: this._width,
+                    child: Center(
+                      child: Text(
+                        "角色",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFFc37e00),
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                ),
 
-                /// 内容
-                Positioned(
-                  top: 114 * this._scale,
-                  left: 66 * this._scale,
-                  width: _containerWidth,
-                  height: _containerHeight,
-                  child: Container(
-                    /*color: Color(0xFFFFFFFF),*/
-                    margin: EdgeInsets.all(8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: _getCharacter(),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 10),
-                          child: _getProperty(),
-                        ),
-                      ],
+                  /// 内容
+                  Positioned(
+                    top: 114 * this._scale,
+                    left: 66 * this._scale,
+                    width: _containerWidth,
+                    height: _containerHeight,
+                    child: Container(
+                      /*color: Color(0xFFFFFFFF),*/
+                      margin: EdgeInsets.all(8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: _getCharacterWidget(),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: _getPropertyWidget(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 40),
-            child: DFButton(
-              /// text: "关闭",
-              image: "assets/images/ui/btn_close_01.png",
-              size: Size(36, 36),
-              onPressed: (button) {
-                Navigator.pop(context);
-              },
+            Container(
+              margin: EdgeInsets.only(top: 40),
+              child: DFButton(
+                /// text: "关闭",
+                image: "assets/images/ui/btn_close_01.png",
+                size: Size(36, 36),
+                onPressed: (button) {
+                  Navigator.pop(context);
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

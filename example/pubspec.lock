@@ -67,9 +67,9 @@ packages:
   devilf_engine:
     dependency: "direct main"
     description:
-      name: devilf_engine
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "E:/project/devilf/devilf_engine/"
+      relative: false
+    source: path
     version: "0.0.9"
   fake_async:
     dependency: transitive

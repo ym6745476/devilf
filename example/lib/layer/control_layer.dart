@@ -96,6 +96,8 @@ class _ControlLayerState extends State<ControlLayer> {
                 image: EffectData.items["1001"]!.icon!,
                 size: Size(70, 70),
                 onPressed: (button) {
+                  _playerSprite?.cancelAutoFight();
+                  _autoFightButton!.setChecked(false);
                   _playerSprite?.moveToAction(DFAction.ATTACK, effect: EffectData.items["1001"]);
                 },
               ),
@@ -115,6 +117,8 @@ class _ControlLayerState extends State<ControlLayer> {
                 image: EffectData.items["1002"]!.icon!,
                 size: Size(50, 50),
                 onPressed: (button) {
+                  _playerSprite?.cancelAutoFight();
+                  _autoFightButton!.setChecked(false);
                   _playerSprite?.moveToAction(DFAction.ATTACK, effect: EffectData.items["1002"]);
                 },
               ),
@@ -136,6 +140,8 @@ class _ControlLayerState extends State<ControlLayer> {
                 image: EffectData.items["2001"]!.icon!,
                 size: Size(50, 50),
                 onPressed: (button) {
+                  _playerSprite?.cancelAutoFight();
+                  _autoFightButton!.setChecked(false);
                   _playerSprite?.moveToAction(DFAction.CASTING, effect: EffectData.items["2001"]);
                 },
               ),
@@ -157,6 +163,8 @@ class _ControlLayerState extends State<ControlLayer> {
                 image: EffectData.items["3001"]!.icon!,
                 size: Size(50, 50),
                 onPressed: (button) {
+                  _playerSprite?.cancelAutoFight();
+                  _autoFightButton!.setChecked(false);
                   _playerSprite?.moveToAction(DFAction.CASTING, effect: EffectData.items["3001"]);
                 },
               ),
@@ -178,6 +186,8 @@ class _ControlLayerState extends State<ControlLayer> {
                 image: EffectData.items["3002"]!.icon!,
                 size: Size(50, 50),
                 onPressed: (button) {
+                  _playerSprite?.cancelAutoFight();
+                  _autoFightButton!.setChecked(false);
                   _playerSprite?.moveToAction(DFAction.CASTING, effect: EffectData.items["3002"]);
                 },
               ),
@@ -192,6 +202,8 @@ class _ControlLayerState extends State<ControlLayer> {
             image: "assets/images/ui/skill_collect.png",
             size: Size(36, 36),
             onPressed: (button) {
+              _playerSprite?.cancelAutoFight();
+              _autoFightButton!.setChecked(false);
               _playerSprite?.play(DFAction.COLLECT);
             },
           ),
@@ -206,6 +218,8 @@ class _ControlLayerState extends State<ControlLayer> {
             image: "assets/images/ui/skill_pick.png",
             size: Size(40, 40),
             onPressed: (button) {
+              _playerSprite?.cancelAutoFight();
+              _autoFightButton!.setChecked(false);
               _playerSprite?.play(DFAction.COLLECT);
             },
           ),

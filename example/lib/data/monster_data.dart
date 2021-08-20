@@ -12,12 +12,12 @@ class MonsterData {
   /// 默认前缀 assets/audio/
   static String audioPath = "monster/";
 
-  /// 基本配置
-  static Map<String, MonsterInfo> items = {
+  /// 数据
+  static Map<String, MonsterInfo> templates = {
     "1001": MonsterInfo(
       1001,
       "蜘蛛",
-      clothes: ItemInfo(1,"",texture: getClothes("spider")),
+      clothes: ItemInfo(1,texture: getClothes("spider")),
       moveSpeed: 0.4,
       maxAt: 40,
       attackAudio: ["spider/attack_1", "spider/attack_2", "spider/attack_3"],
@@ -28,7 +28,7 @@ class MonsterData {
     "1002": MonsterInfo(
       1002,
       "蛇",
-      clothes: ItemInfo(1,"",texture: getClothes("snake")),
+      clothes: ItemInfo(1,texture: getClothes("snake")),
       moveSpeed: 0.4,
       maxAt: 40,
       attackAudio: ["snake/attack_1", "snake/attack_2", "snake/attack_3"],
@@ -52,20 +52,21 @@ class MonsterData {
   };
 
   /// 创建怪物
-  static MonsterInfo newMonster(String id) {
-    MonsterInfo template = items[id]!;
+  static MonsterInfo newMonster(String template) {
+    MonsterInfo monsterInfo = templates[template]!;
     return MonsterInfo(
-      template.id,
-      template.name,
-      clothes: template.clothes,
-      weapon: template.weapon,
-      moveSpeed: template.moveSpeed,
-      maxAt: template.maxAt,
-      runAudio: List.generate(template.runAudio.length, (index) => getAudio(template.runAudio[index])),
-      attackAudio: List.generate(template.attackAudio.length, (index) => getAudio(template.attackAudio[index])),
-      hurtAudio: List.generate(template.hurtAudio.length, (index) => getAudio(template.hurtAudio[index])),
-      deathAudio: List.generate(template.deathAudio.length, (index) => getAudio(template.deathAudio[index])),
-      effects: template.effects,
+      monsterInfo.id,
+      monsterInfo.name,
+      clothes: monsterInfo.clothes,
+      weapon: monsterInfo.weapon,
+      moveSpeed: monsterInfo.moveSpeed,
+      maxAt: monsterInfo.maxAt,
+      runAudio: List.generate(monsterInfo.runAudio.length, (index) => getAudio(monsterInfo.runAudio[index])),
+      attackAudio: List.generate(monsterInfo.attackAudio.length, (index) => getAudio(monsterInfo.attackAudio[index])),
+      hurtAudio: List.generate(monsterInfo.hurtAudio.length, (index) => getAudio(monsterInfo.hurtAudio[index])),
+      deathAudio: List.generate(monsterInfo.deathAudio.length, (index) => getAudio(monsterInfo.deathAudio[index])),
+      effects: monsterInfo.effects,
+      template: template,
     );
   }
 

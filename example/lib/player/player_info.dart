@@ -12,35 +12,53 @@ class PlayerInfo extends DFLiving {
   /// 性别
   int gender;
 
+  /// 职业
+  int job;
+
+  /// 等级
+  int level;
+
+  /// 战斗力
+  int battle;
+
   /// 生命值
-  double hp;
+  int hp;
 
   /// 最大生命值
-  double maxHp;
+  int maxHp;
 
   /// 魔法值
-  double mp;
+  int mp;
 
   /// 最大魔法值
-  double maxMp;
+  int maxMp;
+
+  /// 经验值
+  int exp;
 
   /// 最小攻击力
-  double minAt;
+  int minAt;
 
   /// 最大攻击力
-  double maxAt;
+  int maxAt;
 
   /// 最小魔法攻击力
-  double minMt;
+  int minMt;
 
   /// 最大魔法攻击力
-  double maxMt;
+  int maxMt;
 
-  /// 物理防御
-  double df;
+  /// 最小物理防御
+  int minDf;
 
-  /// 魔法防御
-  double mf;
+  /// 最大物理防御
+  int maxDf;
+
+  /// 最小魔法防御
+  int minMf;
+
+  /// 最大魔法防御
+  int maxMf;
 
   /// 移动速度
   double moveSpeed;
@@ -66,6 +84,9 @@ class PlayerInfo extends DFLiving {
   /// 采集音效
   List<String> collectAudio;
 
+  /// 模板
+  String template;
+
   /// 创建玩家
   PlayerInfo(
     id,
@@ -73,24 +94,31 @@ class PlayerInfo extends DFLiving {
     this.clothes,
     this.weapon,
     this.gender = 1,
+    this.job = 1,
+    this.level = 1,
+    this.battle = 1,
     this.hp = 100,
     this.maxHp = 100,
     this.mp = 100,
     this.maxMp = 100,
-    this.minAt = 5,
-    this.maxAt = 10,
-    this.minMt = 5,
-    this.maxMt = 10,
-    this.df = 5,
-    this.mf = 5,
-    this.moveSpeed = 1,
+    this.exp = 1000,
+    this.minAt = 0,
+    this.maxAt = 5,
+    this.minMt = 0,
+    this.maxMt = 5,
+    this.minDf = 0,
+    this.maxDf = 5,
+    this.minMf = 0,
+    this.maxMf = 5,
+    this.moveSpeed = 2,
     this.vision = 800,
     this.rebornTime = 5000,
     this.runAudio = const [],
     this.attackAudio = const [],
     this.hurtAudio = const [],
     this.deathAudio = const [],
-    this.collectAudio = const []
+    this.collectAudio = const [],
+    this.template = "",
   }) : super(id, name) {
     this.hp = this.maxHp;
     this.mp = this.maxMp;

@@ -9,9 +9,11 @@ import 'package:devilf_engine/util/df_audio.dart';
 import 'package:example/data/effect_data.dart';
 import 'package:example/data/item_data.dart';
 import 'package:example/data/monster_data.dart';
+import 'package:example/data/monster_update_data.dart';
 import 'package:example/data/player_data.dart';
 import 'package:example/layer/control_layer.dart';
 import 'package:example/map/map_info.dart';
+import 'package:example/model/item_info.dart';
 import 'package:example/player/player_info.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +77,63 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 定义主界面
         this._gameWidget = DFGameWidget(camera: camera);
 
+        /// 读物玩家数据
+        int playerId = 1;
+        int gender = 1;
+        String name = "一梦";
+        int clothesId = 5;
+        int weaponId = 3;
+        List<ItemInfo> items = [
+          ItemInfo(1,template: "1000"),
+          ItemInfo(2,template: "1001"),
+          ItemInfo(3,template: "2001"),
+          ItemInfo(4,template: "3001"),
+          ItemInfo(5,template: "1100"),
+          ItemInfo(6,template: "1101"),
+          ItemInfo(7,template: "1102"),
+          ItemInfo(8,template: "1103"),
+          ItemInfo(9,template: "1104"),
+          ItemInfo(10,template: "2104"),
+          ItemInfo(11,template: "3104"),
+          ItemInfo(12,template: "1200"),
+          ItemInfo(13,template: "1201"),
+          ItemInfo(14,template: "1202"),
+          ItemInfo(15,template: "1203"),
+          ItemInfo(16,template: "1204"),
+          ItemInfo(17,template: "2204"),
+          ItemInfo(18,template: "3204"),
+
+        ];
+
+        /// 玩家类
+        PlayerInfo player = PlayerData.newPlayer(gender.toString());
+        player.id = playerId;
+        player.name = name;
+        player.gender = gender;
+        player.battle = 1200;
+        player.level = 1;
+        player.exp = 0;
+        player.minAt = 50;
+        player.maxAt = 120;
+        player.minDf = 5;
+        player.maxDf = 10;
+        player.minMf = 5;
+        player.maxMf = 10;
+        player.moveSpeed = 2;
+
+        /// 背包物品
+        items.forEach((item) {
+          ItemInfo itemInfo = ItemData.newItemInfo(item.template);
+          if(item.id == clothesId){
+            player.clothes = itemInfo;
+            itemInfo.isDressed = true;
+          }else if(item.id == weaponId){
+            player.weapon = itemInfo;
+            itemInfo.isDressed = true;
+          }
+          GameManager.items.add(itemInfo);
+        });
+
         /// 地图精灵
         MapInfo mapInfo = MapInfo("落霞岛");
         mapInfo.texture = "assets/images/map/lxd.json";
@@ -87,13 +146,6 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         GameManager.mapSprite = mapSprite;
 
         /// 创建玩家精灵
-        PlayerInfo player = PlayerData.newPlayer("1001");
-        player.clothes = ItemData.newItemInfo("1100");
-        player.weapon = ItemData.newItemInfo("2001");
-        player.maxAt = 120;
-        player.moveSpeed = 2;
-        player.df = 6;
-        player.mf = 6;
         _playerSprite = PlayerSprite(player);
         _playerSprite!.position = DFPosition(800, 1500);
 
@@ -103,39 +155,19 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 怪物精灵
         List<MonsterSprite> _monsterSprites = [];
 
-        /// 蜘蛛
-        for (int i = 0; i < 3; i++) {
-          MonsterInfo monster = MonsterData.newMonster("1001");
-          monster.id = i+1;
-          MonsterSprite monsterSprite = MonsterSprite(monster);
-          int dirX = Random().nextBool() ? 1 : -1;
-          int dirY = Random().nextBool() ? 1 : -1;
-          monsterSprite.position = DFPosition(700 + dirX * 200 * Random().nextDouble(),
-              1500 + dirY * 200 * Random().nextDouble());
-          _monsterSprites.add(monsterSprite);
-        }
-
-        /// 蛇
-        for (int i = 0; i < 3; i++) {
-          MonsterInfo monster = MonsterData.newMonster("1002");
-          monster.id = i+1;
-          MonsterSprite monsterSprite = MonsterSprite(monster);
-          int dirX = Random().nextBool() ? 1 : -1;
-          int dirY = Random().nextBool() ? 1 : -1;
-          monsterSprite.position = DFPosition(1000 + dirX * 200 * Random().nextDouble(),
-              1400 + dirY * 200 * Random().nextDouble());
-          _monsterSprites.add(monsterSprite);
-        }
-
-        /// 1级女妖精
-        MonsterInfo monster = MonsterData.newMonster("2001");
-        /// monster.effects = [EffectData.items["2001"]!];
-        MonsterSprite monsterSprite = MonsterSprite(monster);
-        int dirX = Random().nextBool() ? 1 : -1;
-        int dirY = Random().nextBool() ? 1 : -1;
-        monsterSprite.position = DFPosition(1000 + dirX * 200 * Random().nextDouble(),
-            1400 + dirY * 200 * Random().nextDouble());
-        _monsterSprites.add(monsterSprite);
+        /// 怪物刷新
+        MonsterUpdateData.items.forEach((element) {
+          for (int i = 0; i < element.count; i++) {
+            MonsterInfo monster = MonsterData.newMonster(element.template);
+            /// monster.effects = [EffectData.items["2001"]!];
+            MonsterSprite monsterSprite = MonsterSprite(monster);
+            int dirX = Random().nextBool() ? 1 : -1;
+            int dirY = Random().nextBool() ? 1 : -1;
+            monsterSprite.position = DFPosition(element.x + dirX * element.radius * Random().nextDouble(),
+                element.y + dirY * element.radius * Random().nextDouble());
+            _monsterSprites.add(monsterSprite);
+          }
+        });
 
         /// 保存到管理器里
         GameManager.monsterSprites = _monsterSprites;
@@ -192,11 +224,6 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
         /// 设置摄像机跟随
         camera.lookAt(_playerSprite!);
-
-        /// 背包物品
-        ItemData.items.forEach((key, value) {
-          GameManager.items.add(ItemData.newItemInfo(key));
-        });
 
         /// 保存到管理器里
         GameManager.gameWidget = this._gameWidget!;

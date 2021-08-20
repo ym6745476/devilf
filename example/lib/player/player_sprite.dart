@@ -137,7 +137,7 @@ class PlayerSprite extends DFSprite {
 
       /// 名字
       this.nameSprite = DFTextSprite(this.player.name, fontSize: 10, background: Color(0x20000000));
-      this.nameSprite!.position = DFPosition(size.width / 2, -60);
+      this.nameSprite!.position = DFPosition(size.width / 2, -70);
       this.nameSprite!.setOnUpdate((dt) {});
       addChild(this.nameSprite!);
 
@@ -541,13 +541,23 @@ class PlayerSprite extends DFSprite {
     /// 随机伤害  0.0~1.0
     var random = new Random();
     if (ownerSprite is MonsterSprite) {
-      double newMinAt = ownerSprite.monster.minAt * random.nextDouble();
-      double newMaxAt = ownerSprite.monster.maxAt * random.nextDouble();
-      double damageAt = newMinAt > newMaxAt ? newMinAt * effect.at : newMaxAt * effect.at - player.df;
+      int newMinAt = ownerSprite.monster.minAt;
+      int newMaxAt = (ownerSprite.monster.maxAt * random.nextDouble()).round();
+      int at = newMinAt > newMaxAt ? newMinAt : newMaxAt ;
 
-      double newMinMt = ownerSprite.monster.minMt * random.nextDouble();
-      double newMaxMt = ownerSprite.monster.maxMt * random.nextDouble();
-      double damageMt = newMinMt > newMaxMt ? newMinMt * effect.at : newMaxMt * effect.mt - player.mf;
+      int newMinDf = ownerSprite.monster.minDf;
+      int newMaxDf = (ownerSprite.monster.maxDf * random.nextDouble()).round();
+      int df = newMinDf > newMaxDf ? newMinDf : newMaxAt ;
+      double damageAt = at * effect.at - df;
+
+      int newMinMt = ownerSprite.monster.minMt;
+      int newMaxMt = (ownerSprite.monster.maxMt * random.nextDouble()).round();
+      int mt = newMinMt > newMaxMt ? newMinMt : newMaxMt ;
+
+      int newMinMf = ownerSprite.monster.minMf;
+      int newMaxMf = (ownerSprite.monster.maxMf * random.nextDouble()).round();
+      int mf = newMinMf > newMaxMf ? newMinMf : newMaxMf ;
+      double damageMt = mt * effect.mt - mf;
 
       double totalDamage = damageAt + damageMt;
       if (totalDamage <= 0) {
