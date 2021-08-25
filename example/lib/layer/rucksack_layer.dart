@@ -3,6 +3,7 @@ import 'package:devilf_engine/widget/df_button.dart';
 import 'package:example/data/item_data.dart';
 import 'package:example/model/item_info.dart';
 import 'package:example/player/player_info.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import '../game_manager.dart';
@@ -20,6 +21,7 @@ class RucksackLayer extends StatefulWidget {
 
 class _RucksackLayerState extends State<RucksackLayer> {
   double _width = 0;
+  double _height = 0;
   double _scale = 1;
   double _containerWidth = 0;
   double _containerHeight = 0;
@@ -32,14 +34,14 @@ class _RucksackLayerState extends State<RucksackLayer> {
 
     this._width = GameManager.visibleWidth * 0.70;
     this._scale = this._width / 1031;
-
-    this._containerWidth = this._width - 130 * this._scale;
-    this._containerHeight = 520 * this._scale;
+    this._height = 641 * this._scale;
+    this._containerWidth = this._width - 126 * this._scale;
+    this._containerHeight = 528 * this._scale;
     _playerInfo = GameManager.playerSprite!.player;
   }
 
   List<Widget> _getItemList() {
-    double itemWidth = (this._containerWidth - 16 - 5 * 8) / 9;
+    double itemWidth = (this._containerWidth - 10 * this._scale * 9) / 10;
     List<Widget> list = [];
     GameManager.items.forEach((item) {
       if (!item.isDressed) {
@@ -55,7 +57,7 @@ class _RucksackLayerState extends State<RucksackLayer> {
           child: Container(
             width: itemWidth,
             height: itemWidth,
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(10 * this._scale),
             child: GestureDetector(
               child: Image.asset(
                 item.icon!,
@@ -74,11 +76,14 @@ class _RucksackLayerState extends State<RucksackLayer> {
   }
 
   void _onItemClick(ItemInfo item) {
-    DFUiUtil.showLayer(context,
-        ItemLayer(item,onRefresh: (){
-          setState(() {});
-        },)
-    );
+    DFUiUtil.showLayer(
+        context,
+        ItemLayer(
+          item,
+          onRefresh: () {
+            setState(() {});
+          },
+        ));
   }
 
   @override
@@ -93,47 +98,54 @@ class _RucksackLayerState extends State<RucksackLayer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.only(top: 0, left: 18),
+              margin: EdgeInsets.only(top: 0, left: 0),
               width: this._width,
+              height: this._height,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  fit: BoxFit.fitWidth,
+                  fit: BoxFit.fitHeight,
                   image: AssetImage("assets/images/ui/bg_01.png"),
                 ),
               ),
               alignment: Alignment.center,
-              child: Stack(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   /// 标题
-                  Positioned(
-                    top: 60 * this._scale,
+                  Container(
                     width: this._width,
-                    child: Center(
-                      child: Text(
-                        "背包",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFFc37e00),
-                          fontWeight: FontWeight.bold,
-                        ),
+                    height:40 * this._scale,
+                    margin: EdgeInsets.only(
+                      top: 26 * this._scale,
+                    ),
+                    /*color: Color(0x60FFFFFF),*/
+                    child: Text(
+                      "背包",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 28 * this._scale,
+                        color: Color(0xFFc37e00),
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
 
                   /// 内容
-                  Positioned(
-                    top: 114 * this._scale,
-                    left: 66 * this._scale,
+                  Container(
                     width: this._containerWidth,
                     height: this._containerHeight,
+                    margin: EdgeInsets.only(
+                      top: 10 * this._scale,
+                    ),
                     child: Container(
-                      /*color: Color(0xFFFFFFFF),*/
-                      margin: EdgeInsets.all(8),
+                      /*color: Color(0x60FFFFFF),*/
+                      margin: EdgeInsets.all(15 * this._scale),
                       child: SingleChildScrollView(
                         physics: ClampingScrollPhysics(),
                         reverse: false,
                         controller: _controller,
-                        child: Wrap(spacing: 5, runSpacing: 5, children: _getItemList()),
+                        child: Wrap(spacing: 6 * this._scale, runSpacing: 6 * this._scale, children: _getItemList()),
                       ),
                     ),
                   ),
@@ -141,11 +153,11 @@ class _RucksackLayerState extends State<RucksackLayer> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 40),
+              margin: EdgeInsets.only(top: 30 * this._scale),
               child: DFButton(
                 /// text: "关闭",
                 image: "assets/images/ui/btn_close_01.png",
-                size: Size(36, 36),
+                size: Size(72 * this._scale, 72 * this._scale),
                 onPressed: (button) {
                   Navigator.pop(context);
                 },

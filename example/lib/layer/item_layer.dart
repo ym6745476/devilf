@@ -11,7 +11,7 @@ class ItemLayer extends StatefulWidget {
   final ItemInfo item;
   Function? onRefresh;
 
-  ItemLayer(this.item, {this.size = const Size(100, 100),this.onRefresh});
+  ItemLayer(this.item, {this.size = const Size(100, 100), this.onRefresh});
 
   @override
   _ItemLayerState createState() => _ItemLayerState();
@@ -50,11 +50,9 @@ class _ItemLayerState extends State<ItemLayer> {
       GameManager.playerSprite!.changeWeapon(item);
     } else {}
 
-    setState(() {
+    setState(() {});
 
-    });
-
-    if(widget.onRefresh != null){
+    if (widget.onRefresh != null) {
       widget.onRefresh!();
     }
   }
@@ -75,18 +73,16 @@ class _ItemLayerState extends State<ItemLayer> {
       }
     }
 
-    setState(() {
+    setState(() {});
 
-    });
-
-    if(widget.onRefresh != null){
+    if (widget.onRefresh != null) {
       widget.onRefresh!();
     }
   }
 
-  Widget _getPropertyItem(String label, String text) {
+  Widget _getPropertyItem(String label, String text,double width) {
     return Container(
-      width: this._width,
+      width: width,
       padding: EdgeInsets.only(left: 10, top: 5, bottom: 5),
       child: Row(
         children: [
@@ -124,7 +120,6 @@ class _ItemLayerState extends State<ItemLayer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.only(top: 0, left: 18),
               width: this._width,
               height: this._height,
               decoration: BoxDecoration(
@@ -134,33 +129,35 @@ class _ItemLayerState extends State<ItemLayer> {
                 ),
               ),
               alignment: Alignment.center,
-              child: Stack(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   /// 标题
-                  Positioned(
-                    top: 5 * this._scale,
+                  Container(
                     width: this._width,
-                    child: Center(
-                      child: Text(
-                        widget.item.name,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFFc37e00),
-                          fontWeight: FontWeight.bold,
-                        ),
+                    height: 36 * this._scale,
+                    margin: EdgeInsets.only(
+                      top: 7 * this._scale,
+                    ),
+                    /*color: Color(0x30FFFFFF),*/
+                    child: Text(
+                      widget.item.name,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 28 * this._scale,
+                        color: Color(0xFFc37e00),
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
 
                   /// 内容
-                  Positioned(
-                    top: 45 * this._scale,
-                    left: 0,
-                    bottom: 0,
+                  Container(
                     width: this._width,
                     child: Container(
                       color: Color(0x80000000),
-                      margin: EdgeInsets.all(8),
+                      margin: EdgeInsets.all(16 * this._scale),
                       child: SingleChildScrollView(
                         physics: ClampingScrollPhysics(),
                         reverse: false,
@@ -169,13 +166,54 @@ class _ItemLayerState extends State<ItemLayer> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            _getPropertyItem("类别：", ItemType.getName(widget.item.type)),
-                            _getPropertyItem("生命：", widget.item.hp.toString()),
-                            _getPropertyItem("魔法：", widget.item.mp.toString()),
-                            _getPropertyItem("物攻：", widget.item.minAt.toString() + "-" + _playerInfo.maxAt.toString()),
-                            _getPropertyItem("魔攻：", widget.item.minMt.toString() + "-" + _playerInfo.maxMt.toString()),
-                            _getPropertyItem("物防：", widget.item.minDf.toString() + "-" + _playerInfo.maxDf.toString()),
-                            _getPropertyItem("魔防：", widget.item.minMf.toString() + "-" + _playerInfo.maxMf.toString()),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 100 * this._scale,
+                                  height: 100 * this._scale,
+                                  margin: EdgeInsets.all(10 * this._scale),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage("assets/images/ui/equip_bg.png"),
+                                    ),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    width: 100 * this._scale,
+                                    height: 100 * this._scale,
+                                    decoration: widget.item.icon != null
+                                        ? BoxDecoration(
+                                            image: DecorationImage(
+                                            image: AssetImage("assets/images/ui/border_01.png"),
+                                          ))
+                                        : BoxDecoration(),
+                                    alignment: Alignment.center,
+                                    child: DFButton(
+                                      image: widget.item.icon,
+                                      size: Size(60 * this._scale, 60 * this._scale),
+                                      textColor: Color(0xFFc37e00),
+                                      fontSize: 22 * this._scale,
+                                      onPressed: (button) {},
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      _getPropertyItem("类别：", ItemType.getName(widget.item.type),this._width - 160 * this._scale),
+                                      _getPropertyItem("职业：", "通用",this._width - 160 * this._scale),
+                                    ]),
+                              ],
+                            ),
+                            _getPropertyItem("生命：", widget.item.hp.toString(),this._width),
+                            _getPropertyItem("魔法：", widget.item.mp.toString(),this._width),
+                            _getPropertyItem("物攻：", widget.item.minAt.toString() + "-" + _playerInfo.maxAt.toString(),this._width),
+                            _getPropertyItem("魔攻：", widget.item.minMt.toString() + "-" + _playerInfo.maxMt.toString(),this._width),
+                            _getPropertyItem("物防：", widget.item.minDf.toString() + "-" + _playerInfo.maxDf.toString(),this._width),
+                            _getPropertyItem("魔防：", widget.item.minMf.toString() + "-" + _playerInfo.maxMf.toString(),this._width),
                           ],
                         ),
                       ),
@@ -185,7 +223,7 @@ class _ItemLayerState extends State<ItemLayer> {
               ),
             ),
             Container(
-              width: 100,
+              width: 200 * this._scale,
               height: this._height,
               margin: EdgeInsets.only(top: 0),
               child: Stack(
@@ -196,32 +234,34 @@ class _ItemLayerState extends State<ItemLayer> {
                     child: DFButton(
                       /// text: "关闭",
                       image: "assets/images/ui/btn_close_03.png",
-                      size: Size(36, 36),
+                      size: Size(72 * this._scale, 72 * this._scale),
                       onPressed: (button) {
                         Navigator.pop(context);
                       },
                     ),
                   ),
                   Positioned(
-                    left: 2,
+                    left: 10 * this._scale,
                     bottom: 0,
                     child: Column(
                       children: [
                         widget.item.isDressed
                             ? DFButton(
                                 text: "卸下",
+                                fontSize: 28 * this._scale,
                                 image: "assets/images/ui/btn_01.png",
                                 pressedImage: "assets/images/ui/btn_02.png",
-                                size: Size(60, 36),
+                                size: Size(120 * this._scale, 72 * this._scale),
                                 onPressed: (button) {
                                   _onTakeOffClick(widget.item);
                                 },
                               )
                             : DFButton(
                                 text: "装备",
+                                fontSize: 28 * this._scale,
                                 image: "assets/images/ui/btn_01.png",
                                 pressedImage: "assets/images/ui/btn_02.png",
-                                size: Size(60, 36),
+                                size: Size(120 * this._scale, 72 * this._scale),
                                 onPressed: (button) {
                                   _onTakeOnClick(widget.item);
                                 },
