@@ -1,5 +1,5 @@
 import 'package:devilf_engine/widget/df_button.dart';
-import 'package:example/model/item_info.dart';
+import 'package:example/item/item_info.dart';
 import 'package:example/player/player_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -80,16 +80,16 @@ class _ItemLayerState extends State<ItemLayer> {
     }
   }
 
-  Widget _getPropertyItem(String label, String text,double width) {
+  Widget _getPropertyItem(String label, String text, double width) {
     return Container(
       width: width,
-      padding: EdgeInsets.only(left: 10, top: 5, bottom: 5),
+      padding: EdgeInsets.only(left: 20 * this._scale, top: 10 * this._scale, bottom: 10 * this._scale),
       child: Row(
         children: [
           Text(
             label,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 24 * this._scale,
               color: Color(0xFFad8b3d),
               shadows: [Shadow(color: Color(0xFF222222), offset: Offset(0.5, 0.5), blurRadius: 0.2)],
               fontWeight: FontWeight.w400,
@@ -98,7 +98,7 @@ class _ItemLayerState extends State<ItemLayer> {
           Text(
             text,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 24 * this._scale,
               color: Color(0xFFa1a3a6),
               fontWeight: FontWeight.w400,
             ),
@@ -155,6 +155,7 @@ class _ItemLayerState extends State<ItemLayer> {
                   /// 内容
                   Container(
                     width: this._width,
+                    height: this._height - 50 * this._scale,
                     child: Container(
                       color: Color(0x80000000),
                       margin: EdgeInsets.all(16 * this._scale),
@@ -203,17 +204,22 @@ class _ItemLayerState extends State<ItemLayer> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      _getPropertyItem("类别：", ItemType.getName(widget.item.type),this._width - 160 * this._scale),
-                                      _getPropertyItem("职业：", "通用",this._width - 160 * this._scale),
+                                      _getPropertyItem(
+                                          "类别：", ItemType.getName(widget.item.type), this._width - 160 * this._scale),
+                                      _getPropertyItem("职业：", "通用", this._width - 160 * this._scale),
                                     ]),
                               ],
                             ),
-                            _getPropertyItem("生命：", widget.item.hp.toString(),this._width),
-                            _getPropertyItem("魔法：", widget.item.mp.toString(),this._width),
-                            _getPropertyItem("物攻：", widget.item.minAt.toString() + "-" + _playerInfo.maxAt.toString(),this._width),
-                            _getPropertyItem("魔攻：", widget.item.minMt.toString() + "-" + _playerInfo.maxMt.toString(),this._width),
-                            _getPropertyItem("物防：", widget.item.minDf.toString() + "-" + _playerInfo.maxDf.toString(),this._width),
-                            _getPropertyItem("魔防：", widget.item.minMf.toString() + "-" + _playerInfo.maxMf.toString(),this._width),
+                            _getPropertyItem("生命：", widget.item.hp.toString(), this._width),
+                            _getPropertyItem("魔法：", widget.item.mp.toString(), this._width),
+                            _getPropertyItem(
+                                "物攻：", widget.item.minAt.toString() + "-" + _playerInfo.maxAt.toString(), this._width),
+                            _getPropertyItem(
+                                "魔攻：", widget.item.minMt.toString() + "-" + _playerInfo.maxMt.toString(), this._width),
+                            _getPropertyItem(
+                                "物防：", widget.item.minDf.toString() + "-" + _playerInfo.maxDf.toString(), this._width),
+                            _getPropertyItem(
+                                "魔防：", widget.item.minMf.toString() + "-" + _playerInfo.maxMf.toString(), this._width),
                           ],
                         ),
                       ),

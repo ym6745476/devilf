@@ -1,6 +1,6 @@
 import 'package:devilf_engine/core/df_living.dart';
 import 'package:example/effect/effect_info.dart';
-import 'package:example/model/item_info.dart';
+import 'package:example/item/item_info.dart';
 
 /// 怪物类
 class MonsterInfo extends DFLiving {
@@ -64,7 +64,6 @@ class MonsterInfo extends DFLiving {
   /// 复活间隔
   double rebornTime;
 
-
   /// 跑音效
   List<String> runAudio;
 
@@ -80,11 +79,17 @@ class MonsterInfo extends DFLiving {
   /// 领悟技能
   List<EffectInfo> effects;
 
+  /// 掉落列表
+  List<int> dropIds;
+
   /// 模板
   String template;
 
   /// 创建怪物
-  MonsterInfo(id,name,{
+  MonsterInfo(
+    id,
+    name, {
+    this.template = "",
     this.clothes,
     this.weapon,
     this.level = 1,
@@ -110,10 +115,9 @@ class MonsterInfo extends DFLiving {
     this.hurtAudio = const [],
     this.deathAudio = const [],
     this.effects = const [],
-    this.template = "",
-  }) : super(id, name){
+    this.dropIds = const [],
+  }) : super(id, name) {
     this.hp = this.maxHp;
     this.mp = this.maxMp;
   }
-
 }

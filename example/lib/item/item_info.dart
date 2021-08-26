@@ -1,3 +1,5 @@
+import 'package:example/data/item_data.dart';
+
 /// 一件物品类
 class ItemInfo {
   /// 物品ID
@@ -6,11 +8,11 @@ class ItemInfo {
   /// 物品名字
   String name;
 
-  /// 纹理
-  String? texture;
-
   /// 图标
   String? icon;
+
+  /// 纹理
+  String? texture;
 
   /// 预览
   String? show;
@@ -57,11 +59,12 @@ class ItemInfo {
   /// 创建物品
   ItemInfo(
     this.id, {
+    this.template = "",
     this.name = "",
-    this.icon,
-    this.show,
-    this.texture,
     this.type = ItemType.NONE,
+    this.icon,
+    this.texture,
+    this.show,
     this.hp = 100,
     this.mp = 100,
     this.minAt = 0,
@@ -73,7 +76,6 @@ class ItemInfo {
     this.minMf = 0,
     this.maxMf = 5,
     this.isDressed = false,
-    this.template = "",
   });
 }
 

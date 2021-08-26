@@ -12,15 +12,19 @@ class MonsterUpdate {
   /// 半径
   int radius;
 
-  /// 模板
+  /// 怪物模板
   String template;
+
+  /// 掉落列表
+  List<int> dropIds;
 
   /// 创建怪物刷新
   MonsterUpdate({
+    required this.template,
     required this.x,
     required this.y,
     this.count = 1,
     this.radius = 100,
-    required this.template,
+    this.dropIds = const [],
   });
 }

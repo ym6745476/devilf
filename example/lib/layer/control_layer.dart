@@ -45,7 +45,7 @@ class _ControlLayerState extends State<ControlLayer> {
       onChanged: (DFCheckButton button, bool checked, int value) {
         _autoFight = checked;
         if (checked) {
-          _playerSprite?.startAutoFight(DFAction.CASTING, effect: EffectData.items["2001"]!);
+          _playerSprite?.startAutoFight(DFAction.CASTING, effect: EffectData.newEffectInfo(template: "2001"));
         } else {
           _playerSprite?.cancelAutoFight(action: DFAction.IDLE);
         }
@@ -93,12 +93,12 @@ class _ControlLayerState extends State<ControlLayer> {
               ),
               alignment: Alignment.center,
               child: DFButton(
-                image: EffectData.items["1001"]!.icon!,
+                image: EffectData.getIcon("1001"),
                 size: Size(70, 70),
                 onPressed: (button) {
                   _playerSprite?.cancelAutoFight();
                   _autoFightButton!.setChecked(false);
-                  _playerSprite?.moveToAction(DFAction.ATTACK, effect: EffectData.items["1001"]);
+                  _playerSprite?.moveToAction(DFAction.ATTACK, effect: EffectData.newEffectInfo(template: "1001"));
                 },
               ),
             )),
@@ -114,12 +114,12 @@ class _ControlLayerState extends State<ControlLayer> {
               ),
               alignment: Alignment.center,
               child: DFButton(
-                image: EffectData.items["1002"]!.icon!,
+                image: EffectData.getIcon("1002"),
                 size: Size(50, 50),
                 onPressed: (button) {
                   _playerSprite?.cancelAutoFight();
                   _autoFightButton!.setChecked(false);
-                  _playerSprite?.moveToAction(DFAction.ATTACK, effect: EffectData.items["1002"]);
+                  _playerSprite?.moveToAction(DFAction.ATTACK, effect: EffectData.newEffectInfo(template: "1002"));
                 },
               ),
             )),
@@ -137,12 +137,12 @@ class _ControlLayerState extends State<ControlLayer> {
               ),
               alignment: Alignment.center,
               child: DFButton(
-                image: EffectData.items["2001"]!.icon!,
+                image: EffectData.getIcon("2001"),
                 size: Size(50, 50),
                 onPressed: (button) {
                   _playerSprite?.cancelAutoFight();
                   _autoFightButton!.setChecked(false);
-                  _playerSprite?.moveToAction(DFAction.CASTING, effect: EffectData.items["2001"]);
+                  _playerSprite?.moveToAction(DFAction.CASTING, effect: EffectData.newEffectInfo(template: "2001"));
                 },
               ),
             )),
@@ -160,12 +160,12 @@ class _ControlLayerState extends State<ControlLayer> {
               ),
               alignment: Alignment.center,
               child: DFButton(
-                image: EffectData.items["3001"]!.icon!,
+                image: EffectData.getIcon("3001"),
                 size: Size(50, 50),
                 onPressed: (button) {
                   _playerSprite?.cancelAutoFight();
                   _autoFightButton!.setChecked(false);
-                  _playerSprite?.moveToAction(DFAction.CASTING, effect: EffectData.items["3001"]);
+                  _playerSprite?.moveToAction(DFAction.CASTING, effect: EffectData.newEffectInfo(template: "3001"));
                 },
               ),
             )),
@@ -183,12 +183,12 @@ class _ControlLayerState extends State<ControlLayer> {
               ),
               alignment: Alignment.center,
               child: DFButton(
-                image: EffectData.items["3002"]!.icon!,
+                image: EffectData.getIcon("3002"),
                 size: Size(50, 50),
                 onPressed: (button) {
                   _playerSprite?.cancelAutoFight();
                   _autoFightButton!.setChecked(false);
-                  _playerSprite?.moveToAction(DFAction.CASTING, effect: EffectData.items["3002"]);
+                  _playerSprite?.moveToAction(DFAction.CASTING, effect: EffectData.newEffectInfo(template: "3002"));
                 },
               ),
             )),

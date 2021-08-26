@@ -18,7 +18,7 @@ import 'package:devilf_engine/util/df_util.dart';
 import 'package:example/data/item_data.dart';
 import 'package:example/effect/effect_info.dart';
 import 'package:example/effect/effect_sprite.dart';
-import 'package:example/model/item_info.dart';
+import 'package:example/item/item_info.dart';
 import 'package:example/monster/monster_sprite.dart';
 import 'package:example/player/player_info.dart';
 import 'package:flutter/cupertino.dart';
@@ -500,9 +500,9 @@ class PlayerSprite extends DFSprite {
   /// 卸下衣服
   Future<void> removeClothes() async {
     if(this.player.gender == 1){
-      this.changeClothes(ItemData.newItemInfo("1100"));
+      this.changeClothes(ItemData.newItemInfo(0,template: "1100"));
     }else{
-      this.changeClothes(ItemData.newItemInfo("1200"));
+      this.changeClothes(ItemData.newItemInfo(0,template: "1200"));
     }
   }
 

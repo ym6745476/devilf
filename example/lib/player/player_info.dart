@@ -1,5 +1,5 @@
 import 'package:devilf_engine/core/df_living.dart';
-import 'package:example/model/item_info.dart';
+import 'package:example/item/item_info.dart';
 
 /// 玩家类
 class PlayerInfo extends DFLiving {
@@ -122,5 +122,20 @@ class PlayerInfo extends DFLiving {
   }) : super(id, name) {
     this.hp = this.maxHp;
     this.mp = this.maxMp;
+  }
+}
+
+/// 职业类型
+class JobType {
+  static const int NONE = 0;
+  static const int ZANSHI = 1;
+  static const int FASHI = 2;
+  static const int DAOSHI = 3;
+
+  static const List<String> NAMES = ["无","战士","法师","道士"];
+
+  /// 职业名称
+  static String getName(int type) {
+    return NAMES[type];
   }
 }

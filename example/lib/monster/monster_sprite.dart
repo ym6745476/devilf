@@ -15,8 +15,13 @@ import 'package:devilf_engine/sprite/df_text_sprite.dart';
 import 'package:devilf_engine/util/df_astar.dart';
 import 'package:devilf_engine/util/df_audio.dart';
 import 'package:devilf_engine/util/df_util.dart';
+import 'package:example/data/item_data.dart';
+import 'package:example/data/item_drop_data.dart';
 import 'package:example/effect/effect_info.dart';
 import 'package:example/effect/effect_sprite.dart';
+import 'package:example/item/item_info.dart';
+import 'package:example/item/item_sprite.dart';
+import 'package:example/model/drop_item_info.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui' as ui;
@@ -527,6 +532,47 @@ class MonsterSprite extends DFSprite {
     this.unSelectThisSprite();
     this.play(DFAction.DEATH, direction: direction, radians: radians);
     this.rebornClock = DateTime.now().millisecondsSinceEpoch;
+
+    /// 物品掉落
+    print("怪物死亡，判断物品掉落");
+    _dropItem();
+  }
+
+  /// 掉落物品
+  Future<void> _dropItem() async {
+    List<ItemSprite> dropItemSprite = [];
+
+    await Future.delayed(Duration(milliseconds: 100), () async {
+
+      double stepDrop = 0;
+      double radians =  0;
+      for(int i = 0; i<this.monster.dropIds.length; i++){
+        DropItemInfo dropItemInfo = ItemDropData.getDropItem(this.monster.dropIds[i]);
+
+        radians = radians - 45 * pi / 180;
+        if(radians < -pi){
+          radians = pi;
+        }
+        stepDrop = i % 8 * 20 + 20;
+
+        ItemInfo itemInfo = ItemData.newItemInfo(ItemData.generateItemId(),template:dropItemInfo.template);
+        ItemSprite itemSprite = ItemSprite(itemInfo);
+        double x = this.position.x + stepDrop * cos(radians);
+        double y = this.position.y + stepDrop * sin(radians);
+        itemSprite.position = DFPosition(x, y);
+
+        print("掉落物品:" + itemInfo.id.toString() + "," + itemInfo.name + "," + dropItemInfo.template);
+        dropItemSprite.add(itemSprite);
+
+      }
+
+    });
+
+    /// 将怪物精灵添加到主界面
+    GameManager.gameWidget!.insertChildren(1,dropItemSprite);
+
+    /// 保存到管理器里
+    GameManager.dropItemSprite = dropItemSprite;
   }
 
   /// 重生

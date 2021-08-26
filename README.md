@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/devilf-0.0.9-orange" />
+    <img src="https://img.shields.io/badge/devilf-0.1.0-orange" />
     <img src="https://img.shields.io/badge/flutter-2.2.3-green" />
 </p>
 
@@ -26,13 +26,16 @@
 ## 引擎介绍  
 Flutter由Google的工程师团队打造，用于创建高性能、跨平台的移动应用。  
 使用Flutter可以很容易的实现三端跨平台，为APP游戏化，以及跨平台游戏开发提供了更多可能性。  
-感谢大家关注，也欢迎贡献你的想法和技术。欢迎加QQ群讨论：687500695！！！  
-
+感谢大家关注，也欢迎贡献你的想法和技术。欢迎加QQ群讨论：687500695！！！   
+声明：游戏内素材来源传奇世界，如有侵权请联系站长删除，素材仅供开发学习，如滥用产生的后果与本站无关。  
 ## 适用范围：  
 中型游戏，营销活动，小游戏。  
 
 ## 主要特性：  
 游戏循环，精灵渲染，精灵动画，摄像机，瓦片地图，碰撞检测等。   
+
+## 引擎官网    
+https://devilf.com  
 
 ## 开发手册  
 https://ymbok.com/book/devilf.html  
@@ -43,11 +46,11 @@ https://ymbok.com/download/slayer.html
 ## 安装引擎  
 ```yaml
 dependencies:
-  devilf: ^0.0.9
+  devilf: ^0.1.0
 ```
 
 ## 示例演示  
-<img src="https://github.com/ym6745476/devilf/blob/master/screenshot/slayer.gif?v=9" width="600" height="292"/>  
+<img src="https://github.com/ym6745476/devilf/blob/master/screenshot/slayer.gif?v=10" width="600" height="292"/>  
 
 ## 示例功能  
 * GameManager：游戏管理器  
@@ -56,6 +59,7 @@ dependencies:
 * MonsterSprite：怪物精灵  
 * EffectSprite：特效精灵  
 * MapSprite：地图精灵  
+* ItemSprite：物品精灵  
 
 ## 核心组件    
 * GameScene：游戏场景  
@@ -83,6 +87,11 @@ dependencies:
 * 碰撞检测  
 * 坐标转换  
 * A*寻路算法  
+
+## [0.1.0] - 2021/08/28.   
+* 新增[示例] 物品掉落到场景中显示      
+* 新增[示例] 怪物死亡物品掉落配置    
+* 新增[示例] 装备信息显示  
 
 ## [0.0.9] - 2021/08/19.   
 * 优化[示例] 修复BUG  

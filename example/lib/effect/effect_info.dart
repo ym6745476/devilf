@@ -40,22 +40,29 @@ class EffectInfo {
   int delayTime;
 
   /// 特效类型
-  EffectType type = EffectType.NONE;
+  EffectType type;
+
+  /// 模板
+  String template;
 
   /// 创建特效
-  EffectInfo(this.id, this.name, this.type,
-      {
-      this.icon,
-      this.texture,
-      this.audio,
-      this.at = 1,
-      this.mt = 1,
-      this.moveSpeed = 0,
-      this.frameSpeed = 5,
-      this.vision = 0,
-      this.delayTime = 0,
-      this.destroyTime = 400,
-      this.damageRange = 0});
+  EffectInfo(
+    this.id, {
+    this.template = "",
+    this.name = "",
+    this.icon,
+    this.texture,
+    this.audio,
+    this.at = 1,
+    this.mt = 1,
+    this.moveSpeed = 0,
+    this.frameSpeed = 5,
+    this.vision = 0,
+    this.delayTime = 0,
+    this.destroyTime = 400,
+    this.damageRange = 0,
+    this.type = EffectType.NONE,
+  });
 }
 
 /// 特效类型

@@ -1,7 +1,7 @@
 import 'package:devilf_engine/util/df_ui_util.dart';
 import 'package:devilf_engine/widget/df_button.dart';
 import 'package:example/data/item_data.dart';
-import 'package:example/model/item_info.dart';
+import 'package:example/item/item_info.dart';
 import 'package:example/player/player_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +41,7 @@ class _RucksackLayerState extends State<RucksackLayer> {
   }
 
   List<Widget> _getItemList() {
-    double itemWidth = (this._containerWidth - 10 * this._scale * 9) / 10;
+    double itemWidth = (this._containerWidth - 30 * this._scale - 10 * this._scale * 9) / 10;
     List<Widget> list = [];
     GameManager.items.forEach((item) {
       if (!item.isDressed) {
@@ -98,7 +98,6 @@ class _RucksackLayerState extends State<RucksackLayer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.only(top: 0, left: 0),
               width: this._width,
               height: this._height,
               decoration: BoxDecoration(
@@ -117,7 +116,7 @@ class _RucksackLayerState extends State<RucksackLayer> {
                     width: this._width,
                     height:40 * this._scale,
                     margin: EdgeInsets.only(
-                      top: 26 * this._scale,
+                      top: 22 * this._scale,
                     ),
                     /*color: Color(0x60FFFFFF),*/
                     child: Text(
@@ -136,16 +135,16 @@ class _RucksackLayerState extends State<RucksackLayer> {
                     width: this._containerWidth,
                     height: this._containerHeight,
                     margin: EdgeInsets.only(
-                      top: 10 * this._scale,
+                      top: 16 * this._scale,
                     ),
                     child: Container(
-                      /*color: Color(0x60FFFFFF),*/
+                      /*color: Color(0xFF000000),*/
                       margin: EdgeInsets.all(15 * this._scale),
                       child: SingleChildScrollView(
                         physics: ClampingScrollPhysics(),
                         reverse: false,
                         controller: _controller,
-                        child: Wrap(spacing: 6 * this._scale, runSpacing: 6 * this._scale, children: _getItemList()),
+                        child: Wrap(spacing: 10 * this._scale, runSpacing: 10 * this._scale, children: _getItemList()),
                       ),
                     ),
                   ),

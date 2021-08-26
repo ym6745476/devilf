@@ -13,7 +13,7 @@ import 'package:example/data/monster_update_data.dart';
 import 'package:example/data/player_data.dart';
 import 'package:example/layer/control_layer.dart';
 import 'package:example/map/map_info.dart';
-import 'package:example/model/item_info.dart';
+import 'package:example/item/item_info.dart';
 import 'package:example/player/player_info.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +88,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
           ItemInfo(2,template: "1001"),
           ItemInfo(3,template: "2001"),
           ItemInfo(4,template: "3001"),
+
           ItemInfo(5,template: "1100"),
           ItemInfo(6,template: "1101"),
           ItemInfo(7,template: "1102"),
@@ -106,15 +107,13 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         ];
 
         /// 玩家类
-        PlayerInfo player = PlayerData.newPlayer(gender.toString());
-        player.id = playerId;
-        player.name = name;
+        PlayerInfo player = PlayerData.newPlayer(playerId,name,template:gender==1?"1100":"1200");
         player.gender = gender;
         player.battle = 1200;
         player.level = 1;
         player.exp = 0;
-        player.minAt = 50;
-        player.maxAt = 120;
+        player.minAt = 3 * 50;
+        player.maxAt = 3 * 120;
         player.minDf = 5;
         player.maxDf = 10;
         player.minMf = 5;
@@ -123,7 +122,7 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
 
         /// 背包物品
         items.forEach((item) {
-          ItemInfo itemInfo = ItemData.newItemInfo(item.template);
+          ItemInfo itemInfo = ItemData.newItemInfo(item.id,template:item.template);
           if(item.id == clothesId){
             player.clothes = itemInfo;
             itemInfo.isDressed = true;
@@ -158,8 +157,9 @@ class _GameSceneState extends State<GameScene> with TickerProviderStateMixin {
         /// 怪物刷新
         MonsterUpdateData.items.forEach((element) {
           for (int i = 0; i < element.count; i++) {
-            MonsterInfo monster = MonsterData.newMonster(element.template);
-            /// monster.effects = [EffectData.items["2001"]!];
+            MonsterInfo monster = MonsterData.newMonster(i + 1,template: element.template);
+            /// monster.effects = [EffectData.newEffectInfo(template: "2001")!];
+            monster.dropIds = element.dropIds;
             MonsterSprite monsterSprite = MonsterSprite(monster);
             int dirX = Random().nextBool() ? 1 : -1;
             int dirY = Random().nextBool() ? 1 : -1;

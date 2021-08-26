@@ -1,10 +1,7 @@
 import 'package:devilf_engine/core/df_position.dart';
 import 'package:devilf_engine/util/df_ui_util.dart';
 import 'package:devilf_engine/widget/df_button.dart';
-import 'package:example/data/effect_data.dart';
-import 'package:example/data/item_data.dart';
-import 'package:example/data/job_data.dart';
-import 'package:example/model/item_info.dart';
+import 'package:example/item/item_info.dart';
 import 'package:example/player/player_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -181,7 +178,7 @@ class _CharacterLayerState extends State<CharacterLayer> {
           ),
           Container(
             width: width,
-            height: this._containerHeight - 100 * this._scale,
+            height: this._containerHeight - 105 * this._scale,
             /*color: Color(0x60FFFFFF),*/
             child: SingleChildScrollView(
               child: Column(
@@ -189,7 +186,7 @@ class _CharacterLayerState extends State<CharacterLayer> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _getPropertyItem("等级：", _playerInfo.level.toString()),
-                  _getPropertyItem("职业：", JobData.items[_playerInfo.job.toString()]!),
+                  _getPropertyItem("职业：", JobType.NAMES[_playerInfo.job]),
                   _getPropertyItem("生命：", _playerInfo.hp.toString() + "/" + _playerInfo.maxHp.toString()),
                   _getPropertyItem("魔法：", _playerInfo.mp.toString() + "/" + _playerInfo.maxMp.toString()),
                   _getPropertyItem("经验：", _playerInfo.exp.toString()),
@@ -322,7 +319,7 @@ class _CharacterLayerState extends State<CharacterLayer> {
                     width: this._width,
                     height: 40 * this._scale,
                     margin: EdgeInsets.only(
-                      top: 26 * this._scale,
+                      top: 22 * this._scale,
                     ),
                     /*color: Color(0xFFFFFFFF),*/
                     child: Text(
@@ -341,7 +338,7 @@ class _CharacterLayerState extends State<CharacterLayer> {
                     width: this._containerWidth,
                     height: this._containerHeight,
                     margin: EdgeInsets.only(
-                      top: 10 * this._scale,
+                      top: 15 * this._scale,
                     ),
                     child: Container(
                       /*color: Color(0x60FFFFFF),*/
