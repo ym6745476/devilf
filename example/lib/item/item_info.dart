@@ -82,6 +82,10 @@ class ItemInfo {
 /// 物品类型
 class ItemType {
   static const String NONE = "NONE";
+  /// 药水
+  static const String POTION = "POTION";
+  /// 金币
+  static const String COIN = "COIN";
   static const String WEAPON = "WEAPON";
   static const String CLOTHES = "CLOTHES";
   static const String HELMET = "HELMET";
@@ -97,6 +101,8 @@ class ItemType {
 
   static const Map<String, String> NAMES = {
     ItemType.NONE: "无",
+    ItemType.POTION: "药水",
+    ItemType.COIN: "金币",
     ItemType.WEAPON: "武器",
     ItemType.CLOTHES: "衣服",
     ItemType.HELMET: "头盔",

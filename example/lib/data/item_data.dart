@@ -28,6 +28,18 @@ class ItemData {
     ItemInfo(0, template: "1204", name: "重盔", type: ItemType.CLOTHES),
     ItemInfo(0, template: "2204", name: "魔袍", type: ItemType.CLOTHES),
     ItemInfo(0, template: "3204", name: "灵魂战甲", type: ItemType.CLOTHES),
+
+    ItemInfo(0, template: "100", name: "金币（小）", type: ItemType.COIN),
+    ItemInfo(0, template: "101", name: "金币（中）", type: ItemType.COIN),
+    ItemInfo(0, template: "102", name: "金币（大）", type: ItemType.COIN),
+    ItemInfo(0, template: "103", name: "金创药（小）", type: ItemType.POTION),
+    ItemInfo(0, template: "104", name: "金创药（中）", type: ItemType.POTION),
+    ItemInfo(0, template: "105", name: "金创药（大）", type: ItemType.POTION),
+    ItemInfo(0, template: "106", name: "魔法药（小）", type: ItemType.POTION),
+    ItemInfo(0, template: "107", name: "魔法药（中）", type: ItemType.POTION),
+    ItemInfo(0, template: "108", name: "魔法药（大）", type: ItemType.POTION),
+    ItemInfo(0, template: "109", name: "太阳水（小）", type: ItemType.POTION),
+    ItemInfo(0, template: "110", name: "太阳水（大）", type: ItemType.POTION),
   ];
 
   /// 创建物品

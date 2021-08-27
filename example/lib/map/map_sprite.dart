@@ -8,7 +8,9 @@ import 'package:devilf_engine/sprite/df_tile_map_sprite.dart';
 import 'package:devilf_engine/tiled/df_tile_map.dart';
 import 'package:devilf_engine/util/df_audio.dart';
 import 'package:devilf_engine/util/df_util.dart';
+import 'package:example/item/item_sprite.dart';
 import 'package:flutter/cupertino.dart';
+import '../game_manager.dart';
 import 'map_info.dart';
 
 /// 地图精灵类
@@ -48,6 +50,9 @@ class MapSprite extends DFSprite {
 
       /// 将block转化为二维数组
       this.mapInfo.blockMap = DFUtil.to2dList(this.tileMapSprite!.blockLayer!.data!, tileMap.width!, 1);
+
+      /// 填充这个列表 后面掉落要用
+      GameManager.droppedItemSprite = List.generate(tileMap.height!,(index)=> List.generate(tileMap.width!, (index) => null));
 
       /// 调用add产生层级关系进行坐标转换
       addChild(this.tileMapSprite!);

@@ -26,7 +26,7 @@ class GameManager {
   static List<MonsterSprite>? monsterSprites;
 
   /// 已掉落在地上的物品
-  static List<ItemSprite> dropItemSprite = [];
+  static List<List<ItemSprite?>>? droppedItemSprite;
 
   /// 背包物品
   static List<ItemInfo> items = [];

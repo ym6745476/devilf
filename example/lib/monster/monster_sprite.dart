@@ -73,7 +73,7 @@ class MonsterSprite extends DFSprite {
   bool autoMove = false;
 
   /// 当前路径
-  List<DFMapPosition> pathList = [];
+  List<DFTilePosition> pathList = [];
 
   /// 寻路坐标
   DFPosition? movePathPosition;
@@ -332,10 +332,10 @@ class MonsterSprite extends DFSprite {
 
     if (this.targetSprite != null) {
       /// 转换为瓦片坐标
-      DFMapPosition startPosition = GameManager.mapSprite!.mapInfo.getMapPosition(position);
-      DFMapPosition endPosition = GameManager.mapSprite!.mapInfo.getMapPosition(this.targetSprite!.position);
-      DFMapNode startNode = DFMapNode(startPosition.x, startPosition.y);
-      DFMapNode endNode = DFMapNode(endPosition.x, endPosition.y);
+      DFTilePosition startPosition = GameManager.mapSprite!.mapInfo.getTilePosition(position);
+      DFTilePosition endPosition = GameManager.mapSprite!.mapInfo.getTilePosition(this.targetSprite!.position);
+      DFAStarNode startNode = DFAStarNode(startPosition.x, startPosition.y);
+      DFAStarNode endNode = DFAStarNode(endPosition.x, endPosition.y);
 
       /// print("起点瓦片位置：" + startNode.toString() + ",起点位置：" + this.position.toString());
       /// print("终点瓦片位置：" + endNode.toString() + ",目标位置：" + this.targetSprite!.position.toString());
@@ -347,7 +347,7 @@ class MonsterSprite extends DFSprite {
         this.pathList = await aStar.start(GameManager.mapSprite!.mapInfo.blockMap!, startNode, endNode);
 
         if (this.pathList.length > 0) {
-          DFMapPosition mapPosition = this.pathList.removeLast();
+          DFTilePosition mapPosition = this.pathList.removeLast();
           this.movePathPosition = GameManager.mapSprite!.mapInfo.getPosition(mapPosition);
           this.updateDirection(this.movePathPosition!);
 
@@ -544,26 +544,29 @@ class MonsterSprite extends DFSprite {
 
     await Future.delayed(Duration(milliseconds: 100), () async {
 
-      double stepDrop = 0;
-      double radians =  0;
+      DFTilePosition tilePosition = GameManager.mapSprite!.mapInfo.getTilePosition(this.position);
+      int radius = 3;
       for(int i = 0; i<this.monster.dropIds.length; i++){
         DropItemInfo dropItemInfo = ItemDropData.getDropItem(this.monster.dropIds[i]);
 
-        radians = radians - 45 * pi / 180;
-        if(radians < -pi){
-          radians = pi;
+        DFTilePosition? findMapPosition = findDropPosition(tilePosition,radius);
+        if(findMapPosition != null){
+          DFPosition itemPosition = GameManager.mapSprite!.mapInfo.getPosition(findMapPosition);
+
+          ItemInfo itemInfo = ItemData.newItemInfo(ItemData.generateItemId(),template:dropItemInfo.template);
+          ItemSprite itemSprite = ItemSprite(itemInfo);
+          itemSprite.position = itemPosition;
+          print("掉落物品:" + itemInfo.id.toString() + "," + itemInfo.name + "," + dropItemInfo.template);
+
+          /// 保存到管理器里
+          if(GameManager.droppedItemSprite != null){
+            GameManager.droppedItemSprite![findMapPosition.y][findMapPosition.x] = itemSprite;
+          }
+
+          dropItemSprite.add(itemSprite);
+        }else{
+          print("掉落物品失败，地上没有空位置了");
         }
-        stepDrop = i % 8 * 20 + 20;
-
-        ItemInfo itemInfo = ItemData.newItemInfo(ItemData.generateItemId(),template:dropItemInfo.template);
-        ItemSprite itemSprite = ItemSprite(itemInfo);
-        double x = this.position.x + stepDrop * cos(radians);
-        double y = this.position.y + stepDrop * sin(radians);
-        itemSprite.position = DFPosition(x, y);
-
-        print("掉落物品:" + itemInfo.id.toString() + "," + itemInfo.name + "," + dropItemInfo.template);
-        dropItemSprite.add(itemSprite);
-
       }
 
     });
@@ -571,8 +574,37 @@ class MonsterSprite extends DFSprite {
     /// 将怪物精灵添加到主界面
     GameManager.gameWidget!.insertChildren(1,dropItemSprite);
 
-    /// 保存到管理器里
-    GameManager.dropItemSprite = dropItemSprite;
+
+  }
+
+  DFTilePosition? findDropPosition(DFTilePosition mapPosition,int radius){
+    DFTilePosition? findMapPosition;
+    int mapX = mapPosition.x;
+    int mapY =  mapPosition.y;
+    /// 往外圈找位置
+    List<DFTilePosition> positions = [
+      DFTilePosition(mapX, mapY - radius),
+      DFTilePosition(mapX + radius, mapY - radius),
+      DFTilePosition(mapX + radius, mapY),
+      DFTilePosition(mapX + radius, mapY + radius),
+      DFTilePosition(mapX, mapY + radius),
+      DFTilePosition(mapX - radius, mapY + radius),
+      DFTilePosition(mapX - radius, mapY),
+      DFTilePosition(mapX - radius, mapY - radius)
+    ];
+
+    if(GameManager.droppedItemSprite != null){
+      for(DFTilePosition position in positions){
+        if(GameManager.droppedItemSprite![position.y][position.x] == null){
+          findMapPosition = position;
+        }
+      }
+    }
+    if(findMapPosition == null && radius < 10){
+      return findDropPosition(mapPosition,radius + 3);
+    }else{
+      return  findMapPosition;
+    }
   }
 
   /// 重生
@@ -714,7 +746,7 @@ class MonsterSprite extends DFSprite {
               this.doNextAction();
             } else {
               if (this.pathList.length > 0) {
-                DFMapPosition mapPosition = this.pathList.removeLast();
+                DFTilePosition mapPosition = this.pathList.removeLast();
                 this.movePathPosition = GameManager.mapSprite!.mapInfo.getPosition(mapPosition);
                 this.updateDirection(this.movePathPosition!);
 

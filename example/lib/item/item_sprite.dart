@@ -2,6 +2,8 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:devilf_engine/core/df_position.dart';
 import 'package:devilf_engine/core/df_size.dart';
+import 'package:devilf_engine/game/df_animation.dart';
+import 'package:devilf_engine/sprite/df_animation_sprite.dart';
 import 'package:devilf_engine/sprite/df_image_sprite.dart';
 import 'package:devilf_engine/sprite/df_sprite.dart';
 import 'package:devilf_engine/sprite/df_text_sprite.dart';
@@ -20,6 +22,12 @@ class ItemSprite extends DFSprite {
   /// 名字
   DFTextSprite? nameSprite;
 
+  /// 选中光圈
+  DFAnimationSprite? selectSprite;
+
+  /// 是否被选择
+  bool isSelected = false;
+
   /// 初始化完成
   bool initOk = false;
 
@@ -35,15 +43,22 @@ class ItemSprite extends DFSprite {
   Future<void> _init() async {
     try {
       await Future.delayed(Duration.zero, () async {
+
+        /// 选择光圈
+        this.selectSprite = await DFAnimationSprite.load("assets/images/effect/select_monster.json",
+            scale: 0.4, blendMode: BlendMode.colorDodge);
+        this.selectSprite!.position = DFPosition(size.width / 2, size.height / 2);
+        addChild(this.selectSprite!);
+
         /// 图像
         this.imageSprite = await DFImageSprite.load(this.item.icon!);
         this.imageSprite!.position = DFPosition(size.width / 2, size.height / 2);
-        this.imageSprite!.scale = 0.4;
+        this.imageSprite!.scale = 0.3;
         addChild(this.imageSprite!);
 
         /// 名字
-        this.nameSprite = DFTextSprite(this.item.name, fontSize: 10);
-        this.nameSprite!.position = DFPosition(size.width / 2, size.height / 2);
+        this.nameSprite = DFTextSprite(this.item.name, fontSize: 8);
+        this.nameSprite!.position = DFPosition(size.width / 2, 0);
         this.nameSprite!.setOnUpdate((dt) {});
         addChild(this.nameSprite!);
 
@@ -53,6 +68,19 @@ class ItemSprite extends DFSprite {
     } catch (e) {
       print('(ItemSprite _init) Error: $e');
     }
+  }
+
+  /// 选择
+  void selectThisSprite() {
+    this.selectSprite?.visible = true;
+    this.isSelected = true;
+    this.selectSprite?.play(DFAction.IDLE + DFDirection.UP, stepTime: 100, loop: true);
+  }
+
+  /// 取消选择
+  void unSelectThisSprite() {
+    this.selectSprite?.visible = false;
+    this.isSelected = false;
   }
 
   @override

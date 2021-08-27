@@ -44,19 +44,19 @@ class MapInfo {
   MapInfo(this.name);
 
   /// 根据瓦片位置获取地图上坐标
-  DFPosition getPosition(DFMapPosition mapPosition) {
-    return DFPosition(mapPosition.x * scaledTileWidth + scaledTileWidth / 2, mapPosition.y * scaledTileHeight + scaledTileHeight / 2);
+  DFPosition getPosition(DFTilePosition position) {
+    return DFPosition(position.x * scaledTileWidth + scaledTileWidth / 2, position.y * scaledTileHeight + scaledTileHeight / 2);
   }
 
   /// 根据地图上坐标获取瓦片位置
-  DFMapPosition getMapPosition(DFPosition position) {
+  DFTilePosition getTilePosition(DFPosition position) {
     int x = (position.x / scaledTileWidth).floor();
     int y = (position.y / scaledTileHeight).floor();
-    return DFMapPosition(x, y);
+    return DFTilePosition(x, y);
   }
 
   /// 获取路径矩形
-  DFRect getPathRect(DFMapPosition mapPosition) {
-    return DFRect(mapPosition.x * scaledTileWidth, mapPosition.y * scaledTileHeight,scaledTileWidth,scaledTileHeight);
+  DFRect getPathRect(DFTilePosition position) {
+    return DFRect(position.x * scaledTileWidth, position.y * scaledTileHeight,scaledTileWidth,scaledTileHeight);
   }
 }
