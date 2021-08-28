@@ -262,20 +262,30 @@ class MonsterSprite extends DFSprite {
     }
   }
 
-  /// 锁定目标
-  void lockTargetSprite() {
+  /// 寻找敌人
+  void findAndSelectEnemy() {
     if (inVision()) {
       return;
     }
-    this.findEnemy(
-        found: (sprites) {
-          this.targetSprite = sprites[0];
-        },
-        notFound: () {
-          /// print("没有找到目标");
-          this.targetSprite = null;
-        },
-        vision: monster.vision);
+
+    /// 目标列表
+    List<DFSprite> foundEnemy = [];
+
+    DFCircle visibleShape = DFCircle(DFPosition(this.position.x, this.position.y), monster.vision);
+    PlayerSprite playerSprite = GameManager.playerSprite!;
+    if (!playerSprite.player.isDeath) {
+      DFShape playerCollision = playerSprite.getCollisionShape();
+      if (playerCollision.overlaps(visibleShape)) {
+        foundEnemy.add(playerSprite);
+      }
+    }
+
+    if (foundEnemy.length > 0) {
+      this.targetSprite = foundEnemy[0];
+    } else {
+      /// print("没有找到目标");
+      this.targetSprite = null;
+    }
   }
 
   /// 检查目标
@@ -295,30 +305,6 @@ class MonsterSprite extends DFSprite {
     return false;
   }
 
-  /// 在可视范围内找敌人
-  void findEnemy({
-    required Function(List<DFSprite>) found,
-    required Function() notFound,
-    required double vision,
-  }) {
-    /// 目标列表
-    List<DFSprite> foundEnemy = [];
-
-    DFCircle visibleShape = DFCircle(DFPosition(this.position.x, this.position.y), vision);
-    PlayerSprite playerSprite = GameManager.playerSprite!;
-    if (!playerSprite.player.isDeath) {
-      DFShape playerCollision = playerSprite.getCollisionShape();
-      if (playerCollision.overlaps(visibleShape)) {
-        foundEnemy.add(playerSprite);
-      }
-    }
-
-    if (foundEnemy.length > 0) {
-      found(foundEnemy);
-    } else {
-      notFound();
-    }
-  }
 
   /// 锁定目标->移动到目标->动作
   Future<void> moveToAction(String action, {EffectInfo? effect, bool autoFight = false}) async {
@@ -327,8 +313,8 @@ class MonsterSprite extends DFSprite {
     this.nextAction = action;
     this.effect = effect;
 
-    /// 锁定目标
-    lockTargetSprite();
+    /// 自动选择目标
+    findAndSelectEnemy();
 
     if (this.targetSprite != null) {
       /// 转换为瓦片坐标
@@ -339,7 +325,7 @@ class MonsterSprite extends DFSprite {
 
       /// print("起点瓦片位置：" + startNode.toString() + ",起点位置：" + this.position.toString());
       /// print("终点瓦片位置：" + endNode.toString() + ",目标位置：" + this.targetSprite!.position.toString());
-      if (startNode.position == endNode.position || inEffectVision(this.targetSprite!)) {
+      if (startNode.position == endNode.position || collisionWithVision(this.targetSprite!)) {
         /// 在可攻击范围
         this.doNextAction();
       } else {
@@ -410,7 +396,7 @@ class MonsterSprite extends DFSprite {
   }
 
   /// 检查是否提前到达攻击范围
-  bool inEffectVision(DFSprite? targetSprite) {
+  bool collisionWithVision(DFSprite? targetSprite) {
     if (targetSprite == null) {
       return false;
     }
@@ -439,7 +425,7 @@ class MonsterSprite extends DFSprite {
 
     /// 显示技能特效
     if (this.effect != null && this.effect!.texture != null) {
-      this._addEffect(this.effect!);
+      this.addEffect(this.effect!);
     } else {
       /// 没特效直接出伤害
       if (this.targetSprite != null && effect != null) {
@@ -452,7 +438,7 @@ class MonsterSprite extends DFSprite {
   }
 
   /// 添加特效
-  Future<void> _addEffect(EffectInfo effect) async {
+  Future<void> addEffect(EffectInfo effect) async {
     await Future.delayed(Duration(milliseconds: effect.delayTime), () async {
       EffectSprite effectSprite = EffectSprite(effect);
       effectSprite.position = DFPosition(this.position.x, this.position.y - DFConfig.effectOffset);
@@ -466,58 +452,21 @@ class MonsterSprite extends DFSprite {
 
   /// 接收伤害
   void receiveDamage(DFSprite ownerSprite, EffectInfo effect) {
-    /// 随机伤害  0.0~1.0
-    var random = new Random();
-    if (ownerSprite is PlayerSprite) {
-      int newMinAt = ownerSprite.player.minAt;
-      int newMaxAt = (ownerSprite.player.maxAt * random.nextDouble()).round();
-      int at = newMinAt > newMaxAt ? newMinAt : newMaxAt ;
 
-      int newMinDf = ownerSprite.player.minDf;
-      int newMaxDf = (ownerSprite.player.maxDf * random.nextDouble()).round();
-      int df = newMinDf > newMaxDf ? newMinDf : newMaxAt ;
-      double damageAt = at * effect.at - df;
+    int hp = GameManager.damageHp(ownerSprite, this, effect);
 
-      int newMinMt = ownerSprite.player.minMt;
-      int newMaxMt = (ownerSprite.player.maxMt * random.nextDouble()).round();
-      int mt = newMinMt > newMaxMt ? newMinMt : newMaxMt ;
+    /// print("伤害转化血量:" + hp.toString());
 
-      int newMinMf = ownerSprite.player.minMf;
-      int newMaxMf = (ownerSprite.player.maxMf * random.nextDouble()).round();
-      int mf = newMinMf > newMaxMf ? newMinMf : newMaxMf ;
-      double damageMt = mt * effect.mt - mf;
+    this.monster.hp = this.monster.hp - hp;
+    this.hpBarSprite!.progress = (this.monster.hp / this.monster.maxMp * 100).toInt();
 
-      double totalDamage = damageAt + damageMt;
-      if (totalDamage <= 0) {
-        totalDamage = 1;
-      }
+    /// 播放音频
+    DFAudio.play(this.monster.hurtAudio[0]);
 
-      /// 真实伤害数值 攻击力 - 防御力 * 0.35
-      int hp = (totalDamage * 0.35 + 0.5).floor();
-
-      print(this.monster.name + "接收到伤害:" + totalDamage.toStringAsFixed(2));
-      /// print("伤害转化血量:" + hp.toString());
-
-      this.monster.hp = this.monster.hp - hp;
-      this.hpBarSprite!.progress = (this.monster.hp / this.monster.maxMp * 100).toInt();
-
-      /// 播放音频
-      DFAudio.play(this.monster.hurtAudio[0]);
-
-      /// 判断死亡
-      if (this.monster.hp < 0) {
-        this.dead(ownerSprite);
-      }
+    /// 判断死亡
+    if (this.monster.hp < 0) {
+      this.dead(ownerSprite);
     }
-
-    /*this.showDamage(
-      damage,
-      config: TextPaintConfig(
-        fontSize: width / 3,
-        color: Colors.white,
-      ),
-    );
-    super.receiveDamage(damage, from);*/
   }
 
   /// 死亡
@@ -549,9 +498,9 @@ class MonsterSprite extends DFSprite {
       for(int i = 0; i<this.monster.dropIds.length; i++){
         DropItemInfo dropItemInfo = ItemDropData.getDropItem(this.monster.dropIds[i]);
 
-        DFTilePosition? findMapPosition = findDropPosition(tilePosition,radius);
-        if(findMapPosition != null){
-          DFPosition itemPosition = GameManager.mapSprite!.mapInfo.getPosition(findMapPosition);
+        DFTilePosition? foundPosition = GameManager.findDropPosition(tilePosition,radius);
+        if(foundPosition != null){
+          DFPosition itemPosition = GameManager.mapSprite!.mapInfo.getPosition(foundPosition);
 
           ItemInfo itemInfo = ItemData.newItemInfo(ItemData.generateItemId(),template:dropItemInfo.template);
           ItemSprite itemSprite = ItemSprite(itemInfo);
@@ -560,7 +509,7 @@ class MonsterSprite extends DFSprite {
 
           /// 保存到管理器里
           if(GameManager.droppedItemSprite != null){
-            GameManager.droppedItemSprite![findMapPosition.y][findMapPosition.x] = itemSprite;
+            GameManager.droppedItemSprite![foundPosition.y][foundPosition.x] = itemSprite;
           }
 
           dropItemSprite.add(itemSprite);
@@ -571,40 +520,9 @@ class MonsterSprite extends DFSprite {
 
     });
 
-    /// 将怪物精灵添加到主界面
+    /// 将物品精灵添加到主界面
     GameManager.gameWidget!.insertChildren(1,dropItemSprite);
 
-
-  }
-
-  DFTilePosition? findDropPosition(DFTilePosition mapPosition,int radius){
-    DFTilePosition? findMapPosition;
-    int mapX = mapPosition.x;
-    int mapY =  mapPosition.y;
-    /// 往外圈找位置
-    List<DFTilePosition> positions = [
-      DFTilePosition(mapX, mapY - radius),
-      DFTilePosition(mapX + radius, mapY - radius),
-      DFTilePosition(mapX + radius, mapY),
-      DFTilePosition(mapX + radius, mapY + radius),
-      DFTilePosition(mapX, mapY + radius),
-      DFTilePosition(mapX - radius, mapY + radius),
-      DFTilePosition(mapX - radius, mapY),
-      DFTilePosition(mapX - radius, mapY - radius)
-    ];
-
-    if(GameManager.droppedItemSprite != null){
-      for(DFTilePosition position in positions){
-        if(GameManager.droppedItemSprite![position.y][position.x] == null){
-          findMapPosition = position;
-        }
-      }
-    }
-    if(findMapPosition == null && radius < 10){
-      return findDropPosition(mapPosition,radius + 3);
-    }else{
-      return  findMapPosition;
-    }
   }
 
   /// 重生
@@ -738,7 +656,7 @@ class MonsterSprite extends DFSprite {
         if (this.autoMove && this.movePathPosition != null) {
           this.run(this.movePathPosition!, arrived: () {
             /// 检查是否在攻击范围
-            bool arrived = this.inEffectVision(this.targetSprite!);
+            bool arrived = this.collisionWithVision(this.targetSprite!);
             if (arrived) {
               /// 清除路径
               this.autoFightClock = DateTime.now().millisecondsSinceEpoch;

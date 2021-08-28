@@ -196,6 +196,10 @@ class PlayerSprite extends DFSprite {
     /// 动画名称
     String animation = this.action + this.direction;
 
+    if (this.action == DFAction.PICKUP) {
+      animation = DFAction.COLLECT + this.direction;
+    }
+
     if (clothesSprite != null) {
       if (animation != clothesSprite!.currentAnimation) {
         /// 5方向转换为8方向
@@ -206,7 +210,7 @@ class PlayerSprite extends DFSprite {
         clothesSprite!.currentAnimationFlippedX = flippedX;
 
         bool loop = true;
-        if (this.action == DFAction.ATTACK || this.action == DFAction.CASTING || this.action == DFAction.DEATH) {
+        if (this.action == DFAction.ATTACK || this.action == DFAction.CASTING || this.action == DFAction.PICKUP || this.action == DFAction.DEATH) {
           loop = false;
         }
 
@@ -236,7 +240,35 @@ class PlayerSprite extends DFSprite {
           /// 播放音频
           DFAudio.play(this.player.deathAudio[0]);
         } else if (this.action == DFAction.COLLECT) {
-          clothesSprite!.play(animation, stepTime: 100, loop: loop);
+          clothesSprite!.play(animation, stepTime: 100, loop: loop, onComplete: (DFAnimationSprite sprite) {
+
+          });
+
+          /// 播放音频
+          DFAudio.play(this.player.collectAudio[0]);
+        } else if (this.action == DFAction.PICKUP) {
+          clothesSprite!.play(animation, stepTime: 100, loop: false, onComplete: (DFAnimationSprite sprite) {
+
+              /// 拾取物品
+              if(this.targetSprite is ItemSprite){
+                ItemSprite itemSprite = this.targetSprite as ItemSprite;
+
+                /// 从地面上删除
+                if(GameManager.droppedItemSprite != null){
+                  DFTilePosition foundPosition = GameManager.mapSprite!.mapInfo.getTilePosition(itemSprite.position);
+                  GameManager.droppedItemSprite![foundPosition.y][foundPosition.x] = null;
+                  GameManager.gameWidget!.removeChild(itemSprite);
+                }
+
+                /// 添加到背包
+                GameManager.items.add(itemSprite.item);
+                this.targetSprite = null;
+              }
+
+              /// 动作完成回到IDLE
+              clothesSprite!.play(DFAction.IDLE + this.direction, stepTime: 200, loop: false);
+
+          });
 
           /// 播放音频
           DFAudio.play(this.player.collectAudio[0]);
@@ -245,15 +277,18 @@ class PlayerSprite extends DFSprite {
     }
   }
 
-  /// 手动选择目标
+  /// 手动选择目标精灵
   void selectTargetSprite(DFSprite sprite) {
+
     if (this.targetSprite != null) {
       if (this.targetSprite is MonsterSprite) {
         MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
+
         /// 放弃目标
         monsterSprite.unSelectThisSprite();
-      }else if(this.targetSprite is ItemSprite){
+      } else if (this.targetSprite is ItemSprite) {
         ItemSprite itemSprite = this.targetSprite as ItemSprite;
+
         /// 放弃目标
         itemSprite.unSelectThisSprite();
       }
@@ -261,78 +296,37 @@ class PlayerSprite extends DFSprite {
     this.targetSprite = sprite;
     if (this.targetSprite is MonsterSprite) {
       MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
+
       /// 选择目标
       monsterSprite.selectThisSprite();
-    }else if(this.targetSprite is ItemSprite){
+    } else if (this.targetSprite is ItemSprite) {
       ItemSprite itemSprite = this.targetSprite as ItemSprite;
+
       /// 选择目标
       itemSprite.selectThisSprite();
     }
   }
 
-  /// 在范围内锁定目标
-  void lockTargetSprite() {
+  /// 寻找敌人
+  void findAndSelectEnemy() {
+    if (this.targetSprite != null) {
+      if (this.targetSprite is ItemSprite) {
+        ItemSprite itemSprite = this.targetSprite as ItemSprite;
+        /// 放弃目标
+        itemSprite.unSelectThisSprite();
+        this.targetSprite = null;
+      }
+    }
+
     if (inVision()) {
       return;
-    } else {
-      if (this.targetSprite != null) {
-        if (this.targetSprite is MonsterSprite) {
-          MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
-
-          /// 放弃目标
-          monsterSprite.unSelectThisSprite();
-        }
-      }
     }
 
-    /// 重新寻找目标
-    /// 玩家视野范围内有多个精灵，选取距离最近的作为目标
-    this.findEnemy(
-        found: (sprites) {
-          /// print("找到了" + sprites.length.toString() + "个目标");
-          this.targetSprite = sprites[0];
-          if (this.targetSprite is MonsterSprite) {
-            MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
-
-            /// print("锁定目标：" + monsterSprite.monster.name);
-            monsterSprite.selectThisSprite();
-          }
-        },
-        notFound: () {
-          /// print("没有找到目标");
-          this.targetSprite = null;
-        },
-        vision: player.vision);
-  }
-
-  /// 检查目标
-  bool inVision() {
-    DFCircle visibleShape = DFCircle(DFPosition(this.position.x, this.position.y), this.player.vision);
-    if (this.targetSprite != null) {
-      if (this.targetSprite is MonsterSprite) {
-        MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
-        if (!monsterSprite.monster.isDeath) {
-          DFShape monsterCollision = monsterSprite.getCollisionShape();
-          if (monsterCollision.overlaps(visibleShape)) {
-            return true;
-          }
-        }
-      }
-    }
-    return false;
-  }
-
-  /// 在可视范围内找敌人
-  void findEnemy({
-    required Function(List<DFSprite>) found,
-    required Function() notFound,
-    required double vision,
-  }) {
     /// 目标列表
     List<DFSprite> foundEnemy = [];
 
     /// 获取距离最近的
-    double distance = vision * vision;
+    double distance =  this.player.vision * this.player.vision;
     MonsterSprite? preSprite;
     if (GameManager.monsterSprites != null) {
       GameManager.monsterSprites!.forEach((monsterSprite) {
@@ -352,10 +346,84 @@ class PlayerSprite extends DFSprite {
     }
 
     if (foundEnemy.length > 0) {
-      found(foundEnemy);
+      /// print("找到了" + sprites.length.toString() + "个目标");
+      this.targetSprite = foundEnemy[0];
+      if (this.targetSprite is MonsterSprite) {
+        MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
+
+        /// print("锁定目标：" + monsterSprite.monster.name);
+        monsterSprite.selectThisSprite();
+      }
     } else {
-      notFound();
+      /// print("没有找到目标");
+      this.targetSprite = null;
     }
+  }
+
+  /// 寻找地上物品
+  void findAndSelectItem() {
+
+    if (this.targetSprite != null) {
+      if (this.targetSprite is MonsterSprite) {
+        MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
+        /// 放弃目标
+        monsterSprite.unSelectThisSprite();
+        this.targetSprite = null;
+      }
+    }
+
+    if (inVision()) {
+      return;
+    }
+
+    /// 获取距离最近的
+    double distance =  this.player.vision * this.player.vision;
+    ItemSprite? foundSprite;
+    if (GameManager.droppedItemSprite != null) {
+      GameManager.droppedItemSprite!.forEach((element) {
+        element.forEach((itemSprite) {
+          if(itemSprite != null){
+            /// 距离
+            Offset offset = itemSprite.position.toOffset() - this.position.toOffset();
+            if (offset.distanceSquared <= distance) {
+              foundSprite = itemSprite;
+              distance = offset.distanceSquared;
+            }
+          }
+
+        });
+      });
+    }
+
+    if (foundSprite != null) {
+      this.targetSprite = foundSprite;
+      foundSprite!.selectThisSprite();
+    } else {
+      this.targetSprite = null;
+    }
+  }
+
+  /// 检查目标是否在可见范围
+  bool inVision() {
+    if (this.targetSprite != null) {
+      DFCircle visibleShape = DFCircle(DFPosition(this.position.x, this.position.y), this.player.vision);
+      if (this.targetSprite is MonsterSprite) {
+        MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
+        if (!monsterSprite.monster.isDeath) {
+          DFShape monsterCollision = monsterSprite.getCollisionShape();
+          if (monsterCollision.overlaps(visibleShape)) {
+            return true;
+          }
+        }
+      }else if(this.targetSprite is ItemSprite){
+        ItemSprite itemSprite = this.targetSprite as ItemSprite;
+        DFShape collision = itemSprite.getCollisionShape();
+        if (collision.overlaps(visibleShape)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   /// 锁定目标->移动到目标->动作
@@ -365,8 +433,12 @@ class PlayerSprite extends DFSprite {
     this.nextAction = action;
     this.effect = effect;
 
-    /// 锁定目标
-    lockTargetSprite();
+    /// 自动选择目标
+    if(action == DFAction.ATTACK || action == DFAction.CASTING ){
+      findAndSelectEnemy();
+    }else if(action == DFAction.PICKUP){
+      findAndSelectItem();
+    }
 
     if (this.targetSprite != null) {
       /// 转换为瓦片坐标
@@ -378,8 +450,8 @@ class PlayerSprite extends DFSprite {
 
       /// print("起点瓦片位置：" + startNode.toString() + ",起点位置：" + this.position.toString());
       /// print("终点瓦片位置：" + endNode.toString() + ",目标位置：" + this.targetSprite!.position.toString());
-      if (startNode.position == endNode.position || inEffectVision(this.targetSprite!)) {
-        /// 在可攻击范围
+      if (startNode.position == endNode.position || collisionWithVision(this.targetSprite!)) {
+        /// 到达目标位置
         this.doNextAction();
       } else {
         /// 规划路径
@@ -449,20 +521,28 @@ class PlayerSprite extends DFSprite {
   }
 
   /// 检查是否提前到达攻击范围
-  bool inEffectVision(DFSprite? targetSprite) {
+  bool collisionWithVision(DFSprite? targetSprite) {
     if (targetSprite == null) {
       return false;
     }
-    if (this.effect != null && this.effect!.vision > 0) {
-      DFCircle visibleShape = DFCircle(DFPosition(this.position.x, this.position.y), this.effect!.vision);
-      if (targetSprite is MonsterSprite) {
+    
+    if(targetSprite is MonsterSprite){
+      if (this.effect != null && this.effect!.vision > 0) {
+        DFCircle visibleShape = DFCircle(DFPosition(this.position.x, this.position.y), this.effect!.vision);
         DFShape targetCollision = targetSprite.getCollisionShape();
         if (targetCollision.overlaps(visibleShape)) {
           /// print("已在攻击范围内");
           return true;
         }
       }
+    }else if(targetSprite is ItemSprite){
+      DFCircle playerShape = this.getPathCollisionShape(this.position);
+      DFShape itemShape = targetSprite.getCollisionShape();
+      if (playerShape.overlaps(itemShape)) {
+        return true;
+      }
     }
+    
     return false;
   }
 
@@ -477,14 +557,16 @@ class PlayerSprite extends DFSprite {
     this.play(this.nextAction, direction: direction, radians: radians);
 
     /// 显示技能特效
-    if (this.effect != null && this.effect!.texture != null) {
-      this._addEffect(this.effect!);
-    } else {
-      /// 没特效直接出伤害
-      if (this.targetSprite != null && effect != null) {
-        if (this.targetSprite is MonsterSprite) {
-          MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
-          monsterSprite.receiveDamage(this, effect!);
+    if (this.effect != null) {
+      if (this.effect!.texture != null) {
+        this.addEffect(this.effect!);
+      } else {
+        /// 没特效图像直接出伤害
+        if (this.targetSprite != null) {
+          if (this.targetSprite is MonsterSprite) {
+            MonsterSprite monsterSprite = this.targetSprite as MonsterSprite;
+            monsterSprite.receiveDamage(this, effect!);
+          }
         }
       }
     }
@@ -492,21 +574,20 @@ class PlayerSprite extends DFSprite {
 
   /// 更换武器
   Future<void> changeWeapon(ItemInfo weapon) async {
-    if(this.weaponSprite != null){
+    if (this.weaponSprite != null) {
       this.clothesSprite?.removeBindChild(this.weaponSprite!);
     }
     this.player.weapon = weapon;
     print("更换武器:" + this.player.weapon!.name);
     this.weaponSprite = await DFAnimationSprite.load(this.player.weapon!.texture!);
-    this.weaponSprite!.position =
-        DFPosition(this.clothesSprite!.size.width / 2, this.clothesSprite!.size.height / 2);
+    this.weaponSprite!.position = DFPosition(this.clothesSprite!.size.width / 2, this.clothesSprite!.size.height / 2);
     this.clothesSprite?.bindChild(this.weaponSprite!);
   }
 
   /// 更换衣服
   Future<void> changeClothes(ItemInfo clothes) async {
     this.initOk = false;
-    if(this.clothesSprite != null){
+    if (this.clothesSprite != null) {
       this.removeChild(this.clothesSprite!);
     }
     this.player.clothes = clothes;
@@ -514,9 +595,8 @@ class PlayerSprite extends DFSprite {
     this.clothesSprite = await DFAnimationSprite.load(this.player.clothes!.texture!);
     this.clothesSprite!.position = DFPosition(size.width / 2, size.height / 2 - 10);
     addChild(this.clothesSprite!);
-    if(this.weaponSprite != null){
-      this.weaponSprite!.position =
-          DFPosition(this.clothesSprite!.size.width / 2, this.clothesSprite!.size.height / 2);
+    if (this.weaponSprite != null) {
+      this.weaponSprite!.position = DFPosition(this.clothesSprite!.size.width / 2, this.clothesSprite!.size.height / 2);
       this.clothesSprite?.bindChild(this.weaponSprite!);
     }
     this.play(this.action, direction: this.direction, radians: this.radians);
@@ -525,16 +605,16 @@ class PlayerSprite extends DFSprite {
 
   /// 卸下衣服
   Future<void> removeClothes() async {
-    if(this.player.gender == 1){
-      this.changeClothes(ItemData.newItemInfo(0,template: "1100"));
-    }else{
-      this.changeClothes(ItemData.newItemInfo(0,template: "1200"));
+    if (this.player.gender == 1) {
+      this.changeClothes(ItemData.newItemInfo(0, template: "1100"));
+    } else {
+      this.changeClothes(ItemData.newItemInfo(0, template: "1200"));
     }
   }
 
   /// 卸下武器
   Future<void> removeWeapon() async {
-    if(this.weaponSprite != null){
+    if (this.weaponSprite != null) {
       this.clothesSprite?.removeBindChild(this.weaponSprite!);
     }
     print("卸下武器:" + this.player.weapon!.name);
@@ -542,12 +622,12 @@ class PlayerSprite extends DFSprite {
   }
 
   /// 添加特效
-  Future<void> _addEffect(EffectInfo effect) async {
+  Future<void> addEffect(EffectInfo effect) async {
     await Future.delayed(Duration(milliseconds: effect.delayTime), () async {
       EffectSprite effectSprite = EffectSprite(effect);
-      if(effect.type == EffectType.ATTACK){
+      if (effect.type == EffectType.ATTACK) {
         effectSprite.position = DFPosition(this.position.x, this.position.y);
-      }else{
+      } else {
         effectSprite.position = DFPosition(this.position.x, this.position.y - DFConfig.effectOffset);
       }
       effectSprite.size = DFSize(effect.damageRange, effect.damageRange);
@@ -564,57 +644,20 @@ class PlayerSprite extends DFSprite {
       return;
     }
 
-    /// 随机伤害  0.0~1.0
-    var random = new Random();
-    if (ownerSprite is MonsterSprite) {
-      int newMinAt = ownerSprite.monster.minAt;
-      int newMaxAt = (ownerSprite.monster.maxAt * random.nextDouble()).round();
-      int at = newMinAt > newMaxAt ? newMinAt : newMaxAt ;
+    int hp = GameManager.damageHp(ownerSprite, this, effect);
 
-      int newMinDf = ownerSprite.monster.minDf;
-      int newMaxDf = (ownerSprite.monster.maxDf * random.nextDouble()).round();
-      int df = newMinDf > newMaxDf ? newMinDf : newMaxAt ;
-      double damageAt = at * effect.at - df;
+    /// print("伤害转化血量:" + hp.toString());
 
-      int newMinMt = ownerSprite.monster.minMt;
-      int newMaxMt = (ownerSprite.monster.maxMt * random.nextDouble()).round();
-      int mt = newMinMt > newMaxMt ? newMinMt : newMaxMt ;
+    this.player.hp = this.player.hp - hp;
+    this.hpBarSprite!.progress = (this.player.hp / this.player.maxMp * 100).toInt();
 
-      int newMinMf = ownerSprite.monster.minMf;
-      int newMaxMf = (ownerSprite.monster.maxMf * random.nextDouble()).round();
-      int mf = newMinMf > newMaxMf ? newMinMf : newMaxMf ;
-      double damageMt = mt * effect.mt - mf;
+    /// 播放音频
+    DFAudio.play(this.player.hurtAudio[0]);
 
-      double totalDamage = damageAt + damageMt;
-      if (totalDamage <= 0) {
-        totalDamage = 1;
-      }
-
-      /// 真实伤害数值 攻击力 - 防御力 * 0.35
-      int hp = (totalDamage * 0.35 + 0.5).floor();
-
-      /// print("接收到伤害:" + totalDamage.toStringAsFixed(2));
-      /// print("伤害转化血量:" + hp.toString());
-
-      this.player.hp = this.player.hp - hp;
-      this.hpBarSprite!.progress = (this.player.hp / this.player.maxMp * 100).toInt();
-
-      /// 播放音频
-      DFAudio.play(this.player.hurtAudio[0]);
-
-      if (this.player.hp < 0) {
-        this.dead(ownerSprite);
-      }
+    if (this.player.hp < 0) {
+      this.dead(ownerSprite);
     }
 
-    /*this.showDamage(
-      damage,
-      config: TextPaintConfig(
-        fontSize: width / 3,
-        color: Colors.white,
-      ),
-    );
-    super.receiveDamage(damage, from);*/
   }
 
   /// 死亡
@@ -647,7 +690,7 @@ class PlayerSprite extends DFSprite {
 
     /// print("重生：" + this.position.toString());
     this.play(DFAction.IDLE, direction: DFDirection.DOWN, radians: 90 * pi / 180.0);
-    this.autoFight = true;
+    this.autoFight = false;
   }
 
   /// 碰撞后转换方向,避免卡住
@@ -746,7 +789,7 @@ class PlayerSprite extends DFSprite {
         if (this.autoMove && this.movePathPosition != null) {
           this.run(this.movePathPosition!, arrived: () {
             /// 检查是否在攻击范围
-            bool arrived = this.inEffectVision(this.targetSprite);
+            bool arrived = this.collisionWithVision(this.targetSprite);
             if (arrived) {
               /// 清除路径
               this.autoFightClock = DateTime.now().millisecondsSinceEpoch;

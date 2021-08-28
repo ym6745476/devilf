@@ -22,6 +22,7 @@ class _ItemLayerState extends State<ItemLayer> {
   double _height = 0;
   double _scale = 1;
   late PlayerInfo _playerInfo;
+  bool canDress = true;
   ScrollController _controller = ScrollController();
 
   @override
@@ -33,6 +34,11 @@ class _ItemLayerState extends State<ItemLayer> {
     this._height = 530 * this._scale;
 
     _playerInfo = GameManager.playerSprite!.player;
+
+    if(widget.item.type == ItemType.COIN || widget.item.type == ItemType.POTION){
+      canDress = false;
+    }
+
   }
 
   void _onTakeOnClick(ItemInfo item) {
@@ -213,13 +219,13 @@ class _ItemLayerState extends State<ItemLayer> {
                             _getPropertyItem("生命：", widget.item.hp.toString(), this._width),
                             _getPropertyItem("魔法：", widget.item.mp.toString(), this._width),
                             _getPropertyItem(
-                                "物攻：", widget.item.minAt.toString() + "-" + _playerInfo.maxAt.toString(), this._width),
+                                "物攻：", widget.item.minAt.toString() + " - " + _playerInfo.maxAt.toString(), this._width),
                             _getPropertyItem(
-                                "魔攻：", widget.item.minMt.toString() + "-" + _playerInfo.maxMt.toString(), this._width),
+                                "魔攻：", widget.item.minMt.toString() + " - " + _playerInfo.maxMt.toString(), this._width),
                             _getPropertyItem(
-                                "物防：", widget.item.minDf.toString() + "-" + _playerInfo.maxDf.toString(), this._width),
+                                "物防：", widget.item.minDf.toString() + " - " + _playerInfo.maxDf.toString(), this._width),
                             _getPropertyItem(
-                                "魔防：", widget.item.minMf.toString() + "-" + _playerInfo.maxMf.toString(), this._width),
+                                "魔防：", widget.item.minMf.toString() + " - " + _playerInfo.maxMf.toString(), this._width),
                           ],
                         ),
                       ),
@@ -251,7 +257,7 @@ class _ItemLayerState extends State<ItemLayer> {
                     bottom: 0,
                     child: Column(
                       children: [
-                        widget.item.isDressed
+                        widget.item.isDressed && canDress
                             ? DFButton(
                                 text: "卸下",
                                 fontSize: 28 * this._scale,

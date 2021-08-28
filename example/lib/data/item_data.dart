@@ -10,13 +10,13 @@ class ItemData {
 
   /// 数据
   static List<ItemInfo> items = [
-    ItemInfo(0, template: "1000", name: "木剑", type: ItemType.WEAPON),
-    ItemInfo(0, template: "1001", name: "修罗战斧", type: ItemType.WEAPON),
-    ItemInfo(0, template: "2001", name: "偃月刀", type: ItemType.WEAPON),
-    ItemInfo(0, template: "3001", name: "降魔剑", type: ItemType.WEAPON),
-    ItemInfo(0, template: "1100", name: "布衣", type: ItemType.CLOTHES),
-    ItemInfo(0, template: "1101", name: "轻盔", type: ItemType.CLOTHES),
-    ItemInfo(0, template: "1102", name: "中盔", type: ItemType.CLOTHES),
+    ItemInfo(0, template: "1000", name: "木剑", type: ItemType.WEAPON,minAt: 1,maxAt: 3),
+    ItemInfo(0, template: "1001", name: "修罗战斧", type: ItemType.WEAPON,minAt: 5,maxAt: 10),
+    ItemInfo(0, template: "2001", name: "偃月刀", type: ItemType.WEAPON,minAt: 3,maxAt: 6,minMt: 5,maxMt: 10),
+    ItemInfo(0, template: "3001", name: "降魔剑", type: ItemType.WEAPON,minAt: 3,maxAt: 6,minMt: 8,maxMt: 12),
+    ItemInfo(0, template: "1100", name: "布衣", type: ItemType.CLOTHES,hp:100,mp:50),
+    ItemInfo(0, template: "1101", name: "轻盔", type: ItemType.CLOTHES,hp:200,mp:100),
+    ItemInfo(0, template: "1102", name: "中盔", type: ItemType.CLOTHES,hp:300,mp:150),
     ItemInfo(0, template: "1103", name: "金鹏宝甲", type: ItemType.CLOTHES),
     ItemInfo(0, template: "1104", name: "重盔", type: ItemType.CLOTHES),
     ItemInfo(0, template: "2104", name: "魔袍", type: ItemType.CLOTHES),

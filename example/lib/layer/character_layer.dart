@@ -146,6 +146,9 @@ class _CharacterLayerState extends State<CharacterLayer> {
   }
 
   Widget _getPropertyWidget() {
+
+    Map<String,int> property = GameManager.getPropertyIncrease(GameManager.playerSprite!);
+
     double width = this._containerWidth * 0.40 - 50 * this._scale;
     return Container(
       width: width,
@@ -187,13 +190,13 @@ class _CharacterLayerState extends State<CharacterLayer> {
                 children: [
                   _getPropertyItem("等级：", _playerInfo.level.toString()),
                   _getPropertyItem("职业：", JobType.NAMES[_playerInfo.job]),
-                  _getPropertyItem("生命：", _playerInfo.hp.toString() + "/" + _playerInfo.maxHp.toString()),
-                  _getPropertyItem("魔法：", _playerInfo.mp.toString() + "/" + _playerInfo.maxMp.toString()),
+                  _getPropertyItem("生命：", _playerInfo.hp.toString() + "/" + (_playerInfo.maxHp + property["maxHp"]!).toString()),
+                  _getPropertyItem("魔法：", _playerInfo.mp.toString() + "/" + (_playerInfo.maxMp + property["maxMp"]!).toString()),
                   _getPropertyItem("经验：", _playerInfo.exp.toString()),
-                  _getPropertyItem("物攻：", _playerInfo.minAt.toString() + "-" + _playerInfo.maxAt.toString()),
-                  _getPropertyItem("魔攻：", _playerInfo.minMt.toString() + "-" + _playerInfo.maxMt.toString()),
-                  _getPropertyItem("物防：", _playerInfo.minDf.toString() + "-" + _playerInfo.maxDf.toString()),
-                  _getPropertyItem("魔防：", _playerInfo.minMf.toString() + " -" + _playerInfo.maxMf.toString()),
+                  _getPropertyItem("物攻：", (_playerInfo.minAt + property["minAt"]!).toString() + " - " + (_playerInfo.maxAt + property["maxAt"]!).toString()),
+                  _getPropertyItem("魔攻：", (_playerInfo.minMt + property["minMt"]!).toString() + " - " + (_playerInfo.maxAt + property["maxMt"]!).toString()),
+                  _getPropertyItem("物防：", (_playerInfo.minDf + property["minDf"]!).toString() + " - " + (_playerInfo.maxAt + property["maxDf"]!).toString()),
+                  _getPropertyItem("魔防：", (_playerInfo.minMf + property["minMf"]!).toString() + " - " + (_playerInfo.maxAt + property["maxMf"]!).toString()),
                 ],
               ),
             ),

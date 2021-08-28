@@ -123,6 +123,7 @@ class PlayerInfo extends DFLiving {
     this.hp = this.maxHp;
     this.mp = this.maxMp;
   }
+
 }
 
 /// 职业类型

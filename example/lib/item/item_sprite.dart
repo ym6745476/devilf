@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:devilf_engine/core/df_position.dart';
+import 'package:devilf_engine/core/df_rect.dart';
+import 'package:devilf_engine/core/df_shape.dart';
 import 'package:devilf_engine/core/df_size.dart';
 import 'package:devilf_engine/game/df_animation.dart';
 import 'package:devilf_engine/sprite/df_animation_sprite.dart';
@@ -83,8 +85,22 @@ class ItemSprite extends DFSprite {
     this.isSelected = false;
   }
 
+  /// 碰撞形状
   @override
-  void update(double dt) {}
+  DFShape getCollisionShape() {
+    return DFRect(this.position.x - this.size.width / 2, this.position.y - this.size.height / 2, this.size.width,
+        this.size.height);
+  }
+
+  @override
+  void update(double dt) {
+
+    /// 选择光圈
+    if (this.isSelected) {
+      this.selectSprite?.update(dt);
+    }
+
+  }
 
   @override
   void render(Canvas canvas) {

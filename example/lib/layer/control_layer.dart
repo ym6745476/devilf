@@ -5,8 +5,10 @@ import 'package:devilf_engine/widget/df_button.dart';
 import 'package:devilf_engine/widget/df_check_button.dart';
 import 'package:devilf_engine/widget/df_joystick.dart';
 import 'package:example/data/effect_data.dart';
+import 'package:example/item/item_sprite.dart';
 import 'package:example/layer/character_layer.dart';
 import 'package:example/layer/rucksack_layer.dart';
+import 'package:example/monster/monster_sprite.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -28,8 +30,8 @@ class _ControlLayerState extends State<ControlLayer> {
   /// 自动按钮
   DFCheckButton? _autoFightButton;
 
-  /// 自动战斗状态
-  bool _autoFight = false;
+  /// 目标名称
+  String? _targetName;
 
   @override
   void initState() {
@@ -43,7 +45,6 @@ class _ControlLayerState extends State<ControlLayer> {
       checkedImage: "assets/images/ui/auto_on.png",
       size: Size(40, 40),
       onChanged: (DFCheckButton button, bool checked, int value) {
-        _autoFight = checked;
         if (checked) {
           _playerSprite?.startAutoFight(DFAction.CASTING, effect: EffectData.newEffectInfo(template: "2001"));
         } else {
@@ -216,16 +217,16 @@ class _ControlLayerState extends State<ControlLayer> {
           child: DFButton(
             /// text: "拾取",
             image: "assets/images/ui/skill_pick.png",
-            size: Size(40, 40),
+            size: Size(36, 36),
             onPressed: (button) {
-              _playerSprite?.cancelAutoFight();
-              _autoFightButton!.setChecked(false);
-              _playerSprite?.play(DFAction.COLLECT);
+                _playerSprite?.cancelAutoFight();
+                _autoFightButton!.setChecked(false);
+                _playerSprite?.moveToAction(DFAction.PICKUP);
             },
           ),
         ),
 
-        /// 锁定目标
+        /// 查看目标
         Positioned(
           bottom: MediaQuery.of(context).padding.bottom + 16,
           right: 180,
@@ -234,10 +235,55 @@ class _ControlLayerState extends State<ControlLayer> {
             image: "assets/images/ui/skill_select.png",
             size: Size(40, 40),
             onPressed: (button) {
-              _playerSprite?.lockTargetSprite();
+              if (_playerSprite?.targetSprite == null) {
+                setState(() {
+                  _targetName = "没有选择目标";
+                });
+              } else {
+                if (_playerSprite?.targetSprite is MonsterSprite) {
+                  MonsterSprite targetSprite = _playerSprite?.targetSprite as MonsterSprite;
+                  setState(() {
+                    _targetName = targetSprite.monster.name;
+                  });
+                } else if (_playerSprite?.targetSprite is PlayerSprite) {
+                  PlayerSprite targetSprite = _playerSprite?.targetSprite as PlayerSprite;
+                  setState(() {
+                    _targetName = targetSprite.player.name;
+                  });
+                } else if (_playerSprite?.targetSprite is ItemSprite) {
+                  ItemSprite targetSprite = _playerSprite?.targetSprite as ItemSprite;
+                  setState(() {
+                    _targetName = targetSprite.item.name;
+                  });
+                }
+              }
             },
           ),
         ),
+
+        /// 目标信息
+        _targetName != null
+            ? Positioned(
+                bottom: MediaQuery.of(context).padding.bottom + 60,
+                right: 220,
+                child: Container(
+                  height: 20,
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius:BorderRadius.circular(10),
+                    color: Color(0x90000000)
+                  ),
+                  child: Text(
+                    "当前目标：" + _targetName!,
+                    style: TextStyle(
+                      fontSize: 8,
+                      color: Color(0xFF1d953f),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              )
+            : Container(),
 
         /// 自动战斗
         _autoFightButton != null
@@ -260,7 +306,7 @@ class _ControlLayerState extends State<ControlLayer> {
                 /// text: "角色",
                 image: "assets/images/ui/menu_01.png",
                 pressedImage: "assets/images/ui/menu_01_pressed.png",
-                size: Size(50, 50),
+                size: Size(48, 48),
                 onPressed: (button) {
                   DFUiUtil.showLayer(context, CharacterLayer());
                 },
@@ -271,7 +317,7 @@ class _ControlLayerState extends State<ControlLayer> {
                   /// text: "背包",
                   image: "assets/images/ui/menu_02.png",
                   pressedImage: "assets/images/ui/menu_02_pressed.png",
-                  size: Size(50, 50),
+                  size: Size(48, 48),
                   onPressed: (button) {
                     DFUiUtil.showLayer(context, RucksackLayer());
                   },

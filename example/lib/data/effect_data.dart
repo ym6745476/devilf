@@ -58,7 +58,7 @@ class EffectData {
     ),
     EffectInfo(
       3002,
-      template: "3001",
+      template: "3002",
       name: "施毒术",
       type: EffectType.CASTING,
       at: 1.2,
