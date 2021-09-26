@@ -4,8 +4,8 @@ file:///E:/project/devilf/devilf/
 file:///E:/project/devilf/devilf/lib/
 async
 2.12
-file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.6.1/
-file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.6.1/lib/
+file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.8.1/
+file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.8.1/lib/
 boolean_selector
 2.12
 file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.1.0/
@@ -16,8 +16,8 @@ file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/characters-1
 file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/characters-1.1.0/lib/
 charcode
 2.12
-file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.2.0/
-file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.2.0/lib/
+file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.3.1/
+file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.3.1/lib/
 clock
 2.12
 file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/clock-1.1.0/
@@ -36,8 +36,8 @@ file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12
 file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.10/lib/
 meta
 2.12
-file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.3.0/
-file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.3.0/lib/
+file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.7.0/
+file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.7.0/lib/
 path
 2.12
 file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.8.0/
@@ -64,8 +64,8 @@ file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1
 file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.2.0/lib/
 test_api
 2.12
-file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.3.0/
-file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.3.0/lib/
+file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.4.2/
+file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.4.2/lib/
 typed_data
 2.12
 file:///E:/project/tools/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.3.0/

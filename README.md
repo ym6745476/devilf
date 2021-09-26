@@ -6,7 +6,7 @@
 
 <p align="center">
     <img src="https://img.shields.io/badge/devilf-0.1.0-orange" />
-    <img src="https://img.shields.io/badge/flutter-2.2.3-green" />
+    <img src="https://img.shields.io/badge/flutter-2.5.0-green" />
 </p>
 
 <p align="center" >
