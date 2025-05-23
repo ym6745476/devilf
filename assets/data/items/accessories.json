@@ -1,0 +1,208 @@
+{
+  "accessories": [
+    {
+      "id": "ring_1",
+      "name": "خاتم القوة",
+      "nameEn": "Ring of Power",
+      "type": "ring",
+      "rarity": "legendary",
+      "level": 40,
+      "stats": {
+        "strength": 20,
+        "stamina": 15,
+        "attackPower": 30
+      },
+      "effects": {
+        "criticalChance": 5,
+        "criticalDamage": 15
+      },
+      "glowEffect": {
+        "color": "#e74c3c",
+        "intensity": 0.8,
+        "pulseRate": 1.5
+      },
+      "upgradeSlots": 2,
+      "description": "خاتم أسطوري يمنح مرتديه قوة هائلة، صنع من معدن نادر وجواهر قديمة",
+      "descriptionEn": "A legendary ring granting its wearer immense strength, crafted from rare metal and ancient gems",
+      "modelPath": "assets/images/items/accessories/rings/power_ring.png",
+      "iconPath": "assets/images/ui/icons/accessories/power_ring_icon.png",
+      "requiredClass": ["warrior", "berserker", "paladin"],
+      "dropRate": 0.01,
+      "sellPrice": 15000,
+      "buyPrice": 45000
+    },
+    {
+      "id": "necklace_1",
+      "name": "قلادة الحكمة",
+      "nameEn": "Necklace of Wisdom",
+      "type": "necklace",
+      "rarity": "mythic",
+      "level": 45,
+      "stats": {
+        "intelligence": 30,
+        "wisdom": 25,
+        "manaRegeneration": 20
+      },
+      "effects": {
+        "spellPower": 15,
+        "cooldownReduction": 10
+      },
+      "glowEffect": {
+        "color": "#3498db",
+        "intensity": 1.0,
+        "pulseRate": 1.8,
+        "particleEffect": "arcane"
+      },
+      "upgradeSlots": 3,
+      "description": "قلادة نادرة تتوهج بطاقة سحرية قوية، تزيد من قدرات الساحر وتمنحه حكمة الأجيال",
+      "descriptionEn": "A rare necklace glowing with powerful magical energy, enhancing the mage's abilities and granting the wisdom of generations",
+      "modelPath": "assets/images/items/accessories/necklaces/wisdom_necklace.png",
+      "iconPath": "assets/images/ui/icons/accessories/wisdom_necklace_icon.png",
+      "requiredClass": ["mage", "wizard", "warlock"],
+      "dropRate": 0.008,
+      "sellPrice": 20000,
+      "buyPrice": 60000
+    },
+    {
+      "id": "earring_1",
+      "name": "قرط الخفة",
+      "nameEn": "Earring of Agility",
+      "type": "earring",
+      "rarity": "epic",
+      "level": 35,
+      "stats": {
+        "agility": 25,
+        "dexterity": 20,
+        "attackSpeed": 10
+      },
+      "effects": {
+        "dodgeChance": 8,
+        "movementSpeed": 5
+      },
+      "glowEffect": {
+        "color": "#2ecc71",
+        "intensity": 0.7,
+        "pulseRate": 1.3
+      },
+      "upgradeSlots": 2,
+      "description": "قرط خفيف يمنح مرتديه سرعة ورشاقة فائقة، مصنوع من معدن نادر وريش طائر أسطوري",
+      "descriptionEn": "A light earring granting its wearer superior speed and agility, made from rare metal and the feather of a mythical bird",
+      "modelPath": "assets/images/items/accessories/earrings/agility_earring.png",
+      "iconPath": "assets/images/ui/icons/accessories/agility_earring_icon.png",
+      "requiredClass": ["assassin", "rogue", "archer"],
+      "dropRate": 0.02,
+      "sellPrice": 10000,
+      "buyPrice": 30000
+    },
+    {
+      "id": "wings_1",
+      "name": "أجنحة الملاك",
+      "nameEn": "Angel Wings",
+      "type": "wings",
+      "rarity": "legendary",
+      "level": 50,
+      "stats": {
+        "allStats": 15,
+        "movementSpeed": 20,
+        "jumpHeight": 30
+      },
+      "effects": {
+        "gliding": true,
+        "fallDamageReduction": 100,
+        "holyAura": 10
+      },
+      "glowEffect": {
+        "color": "#ffffff",
+        "intensity": 1.2,
+        "pulseRate": 2.0,
+        "particleEffect": "feathers"
+      },
+      "upgradeSlots": 4,
+      "description": "أجنحة ملائكية تتوهج بنور مقدس، تمنح مرتديها القدرة على التحليق والحماية من قوى الظلام",
+      "descriptionEn": "Angelic wings glowing with holy light, granting the wearer the ability to glide and protection from dark forces",
+      "modelPath": "assets/images/items/accessories/wings/angel_wings.png",
+      "iconPath": "assets/images/ui/icons/accessories/angel_wings_icon.png",
+      "requiredClass": ["all"],
+      "dropRate": 0.005,
+      "sellPrice": 50000,
+      "buyPrice": 150000,
+      "animations": {
+        "idle": "assets/animations/accessories/wings/angel_wings_idle.json",
+        "flying": "assets/animations/accessories/wings/angel_wings_flying.json",
+        "gliding": "assets/animations/accessories/wings/angel_wings_gliding.json"
+      }
+    },
+    {
+      "id": "wings_2",
+      "name": "أجنحة التنين",
+      "nameEn": "Dragon Wings",
+      "type": "wings",
+      "rarity": "mythic",
+      "level": 60,
+      "stats": {
+        "allStats": 20,
+        "movementSpeed": 25,
+        "jumpHeight": 35
+      },
+      "effects": {
+        "gliding": true,
+        "fallDamageReduction": 100,
+        "fireResistance": 50,
+        "fireAura": 15
+      },
+      "glowEffect": {
+        "color": "#e74c3c",
+        "intensity": 1.5,
+        "pulseRate": 2.2,
+        "particleEffect": "fire"
+      },
+      "upgradeSlots": 5,
+      "description": "أجنحة تنين قوية تتوهج بنيران حارقة، تمنح مرتديها قوة التنانين وحماية من النيران",
+      "descriptionEn": "Powerful dragon wings glowing with burning fire, granting the wearer the power of dragons and protection from fire",
+      "modelPath": "assets/images/items/accessories/wings/dragon_wings.png",
+      "iconPath": "assets/images/ui/icons/accessories/dragon_wings_icon.png",
+      "requiredClass": ["all"],
+      "dropRate": 0.003,
+      "sellPrice": 75000,
+      "buyPrice": 225000,
+      "animations": {
+        "idle": "assets/animations/accessories/wings/dragon_wings_idle.json",
+        "flying": "assets/animations/accessories/wings/dragon_wings_flying.json",
+        "gliding": "assets/animations/accessories/wings/dragon_wings_gliding.json"
+      }
+    },
+    {
+      "id": "crown_1",
+      "name": "تاج الملك",
+      "nameEn": "King's Crown",
+      "type": "crown",
+      "rarity": "mythic",
+      "level": 55,
+      "stats": {
+        "charisma": 30,
+        "leadership": 25,
+        "allStats": 10
+      },
+      "effects": {
+        "allyBuffRange": 20,
+        "allyBuffStrength": 15,
+        "respectedByNPCs": true
+      },
+      "glowEffect": {
+        "color": "#f1c40f",
+        "intensity": 1.3,
+        "pulseRate": 1.7,
+        "particleEffect": "royal"
+      },
+      "upgradeSlots": 3,
+      "description": "تاج ملكي مرصع بالجواهر النادرة، يمنح مرتديه هيبة الملوك وقدرة على قيادة الحلفاء",
+      "descriptionEn": "A royal crown adorned with rare gems, granting its wearer the prestige of kings and the ability to lead allies",
+      "modelPath": "assets/images/items/accessories/crowns/kings_crown.png",
+      "iconPath": "assets/images/ui/icons/accessories/kings_crown_icon.png",
+      "requiredClass": ["all"],
+      "dropRate": 0.002,
+      "sellPrice": 100000,
+      "buyPrice": 300000
+    }
+  ]
+}

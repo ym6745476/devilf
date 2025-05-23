@@ -1,0 +1,230 @@
+{
+  "weapons": [
+    {
+      "id": "sword_1",
+      "name": "سيف الفاتح",
+      "nameEn": "Conqueror's Sword",
+      "type": "sword",
+      "rarity": "rare",
+      "level": 30,
+      "damage": {
+        "min": 120,
+        "max": 180
+      },
+      "stats": {
+        "strength": 15,
+        "agility": 8
+      },
+      "effects": {
+        "criticalChance": 5,
+        "criticalDamage": 20
+      },
+      "glowEffect": {
+        "color": "#3498db",
+        "intensity": 0.7,
+        "pulseRate": 1.2
+      },
+      "upgradeSlots": 3,
+      "description": "سيف قوي صنع من معدن نادر، يقال أنه استخدم في معارك الفتح الأولى",
+      "descriptionEn": "A powerful sword made from rare metal, said to have been used in the first conquest battles",
+      "modelPath": "assets/images/weapons/swords/conqueror_sword.png",
+      "iconPath": "assets/images/ui/icons/weapons/conqueror_sword_icon.png",
+      "soundEffects": {
+        "swing": "assets/audio/sfx/weapons/sword_swing.mp3",
+        "hit": "assets/audio/sfx/weapons/sword_hit.mp3",
+        "critical": "assets/audio/sfx/weapons/sword_critical.mp3"
+      },
+      "animations": {
+        "idle": "assets/animations/weapons/sword_idle.json",
+        "attack": "assets/animations/weapons/sword_attack.json",
+        "special": "assets/animations/weapons/sword_special.json"
+      },
+      "requiredClass": ["warrior", "paladin"],
+      "dropRate": 0.05,
+      "sellPrice": 5000,
+      "buyPrice": 15000
+    },
+    {
+      "id": "dagger_1",
+      "name": "خنجر الظل",
+      "nameEn": "Shadow Dagger",
+      "type": "dagger",
+      "rarity": "epic",
+      "level": 35,
+      "damage": {
+        "min": 90,
+        "max": 130
+      },
+      "stats": {
+        "agility": 25,
+        "criticalChance": 12
+      },
+      "effects": {
+        "poisonDamage": 15,
+        "poisonDuration": 5
+      },
+      "glowEffect": {
+        "color": "#8e44ad",
+        "intensity": 0.8,
+        "pulseRate": 1.5
+      },
+      "upgradeSlots": 2,
+      "description": "خنجر مسموم يخترق دروع الأعداء بسهولة، مفضل لدى القتلة والمتسللين",
+      "descriptionEn": "A poisoned dagger that easily penetrates enemy armor, favored by assassins and infiltrators",
+      "modelPath": "assets/images/weapons/daggers/shadow_dagger.png",
+      "iconPath": "assets/images/ui/icons/weapons/shadow_dagger_icon.png",
+      "soundEffects": {
+        "swing": "assets/audio/sfx/weapons/dagger_swing.mp3",
+        "hit": "assets/audio/sfx/weapons/dagger_hit.mp3",
+        "critical": "assets/audio/sfx/weapons/dagger_critical.mp3"
+      },
+      "animations": {
+        "idle": "assets/animations/weapons/dagger_idle.json",
+        "attack": "assets/animations/weapons/dagger_attack.json",
+        "special": "assets/animations/weapons/dagger_special.json"
+      },
+      "requiredClass": ["assassin", "rogue"],
+      "dropRate": 0.03,
+      "sellPrice": 8000,
+      "buyPrice": 24000
+    },
+    {
+      "id": "bow_1",
+      "name": "قوس العاصفة",
+      "nameEn": "Storm Bow",
+      "type": "bow",
+      "rarity": "legendary",
+      "level": 40,
+      "damage": {
+        "min": 150,
+        "max": 220
+      },
+      "stats": {
+        "agility": 30,
+        "accuracy": 20
+      },
+      "effects": {
+        "lightningDamage": 25,
+        "stunChance": 8
+      },
+      "glowEffect": {
+        "color": "#f1c40f",
+        "intensity": 1.0,
+        "pulseRate": 1.8,
+        "particleEffect": "lightning"
+      },
+      "upgradeSlots": 4,
+      "description": "قوس أسطوري يطلق سهاماً مشحونة بالبرق، قادر على صعق عدة أعداء في آن واحد",
+      "descriptionEn": "A legendary bow that fires lightning-charged arrows, capable of stunning multiple enemies at once",
+      "modelPath": "assets/images/weapons/bows/storm_bow.png",
+      "iconPath": "assets/images/ui/icons/weapons/storm_bow_icon.png",
+      "soundEffects": {
+        "draw": "assets/audio/sfx/weapons/bow_draw.mp3",
+        "release": "assets/audio/sfx/weapons/bow_release.mp3",
+        "hit": "assets/audio/sfx/weapons/bow_hit.mp3",
+        "critical": "assets/audio/sfx/weapons/bow_critical.mp3"
+      },
+      "animations": {
+        "idle": "assets/animations/weapons/bow_idle.json",
+        "draw": "assets/animations/weapons/bow_draw.json",
+        "release": "assets/animations/weapons/bow_release.json",
+        "special": "assets/animations/weapons/bow_special.json"
+      },
+      "requiredClass": ["archer", "hunter"],
+      "dropRate": 0.01,
+      "sellPrice": 15000,
+      "buyPrice": 45000
+    },
+    {
+      "id": "staff_1",
+      "name": "عصا النار الأبدية",
+      "nameEn": "Eternal Fire Staff",
+      "type": "staff",
+      "rarity": "mythic",
+      "level": 45,
+      "damage": {
+        "min": 180,
+        "max": 250
+      },
+      "stats": {
+        "intelligence": 40,
+        "wisdom": 25
+      },
+      "effects": {
+        "fireDamage": 35,
+        "burnDuration": 6,
+        "areaOfEffect": 3
+      },
+      "glowEffect": {
+        "color": "#e74c3c",
+        "intensity": 1.2,
+        "pulseRate": 2.0,
+        "particleEffect": "fire"
+      },
+      "upgradeSlots": 5,
+      "description": "عصا أسطورية تحمل قوة النار الأبدية، تحرق كل من يقف في طريقها",
+      "descriptionEn": "A mythical staff carrying the power of eternal fire, burning everything in its path",
+      "modelPath": "assets/images/weapons/staves/eternal_fire_staff.png",
+      "iconPath": "assets/images/ui/icons/weapons/eternal_fire_staff_icon.png",
+      "soundEffects": {
+        "cast": "assets/audio/sfx/weapons/staff_cast.mp3",
+        "hit": "assets/audio/sfx/weapons/staff_hit.mp3",
+        "critical": "assets/audio/sfx/weapons/staff_critical.mp3",
+        "ambient": "assets/audio/sfx/weapons/staff_ambient.mp3"
+      },
+      "animations": {
+        "idle": "assets/animations/weapons/staff_idle.json",
+        "cast": "assets/animations/weapons/staff_cast.json",
+        "special": "assets/animations/weapons/staff_special.json"
+      },
+      "requiredClass": ["mage", "wizard"],
+      "dropRate": 0.005,
+      "sellPrice": 25000,
+      "buyPrice": 75000
+    },
+    {
+      "id": "axe_1",
+      "name": "فأس الجبار",
+      "nameEn": "Titan's Axe",
+      "type": "axe",
+      "rarity": "epic",
+      "level": 38,
+      "damage": {
+        "min": 160,
+        "max": 240
+      },
+      "stats": {
+        "strength": 35,
+        "stamina": 20
+      },
+      "effects": {
+        "armorPenetration": 15,
+        "stunChance": 10
+      },
+      "glowEffect": {
+        "color": "#27ae60",
+        "intensity": 0.9,
+        "pulseRate": 1.3
+      },
+      "upgradeSlots": 3,
+      "description": "فأس ضخم يحمل قوة الجبابرة، قادر على تحطيم الدروع بضربة واحدة",
+      "descriptionEn": "A massive axe carrying the power of titans, capable of shattering armor with a single blow",
+      "modelPath": "assets/images/weapons/axes/titan_axe.png",
+      "iconPath": "assets/images/ui/icons/weapons/titan_axe_icon.png",
+      "soundEffects": {
+        "swing": "assets/audio/sfx/weapons/axe_swing.mp3",
+        "hit": "assets/audio/sfx/weapons/axe_hit.mp3",
+        "critical": "assets/audio/sfx/weapons/axe_critical.mp3"
+      },
+      "animations": {
+        "idle": "assets/animations/weapons/axe_idle.json",
+        "attack": "assets/animations/weapons/axe_attack.json",
+        "special": "assets/animations/weapons/axe_special.json"
+      },
+      "requiredClass": ["warrior", "berserker"],
+      "dropRate": 0.025,
+      "sellPrice": 12000,
+      "buyPrice": 36000
+    }
+  ]
+}

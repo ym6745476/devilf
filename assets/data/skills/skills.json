@@ -1,0 +1,1035 @@
+{
+  "skills": [
+    {
+      "id": "warrior_slash",
+      "name": "ضربة قاطعة",
+      "nameEn": "Slash",
+      "type": "active",
+      "class": "warrior",
+      "level": 1,
+      "cooldown": 3,
+      "manaCost": 10,
+      "damage": {
+        "min": 120,
+        "max": 150,
+        "type": "physical"
+      },
+      "range": 2,
+      "areaOfEffect": 0,
+      "effects": [],
+      "description": "ضربة قوية بالسيف تسبب ضرراً فيزيائياً للعدو",
+      "descriptionEn": "A powerful sword strike causing physical damage to the enemy",
+      "iconPath": "assets/images/ui/icons/skills/warrior/slash.png",
+      "animationPath": "assets/animations/skills/warrior/slash.json",
+      "soundEffects": {
+        "cast": "assets/audio/sfx/skills/warrior/slash_cast.mp3",
+        "hit": "assets/audio/sfx/skills/warrior/slash_hit.mp3"
+      },
+      "visualEffects": {
+        "type": "slash",
+        "color": "#ffffff",
+        "scale": 1.0,
+        "duration": 0.5
+      },
+      "upgrades": [
+        {
+          "level": 2,
+          "requiredCharacterLevel": 10,
+          "damage": {
+            "min": 150,
+            "max": 180,
+            "type": "physical"
+          },
+          "cooldown": 2.5,
+          "manaCost": 12
+        },
+        {
+          "level": 3,
+          "requiredCharacterLevel": 20,
+          "damage": {
+            "min": 180,
+            "max": 220,
+            "type": "physical"
+          },
+          "cooldown": 2,
+          "manaCost": 15,
+          "effects": [
+            {
+              "type": "bleed",
+              "chance": 20,
+              "damage": 10,
+              "duration": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "warrior_whirlwind",
+      "name": "إعصار السيف",
+      "nameEn": "Whirlwind",
+      "type": "active",
+      "class": "warrior",
+      "level": 5,
+      "cooldown": 8,
+      "manaCost": 25,
+      "damage": {
+        "min": 100,
+        "max": 130,
+        "type": "physical"
+      },
+      "range": 0,
+      "areaOfEffect": 5,
+      "effects": [],
+      "description": "دوران سريع بالسيف يسبب ضرراً لجميع الأعداء المحيطين",
+      "descriptionEn": "A rapid sword spin causing damage to all surrounding enemies",
+      "iconPath": "assets/images/ui/icons/skills/warrior/whirlwind.png",
+      "animationPath": "assets/animations/skills/warrior/whirlwind.json",
+      "soundEffects": {
+        "cast": "assets/audio/sfx/skills/warrior/whirlwind_cast.mp3",
+        "hit": "assets/audio/sfx/skills/warrior/whirlwind_hit.mp3"
+      },
+      "visualEffects": {
+        "type": "spin",
+        "color": "#f39c12",
+        "scale": 1.2,
+        "duration": 1.5,
+        "particleEffect": "dust"
+      },
+      "upgrades": [
+        {
+          "level": 2,
+          "requiredCharacterLevel": 15,
+          "damage": {
+            "min": 130,
+            "max": 160,
+            "type": "physical"
+          },
+          "areaOfEffect": 6,
+          "cooldown": 7,
+          "manaCost": 30
+        },
+        {
+          "level": 3,
+          "requiredCharacterLevel": 25,
+          "damage": {
+            "min": 160,
+            "max": 200,
+            "type": "physical"
+          },
+          "areaOfEffect": 7,
+          "cooldown": 6,
+          "manaCost": 35,
+          "effects": [
+            {
+              "type": "stun",
+              "chance": 15,
+              "duration": 1.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "warrior_shield_bash",
+      "name": "ضربة الدرع",
+      "nameEn": "Shield Bash",
+      "type": "active",
+      "class": "warrior",
+      "level": 10,
+      "cooldown": 12,
+      "manaCost": 20,
+      "damage": {
+        "min": 80,
+        "max": 100,
+        "type": "physical"
+      },
+      "range": 2,
+      "areaOfEffect": 0,
+      "effects": [
+        {
+          "type": "stun",
+          "chance": 100,
+          "duration": 2
+        }
+      ],
+      "description": "ضربة قوية بالدرع تسبب ضرراً وتصعق العدو",
+      "descriptionEn": "A powerful shield strike causing damage and stunning the enemy",
+      "iconPath": "assets/images/ui/icons/skills/warrior/shield_bash.png",
+      "animationPath": "assets/animations/skills/warrior/shield_bash.json",
+      "soundEffects": {
+        "cast": "assets/audio/sfx/skills/warrior/shield_bash_cast.mp3",
+        "hit": "assets/audio/sfx/skills/warrior/shield_bash_hit.mp3"
+      },
+      "visualEffects": {
+        "type": "impact",
+        "color": "#7f8c8d",
+        "scale": 1.0,
+        "duration": 0.8,
+        "particleEffect": "metal"
+      },
+      "upgrades": [
+        {
+          "level": 2,
+          "requiredCharacterLevel": 20,
+          "damage": {
+            "min": 100,
+            "max": 130,
+            "type": "physical"
+          },
+          "effects": [
+            {
+              "type": "stun",
+              "chance": 100,
+              "duration": 2.5
+            }
+          ],
+          "cooldown": 10,
+          "manaCost": 25
+        },
+        {
+          "level": 3,
+          "requiredCharacterLevel": 30,
+          "damage": {
+            "min": 130,
+            "max": 160,
+            "type": "physical"
+          },
+          "effects": [
+            {
+              "type": "stun",
+              "chance": 100,
+              "duration": 3
+            },
+            {
+              "type": "defense_reduction",
+              "amount": 20,
+              "duration": 5
+            }
+          ],
+          "cooldown": 8,
+          "manaCost": 30
+        }
+      ]
+    },
+    {
+      "id": "warrior_battle_cry",
+      "name": "صرخة المعركة",
+      "nameEn": "Battle Cry",
+      "type": "active",
+      "class": "warrior",
+      "level": 15,
+      "cooldown": 30,
+      "manaCost": 40,
+      "damage": {
+        "min": 0,
+        "max": 0,
+        "type": "none"
+      },
+      "range": 0,
+      "areaOfEffect": 10,
+      "effects": [
+        {
+          "type": "buff",
+          "target": "allies",
+          "stat": "attack",
+          "amount": 20,
+          "duration": 10
+        },
+        {
+          "type": "buff",
+          "target": "self",
+          "stat": "defense",
+          "amount": 30,
+          "duration": 10
+        },
+        {
+          "type": "debuff",
+          "target": "enemies",
+          "stat": "attack",
+          "amount": -10,
+          "duration": 5
+        }
+      ],
+      "description": "صرخة قوية تزيد من هجوم الحلفاء ودفاع المستخدم وتخفض هجوم الأعداء",
+      "descriptionEn": "A powerful cry that increases allies' attack, user's defense, and reduces enemies' attack",
+      "iconPath": "assets/images/ui/icons/skills/warrior/battle_cry.png",
+      "animationPath": "assets/animations/skills/warrior/battle_cry.json",
+      "soundEffects": {
+        "cast": "assets/audio/sfx/skills/warrior/battle_cry_cast.mp3"
+      },
+      "visualEffects": {
+        "type": "aura",
+        "color": "#e74c3c",
+        "scale": 1.5,
+        "duration": 2.0,
+        "particleEffect": "shockwave"
+      },
+      "upgrades": [
+        {
+          "level": 2,
+          "requiredCharacterLevel": 25,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "allies",
+              "stat": "attack",
+              "amount": 30,
+              "duration": 12
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "defense",
+              "amount": 40,
+              "duration": 12
+            },
+            {
+              "type": "debuff",
+              "target": "enemies",
+              "stat": "attack",
+              "amount": -15,
+              "duration": 7
+            }
+          ],
+          "areaOfEffect": 12,
+          "cooldown": 25,
+          "manaCost": 50
+        },
+        {
+          "level": 3,
+          "requiredCharacterLevel": 35,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "allies",
+              "stat": "attack",
+              "amount": 40,
+              "duration": 15
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "defense",
+              "amount": 50,
+              "duration": 15
+            },
+            {
+              "type": "debuff",
+              "target": "enemies",
+              "stat": "attack",
+              "amount": -20,
+              "duration": 10
+            },
+            {
+              "type": "fear",
+              "target": "enemies",
+              "chance": 30,
+              "duration": 3
+            }
+          ],
+          "areaOfEffect": 15,
+          "cooldown": 20,
+          "manaCost": 60
+        }
+      ]
+    },
+    {
+      "id": "warrior_ultimate_berserk",
+      "name": "غضب المحارب",
+      "nameEn": "Berserker Rage",
+      "type": "ultimate",
+      "class": "warrior",
+      "level": 20,
+      "cooldown": 120,
+      "manaCost": 100,
+      "damage": {
+        "min": 0,
+        "max": 0,
+        "type": "none"
+      },
+      "range": 0,
+      "areaOfEffect": 0,
+      "effects": [
+        {
+          "type": "buff",
+          "target": "self",
+          "stat": "attack",
+          "amount": 100,
+          "duration": 15
+        },
+        {
+          "type": "buff",
+          "target": "self",
+          "stat": "attackSpeed",
+          "amount": 50,
+          "duration": 15
+        },
+        {
+          "type": "buff",
+          "target": "self",
+          "stat": "movementSpeed",
+          "amount": 30,
+          "duration": 15
+        },
+        {
+          "type": "buff",
+          "target": "self",
+          "stat": "criticalChance",
+          "amount": 20,
+          "duration": 15
+        },
+        {
+          "type": "immunity",
+          "target": "self",
+          "immuneTo": ["stun", "slow", "fear"],
+          "duration": 15
+        }
+      ],
+      "description": "يدخل المحارب في حالة غضب شديد، مما يزيد بشكل كبير من قوته وسرعته ويمنحه حصانة ضد التأثيرات السلبية",
+      "descriptionEn": "The warrior enters a state of intense rage, greatly increasing strength and speed and granting immunity to negative effects",
+      "iconPath": "assets/images/ui/icons/skills/warrior/berserker_rage.png",
+      "animationPath": "assets/animations/skills/warrior/berserker_rage.json",
+      "soundEffects": {
+        "cast": "assets/audio/sfx/skills/warrior/berserker_rage_cast.mp3"
+      },
+      "visualEffects": {
+        "type": "transform",
+        "color": "#c0392b",
+        "scale": 1.2,
+        "duration": 15.0,
+        "particleEffect": "rage",
+        "glowEffect": {
+          "color": "#e74c3c",
+          "intensity": 1.0,
+          "pulseRate": 2.0
+        }
+      },
+      "upgrades": [
+        {
+          "level": 2,
+          "requiredCharacterLevel": 30,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "attack",
+              "amount": 150,
+              "duration": 20
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "attackSpeed",
+              "amount": 70,
+              "duration": 20
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "movementSpeed",
+              "amount": 40,
+              "duration": 20
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "criticalChance",
+              "amount": 30,
+              "duration": 20
+            },
+            {
+              "type": "immunity",
+              "target": "self",
+              "immuneTo": ["stun", "slow", "fear", "poison"],
+              "duration": 20
+            },
+            {
+              "type": "lifeSteal",
+              "amount": 10,
+              "duration": 20
+            }
+          ],
+          "cooldown": 100,
+          "manaCost": 120
+        },
+        {
+          "level": 3,
+          "requiredCharacterLevel": 40,
+          "effects": [
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "attack",
+              "amount": 200,
+              "duration": 25
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "attackSpeed",
+              "amount": 100,
+              "duration": 25
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "movementSpeed",
+              "amount": 50,
+              "duration": 25
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "criticalChance",
+              "amount": 40,
+              "duration": 25
+            },
+            {
+              "type": "immunity",
+              "target": "self",
+              "immuneTo": ["stun", "slow", "fear", "poison", "curse", "silence"],
+              "duration": 25
+            },
+            {
+              "type": "lifeSteal",
+              "amount": 20,
+              "duration": 25
+            },
+            {
+              "type": "aura",
+              "target": "enemies",
+              "areaOfEffect": 5,
+              "damage": 20,
+              "damageType": "physical",
+              "damageInterval": 1,
+              "duration": 25
+            }
+          ],
+          "cooldown": 90,
+          "manaCost": 150
+        }
+      ]
+    },
+    {
+      "id": "mage_fireball",
+      "name": "كرة النار",
+      "nameEn": "Fireball",
+      "type": "active",
+      "class": "mage",
+      "level": 1,
+      "cooldown": 4,
+      "manaCost": 15,
+      "damage": {
+        "min": 150,
+        "max": 180,
+        "type": "fire"
+      },
+      "range": 10,
+      "areaOfEffect": 3,
+      "effects": [
+        {
+          "type": "burn",
+          "chance": 30,
+          "damage": 10,
+          "duration": 3
+        }
+      ],
+      "description": "إطلاق كرة من النار تسبب ضرراً للعدو والأعداء القريبين منه مع فرصة لإشعالهم",
+      "descriptionEn": "Launch a ball of fire causing damage to the enemy and nearby enemies with a chance to ignite them",
+      "iconPath": "assets/images/ui/icons/skills/mage/fireball.png",
+      "animationPath": "assets/animations/skills/mage/fireball.json",
+      "soundEffects": {
+        "cast": "assets/audio/sfx/skills/mage/fireball_cast.mp3",
+        "hit": "assets/audio/sfx/skills/mage/fireball_hit.mp3"
+      },
+      "visualEffects": {
+        "type": "projectile",
+        "color": "#e74c3c",
+        "scale": 1.0,
+        "duration": 0.8,
+        "particleEffect": "fire",
+        "projectileSpeed": 15
+      },
+      "upgrades": [
+        {
+          "level": 2,
+          "requiredCharacterLevel": 10,
+          "damage": {
+            "min": 180,
+            "max": 220,
+            "type": "fire"
+          },
+          "effects": [
+            {
+              "type": "burn",
+              "chance": 40,
+              "damage": 15,
+              "duration": 4
+            }
+          ],
+          "areaOfEffect": 4,
+          "cooldown": 3.5,
+          "manaCost": 20
+        },
+        {
+          "level": 3,
+          "requiredCharacterLevel": 20,
+          "damage": {
+            "min": 220,
+            "max": 270,
+            "type": "fire"
+          },
+          "effects": [
+            {
+              "type": "burn",
+              "chance": 50,
+              "damage": 20,
+              "duration": 5
+            }
+          ],
+          "areaOfEffect": 5,
+          "cooldown": 3,
+          "manaCost": 25
+        }
+      ]
+    },
+    {
+      "id": "mage_ice_spike",
+      "name": "أشواك الجليد",
+      "nameEn": "Ice Spike",
+      "type": "active",
+      "class": "mage",
+      "level": 5,
+      "cooldown": 6,
+      "manaCost": 20,
+      "damage": {
+        "min": 130,
+        "max": 160,
+        "type": "ice"
+      },
+      "range": 8,
+      "areaOfEffect": 0,
+      "effects": [
+        {
+          "type": "slow",
+          "chance": 70,
+          "amount": 40,
+          "duration": 4
+        }
+      ],
+      "description": "إطلاق شوكة جليدية حادة تخترق العدو وتبطئ حركته",
+      "descriptionEn": "Launch a sharp ice spike that pierces the enemy and slows their movement",
+      "iconPath": "assets/images/ui/icons/skills/mage/ice_spike.png",
+      "animationPath": "assets/animations/skills/mage/ice_spike.json",
+      "soundEffects": {
+        "cast": "assets/audio/sfx/skills/mage/ice_spike_cast.mp3",
+        "hit": "assets/audio/sfx/skills/mage/ice_spike_hit.mp3"
+      },
+      "visualEffects": {
+        "type": "projectile",
+        "color": "#3498db",
+        "scale": 1.0,
+        "duration": 0.6,
+        "particleEffect": "ice",
+        "projectileSpeed": 20
+      },
+      "upgrades": [
+        {
+          "level": 2,
+          "requiredCharacterLevel": 15,
+          "damage": {
+            "min": 160,
+            "max": 200,
+            "type": "ice"
+          },
+          "effects": [
+            {
+              "type": "slow",
+              "chance": 80,
+              "amount": 50,
+              "duration": 5
+            }
+          ],
+          "cooldown": 5,
+          "manaCost": 25
+        },
+        {
+          "level": 3,
+          "requiredCharacterLevel": 25,
+          "damage": {
+            "min": 200,
+            "max": 250,
+            "type": "ice"
+          },
+          "effects": [
+            {
+              "type": "slow",
+              "chance": 90,
+              "amount": 60,
+              "duration": 6
+            },
+            {
+              "type": "freeze",
+              "chance": 20,
+              "duration": 2
+            }
+          ],
+          "cooldown": 4,
+          "manaCost": 30
+        }
+      ]
+    },
+    {
+      "id": "mage_teleport",
+      "name": "انتقال سريع",
+      "nameEn": "Teleport",
+      "type": "active",
+      "class": "mage",
+      "level": 10,
+      "cooldown": 15,
+      "manaCost": 30,
+      "damage": {
+        "min": 0,
+        "max": 0,
+        "type": "none"
+      },
+      "range": 15,
+      "areaOfEffect": 0,
+      "effects": [
+        {
+          "type": "movement",
+          "distance": 15
+        },
+        {
+          "type": "buff",
+          "target": "self",
+          "stat": "movementSpeed",
+          "amount": 20,
+          "duration": 3
+        }
+      ],
+      "description": "انتقال فوري إلى موقع محدد ضمن المدى، مع زيادة مؤقتة في سرعة الحركة",
+      "descriptionEn": "Instantly teleport to a specified location within range, with a temporary increase in movement speed",
+      "iconPath": "assets/images/ui/icons/skills/mage/teleport.png",
+      "animationPath": "assets/animations/skills/mage/teleport.json",
+      "soundEffects": {
+        "cast": "assets/audio/sfx/skills/mage/teleport_cast.mp3",
+        "hit": "assets/audio/sfx/skills/mage/teleport_hit.mp3"
+      },
+      "visualEffects": {
+        "type": "blink",
+        "color": "#9b59b6",
+        "scale": 1.0,
+        "duration": 0.5,
+        "particleEffect": "arcane"
+      },
+      "upgrades": [
+        {
+          "level": 2,
+          "requiredCharacterLevel": 20,
+          "effects": [
+            {
+              "type": "movement",
+              "distance": 20
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "movementSpeed",
+              "amount": 30,
+              "duration": 4
+            },
+            {
+              "type": "invisibility",
+              "duration": 2
+            }
+          ],
+          "range": 20,
+          "cooldown": 12,
+          "manaCost": 35
+        },
+        {
+          "level": 3,
+          "requiredCharacterLevel": 30,
+          "effects": [
+            {
+              "type": "movement",
+              "distance": 25
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "movementSpeed",
+              "amount": 40,
+              "duration": 5
+            },
+            {
+              "type": "invisibility",
+              "duration": 3
+            },
+            {
+              "type": "aoe_damage",
+              "damage": 100,
+              "damageType": "arcane",
+              "radius": 3,
+              "location": "both"
+            }
+          ],
+          "range": 25,
+          "cooldown": 10,
+          "manaCost": 40
+        }
+      ]
+    },
+    {
+      "id": "mage_arcane_barrier",
+      "name": "حاجز سحري",
+      "nameEn": "Arcane Barrier",
+      "type": "active",
+      "class": "mage",
+      "level": 15,
+      "cooldown": 25,
+      "manaCost": 40,
+      "damage": {
+        "min": 0,
+        "max": 0,
+        "type": "none"
+      },
+      "range": 0,
+      "areaOfEffect": 0,
+      "effects": [
+        {
+          "type": "shield",
+          "amount": 300,
+          "duration": 10
+        },
+        {
+          "type": "buff",
+          "target": "self",
+          "stat": "magicResistance",
+          "amount": 30,
+          "duration": 10
+        },
+        {
+          "type": "manaRegeneration",
+          "amount": 10,
+          "duration": 10
+        }
+      ],
+      "description": "إنشاء حاجز سحري يمتص الضرر ويزيد من مقاومة السحر وتجديد المانا",
+      "descriptionEn": "Create a magical barrier that absorbs damage, increases magic resistance, and regenerates mana",
+      "iconPath": "assets/images/ui/icons/skills/mage/arcane_barrier.png",
+      "animationPath": "assets/animations/skills/mage/arcane_barrier.json",
+      "soundEffects": {
+        "cast": "assets/audio/sfx/skills/mage/arcane_barrier_cast.mp3",
+        "hit": "assets/audio/sfx/skills/mage/arcane_barrier_hit.mp3"
+      },
+      "visualEffects": {
+        "type": "shield",
+        "color": "#9b59b6",
+        "scale": 1.2,
+        "duration": 10.0,
+        "particleEffect": "arcane_shield"
+      },
+      "upgrades": [
+        {
+          "level": 2,
+          "requiredCharacterLevel": 25,
+          "effects": [
+            {
+              "type": "shield",
+              "amount": 500,
+              "duration": 12
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "magicResistance",
+              "amount": 40,
+              "duration": 12
+            },
+            {
+              "type": "manaRegeneration",
+              "amount": 15,
+              "duration": 12
+            },
+            {
+              "type": "reflect",
+              "damage": 30,
+              "damageType": "arcane",
+              "duration": 12
+            }
+          ],
+          "cooldown": 20,
+          "manaCost": 50
+        },
+        {
+          "level": 3,
+          "requiredCharacterLevel": 35,
+          "effects": [
+            {
+              "type": "shield",
+              "amount": 800,
+              "duration": 15
+            },
+            {
+              "type": "buff",
+              "target": "self",
+              "stat": "magicResistance",
+              "amount": 50,
+              "duration": 15
+            },
+            {
+              "type": "manaRegeneration",
+              "amount": 20,
+              "duration": 15
+            },
+            {
+              "type": "reflect",
+              "damage": 50,
+              "damageType": "arcane",
+              "duration": 15
+            },
+            {
+              "type": "immunity",
+              "immuneTo": ["stun", "silence"],
+              "duration": 5
+            }
+          ],
+          "cooldown": 15,
+          "manaCost": 60
+        }
+      ]
+    },
+    {
+      "id": "mage_ultimate_meteor_shower",
+      "name": "مطر النيازك",
+      "nameEn": "Meteor Shower",
+      "type": "ultimate",
+      "class": "mage",
+      "level": 20,
+      "cooldown": 180,
+      "manaCost": 150,
+      "damage": {
+        "min": 300,
+        "max": 400,
+        "type": "fire"
+      },
+      "range": 20,
+      "areaOfEffect": 10,
+      "effects": [
+        {
+          "type": "burn",
+          "chance": 100,
+          "damage": 30,
+          "duration": 5
+        },
+        {
+          "type": "stun",
+          "chance": 50,
+          "duration": 2
+        },
+        {
+          "type": "ground_effect",
+          "damage": 20,
+          "damageType": "fire",
+          "damageInterval": 1,
+          "duration": 8,
+          "areaOfEffect": 10
+        }
+      ],
+      "description": "استدعاء مطر من النيازك الملتهبة تسقط على منطقة واسعة، مسببة ضرراً هائلاً وتأثيرات متعددة",
+      "descriptionEn": "Summon a shower of flaming meteors that fall on a wide area, causing massive damage and multiple effects",
+      "iconPath": "assets/images/ui/icons/skills/mage/meteor_shower.png",
+      "animationPath": "assets/animations/skills/mage/meteor_shower.json",
+      "soundEffects": {
+        "cast": "assets/audio/sfx/skills/mage/meteor_shower_cast.mp3",
+        "hit": "assets/audio/sfx/skills/mage/meteor_shower_hit.mp3"
+      },
+      "visualEffects": {
+        "type": "rain",
+        "color": "#e74c3c",
+        "scale": 2.0,
+        "duration": 8.0,
+        "particleEffect": "meteor",
+        "impactEffect": "explosion"
+      },
+      "upgrades": [
+        {
+          "level": 2,
+          "requiredCharacterLevel": 30,
+          "damage": {
+            "min": 400,
+            "max": 550,
+            "type": "fire"
+          },
+          "effects": [
+            {
+              "type": "burn",
+              "chance": 100,
+              "damage": 40,
+              "duration": 6
+            },
+            {
+              "type": "stun",
+              "chance": 60,
+              "duration": 3
+            },
+            {
+              "type": "ground_effect",
+              "damage": 30,
+              "damageType": "fire",
+              "damageInterval": 1,
+              "duration": 10,
+              "areaOfEffect": 12
+            }
+          ],
+          "areaOfEffect": 12,
+          "cooldown": 150,
+          "manaCost": 180
+        },
+        {
+          "level": 3,
+          "requiredCharacterLevel": 40,
+          "damage": {
+            "min": 550,
+            "max": 700,
+            "type": "fire"
+          },
+          "effects": [
+            {
+              "type": "burn",
+              "chance": 100,
+              "damage": 50,
+              "duration": 8
+            },
+            {
+              "type": "stun",
+              "chance": 70,
+              "duration": 4
+            },
+            {
+              "type": "ground_effect",
+              "damage": 40,
+              "damageType": "fire",
+              "damageInterval": 1,
+              "duration": 12,
+              "areaOfEffect": 15
+            },
+            {
+              "type": "debuff",
+              "target": "enemies",
+              "stat": "fireResistance",
+              "amount": -50,
+              "duration": 15
+            }
+          ],
+          "areaOfEffect": 15,
+          "cooldown": 120,
+          "manaCost": 200
+        }
+      ]
+    }
+  ]
+}

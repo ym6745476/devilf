@@ -1,0 +1,772 @@
+{
+  "maps": [
+    {
+      "id": "desert_city",
+      "name": "مدينة الرمال",
+      "nameEn": "Sand City",
+      "type": "city",
+      "isSafeZone": true,
+      "isPvpEnabled": false,
+      "minLevel": 1,
+      "maxLevel": 99,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      },
+      "respawnPoint": {
+        "x": 1024,
+        "y": 1024
+      },
+      "connections": [
+        {
+          "mapId": "desert_outskirts",
+          "portalLocation": {
+            "x": 1950,
+            "y": 1024
+          },
+          "portalName": "بوابة الصحراء الشرقية",
+          "portalNameEn": "Eastern Desert Gate"
+        },
+        {
+          "mapId": "oasis",
+          "portalLocation": {
+            "x": 1024,
+            "y": 1950
+          },
+          "portalName": "بوابة الواحة الجنوبية",
+          "portalNameEn": "Southern Oasis Gate"
+        }
+      ],
+      "npcs": [
+        {
+          "id": "merchant_1",
+          "position": {
+            "x": 900,
+            "y": 1100
+          }
+        },
+        {
+          "id": "blacksmith_1",
+          "position": {
+            "x": 1150,
+            "y": 950
+          }
+        },
+        {
+          "id": "quest_giver_1",
+          "position": {
+            "x": 1050,
+            "y": 1200
+          }
+        },
+        {
+          "id": "guild_master",
+          "position": {
+            "x": 1200,
+            "y": 1100
+          }
+        }
+      ],
+      "features": [
+        {
+          "type": "building",
+          "name": "قصر الحاكم",
+          "nameEn": "Governor's Palace",
+          "position": {
+            "x": 1024,
+            "y": 800
+          },
+          "size": {
+            "width": 200,
+            "height": 150
+          },
+          "interiorMapId": "palace_interior"
+        },
+        {
+          "type": "building",
+          "name": "سوق المدينة",
+          "nameEn": "City Market",
+          "position": {
+            "x": 900,
+            "y": 1000
+          },
+          "size": {
+            "width": 150,
+            "height": 150
+          }
+        },
+        {
+          "type": "building",
+          "name": "مقر النقابة",
+          "nameEn": "Guild Headquarters",
+          "position": {
+            "x": 1200,
+            "y": 1050
+          },
+          "size": {
+            "width": 120,
+            "height": 100
+          },
+          "interiorMapId": "guild_hall"
+        },
+        {
+          "type": "fountain",
+          "name": "نافورة المدينة",
+          "nameEn": "City Fountain",
+          "position": {
+            "x": 1024,
+            "y": 1024
+          },
+          "size": {
+            "width": 50,
+            "height": 50
+          },
+          "effect": "healing",
+          "healAmount": 5,
+          "healInterval": 3
+        }
+      ],
+      "weatherEffects": ["clear", "sandstorm"],
+      "dayNightCycle": true,
+      "ambientSounds": {
+        "day": "assets/audio/ambient/city_day.mp3",
+        "night": "assets/audio/ambient/city_night.mp3"
+      },
+      "backgroundMusic": "assets/audio/music/desert_city_theme.mp3",
+      "description": "مدينة كبيرة تقع في قلب الصحراء، تعج بالتجار والحرفيين والمغامرين. مركز تجاري مهم ونقطة انطلاق للمغامرات",
+      "descriptionEn": "A large city located in the heart of the desert, bustling with merchants, craftsmen, and adventurers. An important trading hub and starting point for adventures",
+      "mapLayers": {
+        "base": "assets/images/maps/desert_city/base.png",
+        "objects": "assets/images/maps/desert_city/objects.png",
+        "foreground": "assets/images/maps/desert_city/foreground.png",
+        "collision": "assets/images/maps/desert_city/collision.json"
+      },
+      "minimapImage": "assets/images/ui/minimaps/desert_city_minimap.png"
+    },
+    {
+      "id": "desert_outskirts",
+      "name": "أطراف الصحراء",
+      "nameEn": "Desert Outskirts",
+      "type": "field",
+      "isSafeZone": false,
+      "isPvpEnabled": true,
+      "minLevel": 5,
+      "maxLevel": 15,
+      "size": {
+        "width": 3072,
+        "height": 3072
+      },
+      "respawnPoint": {
+        "x": 200,
+        "y": 1536
+      },
+      "connections": [
+        {
+          "mapId": "desert_city",
+          "portalLocation": {
+            "x": 100,
+            "y": 1536
+          },
+          "portalName": "بوابة المدينة",
+          "portalNameEn": "City Gate"
+        },
+        {
+          "mapId": "deep_desert",
+          "portalLocation": {
+            "x": 3000,
+            "y": 1536
+          },
+          "portalName": "طريق الصحراء العميقة",
+          "portalNameEn": "Deep Desert Path"
+        },
+        {
+          "mapId": "rocky_hills",
+          "portalLocation": {
+            "x": 1536,
+            "y": 100
+          },
+          "portalName": "ممر التلال الصخرية",
+          "portalNameEn": "Rocky Hills Pass"
+        }
+      ],
+      "monsters": [
+        {
+          "id": "wolf_1",
+          "spawnAreas": [
+            {
+              "x": 500,
+              "y": 500,
+              "width": 1000,
+              "height": 1000,
+              "maxCount": 20,
+              "respawnTime": 60
+            }
+          ]
+        },
+        {
+          "id": "scorpion_1",
+          "spawnAreas": [
+            {
+              "x": 2000,
+              "y": 2000,
+              "width": 800,
+              "height": 800,
+              "maxCount": 15,
+              "respawnTime": 90
+            }
+          ]
+        }
+      ],
+      "npcs": [
+        {
+          "id": "outpost_guard",
+          "position": {
+            "x": 200,
+            "y": 1536
+          }
+        },
+        {
+          "id": "wandering_merchant",
+          "position": {
+            "x": 1000,
+            "y": 1000
+          }
+        }
+      ],
+      "resources": [
+        {
+          "type": "herb",
+          "id": "desert_herb",
+          "spawnAreas": [
+            {
+              "x": 800,
+              "y": 1200,
+              "width": 500,
+              "height": 500,
+              "maxCount": 10,
+              "respawnTime": 300
+            }
+          ]
+        },
+        {
+          "type": "ore",
+          "id": "copper_ore",
+          "spawnAreas": [
+            {
+              "x": 2500,
+              "y": 800,
+              "width": 400,
+              "height": 400,
+              "maxCount": 8,
+              "respawnTime": 600
+            }
+          ]
+        }
+      ],
+      "features": [
+        {
+          "type": "building",
+          "name": "مخفر الحراسة",
+          "nameEn": "Guard Outpost",
+          "position": {
+            "x": 200,
+            "y": 1600
+          },
+          "size": {
+            "width": 80,
+            "height": 60
+          }
+        },
+        {
+          "type": "oasis",
+          "name": "واحة صغيرة",
+          "nameEn": "Small Oasis",
+          "position": {
+            "x": 1500,
+            "y": 1500
+          },
+          "size": {
+            "width": 100,
+            "height": 100
+          },
+          "effect": "healing",
+          "healAmount": 3,
+          "healInterval": 5
+        }
+      ],
+      "weatherEffects": ["clear", "sandstorm", "hot"],
+      "dayNightCycle": true,
+      "ambientSounds": {
+        "day": "assets/audio/ambient/desert_day.mp3",
+        "night": "assets/audio/ambient/desert_night.mp3"
+      },
+      "backgroundMusic": "assets/audio/music/desert_exploration.mp3",
+      "description": "المنطقة المحيطة بمدينة الرمال، تتكون من كثبان رملية وصخور متناثرة. تعيش فيها الذئاب والعقارب وبعض قطاع الطرق",
+      "descriptionEn": "The area surrounding Sand City, consisting of sand dunes and scattered rocks. Home to wolves, scorpions, and some bandits",
+      "mapLayers": {
+        "base": "assets/images/maps/desert_outskirts/base.png",
+        "objects": "assets/images/maps/desert_outskirts/objects.png",
+        "foreground": "assets/images/maps/desert_outskirts/foreground.png",
+        "collision": "assets/images/maps/desert_outskirts/collision.json"
+      },
+      "minimapImage": "assets/images/ui/minimaps/desert_outskirts_minimap.png"
+    },
+    {
+      "id": "ancient_pyramid",
+      "name": "الهرم القديم",
+      "nameEn": "Ancient Pyramid",
+      "type": "dungeon",
+      "isSafeZone": false,
+      "isPvpEnabled": false,
+      "minLevel": 25,
+      "maxLevel": 35,
+      "size": {
+        "width": 4096,
+        "height": 4096
+      },
+      "respawnPoint": {
+        "x": 2048,
+        "y": 3900
+      },
+      "connections": [
+        {
+          "mapId": "deep_desert",
+          "portalLocation": {
+            "x": 2048,
+            "y": 4000
+          },
+          "portalName": "مدخل الهرم",
+          "portalNameEn": "Pyramid Entrance"
+        },
+        {
+          "mapId": "burial_chamber",
+          "portalLocation": {
+            "x": 2048,
+            "y": 100
+          },
+          "portalName": "غرفة الدفن",
+          "portalNameEn": "Burial Chamber"
+        }
+      ],
+      "monsters": [
+        {
+          "id": "mummy_1",
+          "spawnAreas": [
+            {
+              "x": 1000,
+              "y": 1000,
+              "width": 2000,
+              "height": 2000,
+              "maxCount": 30,
+              "respawnTime": 120
+            }
+          ]
+        },
+        {
+          "id": "scarab_1",
+          "spawnAreas": [
+            {
+              "x": 500,
+              "y": 500,
+              "width": 3000,
+              "height": 3000,
+              "maxCount": 50,
+              "respawnTime": 60
+            }
+          ]
+        }
+      ],
+      "npcs": [
+        {
+          "id": "trapped_archaeologist",
+          "position": {
+            "x": 1500,
+            "y": 1500
+          }
+        }
+      ],
+      "treasureChests": [
+        {
+          "id": "gold_chest_1",
+          "position": {
+            "x": 1200,
+            "y": 800
+          },
+          "respawnTime": 3600,
+          "requiredKey": "golden_scarab"
+        },
+        {
+          "id": "artifact_chest_1",
+          "position": {
+            "x": 2800,
+            "y": 1600
+          },
+          "respawnTime": 7200,
+          "requiredKey": "hieroglyph_tablet"
+        }
+      ],
+      "traps": [
+        {
+          "type": "spike",
+          "damage": 50,
+          "triggerArea": {
+            "x": 1800,
+            "y": 2200,
+            "width": 200,
+            "height": 200
+          },
+          "resetTime": 10
+        },
+        {
+          "type": "poison_gas",
+          "damage": 10,
+          "damageInterval": 1,
+          "duration": 5,
+          "triggerArea": {
+            "x": 2500,
+            "y": 1200,
+            "width": 300,
+            "height": 300
+          },
+          "resetTime": 20
+        },
+        {
+          "type": "boulder",
+          "damage": 100,
+          "triggerArea": {
+            "x": 1000,
+            "y": 3000,
+            "width": 100,
+            "height": 100
+          },
+          "path": [
+            {"x": 1000, "y": 3000},
+            {"x": 1000, "y": 2000}
+          ],
+          "speed": 10,
+          "resetTime": 30
+        }
+      ],
+      "puzzles": [
+        {
+          "id": "hieroglyph_puzzle",
+          "position": {
+            "x": 2300,
+            "y": 1800
+          },
+          "solution": "scarab_sun_ankh_eye",
+          "reward": {
+            "itemId": "hieroglyph_tablet",
+            "quantity": 1
+          }
+        },
+        {
+          "id": "statue_puzzle",
+          "position": {
+            "x": 1700,
+            "y": 1200
+          },
+          "solution": "north_east_south_west",
+          "reward": {
+            "itemId": "golden_scarab",
+            "quantity": 1
+          }
+        }
+      ],
+      "weatherEffects": ["dusty"],
+      "dayNightCycle": false,
+      "lighting": "dim",
+      "ambientSounds": {
+        "day": "assets/audio/ambient/pyramid_ambient.mp3",
+        "night": "assets/audio/ambient/pyramid_ambient.mp3"
+      },
+      "backgroundMusic": "assets/audio/music/pyramid_theme.mp3",
+      "description": "هرم قديم يعود لعصور الفراعنة، مليء بالممرات المتعرجة والغرف السرية والكنوز المحروسة بالفخاخ والمومياوات",
+      "descriptionEn": "An ancient pyramid dating back to the pharaonic era, filled with winding corridors, secret chambers, and treasures guarded by traps and mummies",
+      "mapLayers": {
+        "base": "assets/images/maps/ancient_pyramid/base.png",
+        "objects": "assets/images/maps/ancient_pyramid/objects.png",
+        "foreground": "assets/images/maps/ancient_pyramid/foreground.png",
+        "collision": "assets/images/maps/ancient_pyramid/collision.json"
+      },
+      "minimapImage": "assets/images/ui/minimaps/ancient_pyramid_minimap.png"
+    },
+    {
+      "id": "burial_chamber",
+      "name": "غرفة الدفن الملكية",
+      "nameEn": "Royal Burial Chamber",
+      "type": "boss_room",
+      "isSafeZone": false,
+      "isPvpEnabled": false,
+      "minLevel": 30,
+      "maxLevel": 40,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      },
+      "respawnPoint": {
+        "x": 512,
+        "y": 900
+      },
+      "connections": [
+        {
+          "mapId": "ancient_pyramid",
+          "portalLocation": {
+            "x": 512,
+            "y": 950
+          },
+          "portalName": "باب الهرم",
+          "portalNameEn": "Pyramid Door"
+        }
+      ],
+      "monsters": [
+        {
+          "id": "pharaoh_boss",
+          "spawnAreas": [
+            {
+              "x": 512,
+              "y": 300,
+              "width": 1,
+              "height": 1,
+              "maxCount": 1,
+              "respawnTime": 3600
+            }
+          ]
+        },
+        {
+          "id": "guardian_mummy",
+          "spawnAreas": [
+            {
+              "x": 300,
+              "y": 300,
+              "width": 400,
+              "height": 400,
+              "maxCount": 4,
+              "respawnTime": 300
+            }
+          ]
+        }
+      ],
+      "treasureChests": [
+        {
+          "id": "pharaoh_treasure",
+          "position": {
+            "x": 512,
+            "y": 200
+          },
+          "respawnTime": 3600,
+          "requiredBossDefeat": "pharaoh_boss"
+        }
+      ],
+      "features": [
+        {
+          "type": "sarcophagus",
+          "name": "تابوت الفرعون",
+          "nameEn": "Pharaoh's Sarcophagus",
+          "position": {
+            "x": 512,
+            "y": 300
+          },
+          "size": {
+            "width": 100,
+            "height": 200
+          }
+        },
+        {
+          "type": "statue",
+          "name": "تمثال أنوبيس",
+          "nameEn": "Anubis Statue",
+          "position": {
+            "x": 300,
+            "y": 300
+          },
+          "size": {
+            "width": 50,
+            "height": 100
+          }
+        },
+        {
+          "type": "statue",
+          "name": "تمثال حورس",
+          "nameEn": "Horus Statue",
+          "position": {
+            "x": 724,
+            "y": 300
+          },
+          "size": {
+            "width": 50,
+            "height": 100
+          }
+        }
+      ],
+      "weatherEffects": [],
+      "dayNightCycle": false,
+      "lighting": "dark",
+      "specialEffects": [
+        {
+          "type": "torches",
+          "positions": [
+            {"x": 200, "y": 200},
+            {"x": 824, "y": 200},
+            {"x": 200, "y": 824},
+            {"x": 824, "y": 824}
+          ]
+        },
+        {
+          "type": "magical_aura",
+          "position": {
+            "x": 512,
+            "y": 300
+          },
+          "color": "#2ecc71",
+          "radius": 100
+        }
+      ],
+      "ambientSounds": {
+        "day": "assets/audio/ambient/burial_chamber.mp3",
+        "night": "assets/audio/ambient/burial_chamber.mp3"
+      },
+      "backgroundMusic": "assets/audio/music/boss_battle.mp3",
+      "description": "غرفة الدفن الملكية في قلب الهرم، حيث يرقد الفرعون المحنط محاطاً بكنوزه وحراسه. مكان مهيب ومخيف تحيط به هالة من السحر القديم",
+      "descriptionEn": "The royal burial chamber at the heart of the pyramid, where the mummified pharaoh rests surrounded by his treasures and guardians. An imposing and frightening place surrounded by an aura of ancient magic",
+      "mapLayers": {
+        "base": "assets/images/maps/burial_chamber/base.png",
+        "objects": "assets/images/maps/burial_chamber/objects.png",
+        "foreground": "assets/images/maps/burial_chamber/foreground.png",
+        "collision": "assets/images/maps/burial_chamber/collision.json"
+      },
+      "minimapImage": "assets/images/ui/minimaps/burial_chamber_minimap.png"
+    },
+    {
+      "id": "dragon_lair",
+      "name": "وكر التنين",
+      "nameEn": "Dragon's Lair",
+      "type": "boss_room",
+      "isSafeZone": false,
+      "isPvpEnabled": false,
+      "minLevel": 45,
+      "maxLevel": 60,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      },
+      "respawnPoint": {
+        "x": 1024,
+        "y": 1900
+      },
+      "connections": [
+        {
+          "mapId": "ancient_volcano",
+          "portalLocation": {
+            "x": 1024,
+            "y": 2000
+          },
+          "portalName": "مدخل الوكر",
+          "portalNameEn": "Lair Entrance"
+        }
+      ],
+      "monsters": [
+        {
+          "id": "dragon_1",
+          "spawnAreas": [
+            {
+              "x": 1024,
+              "y": 600,
+              "width": 1,
+              "height": 1,
+              "maxCount": 1,
+              "respawnTime": 86400
+            }
+          ]
+        },
+        {
+          "id": "dragon_whelp",
+          "spawnAreas": [
+            {
+              "x": 800,
+              "y": 800,
+              "width": 500,
+              "height": 500,
+              "maxCount": 5,
+              "respawnTime": 600
+            }
+          ]
+        }
+      ],
+      "treasureChests": [
+        {
+          "id": "dragon_hoard",
+          "position": {
+            "x": 1024,
+            "y": 400
+          },
+          "respawnTime": 86400,
+          "requiredBossDefeat": "dragon_1"
+        }
+      ],
+      "features": [
+        {
+          "type": "lava_pool",
+          "name": "بركة الحمم",
+          "nameEn": "Lava Pool",
+          "position": {
+            "x": 1024,
+            "y": 1024
+          },
+          "size": {
+            "width": 400,
+            "height": 400
+          },
+          "damage": 100,
+          "damageInterval": 1
+        },
+        {
+          "type": "treasure_pile",
+          "name": "كنز التنين",
+          "nameEn": "Dragon's Treasure",
+          "position": {
+            "x": 1024,
+            "y": 400
+          },
+          "size": {
+            "width": 200,
+            "height": 200
+          }
+        }
+      ],
+      "weatherEffects": ["hot"],
+      "dayNightCycle": false,
+      "lighting": "dim",
+      "specialEffects": [
+        {
+          "type": "lava_glow",
+          "color": "#e74c3c",
+          "intensity": 0.8
+        },
+        {
+          "type": "steam_vents",
+          "positions": [
+            {"x": 800, "y": 800},
+            {"x": 1200, "y": 800},
+            {"x": 800, "y": 1200},
+            {"x": 1200, "y": 1200}
+          ]
+        }
+      ],
+      "ambientSounds": {
+        "day": "assets/audio/ambient/dragon_lair.mp3",
+        "night": "assets/audio/ambient/dragon_lair.mp3"
+      },
+      "backgroundMusic": "assets/audio/music/dragon_battle.mp3",
+      "description": "كهف ضخم في قلب بركان قديم، يعيش فيه تنين الصحراء المهيب وسط بحيرة من الحمم البركانية وكنوز لا تحصى",
+      "descriptionEn": "A massive cave in the heart of an ancient volcano, home to the majestic desert dragon amidst a lake of volcanic lava and countless treasures",
+      "mapLayers": {
+        "base": "assets/images/maps/dragon_lair/base.png",
+        "objects": "assets/images/maps/dragon_lair/objects.png",
+        "foreground": "assets/images/maps/dragon_lair/foreground.png",
+        "collision": "assets/images/maps/dragon_lair/collision.json"
+      },
+      "minimapImage": "assets/images/ui/minimaps/dragon_lair_minimap.png"
+    }
+  ]
+}

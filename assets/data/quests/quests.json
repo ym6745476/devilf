@@ -1,0 +1,597 @@
+{
+  "quests": [
+    {
+      "id": "main_quest_1",
+      "title": "بداية المغامرة",
+      "titleEn": "The Beginning of the Adventure",
+      "type": "main",
+      "minLevel": 1,
+      "maxLevel": 5,
+      "requiredQuests": [],
+      "startNpcId": "quest_giver_1",
+      "endNpcId": "quest_giver_1",
+      "description": "مرحباً بك في عالم الفتح! لتبدأ مغامرتك، عليك أن تثبت قدراتك القتالية. اذهب إلى أطراف الصحراء واقتل 5 ذئاب صحراوية.",
+      "descriptionEn": "Welcome to the world of Al-Fateh! To begin your adventure, you must prove your combat abilities. Go to the Desert Outskirts and kill 5 Desert Wolves.",
+      "objectives": [
+        {
+          "type": "kill",
+          "targetId": "wolf_1",
+          "count": 5,
+          "description": "اقتل ذئاب الصحراء",
+          "descriptionEn": "Kill Desert Wolves"
+        }
+      ],
+      "rewards": [
+        {
+          "type": "experience",
+          "amount": 100
+        },
+        {
+          "type": "gold",
+          "amount": 50
+        },
+        {
+          "type": "item",
+          "itemId": "novice_sword",
+          "quantity": 1
+        },
+        {
+          "type": "reputation",
+          "factionId": "desert_city",
+          "amount": 10
+        }
+      ],
+      "dialogues": {
+        "start": [
+          {
+            "npcId": "quest_giver_1",
+            "text": "مرحباً أيها المغامر الجديد! أنا الشيخ حسن، مستشار الحاكم. نحن نبحث عن مقاتلين أقوياء لمساعدتنا في حماية المدينة.",
+            "textEn": "Hello, new adventurer! I am Sheikh Hassan, the governor's advisor. We are looking for strong fighters to help us protect the city."
+          },
+          {
+            "npcId": "quest_giver_1",
+            "text": "لكن قبل أن أثق بك، عليك أن تثبت قدراتك. اذهب إلى أطراف الصحراء واقتل 5 ذئاب صحراوية. هذه المخلوقات تهدد قوافلنا التجارية.",
+            "textEn": "But before I can trust you, you must prove your abilities. Go to the Desert Outskirts and kill 5 Desert Wolves. These creatures threaten our trade caravans."
+          },
+          {
+            "playerId": "player",
+            "text": "سأفعل ذلك وأعود إليك بالأخبار.",
+            "textEn": "I will do it and return to you with news."
+          }
+        ],
+        "complete": [
+          {
+            "npcId": "quest_giver_1",
+            "text": "أحسنت! لقد أثبتت شجاعتك وقدراتك القتالية. خذ هذه المكافآت، وهذا السيف سيساعدك في مغامراتك القادمة.",
+            "textEn": "Well done! You have proven your courage and combat abilities. Take these rewards, and this sword will help you in your upcoming adventures."
+          },
+          {
+            "npcId": "quest_giver_1",
+            "text": "لدينا الكثير من المهام التي تحتاج إلى مغامر مثلك. عد إلي عندما تصبح أقوى وسأخبرك بالمزيد عن التهديدات التي تواجه مدينتنا.",
+            "textEn": "We have many tasks that need an adventurer like you. Return to me when you become stronger, and I will tell you more about the threats facing our city."
+          },
+          {
+            "playerId": "player",
+            "text": "شكراً لك. سأعود قريباً بعد أن أكتسب المزيد من الخبرة.",
+            "textEn": "Thank you. I will return soon after gaining more experience."
+          }
+        ]
+      },
+      "timeLimit": 0,
+      "repeatable": false,
+      "mapId": "desert_outskirts",
+      "questMarkers": [
+        {
+          "type": "objective",
+          "mapId": "desert_outskirts",
+          "position": {
+            "x": 500,
+            "y": 500
+          },
+          "radius": 500
+        }
+      ]
+    },
+    {
+      "id": "main_quest_2",
+      "title": "تهديد العقارب",
+      "titleEn": "The Scorpion Threat",
+      "type": "main",
+      "minLevel": 5,
+      "maxLevel": 10,
+      "requiredQuests": ["main_quest_1"],
+      "startNpcId": "quest_giver_1",
+      "endNpcId": "quest_giver_1",
+      "description": "عقارب الصحراء العملاقة تهاجم الواحات وتسمم مصادر المياه. اقتل 8 عقارب واجمع سمومها لصنع ترياق.",
+      "descriptionEn": "Giant Desert Scorpions are attacking the oases and poisoning water sources. Kill 8 scorpions and collect their venom to create an antidote.",
+      "objectives": [
+        {
+          "type": "kill",
+          "targetId": "scorpion_1",
+          "count": 8,
+          "description": "اقتل عقارب الصحراء العملاقة",
+          "descriptionEn": "Kill Giant Desert Scorpions"
+        },
+        {
+          "type": "collect",
+          "itemId": "poison_sac",
+          "count": 5,
+          "description": "اجمع أكياس السم",
+          "descriptionEn": "Collect Poison Sacs"
+        }
+      ],
+      "rewards": [
+        {
+          "type": "experience",
+          "amount": 200
+        },
+        {
+          "type": "gold",
+          "amount": 100
+        },
+        {
+          "type": "item",
+          "itemId": "antidote_potion",
+          "quantity": 3
+        },
+        {
+          "type": "reputation",
+          "factionId": "desert_city",
+          "amount": 15
+        }
+      ],
+      "dialogues": {
+        "start": [
+          {
+            "npcId": "quest_giver_1",
+            "text": "أهلاً بك مجدداً أيها المغامر! لقد ظهرت مشكلة جديدة. عقارب الصحراء العملاقة تهاجم الواحات وتسمم مصادر المياه.",
+            "textEn": "Welcome back, adventurer! A new problem has emerged. Giant Desert Scorpions are attacking the oases and poisoning water sources."
+          },
+          {
+            "npcId": "quest_giver_1",
+            "text": "نحتاج إلى من يقتل هذه العقارب ويجمع سمومها. سيستخدم الحكيم هذه السموم لصنع ترياق يحمي سكان المدينة.",
+            "textEn": "We need someone to kill these scorpions and collect their venom. The sage will use this venom to create an antidote to protect the city's residents."
+          },
+          {
+            "playerId": "player",
+            "text": "سأتولى هذه المهمة. أين يمكنني العثور على هذه العقارب؟",
+            "textEn": "I will take on this task. Where can I find these scorpions?"
+          },
+          {
+            "npcId": "quest_giver_1",
+            "text": "يمكنك العثور عليها في الجزء الجنوبي الشرقي من أطراف الصحراء. كن حذراً، فلدغتها سامة للغاية!",
+            "textEn": "You can find them in the southeastern part of the Desert Outskirts. Be careful, their sting is highly venomous!"
+          }
+        ],
+        "complete": [
+          {
+            "npcId": "quest_giver_1",
+            "text": "ممتاز! هذه الأكياس السامة ستكون كافية لصنع الترياق. لقد أنقذت العديد من الأرواح اليوم.",
+            "textEn": "Excellent! These poison sacs will be sufficient to create the antidote. You have saved many lives today."
+          },
+          {
+            "npcId": "quest_giver_1",
+            "text": "خذ هذه المكافآت، بما فيها بعض جرعات الترياق. قد تحتاجها في مغامراتك القادمة.",
+            "textEn": "Take these rewards, including some doses of the antidote. You may need them in your upcoming adventures."
+          },
+          {
+            "playerId": "player",
+            "text": "شكراً لك. هل هناك مهام أخرى يمكنني المساعدة فيها؟",
+            "textEn": "Thank you. Are there other tasks I can help with?"
+          },
+          {
+            "npcId": "quest_giver_1",
+            "text": "بالتأكيد. عندما تصل إلى المستوى 10، عد إلي. لدينا مشكلة أكبر تتعلق بالمومياوات في الهرم القديم.",
+            "textEn": "Certainly. When you reach level 10, come back to me. We have a bigger problem related to the mummies in the Ancient Pyramid."
+          }
+        ]
+      },
+      "timeLimit": 0,
+      "repeatable": false,
+      "mapId": "desert_outskirts",
+      "questMarkers": [
+        {
+          "type": "objective",
+          "mapId": "desert_outskirts",
+          "position": {
+            "x": 2000,
+            "y": 2000
+          },
+          "radius": 400
+        }
+      ]
+    },
+    {
+      "id": "daily_quest_1",
+      "title": "تدريب يومي",
+      "titleEn": "Daily Training",
+      "type": "daily",
+      "minLevel": 5,
+      "maxLevel": 99,
+      "requiredQuests": ["main_quest_1"],
+      "startNpcId": "training_master",
+      "endNpcId": "training_master",
+      "description": "أكمل تدريبك اليومي بقتل 20 وحشاً من أي نوع.",
+      "descriptionEn": "Complete your daily training by killing 20 monsters of any type.",
+      "objectives": [
+        {
+          "type": "kill",
+          "targetId": "any",
+          "count": 20,
+          "description": "اقتل الوحوش",
+          "descriptionEn": "Kill monsters"
+        }
+      ],
+      "rewards": [
+        {
+          "type": "experience",
+          "amount": 150
+        },
+        {
+          "type": "gold",
+          "amount": 75
+        },
+        {
+          "type": "item",
+          "itemId": "training_token",
+          "quantity": 1
+        }
+      ],
+      "dialogues": {
+        "start": [
+          {
+            "npcId": "training_master",
+            "text": "التدريب المستمر هو مفتاح القوة! هل أنت مستعد لتدريبك اليومي؟",
+            "textEn": "Continuous training is the key to strength! Are you ready for your daily training?"
+          },
+          {
+            "playerId": "player",
+            "text": "نعم، أنا جاهز.",
+            "textEn": "Yes, I am ready."
+          },
+          {
+            "npcId": "training_master",
+            "text": "ممتاز! اقتل 20 وحشاً من أي نوع وعد إلي.",
+            "textEn": "Excellent! Kill 20 monsters of any type and return to me."
+          }
+        ],
+        "complete": [
+          {
+            "npcId": "training_master",
+            "text": "أحسنت! أرى أن مهاراتك تتحسن يوماً بعد يوم. خذ هذه المكافآت، وعد غداً لتدريب جديد.",
+            "textEn": "Well done! I see your skills are improving day by day. Take these rewards, and come back tomorrow for new training."
+          }
+        ]
+      },
+      "timeLimit": 86400,
+      "repeatable": true,
+      "resetTime": "00:00:00",
+      "mapId": "any"
+    },
+    {
+      "id": "guild_quest_1",
+      "title": "دفاع النقابة",
+      "titleEn": "Guild Defense",
+      "type": "guild",
+      "minLevel": 20,
+      "maxLevel": 99,
+      "requiredQuests": [],
+      "startNpcId": "guild_master",
+      "endNpcId": "guild_master",
+      "description": "دافع عن مقر النقابة ضد هجوم قطاع الطرق. اهزم 30 من قطاع الطرق واقتل زعيمهم.",
+      "descriptionEn": "Defend the guild headquarters against a bandit attack. Defeat 30 bandits and kill their leader.",
+      "objectives": [
+        {
+          "type": "kill",
+          "targetId": "bandit_1",
+          "count": 30,
+          "description": "اهزم قطاع الطرق",
+          "descriptionEn": "Defeat bandits"
+        },
+        {
+          "type": "kill",
+          "targetId": "bandit_leader",
+          "count": 1,
+          "description": "اقتل زعيم قطاع الطرق",
+          "descriptionEn": "Kill the bandit leader"
+        }
+      ],
+      "rewards": [
+        {
+          "type": "experience",
+          "amount": 500
+        },
+        {
+          "type": "gold",
+          "amount": 300
+        },
+        {
+          "type": "item",
+          "itemId": "guild_token",
+          "quantity": 5
+        },
+        {
+          "type": "guild_points",
+          "amount": 100
+        }
+      ],
+      "dialogues": {
+        "start": [
+          {
+            "npcId": "guild_master",
+            "text": "انتباه يا أعضاء النقابة! لدينا معلومات عن هجوم وشيك من قطاع الطرق على مقرنا. نحتاج إلى كل المقاتلين المتاحين!",
+            "textEn": "Attention, guild members! We have information about an imminent attack from bandits on our headquarters. We need all available fighters!"
+          },
+          {
+            "playerId": "player",
+            "text": "سأساعد في الدفاع عن النقابة.",
+            "textEn": "I will help defend the guild."
+          },
+          {
+            "npcId": "guild_master",
+            "text": "ممتاز! توجه إلى البوابة الشمالية. قطاع الطرق قادمون من هناك. اهزم أكبر عدد ممكن منهم واقتل زعيمهم إذا استطعت.",
+            "textEn": "Excellent! Head to the northern gate. The bandits are coming from there. Defeat as many of them as you can and kill their leader if possible."
+          }
+        ],
+        "complete": [
+          {
+            "npcId": "guild_master",
+            "text": "لقد فعلتها! بفضل شجاعتك وقوتك، تمكنا من صد الهجوم وحماية مقر النقابة.",
+            "textEn": "You did it! Thanks to your courage and strength, we were able to repel the attack and protect the guild headquarters."
+          },
+          {
+            "npcId": "guild_master",
+            "text": "خذ هذه المكافآت كتقدير من النقابة. لقد أضفت أيضاً نقاط نقابة إلى رصيدك، يمكنك استخدامها لشراء معدات خاصة من متجر النقابة.",
+            "textEn": "Take these rewards as appreciation from the guild. I have also added guild points to your balance, which you can use to purchase special equipment from the guild store."
+          }
+        ]
+      },
+      "timeLimit": 3600,
+      "repeatable": true,
+      "resetTime": "weekly",
+      "mapId": "guild_defense_instance",
+      "requiresGuild": true,
+      "questMarkers": [
+        {
+          "type": "objective",
+          "mapId": "guild_defense_instance",
+          "position": {
+            "x": 500,
+            "y": 500
+          },
+          "radius": 300
+        }
+      ]
+    },
+    {
+      "id": "event_quest_1",
+      "title": "احتفال رمضان",
+      "titleEn": "Ramadan Celebration",
+      "type": "event",
+      "minLevel": 1,
+      "maxLevel": 99,
+      "requiredQuests": [],
+      "startNpcId": "event_coordinator",
+      "endNpcId": "event_coordinator",
+      "description": "ساعد في تحضيرات احتفال رمضان في المدينة. اجمع 15 فانوس رمضان و10 حلويات تقليدية.",
+      "descriptionEn": "Help with the Ramadan celebration preparations in the city. Collect 15 Ramadan lanterns and 10 traditional sweets.",
+      "objectives": [
+        {
+          "type": "collect",
+          "itemId": "ramadan_lantern",
+          "count": 15,
+          "description": "اجمع فوانيس رمضان",
+          "descriptionEn": "Collect Ramadan lanterns"
+        },
+        {
+          "type": "collect",
+          "itemId": "traditional_sweets",
+          "count": 10,
+          "description": "اجمع الحلويات التقليدية",
+          "descriptionEn": "Collect traditional sweets"
+        }
+      ],
+      "rewards": [
+        {
+          "type": "experience",
+          "amount": 300
+        },
+        {
+          "type": "gold",
+          "amount": 200
+        },
+        {
+          "type": "item",
+          "itemId": "ramadan_outfit",
+          "quantity": 1
+        },
+        {
+          "type": "item",
+          "itemId": "special_food_box",
+          "quantity": 5
+        }
+      ],
+      "dialogues": {
+        "start": [
+          {
+            "npcId": "event_coordinator",
+            "text": "مرحباً أيها المغامر! شهر رمضان المبارك على الأبواب، ونحن نحضر لاحتفال كبير في المدينة.",
+            "textEn": "Hello, adventurer! The blessed month of Ramadan is approaching, and we are preparing for a big celebration in the city."
+          },
+          {
+            "npcId": "event_coordinator",
+            "text": "هل يمكنك مساعدتنا في جمع فوانيس رمضان والحلويات التقليدية لتزيين المدينة وإعداد موائد الإفطار؟",
+            "textEn": "Can you help us collect Ramadan lanterns and traditional sweets to decorate the city and prepare iftar tables?"
+          },
+          {
+            "playerId": "player",
+            "text": "بالتأكيد! سأساعد في تحضيرات رمضان.",
+            "textEn": "Certainly! I will help with the Ramadan preparations."
+          },
+          {
+            "npcId": "event_coordinator",
+            "text": "رائع! يمكنك العثور على الفوانيس في جميع أنحاء المدينة، والحلويات يمكن شراؤها من التجار أو الحصول عليها من الوحوش الخاصة التي تظهر خلال هذا الحدث.",
+            "textEn": "Great! You can find lanterns all around the city, and sweets can be purchased from merchants or obtained from special monsters that appear during this event."
+          }
+        ],
+        "complete": [
+          {
+            "npcId": "event_coordinator",
+            "text": "أحسنت! هذه الفوانيس والحلويات ستساعدنا كثيراً في تحضيرات الاحتفال.",
+            "textEn": "Well done! These lanterns and sweets will help us greatly in the celebration preparations."
+          },
+          {
+            "npcId": "event_coordinator",
+            "text": "خذ هذه المكافآت كشكر على مساعدتك. الزي الرمضاني سيمنحك مظهراً مميزاً خلال الشهر الكريم، وصناديق الطعام الخاصة تحتوي على وجبات تمنحك مكافآت إضافية عند تناولها وقت الإفطار في اللعبة.",
+            "textEn": "Take these rewards as thanks for your help. The Ramadan outfit will give you a special appearance during the holy month, and the special food boxes contain meals that give you additional rewards when eaten at iftar time in the game."
+          }
+        ]
+      },
+      "timeLimit": 0,
+      "repeatable": false,
+      "eventId": "ramadan_event",
+      "mapId": "desert_city",
+      "questMarkers": [
+        {
+          "type": "objective",
+          "mapId": "desert_city",
+          "position": {
+            "x": 1024,
+            "y": 1024
+          },
+          "radius": 1000
+        }
+      ]
+    },
+    {
+      "id": "dungeon_quest_1",
+      "title": "أسرار الهرم",
+      "titleEn": "Secrets of the Pyramid",
+      "type": "dungeon",
+      "minLevel": 25,
+      "maxLevel": 35,
+      "requiredQuests": ["main_quest_2"],
+      "startNpcId": "archaeologist",
+      "endNpcId": "archaeologist",
+      "description": "استكشف الهرم القديم، وحل ألغازه، واهزم المومياوات، واعثر على القطع الأثرية المفقودة.",
+      "descriptionEn": "Explore the Ancient Pyramid, solve its puzzles, defeat the mummies, and find the missing artifacts.",
+      "objectives": [
+        {
+          "type": "explore",
+          "areaId": "ancient_pyramid",
+          "description": "استكشف الهرم القديم",
+          "descriptionEn": "Explore the Ancient Pyramid"
+        },
+        {
+          "type": "solve",
+          "puzzleId": "hieroglyph_puzzle",
+          "description": "حل لغز الهيروغليفية",
+          "descriptionEn": "Solve the hieroglyph puzzle"
+        },
+        {
+          "type": "kill",
+          "targetId": "mummy_1",
+          "count": 15,
+          "description": "اهزم المومياوات",
+          "descriptionEn": "Defeat the mummies"
+        },
+        {
+          "type": "collect",
+          "itemId": "ancient_artifact",
+          "count": 3,
+          "description": "اجمع القطع الأثرية القديمة",
+          "descriptionEn": "Collect ancient artifacts"
+        }
+      ],
+      "rewards": [
+        {
+          "type": "experience",
+          "amount": 800
+        },
+        {
+          "type": "gold",
+          "amount": 500
+        },
+        {
+          "type": "item",
+          "itemId": "pyramid_key",
+          "quantity": 1
+        },
+        {
+          "type": "item",
+          "itemId": "ancient_scroll",
+          "quantity": 1
+        }
+      ],
+      "dialogues": {
+        "start": [
+          {
+            "npcId": "archaeologist",
+            "text": "أهلاً أيها المغامر! أنا الدكتور أحمد، عالم آثار. أدرس الهرم القديم منذ سنوات، لكن مؤخراً ظهرت مشكلة كبيرة.",
+            "textEn": "Hello, adventurer! I am Dr. Ahmed, an archaeologist. I have been studying the Ancient Pyramid for years, but recently a big problem has emerged."
+          },
+          {
+            "npcId": "archaeologist",
+            "text": "المومياوات التي كانت نائمة منذ آلاف السنين استيقظت فجأة وأصبحت عدوانية. أعتقد أن هذا بسبب سرقة بعض القطع الأثرية المهمة من الهرم.",
+            "textEn": "The mummies that had been sleeping for thousands of years suddenly awakened and became aggressive. I believe this is due to the theft of some important artifacts from the pyramid."
+          },
+          {
+            "npcId": "archaeologist",
+            "text": "هل يمكنك مساعدتي في استكشاف الهرم، وحل ألغازه، والعثور على القطع الأثرية المفقودة؟ يجب أيضاً التعامل مع المومياوات العدوانية.",
+            "textEn": "Can you help me explore the pyramid, solve its puzzles, and find the missing artifacts? You must also deal with the aggressive mummies."
+          },
+          {
+            "playerId": "player",
+            "text": "سأساعدك. أين يمكنني العثور على هذا الهرم؟",
+            "textEn": "I will help you. Where can I find this pyramid?"
+          },
+          {
+            "npcId": "archaeologist",
+            "text": "الهرم يقع في الصحراء العميقة، شرق المدينة. ستحتاج إلى التوغل عميقاً في الصحراء للوصول إليه. كن حذراً، فالمكان خطير للغاية!",
+            "textEn": "The pyramid is located in the deep desert, east of the city. You will need to venture deep into the desert to reach it. Be careful, the place is extremely dangerous!"
+          }
+        ],
+        "complete": [
+          {
+            "npcId": "archaeologist",
+            "text": "مذهل! لقد نجحت في استكشاف الهرم والعثور على القطع الأثرية المفقودة. هذه اكتشافات مهمة للغاية!",
+            "textEn": "Amazing! You have successfully explored the pyramid and found the missing artifacts. These are very important discoveries!"
+          },
+          {
+            "npcId": "archaeologist",
+            "text": "بإعادة هذه القطع إلى مكانها الصحيح، ستهدأ المومياوات وتعود إلى سباتها. لقد أنقذت الكثير من الأرواح.",
+            "textEn": "By returning these pieces to their rightful place, the mummies will calm down and return to their slumber. You have saved many lives."
+          },
+          {
+            "npcId": "archaeologist",
+            "text": "خذ هذه المكافآت. المفتاح سيسمح لك بالوصول إلى غرفة الدفن الملكية، والمخطوطة القديمة تحتوي على معرفة قيمة عن سحر الفراعنة.",
+            "textEn": "Take these rewards. The key will allow you access to the royal burial chamber, and the ancient scroll contains valuable knowledge about pharaonic magic."
+          }
+        ]
+      },
+      "timeLimit": 7200,
+      "repeatable": false,
+      "mapId": "ancient_pyramid",
+      "questMarkers": [
+        {
+          "type": "objective",
+          "mapId": "ancient_pyramid",
+          "position": {
+            "x": 2300,
+            "y": 1800
+          },
+          "radius": 100
+        },
+        {
+          "type": "objective",
+          "mapId": "ancient_pyramid",
+          "position": {
+            "x": 1000,
+            "y": 1000
+          },
+          "radius": 1000
+        }
+      ]
+    }
+  ]
+}
