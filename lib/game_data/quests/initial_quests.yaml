@@ -1,0 +1,135 @@
+# Initial Game Quests
+
+quests:
+  - id: "tutorial_001"
+    title: "Welcome to the World"
+    description: "Learn the basics of movement and combat"
+    required_level: 1
+    prerequisites: []
+    objectives:
+      - id: "move_tutorial"
+        description: "Move to the training area"
+        type: "reach_location"
+        target_id: "training_ground"
+        required: 1
+        location:
+          x: 100.0
+          y: 100.0
+      
+      - id: "combat_tutorial"
+        description: "Defeat 3 training dummies"
+        type: "kill"
+        target_id: "training_dummy"
+        required: 3
+        location:
+          x: 105.0
+          y: 105.0
+    
+    rewards:
+      experience: 100
+      gold: 50
+      items:
+        - id: "basic_sword"
+          amount: 1
+        - id: "health_potion"
+          amount: 5
+
+  - id: "quest_002"
+    title: "First Monster Hunt"
+    description: "Prove your worth by hunting monsters in the nearby forest"
+    required_level: 2
+    prerequisites: ["tutorial_001"]
+    objectives:
+      - id: "kill_spiders"
+        description: "Defeat 5 forest spiders"
+        type: "kill"
+        target_id: "forest_spider"
+        required: 5
+        location:
+          x: 200.0
+          y: 150.0
+      
+      - id: "collect_webs"
+        description: "Collect spider webs"
+        type: "collect"
+        target_id: "spider_web"
+        required: 3
+        location:
+          x: 205.0
+          y: 155.0
+    
+    rewards:
+      experience: 200
+      gold: 100
+      items:
+        - id: "spider_armor"
+          amount: 1
+
+  - id: "quest_003"
+    title: "Village Defense"
+    description: "Help defend the village from bandits"
+    required_level: 3
+    prerequisites: ["quest_002"]
+    objectives:
+      - id: "talk_guard"
+        description: "Speak with the Guard Captain"
+        type: "talk"
+        target_id: "guard_captain"
+        required: 1
+        location:
+          x: 150.0
+          y: 150.0
+      
+      - id: "defeat_bandits"
+        description: "Defeat bandit raiders"
+        type: "kill"
+        target_id: "bandit_raider"
+        required: 8
+        location:
+          x: 160.0
+          y: 160.0
+      
+      - id: "report_guard"
+        description: "Report back to the Guard Captain"
+        type: "talk"
+        target_id: "guard_captain"
+        required: 1
+        location:
+          x: 150.0
+          y: 150.0
+    
+    rewards:
+      experience: 500
+      gold: 300
+      items:
+        - id: "guard_badge"
+          amount: 1
+        - id: "health_potion"
+          amount: 3
+        - id: "mana_potion"
+          amount: 3
+
+  - id: "daily_quest_001"
+    title: "Daily Monster Hunt"
+    description: "Clear monsters from the trading route"
+    required_level: 5
+    prerequisites: []
+    daily: true
+    objectives:
+      - id: "clear_route"
+        description: "Defeat any monsters on the trade route"
+        type: "kill"
+        target_id: "any_monster"
+        required: 15
+        location:
+          x: 300.0
+          y: 300.0
+    
+    rewards:
+      experience: 1000
+      gold: 500
+      items:
+        - id: "random_equipment"
+          amount: 1
+        - id: "trade_token"
+          amount: 5

@@ -1,0 +1,70 @@
+{
+  "general": {
+    "ok": "موافق",
+    "cancel": "إلغاء",
+    "back": "رجوع",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجاح",
+    "confirm": "تأكيد"
+  },
+  "mainMenu": {
+    "newGame": "لعبة جديدة",
+    "continue": "استمرار",
+    "settings": "الإعدادات",
+    "exit": "خروج"
+  },
+  "game": {
+    "level": "المستوى",
+    "experience": "الخبرة",
+    "health": "الصحة",
+    "mana": "الطاقة",
+    "strength": "القوة",
+    "agility": "الرشاقة",
+    "intelligence": "الذكاء",
+    "inventory": "الحقيبة",
+    "equipment": "المعدات",
+    "skills": "المهارات",
+    "quests": "المهام"
+  },
+  "combat": {
+    "attack": "هجوم",
+    "defend": "دفاع",
+    "useItem": "استخدام عنصر",
+    "flee": "هروب",
+    "victory": "انتصار!",
+    "defeat": "هزيمة",
+    "criticalHit": "ضربة قاضية!"
+  },
+  "inventory": {
+    "use": "استخدام",
+    "equip": "تجهيز",
+    "unequip": "نزع",
+    "drop": "إسقاط",
+    "full": "الحقيبة ممتلئة",
+    "empty": "الحقيبة فارغة"
+  },
+  "equipment": {
+    "weapon": "سلاح",
+    "armor": "درع",
+    "helmet": "خوذة",
+    "boots": "أحذية",
+    "accessory": "إكسسوار"
+  },
+  "quests": {
+    "accept": "قبول",
+    "decline": "رفض",
+    "complete": "إكمال",
+    "failed": "فشل",
+    "inProgress": "قيد التنفيذ",
+    "completed": "مكتمل",
+    "rewards": "المكافآت"
+  },
+  "errors": {
+    "levelRequired": "المستوى المطلوب: {level}",
+    "insufficientGold": "الذهب غير كافي",
+    "inventoryFull": "الحقيبة ممتلئة",
+    "cannotEquip": "لا يمكن تجهيز هذا العنصر",
+    "questUnavailable": "المهمة غير متاحة"
+  }
+}

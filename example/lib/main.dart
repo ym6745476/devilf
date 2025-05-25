@@ -1,6 +1,4 @@
-import 'package:devilf_engine/util/df_audio.dart';
 import 'package:example/scene/game_scene.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 main() async {

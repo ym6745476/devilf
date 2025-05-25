@@ -1,4 +1,3 @@
-import 'package:example/data/player_data.dart';
 import 'package:example/item/item_info.dart';
 import 'package:example/monster/monster_info.dart';
 
