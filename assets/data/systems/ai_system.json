@@ -1,0 +1,2463 @@
+{
+  "ai_types": [
+    {
+      "id": "monster_ai",
+      "name": "ذكاء الوحوش",
+      "description": "نظام الذكاء الاصطناعي للوحوش والأعداء",
+      "behaviors": ["aggressive", "defensive", "passive", "territorial", "pack", "ambush", "flee"],
+      "difficulty_levels": ["easy", "normal", "hard", "elite", "boss"]
+    },
+    {
+      "id": "npc_ai",
+      "name": "ذكاء الشخصيات غير اللاعبة",
+      "description": "نظام الذكاء الاصطناعي للشخصيات غير اللاعبة",
+      "behaviors": ["static", "patrolling", "interactive", "merchant", "quest_giver", "guard", "villager"],
+      "interaction_types": ["dialogue", "trade", "quest", "service", "ambient"]
+    },
+    {
+      "id": "pet_ai",
+      "name": "ذكاء الحيوانات الأليفة",
+      "description": "نظام الذكاء الاصطناعي للحيوانات الأليفة والمرافقين",
+      "behaviors": ["follow", "attack", "defend", "collect", "assist", "scout", "idle"],
+      "command_types": ["direct", "automatic", "priority_based"]
+    },
+    {
+      "id": "mount_ai",
+      "name": "ذكاء المطايا",
+      "description": "نظام الذكاء الاصطناعي للمطايا",
+      "behaviors": ["follow_path", "avoid_obstacles", "auto_combat", "auto_travel"],
+      "movement_types": ["ground", "flying", "swimming", "climbing"]
+    },
+    {
+      "id": "group_ai",
+      "name": "ذكاء المجموعات",
+      "description": "نظام الذكاء الاصطناعي للمجموعات والتنسيق",
+      "behaviors": ["coordinated_attack", "flanking", "support", "distraction", "formation"],
+      "coordination_levels": ["basic", "advanced", "elite"]
+    }
+  ],
+  "monster_ai": {
+    "behavior_types": [
+      {
+        "id": "aggressive",
+        "name": "عدواني",
+        "description": "يهاجم اللاعبين بمجرد رؤيتهم",
+        "detection_range": 15,
+        "aggro_duration": 30,
+        "pursuit_distance": 25,
+        "attack_priority": ["closest", "lowest_health", "highest_damage", "healer_first"]
+      },
+      {
+        "id": "defensive",
+        "name": "دفاعي",
+        "description": "يهاجم فقط عند التعرض للهجوم",
+        "detection_range": 10,
+        "aggro_duration": 20,
+        "pursuit_distance": 15,
+        "attack_priority": ["attacker", "closest", "lowest_health"]
+      },
+      {
+        "id": "passive",
+        "name": "مسالم",
+        "description": "لا يهاجم أبداً إلا إذا تم مهاجمته مباشرة",
+        "detection_range": 5,
+        "aggro_duration": 10,
+        "pursuit_distance": 8,
+        "attack_priority": ["attacker"]
+      },
+      {
+        "id": "territorial",
+        "name": "إقليمي",
+        "description": "يهاجم فقط عند دخول منطقته",
+        "territory_radius": 20,
+        "aggro_duration": 25,
+        "pursuit_distance": 25,
+        "return_to_spawn": true,
+        "attack_priority": ["closest", "highest_damage"]
+      },
+      {
+        "id": "pack",
+        "name": "جماعي",
+        "description": "يتعاون مع وحوش أخرى من نفس النوع",
+        "pack_radius": 30,
+        "call_for_help_chance": 0.7,
+        "max_pack_size": 5,
+        "coordinated_attack": true,
+        "attack_priority": ["isolated_target", "lowest_health"]
+      },
+      {
+        "id": "ambush",
+        "name": "كمين",
+        "description": "يختبئ وينتظر مرور اللاعبين ثم يهاجم",
+        "detection_range": 12,
+        "ambush_bonus_damage": 1.5,
+        "surprise_duration": 3,
+        "cooldown_between_ambushes": 30,
+        "attack_priority": ["closest", "lowest_health"]
+      },
+      {
+        "id": "flee",
+        "name": "هروب",
+        "description": "يهرب عند انخفاض صحته",
+        "flee_health_threshold": 0.3,
+        "flee_duration": 10,
+        "return_after_flee": true,
+        "heal_while_fleeing": true,
+        "heal_amount": 0.05,
+        "attack_priority": ["attacker", "closest"]
+      }
+    ],
+    "difficulty_settings": [
+      {
+        "level": "easy",
+        "name": "سهل",
+        "description": "مستوى سهل مناسب للمبتدئين",
+        "damage_multiplier": 0.7,
+        "health_multiplier": 0.8,
+        "aggression_multiplier": 0.6,
+        "skill_usage_frequency": 0.3,
+        "coordination_level": 0.2,
+        "reaction_time": 1.5
+      },
+      {
+        "level": "normal",
+        "name": "عادي",
+        "description": "مستوى متوازن للاعبين العاديين",
+        "damage_multiplier": 1.0,
+        "health_multiplier": 1.0,
+        "aggression_multiplier": 1.0,
+        "skill_usage_frequency": 0.5,
+        "coordination_level": 0.5,
+        "reaction_time": 1.0
+      },
+      {
+        "level": "hard",
+        "name": "صعب",
+        "description": "مستوى صعب للاعبين المتقدمين",
+        "damage_multiplier": 1.3,
+        "health_multiplier": 1.5,
+        "aggression_multiplier": 1.3,
+        "skill_usage_frequency": 0.7,
+        "coordination_level": 0.7,
+        "reaction_time": 0.7
+      },
+      {
+        "level": "elite",
+        "name": "نخبة",
+        "description": "مستوى صعب جداً للاعبين المحترفين",
+        "damage_multiplier": 1.6,
+        "health_multiplier": 2.0,
+        "aggression_multiplier": 1.5,
+        "skill_usage_frequency": 0.9,
+        "coordination_level": 0.9,
+        "reaction_time": 0.5,
+        "special_abilities": true
+      },
+      {
+        "level": "boss",
+        "name": "زعيم",
+        "description": "مستوى الزعماء، يتطلب مجموعة من اللاعبين",
+        "damage_multiplier": 2.0,
+        "health_multiplier": 10.0,
+        "aggression_multiplier": 2.0,
+        "skill_usage_frequency": 1.0,
+        "coordination_level": 1.0,
+        "reaction_time": 0.3,
+        "special_abilities": true,
+        "phase_transitions": true,
+        "minion_summoning": true
+      }
+    ],
+    "combat_tactics": [
+      {
+        "id": "melee_basic",
+        "name": "قتال قريب أساسي",
+        "description": "تكتيكات أساسية للوحوش التي تقاتل عن قرب",
+        "attack_patterns": [
+          {
+            "name": "هجوم عادي",
+            "damage_multiplier": 1.0,
+            "cooldown": 2.0,
+            "range": 2.0,
+            "animation": "melee_attack_1"
+          },
+          {
+            "name": "هجوم قوي",
+            "damage_multiplier": 1.5,
+            "cooldown": 5.0,
+            "range": 2.0,
+            "animation": "melee_attack_2"
+          },
+          {
+            "name": "ضربة دائرية",
+            "damage_multiplier": 0.8,
+            "cooldown": 8.0,
+            "range": 3.0,
+            "area_of_effect": true,
+            "animation": "melee_aoe_attack"
+          }
+        ],
+        "defensive_actions": [
+          {
+            "name": "تفادي",
+            "trigger": "high_damage_incoming",
+            "cooldown": 10.0,
+            "animation": "dodge"
+          },
+          {
+            "name": "صد",
+            "trigger": "player_attack",
+            "cooldown": 15.0,
+            "damage_reduction": 0.5,
+            "animation": "block"
+          }
+        ]
+      },
+      {
+        "id": "ranged_basic",
+        "name": "قتال بعيد أساسي",
+        "description": "تكتيكات أساسية للوحوش التي تقاتل عن بعد",
+        "attack_patterns": [
+          {
+            "name": "رمي سهم",
+            "damage_multiplier": 1.0,
+            "cooldown": 3.0,
+            "range": 15.0,
+            "projectile_speed": 20.0,
+            "animation": "ranged_attack_1"
+          },
+          {
+            "name": "وابل سهام",
+            "damage_multiplier": 0.7,
+            "count": 3,
+            "cooldown": 8.0,
+            "range": 12.0,
+            "projectile_speed": 15.0,
+            "animation": "ranged_attack_2"
+          },
+          {
+            "name": "سهم مسموم",
+            "damage_multiplier": 0.8,
+            "cooldown": 12.0,
+            "range": 10.0,
+            "projectile_speed": 18.0,
+            "effect": "poison",
+            "effect_duration": 5.0,
+            "animation": "ranged_attack_3"
+          }
+        ],
+        "defensive_actions": [
+          {
+            "name": "تراجع",
+            "trigger": "player_close",
+            "cooldown": 8.0,
+            "animation": "retreat"
+          },
+          {
+            "name": "قفزة للخلف",
+            "trigger": "player_very_close",
+            "cooldown": 12.0,
+            "animation": "jump_back"
+          }
+        ]
+      },
+      {
+        "id": "magic_basic",
+        "name": "سحر أساسي",
+        "description": "تكتيكات أساسية للوحوش السحرية",
+        "attack_patterns": [
+          {
+            "name": "كرة نارية",
+            "damage_multiplier": 1.2,
+            "cooldown": 4.0,
+            "range": 18.0,
+            "projectile_speed": 15.0,
+            "animation": "fire_spell_1"
+          },
+          {
+            "name": "صاعقة",
+            "damage_multiplier": 1.5,
+            "cooldown": 7.0,
+            "range": 15.0,
+            "instant_hit": true,
+            "animation": "lightning_spell"
+          },
+          {
+            "name": "سحابة سامة",
+            "damage_multiplier": 0.6,
+            "cooldown": 10.0,
+            "range": 12.0,
+            "area_of_effect": true,
+            "effect": "poison",
+            "effect_duration": 8.0,
+            "animation": "poison_cloud"
+          }
+        ],
+        "defensive_actions": [
+          {
+            "name": "درع سحري",
+            "trigger": "health_below_50",
+            "cooldown": 20.0,
+            "damage_reduction": 0.7,
+            "duration": 10.0,
+            "animation": "magic_shield"
+          },
+          {
+            "name": "انتقال سريع",
+            "trigger": "player_very_close",
+            "cooldown": 15.0,
+            "animation": "teleport"
+          }
+        ]
+      },
+      {
+        "id": "boss_tactics",
+        "name": "تكتيكات الزعيم",
+        "description": "تكتيكات متقدمة للزعماء",
+        "phases": [
+          {
+            "name": "المرحلة الأولى",
+            "health_threshold": 1.0,
+            "attack_patterns": [
+              {
+                "name": "ضربة قوية",
+                "damage_multiplier": 1.8,
+                "cooldown": 6.0,
+                "range": 3.0,
+                "animation": "boss_attack_1"
+              },
+              {
+                "name": "هجوم دائري",
+                "damage_multiplier": 1.2,
+                "cooldown": 10.0,
+                "range": 5.0,
+                "area_of_effect": true,
+                "animation": "boss_aoe_attack"
+              }
+            ]
+          },
+          {
+            "name": "المرحلة الثانية",
+            "health_threshold": 0.7,
+            "attack_patterns": [
+              {
+                "name": "ضربة قوية محسنة",
+                "damage_multiplier": 2.0,
+                "cooldown": 5.0,
+                "range": 3.5,
+                "animation": "boss_attack_1_enhanced"
+              },
+              {
+                "name": "هجوم دائري محسن",
+                "damage_multiplier": 1.5,
+                "cooldown": 8.0,
+                "range": 6.0,
+                "area_of_effect": true,
+                "animation": "boss_aoe_attack_enhanced"
+              },
+              {
+                "name": "استدعاء أتباع",
+                "cooldown": 20.0,
+                "minion_type": "basic_minion",
+                "minion_count": 3,
+                "animation": "summon_minions"
+              }
+            ]
+          },
+          {
+            "name": "المرحلة الثالثة",
+            "health_threshold": 0.3,
+            "attack_patterns": [
+              {
+                "name": "غضب الزعيم",
+                "damage_multiplier": 2.5,
+                "cooldown": 4.0,
+                "range": 4.0,
+                "animation": "boss_rage_attack"
+              },
+              {
+                "name": "هجوم فتاك",
+                "damage_multiplier": 3.0,
+                "cooldown": 15.0,
+                "range": 8.0,
+                "area_of_effect": true,
+                "animation": "boss_ultimate_attack"
+              },
+              {
+                "name": "استدعاء أتباع نخبة",
+                "cooldown": 25.0,
+                "minion_type": "elite_minion",
+                "minion_count": 2,
+                "animation": "summon_elite_minions"
+              }
+            ]
+          }
+        ],
+        "special_abilities": [
+          {
+            "name": "غضب",
+            "trigger": "health_below_20",
+            "effect": "damage_increase",
+            "multiplier": 1.5,
+            "duration": -1,
+            "animation": "boss_enrage"
+          },
+          {
+            "name": "شفاء ذاتي",
+            "trigger": "health_below_10",
+            "cooldown": 60.0,
+            "heal_percentage": 0.2,
+            "animation": "boss_heal"
+          },
+          {
+            "name": "تحول",
+            "trigger": "health_below_50",
+            "effect": "form_change",
+            "animation": "boss_transform"
+          }
+        ]
+      }
+    ],
+    "pathfinding": {
+      "algorithms": [
+        {
+          "id": "a_star",
+          "name": "خوارزمية A*",
+          "description": "خوارزمية بحث مسار متقدمة للتنقل في العالم",
+          "heuristic": "euclidean",
+          "diagonal_movement": true,
+          "path_smoothing": true
+        },
+        {
+          "id": "navmesh",
+          "name": "شبكة التنقل",
+          "description": "نظام تنقل يعتمد على شبكة مناطق قابلة للمشي",
+          "path_optimization": true,
+          "dynamic_obstacles": true
+        }
+      ],
+      "movement_types": [
+        {
+          "id": "ground",
+          "name": "أرضي",
+          "description": "حركة على الأرض",
+          "speed_multipliers": {
+            "default": 1.0,
+            "grass": 1.0,
+            "sand": 0.8,
+            "mud": 0.6,
+            "snow": 0.7,
+            "water_shallow": 0.5
+          },
+          "obstacle_handling": {
+            "jump_height": 1.0,
+            "climb_ability": false
+          }
+        },
+        {
+          "id": "flying",
+          "name": "طائر",
+          "description": "حركة في الجو",
+          "speed_multipliers": {
+            "default": 1.2,
+            "storm": 0.7,
+            "strong_wind": 0.8
+          },
+          "altitude_limits": {
+            "min": 2.0,
+            "max": 20.0
+          },
+          "obstacle_handling": {
+            "fly_over": true,
+            "altitude_adjustment": true
+          }
+        },
+        {
+          "id": "swimming",
+          "name": "سباحة",
+          "description": "حركة في الماء",
+          "speed_multipliers": {
+            "water": 0.7,
+            "current_against": 0.5,
+            "current_with": 1.2
+          },
+          "depth_limits": {
+            "min": 0.5,
+            "max": 30.0
+          }
+        },
+        {
+          "id": "climbing",
+          "name": "تسلق",
+          "description": "حركة على الجدران والمنحدرات",
+          "speed_multipliers": {
+            "wall": 0.4,
+            "cliff": 0.3,
+            "tree": 0.5
+          },
+          "angle_limits": {
+            "min": 45,
+            "max": 85
+          }
+        }
+      ]
+    },
+    "perception": {
+      "senses": [
+        {
+          "id": "sight",
+          "name": "بصر",
+          "description": "القدرة على رؤية اللاعبين والأعداء",
+          "range": 20.0,
+          "field_of_view": 120,
+          "affected_by": {
+            "lighting": true,
+            "fog": true,
+            "invisibility": true,
+            "obstacles": true
+          }
+        },
+        {
+          "id": "hearing",
+          "name": "سمع",
+          "description": "القدرة على سماع اللاعبين والأعداء",
+          "range": 15.0,
+          "affected_by": {
+            "noise_level": true,
+            "stealth": true,
+            "obstacles": true
+          }
+        },
+        {
+          "id": "smell",
+          "name": "شم",
+          "description": "القدرة على شم اللاعبين والأعداء",
+          "range": 10.0,
+          "affected_by": {
+            "wind_direction": true,
+            "water": true,
+            "special_items": true
+          }
+        }
+      ],
+      "memory": {
+        "target_memory_duration": 30.0,
+        "last_known_position_tracking": true,
+        "search_behavior": {
+          "search_duration": 15.0,
+          "search_pattern": "last_known_position_outward",
+          "give_up_condition": "time_elapsed"
+        }
+      },
+      "awareness_levels": [
+        {
+          "id": "unaware",
+          "name": "غير مدرك",
+          "description": "الوحش غير مدرك لوجود اللاعب",
+          "behavior": "default"
+        },
+        {
+          "id": "suspicious",
+          "name": "مشتبه",
+          "description": "الوحش يشتبه بوجود شيء ما",
+          "behavior": "investigate",
+          "duration": 10.0
+        },
+        {
+          "id": "alert",
+          "name": "متنبه",
+          "description": "الوحش متنبه ويبحث بنشاط",
+          "behavior": "search",
+          "duration": 20.0
+        },
+        {
+          "id": "combat",
+          "name": "قتال",
+          "description": "الوحش في حالة قتال",
+          "behavior": "combat",
+          "duration": "until_resolved"
+        }
+      ]
+    }
+  },
+  "npc_ai": {
+    "behavior_types": [
+      {
+        "id": "static",
+        "name": "ثابت",
+        "description": "شخصية ثابتة في مكانها",
+        "movement_pattern": "none",
+        "idle_animations": ["idle_1", "idle_2", "look_around"],
+        "interaction_radius": 3.0
+      },
+      {
+        "id": "patrolling",
+        "name": "دورية",
+        "description": "شخصية تتحرك في مسار محدد",
+        "movement_pattern": "waypoints",
+        "patrol_speed": 1.0,
+        "wait_at_waypoints": true,
+        "wait_duration": [5.0, 15.0],
+        "idle_animations": ["idle_1", "look_around", "check_surroundings"],
+        "interaction_radius": 3.0
+      },
+      {
+        "id": "interactive",
+        "name": "تفاعلي",
+        "description": "شخصية تتفاعل مع البيئة والشخصيات الأخرى",
+        "movement_pattern": "free",
+        "interaction_points": ["chair", "table", "workbench", "other_npc"],
+        "daily_schedule": true,
+        "idle_animations": ["idle_1", "talk", "work", "eat"],
+        "interaction_radius": 3.0
+      },
+      {
+        "id": "merchant",
+        "name": "تاجر",
+        "description": "شخصية تبيع وتشتري العناصر",
+        "movement_pattern": "limited",
+        "shop_area_radius": 5.0,
+        "idle_animations": ["idle_1", "arrange_goods", "count_money"],
+        "interaction_radius": 3.0,
+        "shop_open_hours": [8, 20],
+        "special_day_schedule": {
+          "weekend": {
+            "shop_open_hours": [10, 18]
+          },
+          "holiday": {
+            "shop_open_hours": [12, 16]
+          }
+        }
+      },
+      {
+        "id": "quest_giver",
+        "name": "مانح المهام",
+        "description": "شخصية تقدم المهام للاعبين",
+        "movement_pattern": "limited",
+        "idle_animations": ["idle_1", "write", "read"],
+        "interaction_radius": 4.0,
+        "quest_indicator": true,
+        "quest_status_reactions": {
+          "available": {
+            "animation": "wave",
+            "dialogue_priority": "high"
+          },
+          "in_progress": {
+            "animation": "nod",
+            "dialogue_priority": "medium"
+          },
+          "completed": {
+            "animation": "cheer",
+            "dialogue_priority": "high"
+          }
+        }
+      },
+      {
+        "id": "guard",
+        "name": "حارس",
+        "description": "شخصية تحرس منطقة معينة",
+        "movement_pattern": "patrol",
+        "patrol_area_radius": 15.0,
+        "idle_animations": ["idle_1", "look_around", "stand_guard"],
+        "interaction_radius": 5.0,
+        "combat_capable": true,
+        "alert_radius": 20.0,
+        "response_to_crime": {
+          "theft": "arrest",
+          "assault": "attack",
+          "murder": "attack"
+        }
+      },
+      {
+        "id": "villager",
+        "name": "قروي",
+        "description": "شخصية عادية تعيش في القرية",
+        "movement_pattern": "free",
+        "daily_schedule": true,
+        "home_location": "house",
+        "work_location": "field",
+        "idle_animations": ["idle_1", "work", "talk", "sit"],
+        "interaction_radius": 3.0,
+        "schedule": {
+          "morning": {
+            "time": [6, 12],
+            "location": "work_location",
+            "activities": ["work"]
+          },
+          "afternoon": {
+            "time": [12, 18],
+            "location": "village_center",
+            "activities": ["socialize", "shop"]
+          },
+          "evening": {
+            "time": [18, 22],
+            "location": "home_location",
+            "activities": ["eat", "relax"]
+          },
+          "night": {
+            "time": [22, 6],
+            "location": "home_location",
+            "activities": ["sleep"]
+          }
+        }
+      }
+    ],
+    "interaction_types": [
+      {
+        "id": "dialogue",
+        "name": "حوار",
+        "description": "تفاعل حواري مع اللاعب",
+        "dialogue_system": "tree_based",
+        "emotion_system": true,
+        "memory_system": true,
+        "relationship_impact": true
+      },
+      {
+        "id": "trade",
+        "name": "تجارة",
+        "description": "تفاعل تجاري مع اللاعب",
+        "shop_interface": true,
+        "price_negotiation": {
+          "enabled": true,
+          "factors": ["player_reputation", "charisma", "market_conditions"]
+        },
+        "stock_management": {
+          "limited_inventory": true,
+          "restock_period": "daily",
+          "special_items_chance": 0.1
+        }
+      },
+      {
+        "id": "quest",
+        "name": "مهمة",
+        "description": "تفاعل لتقديم وإدارة المهام",
+        "quest_types": ["fetch", "kill", "escort", "defend", "explore"],
+        "quest_tracking": true,
+        "quest_rewards": ["gold", "items", "experience", "reputation"]
+      },
+      {
+        "id": "service",
+        "name": "خدمة",
+        "description": "تقديم خدمة للاعب",
+        "service_types": ["repair", "enchant", "craft", "train", "transport"],
+        "service_quality_levels": ["basic", "advanced", "master"],
+        "service_cost_factors": ["quality", "player_reputation", "item_value"]
+      },
+      {
+        "id": "ambient",
+        "name": "محيطي",
+        "description": "تفاعلات محيطية لإضفاء الحيوية على العالم",
+        "ambient_dialogues": true,
+        "react_to_player_presence": true,
+        "react_to_events": true,
+        "react_to_time_of_day": true,
+        "react_to_weather": true
+      }
+    ],
+    "daily_schedules": {
+      "schedule_types": [
+        {
+          "id": "basic",
+          "name": "جدول أساسي",
+          "description": "جدول يومي بسيط",
+          "time_slots": [
+            {
+              "name": "صباح",
+              "start_hour": 6,
+              "end_hour": 12,
+              "activities": ["work"]
+            },
+            {
+              "name": "ظهر",
+              "start_hour": 12,
+              "end_hour": 14,
+              "activities": ["eat", "rest"]
+            },
+            {
+              "name": "عصر",
+              "start_hour": 14,
+              "end_hour": 18,
+              "activities": ["work"]
+            },
+            {
+              "name": "مساء",
+              "start_hour": 18,
+              "end_hour": 22,
+              "activities": ["leisure", "eat"]
+            },
+            {
+              "name": "ليل",
+              "start_hour": 22,
+              "end_hour": 6,
+              "activities": ["sleep"]
+            }
+          ]
+        },
+        {
+          "id": "merchant",
+          "name": "جدول تاجر",
+          "description": "جدول يومي للتجار",
+          "time_slots": [
+            {
+              "name": "تحضير",
+              "start_hour": 6,
+              "end_hour": 8,
+              "activities": ["prepare_shop"]
+            },
+            {
+              "name": "عمل صباحي",
+              "start_hour": 8,
+              "end_hour": 12,
+              "activities": ["sell", "restock"]
+            },
+            {
+              "name": "استراحة",
+              "start_hour": 12,
+              "end_hour": 14,
+              "activities": ["eat", "rest"]
+            },
+            {
+              "name": "عمل مسائي",
+              "start_hour": 14,
+              "end_hour": 20,
+              "activities": ["sell", "inventory"]
+            },
+            {
+              "name": "إغلاق",
+              "start_hour": 20,
+              "end_hour": 22,
+              "activities": ["close_shop", "count_money"]
+            },
+            {
+              "name": "ليل",
+              "start_hour": 22,
+              "end_hour": 6,
+              "activities": ["sleep"]
+            }
+          ]
+        },
+        {
+          "id": "guard",
+          "name": "جدول حارس",
+          "description": "جدول يومي للحراس",
+          "time_slots": [
+            {
+              "name": "نوبة صباحية",
+              "start_hour": 6,
+              "end_hour": 14,
+              "activities": ["patrol", "guard_post"]
+            },
+            {
+              "name": "استراحة",
+              "start_hour": 14,
+              "end_hour": 16,
+              "activities": ["eat", "rest"]
+            },
+            {
+              "name": "تدريب",
+              "start_hour": 16,
+              "end_hour": 18,
+              "activities": ["train"]
+            },
+            {
+              "name": "نوبة مسائية",
+              "start_hour": 18,
+              "end_hour": 22,
+              "activities": ["patrol", "guard_post"]
+            },
+            {
+              "name": "راحة",
+              "start_hour": 22,
+              "end_hour": 6,
+              "activities": ["sleep", "off_duty"]
+            }
+          ],
+          "shift_rotation": {
+            "enabled": true,
+            "rotation_period": "weekly"
+          }
+        }
+      ],
+      "special_days": [
+        {
+          "id": "weekend",
+          "name": "عطلة نهاية الأسبوع",
+          "days": [5, 6],
+          "schedule_modifications": {
+            "work_hours_reduced": true,
+            "leisure_activities_increased": true
+          }
+        },
+        {
+          "id": "market_day",
+          "name": "يوم السوق",
+          "days": [3],
+          "schedule_modifications": {
+            "merchant_extended_hours": true,
+            "special_goods_available": true,
+            "increased_npc_density": true
+          }
+        },
+        {
+          "id": "festival",
+          "name": "مهرجان",
+          "days": "special",
+          "schedule_modifications": {
+            "special_activities": ["celebrate", "dance", "games"],
+            "special_decorations": true,
+            "special_npcs": true
+          }
+        }
+      ]
+    },
+    "dialogue_system": {
+      "dialogue_types": [
+        {
+          "id": "greeting",
+          "name": "تحية",
+          "description": "حوار ترحيبي عند بدء التفاعل",
+          "variations_by_time": {
+            "morning": ["صباح الخير", "يوم سعيد"],
+            "afternoon": ["ظهر سعيد", "يوم طيب"],
+            "evening": ["مساء الخير", "مساء سعيد"],
+            "night": ["ليلة سعيدة", "مساء الخير"]
+          },
+          "variations_by_relationship": {
+            "stranger": ["مرحباً أيها المسافر", "أهلاً بك"],
+            "acquaintance": ["أهلاً بك مجدداً", "سعيد برؤيتك"],
+            "friend": ["صديقي العزيز!", "كم أنا سعيد برؤيتك!"],
+            "honored": ["يشرفني لقاؤك", "أهلاً بالبطل"]
+          }
+        },
+        {
+          "id": "quest",
+          "name": "مهمة",
+          "description": "حوار متعلق بالمهام",
+          "stages": {
+            "offer": {
+              "structure": ["introduction", "problem", "request", "reward"],
+              "player_options": ["accept", "decline", "ask_more", "negotiate"]
+            },
+            "in_progress": {
+              "structure": ["reminder", "encouragement"],
+              "player_options": ["report_progress", "ask_help", "abandon"]
+            },
+            "completion": {
+              "structure": ["congratulation", "reward_giving", "follow_up"],
+              "player_options": ["accept_reward", "ask_more_quests", "farewell"]
+            }
+          }
+        },
+        {
+          "id": "merchant",
+          "name": "تاجر",
+          "description": "حوار متعلق بالتجارة",
+          "dialogue_options": {
+            "buy": ["أريد شراء بعض العناصر", "أرني بضاعتك"],
+            "sell": ["أريد بيع بعض العناصر", "هل تشتري هذه العناصر؟"],
+            "browse": ["دعني أرى ما لديك", "ما هي أفضل العناصر لديك؟"],
+            "haggle": ["هل يمكنك تخفيض السعر؟", "السعر مرتفع جداً"]
+          },
+          "responses": {
+            "buy": ["بالتأكيد، هذه هي بضاعتي", "لدي أفضل البضائع في المنطقة"],
+            "sell": ["دعني أرى ما لديك", "سأعطيك سعراً عادلاً"],
+            "haggle_success": ["حسناً، يمكنني تخفيض السعر قليلاً", "لأنك زبون جيد، سأعطيك خصماً"],
+            "haggle_failure": ["هذا هو أفضل سعر لدي", "لا يمكنني تخفيض السعر أكثر من ذلك"]
+          }
+        },
+        {
+          "id": "information",
+          "name": "معلومات",
+          "description": "حوار لتقديم معلومات للاعب",
+          "topics": {
+            "location": ["معلومات عن المدينة", "أماكن هامة", "خريطة المنطقة"],
+            "lore": ["تاريخ المنطقة", "أساطير", "شخصيات مشهورة"],
+            "gameplay": ["نصائح للعب", "شرح الأنظمة", "مساعدة"]
+          }
+        },
+        {
+          "id": "ambient",
+          "name": "محيطي",
+          "description": "حوار عشوائي لإضفاء الحيوية",
+          "categories": {
+            "weather": {
+              "sunny": ["يوم جميل اليوم", "الشمس مشرقة بشكل رائع"],
+              "rainy": ["هذا المطر لا ينتهي", "احترس من الطرق الزلقة"],
+              "stormy": ["عاصفة رهيبة", "ابق في الداخل خلال العاصفة"]
+            },
+            "events": {
+              "festival": ["المهرجان قادم قريباً", "هل ستحضر المهرجان؟"],
+              "war": ["الحرب تقترب", "الأوقات صعبة بسبب الحرب"],
+              "peace": ["أخيراً عاد السلام", "الحياة أفضل في وقت السلام"]
+            }
+          }
+        }
+      ],
+      "emotion_system": {
+        "base_emotions": ["neutral", "happy", "sad", "angry", "afraid", "surprised"],
+        "emotion_triggers": {
+          "player_actions": {
+            "gift": {"happy": 0.7, "surprised": 0.3},
+            "insult": {"angry": 0.8, "sad": 0.2},
+            "help": {"happy": 0.9, "surprised": 0.1}
+          },
+          "events": {
+            "attack": {"afraid": 0.7, "angry": 0.3},
+            "celebration": {"happy": 0.9, "surprised": 0.1}
+          }
+        },
+        "emotion_effects": {
+          "dialogue_tone": {
+            "happy": "friendly and enthusiastic",
+            "sad": "melancholic and slow",
+            "angry": "sharp and aggressive",
+            "afraid": "nervous and hesitant"
+          },
+          "animation": {
+            "happy": ["smile", "laugh"],
+            "sad": ["frown", "look_down"],
+            "angry": ["frown", "cross_arms"],
+            "afraid": ["step_back", "look_around_nervously"]
+          }
+        }
+      },
+      "memory_system": {
+        "remembered_interactions": {
+          "player_choices": true,
+          "completed_quests": true,
+          "trade_history": true,
+          "gifts": true,
+          "insults": true
+        },
+        "memory_duration": {
+          "short_term": "session",
+          "medium_term": "days",
+          "long_term": "permanent"
+        },
+        "memory_impact": {
+          "dialogue_options": true,
+          "quest_availability": true,
+          "prices": true,
+          "attitude": true
+        }
+      }
+    }
+  },
+  "pet_ai": {
+    "behavior_types": [
+      {
+        "id": "follow",
+        "name": "متابعة",
+        "description": "الحيوان الأليف يتبع اللاعب",
+        "follow_distance": 3.0,
+        "max_distance": 10.0,
+        "teleport_threshold": 30.0,
+        "obstacle_avoidance": true,
+        "animations": ["walk", "run", "idle"]
+      },
+      {
+        "id": "attack",
+        "name": "هجوم",
+        "description": "الحيوان الأليف يهاجم أعداء اللاعب",
+        "attack_range": 2.0,
+        "damage_percentage": 0.3,
+        "target_selection": ["player_target", "nearest_enemy", "lowest_health"],
+        "animations": ["attack", "special_attack", "idle_combat"]
+      },
+      {
+        "id": "defend",
+        "name": "دفاع",
+        "description": "الحيوان الأليف يدافع عن اللاعب",
+        "defense_radius": 5.0,
+        "aggro_management": true,
+        "damage_reduction": 0.1,
+        "animations": ["defend", "growl", "idle_alert"]
+      },
+      {
+        "id": "collect",
+        "name": "جمع",
+        "description": "الحيوان الأليف يجمع العناصر والموارد",
+        "collection_radius": 15.0,
+        "collection_interval": 5.0,
+        "item_types": ["gold", "resources", "common_items"],
+        "inventory_capacity": 10,
+        "animations": ["collect", "search", "return_to_player"]
+      },
+      {
+        "id": "assist",
+        "name": "مساعدة",
+        "description": "الحيوان الأليف يقدم مساعدة للاعب",
+        "buff_types": ["health_regen", "mana_regen", "stat_boost"],
+        "buff_radius": 8.0,
+        "buff_interval": 10.0,
+        "animations": ["cast_buff", "idle_supportive"]
+      },
+      {
+        "id": "scout",
+        "name": "استكشاف",
+        "description": "الحيوان الأليف يستكشف المنطقة",
+        "scout_radius": 20.0,
+        "scout_duration": 30.0,
+        "reveal_enemies": true,
+        "reveal_treasures": true,
+        "reveal_resources": true,
+        "animations": ["scout", "alert", "return_to_player"]
+      },
+      {
+        "id": "idle",
+        "name": "خامل",
+        "description": "الحيوان الأليف في وضع الخمول",
+        "idle_animations": ["idle", "sit", "sleep", "play"],
+        "random_movement": true,
+        "movement_radius": 5.0,
+        "interaction_with_environment": true
+      }
+    ],
+    "command_types": [
+      {
+        "id": "direct",
+        "name": "مباشر",
+        "description": "أوامر مباشرة من اللاعب",
+        "commands": [
+          {
+            "id": "follow",
+            "name": "اتبعني",
+            "behavior": "follow",
+            "icon": "follow_icon.png",
+            "animation": "acknowledge"
+          },
+          {
+            "id": "attack",
+            "name": "هاجم",
+            "behavior": "attack",
+            "target_required": true,
+            "icon": "attack_icon.png",
+            "animation": "acknowledge_aggressive"
+          },
+          {
+            "id": "defend",
+            "name": "دافع",
+            "behavior": "defend",
+            "icon": "defend_icon.png",
+            "animation": "acknowledge_defensive"
+          },
+          {
+            "id": "collect",
+            "name": "اجمع",
+            "behavior": "collect",
+            "icon": "collect_icon.png",
+            "animation": "acknowledge"
+          },
+          {
+            "id": "scout",
+            "name": "استكشف",
+            "behavior": "scout",
+            "icon": "scout_icon.png",
+            "animation": "acknowledge"
+          },
+          {
+            "id": "stay",
+            "name": "ابق هنا",
+            "behavior": "idle",
+            "icon": "stay_icon.png",
+            "animation": "acknowledge"
+          }
+        ]
+      },
+      {
+        "id": "automatic",
+        "name": "تلقائي",
+        "description": "سلوك تلقائي بدون أوامر مباشرة",
+        "modes": [
+          {
+            "id": "aggressive",
+            "name": "عدواني",
+            "description": "يهاجم الأعداء تلقائياً",
+            "primary_behavior": "attack",
+            "secondary_behavior": "follow",
+            "icon": "aggressive_icon.png"
+          },
+          {
+            "id": "defensive",
+            "name": "دفاعي",
+            "description": "يدافع عن اللاعب عند الهجوم",
+            "primary_behavior": "defend",
+            "secondary_behavior": "follow",
+            "icon": "defensive_icon.png"
+          },
+          {
+            "id": "passive",
+            "name": "سلمي",
+            "description": "يتبع اللاعب فقط بدون قتال",
+            "primary_behavior": "follow",
+            "secondary_behavior": "idle",
+            "icon": "passive_icon.png"
+          },
+          {
+            "id": "assistant",
+            "name": "مساعد",
+            "description": "يجمع العناصر ويساعد اللاعب",
+            "primary_behavior": "collect",
+            "secondary_behavior": "assist",
+            "icon": "assistant_icon.png"
+          },
+          {
+            "id": "scout",
+            "name": "مستكشف",
+            "description": "يستكشف المنطقة ويكشف الأعداء",
+            "primary_behavior": "scout",
+            "secondary_behavior": "follow",
+            "icon": "scout_icon.png"
+          }
+        ]
+      },
+      {
+        "id": "priority_based",
+        "name": "حسب الأولوية",
+        "description": "سلوك يعتمد على أولويات محددة",
+        "priorities": [
+          {
+            "id": "combat_priority",
+            "name": "أولوية القتال",
+            "conditions": [
+              {
+                "condition": "player_health_low",
+                "threshold": 0.3,
+                "behavior": "defend"
+              },
+              {
+                "condition": "enemy_attacking_player",
+                "behavior": "attack"
+              },
+              {
+                "condition": "player_attacking",
+                "behavior": "attack"
+              }
+            ]
+          },
+          {
+            "id": "collection_priority",
+            "name": "أولوية الجمع",
+            "conditions": [
+              {
+                "condition": "valuable_item_nearby",
+                "radius": 10.0,
+                "behavior": "collect"
+              },
+              {
+                "condition": "resources_nearby",
+                "radius": 15.0,
+                "behavior": "collect"
+              }
+            ]
+          },
+          {
+            "id": "movement_priority",
+            "name": "أولوية الحركة",
+            "conditions": [
+              {
+                "condition": "player_moving_fast",
+                "behavior": "follow"
+              },
+              {
+                "condition": "player_idle",
+                "duration": 30.0,
+                "behavior": "idle"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "pet_types": [
+      {
+        "id": "combat_pet",
+        "name": "حيوان قتالي",
+        "description": "حيوان أليف متخصص في القتال",
+        "primary_behaviors": ["attack", "defend"],
+        "secondary_behaviors": ["follow", "idle"],
+        "stats": {
+          "damage_multiplier": 0.4,
+          "health_multiplier": 0.5,
+          "speed_multiplier": 1.0
+        },
+        "growth_rate": {
+          "damage": 0.05,
+          "health": 0.06,
+          "speed": 0.02
+        }
+      },
+      {
+        "id": "utility_pet",
+        "name": "حيوان نفعي",
+        "description": "حيوان أليف متخصص في جمع الموارد والمساعدة",
+        "primary_behaviors": ["collect", "assist"],
+        "secondary_behaviors": ["follow", "idle"],
+        "stats": {
+          "collection_efficiency": 1.2,
+          "buff_strength": 1.1,
+          "inventory_multiplier": 1.5
+        },
+        "growth_rate": {
+          "collection_efficiency": 0.03,
+          "buff_strength": 0.04,
+          "inventory": 0.1
+        }
+      },
+      {
+        "id": "scout_pet",
+        "name": "حيوان استكشاف",
+        "description": "حيوان أليف متخصص في الاستكشاف والكشف",
+        "primary_behaviors": ["scout", "follow"],
+        "secondary_behaviors": ["collect", "idle"],
+        "stats": {
+          "detection_range": 1.5,
+          "movement_speed": 1.3,
+          "stealth_detection": 1.2
+        },
+        "growth_rate": {
+          "detection_range": 0.04,
+          "movement_speed": 0.03,
+          "stealth_detection": 0.02
+        }
+      },
+      {
+        "id": "support_pet",
+        "name": "حيوان دعم",
+        "description": "حيوان أليف متخصص في تقديم الدعم والتعزيزات",
+        "primary_behaviors": ["assist", "defend"],
+        "secondary_behaviors": ["follow", "idle"],
+        "stats": {
+          "buff_strength": 1.5,
+          "buff_duration": 1.3,
+          "healing_power": 1.2
+        },
+        "growth_rate": {
+          "buff_strength": 0.05,
+          "buff_duration": 0.04,
+          "healing_power": 0.03
+        }
+      }
+    ],
+    "training_system": {
+      "training_methods": [
+        {
+          "id": "combat_training",
+          "name": "تدريب قتالي",
+          "description": "تدريب الحيوان الأليف على القتال",
+          "improves": ["damage", "attack_speed", "critical_chance"],
+          "duration": 4,
+          "cost": {
+            "gold": 100,
+            "items": ["training_dummy", "combat_treats"]
+          }
+        },
+        {
+          "id": "obedience_training",
+          "name": "تدريب الطاعة",
+          "description": "تدريب الحيوان الأليف على الطاعة والاستجابة للأوامر",
+          "improves": ["command_response_time", "command_duration", "behavior_switching_speed"],
+          "duration": 2,
+          "cost": {
+            "gold": 50,
+            "items": ["training_whistle", "obedience_treats"]
+          }
+        },
+        {
+          "id": "collection_training",
+          "name": "تدريب الجمع",
+          "description": "تدريب الحيوان الأليف على جمع العناصر والموارد",
+          "improves": ["collection_speed", "collection_range", "inventory_capacity"],
+          "duration": 3,
+          "cost": {
+            "gold": 75,
+            "items": ["collection_pouch", "scent_markers"]
+          }
+        },
+        {
+          "id": "scouting_training",
+          "name": "تدريب الاستكشاف",
+          "description": "تدريب الحيوان الأليف على الاستكشاف والكشف",
+          "improves": ["detection_range", "stealth_detection", "scouting_speed"],
+          "duration": 3,
+          "cost": {
+            "gold": 75,
+            "items": ["scout_map", "tracking_treats"]
+          }
+        }
+      ],
+      "evolution_system": {
+        "evolution_stages": [
+          {
+            "stage": 1,
+            "name": "مبتدئ",
+            "requirements": {
+              "level": 1,
+              "training": 0
+            },
+            "appearance": "basic",
+            "abilities": ["basic_follow", "basic_attack"]
+          },
+          {
+            "stage": 2,
+            "name": "متطور",
+            "requirements": {
+              "level": 10,
+              "training": 5
+            },
+            "appearance": "improved",
+            "abilities": ["improved_follow", "improved_attack", "basic_special_ability"]
+          },
+          {
+            "stage": 3,
+            "name": "متقدم",
+            "requirements": {
+              "level": 25,
+              "training": 15
+            },
+            "appearance": "advanced",
+            "abilities": ["advanced_follow", "advanced_attack", "improved_special_ability"]
+          },
+          {
+            "stage": 4,
+            "name": "نخبة",
+            "requirements": {
+              "level": 40,
+              "training": 30
+            },
+            "appearance": "elite",
+            "abilities": ["elite_follow", "elite_attack", "advanced_special_ability", "basic_ultimate"]
+          },
+          {
+            "stage": 5,
+            "name": "أسطوري",
+            "requirements": {
+              "level": 60,
+              "training": 50
+            },
+            "appearance": "legendary",
+            "abilities": ["legendary_follow", "legendary_attack", "elite_special_ability", "improved_ultimate"]
+          }
+        ],
+        "evolution_items": [
+          {
+            "id": "basic_evolution_stone",
+            "name": "حجر التطور الأساسي",
+            "description": "حجر يساعد الحيوان الأليف على التطور للمرحلة الثانية",
+            "target_stage": 2,
+            "rarity": "uncommon"
+          },
+          {
+            "id": "advanced_evolution_stone",
+            "name": "حجر التطور المتقدم",
+            "description": "حجر يساعد الحيوان الأليف على التطور للمرحلة الثالثة",
+            "target_stage": 3,
+            "rarity": "rare"
+          },
+          {
+            "id": "elite_evolution_stone",
+            "name": "حجر التطور النخبة",
+            "description": "حجر يساعد الحيوان الأليف على التطور للمرحلة الرابعة",
+            "target_stage": 4,
+            "rarity": "epic"
+          },
+          {
+            "id": "legendary_evolution_stone",
+            "name": "حجر التطور الأسطوري",
+            "description": "حجر يساعد الحيوان الأليف على التطور للمرحلة الخامسة",
+            "target_stage": 5,
+            "rarity": "legendary"
+          }
+        ]
+      },
+      "feeding_system": {
+        "food_types": [
+          {
+            "id": "basic_food",
+            "name": "طعام أساسي",
+            "description": "طعام أساسي للحيوانات الأليفة",
+            "satiation": 10,
+            "duration": 3600,
+            "effects": {
+              "health_regen": 1.0,
+              "happiness": 1.0
+            }
+          },
+          {
+            "id": "premium_food",
+            "name": "طعام فاخر",
+            "description": "طعام فاخر للحيوانات الأليفة",
+            "satiation": 20,
+            "duration": 7200,
+            "effects": {
+              "health_regen": 1.5,
+              "happiness": 1.5,
+              "exp_gain": 1.1
+            }
+          },
+          {
+            "id": "special_treat",
+            "name": "وجبة خاصة",
+            "description": "وجبة خاصة تمنح تأثيرات إيجابية",
+            "satiation": 5,
+            "duration": 1800,
+            "effects": {
+              "stat_boost": 1.2,
+              "happiness": 2.0
+            }
+          },
+          {
+            "id": "stat_food",
+            "name": "طعام إحصائي",
+            "description": "طعام يعزز إحصائيات محددة",
+            "satiation": 15,
+            "duration": 3600,
+            "variants": [
+              {
+                "id": "strength_food",
+                "name": "طعام القوة",
+                "effects": {
+                  "damage": 1.3
+                }
+              },
+              {
+                "id": "speed_food",
+                "name": "طعام السرعة",
+                "effects": {
+                  "movement_speed": 1.3,
+                  "attack_speed": 1.2
+                }
+              },
+              {
+                "id": "intelligence_food",
+                "name": "طعام الذكاء",
+                "effects": {
+                  "ability_power": 1.3,
+                  "command_response": 1.2
+                }
+              }
+            ]
+          }
+        ],
+        "hunger_system": {
+          "hunger_rate": 1.0,
+          "max_hunger": 100,
+          "hunger_effects": {
+            "75-100": {
+              "performance": 1.1,
+              "happiness": 1.2
+            },
+            "50-75": {
+              "performance": 1.0,
+              "happiness": 1.0
+            },
+            "25-50": {
+              "performance": 0.8,
+              "happiness": 0.7
+            },
+            "0-25": {
+              "performance": 0.6,
+              "happiness": 0.4
+            }
+          }
+        }
+      }
+    }
+  },
+  "mount_ai": {
+    "behavior_types": [
+      {
+        "id": "follow_path",
+        "name": "اتباع المسار",
+        "description": "المطية تتبع مساراً محدداً",
+        "path_finding": "a_star",
+        "path_smoothing": true,
+        "corner_handling": "slow_down",
+        "obstacle_detection_range": 5.0
+      },
+      {
+        "id": "avoid_obstacles",
+        "name": "تجنب العوائق",
+        "description": "المطية تتجنب العوائق أثناء الحركة",
+        "detection_range": 8.0,
+        "reaction_time": 0.3,
+        "avoidance_strategies": ["go_around", "jump_over", "stop"],
+        "obstacle_memory": true
+      },
+      {
+        "id": "auto_combat",
+        "name": "قتال تلقائي",
+        "description": "المطية تقاتل تلقائياً أثناء ركوب اللاعب",
+        "attack_range": 3.0,
+        "attack_cooldown": 2.0,
+        "damage_percentage": 0.5,
+        "attack_animations": ["mount_attack_1", "mount_attack_2"]
+      },
+      {
+        "id": "auto_travel",
+        "name": "سفر تلقائي",
+        "description": "المطية تسافر تلقائياً إلى وجهة محددة",
+        "path_finding": "navmesh",
+        "auto_avoid_danger": true,
+        "rest_at_intervals": true,
+        "rest_interval": 300,
+        "rest_duration": 30
+      }
+    ],
+    "movement_types": [
+      {
+        "id": "ground",
+        "name": "أرضي",
+        "description": "حركة على الأرض",
+        "base_speed": 1.5,
+        "sprint_multiplier": 2.0,
+        "stamina_consumption": {
+          "walk": 0.5,
+          "trot": 1.0,
+          "gallop": 2.0,
+          "sprint": 4.0
+        },
+        "terrain_handling": {
+          "road": 1.2,
+          "grass": 1.0,
+          "sand": 0.8,
+          "mud": 0.6,
+          "snow": 0.7,
+          "water_shallow": 0.5,
+          "steep_hill": 0.6
+        },
+        "animations": {
+          "idle": "mount_idle",
+          "walk": "mount_walk",
+          "trot": "mount_trot",
+          "gallop": "mount_gallop",
+          "sprint": "mount_sprint",
+          "jump": "mount_jump",
+          "turn": "mount_turn"
+        }
+      },
+      {
+        "id": "flying",
+        "name": "طائر",
+        "description": "حركة في الجو",
+        "base_speed": 2.0,
+        "sprint_multiplier": 1.8,
+        "stamina_consumption": {
+          "glide": 0.5,
+          "fly": 1.5,
+          "sprint": 3.0
+        },
+        "altitude_control": {
+          "min_altitude": 2.0,
+          "max_altitude": 100.0,
+          "ascend_speed": 5.0,
+          "descend_speed": 8.0
+        },
+        "weather_effects": {
+          "clear": 1.0,
+          "rain": 0.8,
+          "storm": 0.6,
+          "strong_wind": 0.7
+        },
+        "animations": {
+          "idle_ground": "flying_mount_idle_ground",
+          "idle_air": "flying_mount_idle_air",
+          "takeoff": "flying_mount_takeoff",
+          "fly": "flying_mount_fly",
+          "glide": "flying_mount_glide",
+          "sprint": "flying_mount_sprint",
+          "land": "flying_mount_land"
+        }
+      },
+      {
+        "id": "swimming",
+        "name": "سباحة",
+        "description": "حركة في الماء",
+        "base_speed": 1.2,
+        "sprint_multiplier": 1.5,
+        "stamina_consumption": {
+          "swim": 1.0,
+          "dive": 2.0,
+          "sprint": 3.0
+        },
+        "diving": {
+          "max_depth": 50.0,
+          "dive_speed": 3.0,
+          "surface_speed": 5.0,
+          "oxygen_consumption": 1.0
+        },
+        "water_effects": {
+          "calm": 1.0,
+          "current_against": 0.7,
+          "current_with": 1.3,
+          "rapids": 0.5
+        },
+        "animations": {
+          "idle_surface": "swimming_mount_idle_surface",
+          "idle_underwater": "swimming_mount_idle_underwater",
+          "swim_surface": "swimming_mount_swim_surface",
+          "swim_underwater": "swimming_mount_swim_underwater",
+          "dive": "swimming_mount_dive",
+          "surface": "swimming_mount_surface"
+        }
+      },
+      {
+        "id": "climbing",
+        "name": "تسلق",
+        "description": "حركة على المنحدرات والجدران",
+        "base_speed": 0.8,
+        "sprint_multiplier": 1.3,
+        "stamina_consumption": {
+          "climb": 2.0,
+          "sprint": 4.0
+        },
+        "climbing_limits": {
+          "max_angle": 75,
+          "grip_strength": 0.8
+        },
+        "surface_effects": {
+          "rock": 1.0,
+          "dirt": 0.8,
+          "ice": 0.5,
+          "wet": 0.7
+        },
+        "animations": {
+          "idle_wall": "climbing_mount_idle_wall",
+          "climb_up": "climbing_mount_climb_up",
+          "climb_down": "climbing_mount_climb_down",
+          "climb_sideways": "climbing_mount_climb_sideways"
+        }
+      }
+    ],
+    "mount_types": [
+      {
+        "id": "horse",
+        "name": "حصان",
+        "description": "مطية سريعة ومتوازنة",
+        "movement_type": "ground",
+        "stats": {
+          "speed": 1.2,
+          "acceleration": 1.1,
+          "stamina": 1.0,
+          "handling": 1.0
+        },
+        "abilities": [
+          {
+            "id": "gallop",
+            "name": "جري سريع",
+            "description": "زيادة سرعة الحصان لفترة قصيرة",
+            "cooldown": 30,
+            "duration": 10,
+            "effect": {
+              "speed_multiplier": 1.5
+            }
+          },
+          {
+            "id": "jump",
+            "name": "قفزة",
+            "description": "القفز فوق العوائق المنخفضة",
+            "cooldown": 5,
+            "effect": {
+              "jump_height": 2.0,
+              "jump_distance": 5.0
+            }
+          }
+        ]
+      },
+      {
+        "id": "tiger",
+        "name": "نمر",
+        "description": "مطية سريعة وقوية",
+        "movement_type": "ground",
+        "stats": {
+          "speed": 1.3,
+          "acceleration": 1.4,
+          "stamina": 0.9,
+          "handling": 1.2
+        },
+        "abilities": [
+          {
+            "id": "pounce",
+            "name": "وثبة",
+            "description": "وثبة قوية للأمام",
+            "cooldown": 15,
+            "effect": {
+              "dash_distance": 8.0,
+              "damage": 50
+            }
+          },
+          {
+            "id": "roar",
+            "name": "زئير",
+            "description": "زئير يخيف الأعداء القريبين",
+            "cooldown": 45,
+            "effect": {
+              "fear_duration": 3.0,
+              "fear_radius": 10.0
+            }
+          }
+        ]
+      },
+      {
+        "id": "dragon",
+        "name": "تنين",
+        "description": "مطية قوية يمكنها الطيران",
+        "movement_type": "flying",
+        "stats": {
+          "speed": 1.5,
+          "acceleration": 1.0,
+          "stamina": 1.2,
+          "handling": 0.9
+        },
+        "abilities": [
+          {
+            "id": "fire_breath",
+            "name": "نفس ناري",
+            "description": "إطلاق نفس من النار على الأعداء",
+            "cooldown": 30,
+            "effect": {
+              "damage": 100,
+              "range": 15.0,
+              "width": 5.0
+            }
+          },
+          {
+            "id": "wing_gust",
+            "name": "عاصفة جناح",
+            "description": "إحداث عاصفة هوائية تدفع الأعداء للخلف",
+            "cooldown": 20,
+            "effect": {
+              "push_force": 10.0,
+              "radius": 8.0
+            }
+          }
+        ]
+      },
+      {
+        "id": "camel",
+        "name": "جمل",
+        "description": "مطية متحملة للظروف الصحراوية",
+        "movement_type": "ground",
+        "stats": {
+          "speed": 0.9,
+          "acceleration": 0.8,
+          "stamina": 1.5,
+          "handling": 0.9
+        },
+        "terrain_specialization": {
+          "desert": 1.5,
+          "sand": 1.3
+        },
+        "abilities": [
+          {
+            "id": "endurance",
+            "name": "تحمل",
+            "description": "تقليل استهلاك الطاقة لفترة طويلة",
+            "cooldown": 120,
+            "duration": 60,
+            "effect": {
+              "stamina_consumption": 0.5
+            }
+          },
+          {
+            "id": "water_storage",
+            "name": "تخزين الماء",
+            "description": "استعادة الطاقة بشكل أسرع",
+            "passive": true,
+            "effect": {
+              "stamina_regen": 1.3
+            }
+          }
+        ]
+      },
+      {
+        "id": "sea_serpent",
+        "name": "ثعبان البحر",
+        "description": "مطية مائية سريعة",
+        "movement_type": "swimming",
+        "stats": {
+          "speed": 1.4,
+          "acceleration": 1.2,
+          "stamina": 1.3,
+          "handling": 1.1
+        },
+        "abilities": [
+          {
+            "id": "water_jet",
+            "name": "نفاثة مائية",
+            "description": "دفعة سريعة في الماء",
+            "cooldown": 20,
+            "effect": {
+              "speed_multiplier": 2.0,
+              "duration": 5.0
+            }
+          },
+          {
+            "id": "whirlpool",
+            "name": "دوامة",
+            "description": "إنشاء دوامة تسحب الأعداء وتؤذيهم",
+            "cooldown": 45,
+            "effect": {
+              "damage": 75,
+              "pull_force": 8.0,
+              "radius": 10.0,
+              "duration": 8.0
+            }
+          }
+        ]
+      },
+      {
+        "id": "giant_spider",
+        "name": "عنكبوت عملاق",
+        "description": "مطية يمكنها تسلق الجدران",
+        "movement_type": "climbing",
+        "stats": {
+          "speed": 1.0,
+          "acceleration": 1.1,
+          "stamina": 1.0,
+          "handling": 1.3
+        },
+        "abilities": [
+          {
+            "id": "web_shot",
+            "name": "إطلاق شبكة",
+            "description": "إطلاق شبكة تبطئ الأعداء",
+            "cooldown": 25,
+            "effect": {
+              "slow_amount": 0.5,
+              "slow_duration": 5.0,
+              "range": 12.0
+            }
+          },
+          {
+            "id": "wall_cling",
+            "name": "التصاق بالجدار",
+            "description": "التصاق بالجدار بدون استهلاك طاقة",
+            "cooldown": 30,
+            "duration": 15,
+            "effect": {
+              "stamina_consumption": 0.0
+            }
+          }
+        ]
+      }
+    ],
+    "mount_customization": {
+      "appearance": {
+        "colors": [
+          {
+            "id": "base_color",
+            "name": "اللون الأساسي",
+            "options": ["brown", "black", "white", "gray", "golden", "red"]
+          },
+          {
+            "id": "pattern_color",
+            "name": "لون النمط",
+            "options": ["none", "white", "black", "brown", "golden", "silver"]
+          },
+          {
+            "id": "eye_color",
+            "name": "لون العين",
+            "options": ["brown", "blue", "green", "red", "purple", "golden"]
+          }
+        ],
+        "patterns": [
+          {
+            "id": "no_pattern",
+            "name": "بدون نمط"
+          },
+          {
+            "id": "spotted",
+            "name": "منقط"
+          },
+          {
+            "id": "striped",
+            "name": "مخطط"
+          },
+          {
+            "id": "gradient",
+            "name": "متدرج"
+          }
+        ],
+        "accessories": [
+          {
+            "id": "saddle",
+            "name": "سرج",
+            "options": ["basic", "decorated", "royal", "battle", "magical"]
+          },
+          {
+            "id": "armor",
+            "name": "درع",
+            "options": ["none", "light", "medium", "heavy", "magical"]
+          },
+          {
+            "id": "head_gear",
+            "name": "زينة الرأس",
+            "options": ["none", "helmet", "crown", "horns", "mask"]
+          }
+        ]
+      },
+      "equipment": [
+        {
+          "id": "saddle",
+          "name": "سرج",
+          "description": "يؤثر على راحة الركوب وسرعة المطية",
+          "slots": ["basic", "improved", "advanced", "elite", "legendary"],
+          "effects": {
+            "basic": {
+              "speed": 1.0,
+              "stamina_consumption": 1.0
+            },
+            "improved": {
+              "speed": 1.05,
+              "stamina_consumption": 0.95
+            },
+            "advanced": {
+              "speed": 1.1,
+              "stamina_consumption": 0.9
+            },
+            "elite": {
+              "speed": 1.15,
+              "stamina_consumption": 0.85,
+              "additional_inventory": 5
+            },
+            "legendary": {
+              "speed": 1.2,
+              "stamina_consumption": 0.8,
+              "additional_inventory": 10,
+              "auto_regenerate_stamina": true
+            }
+          }
+        },
+        {
+          "id": "armor",
+          "name": "درع",
+          "description": "يحمي المطية من الضرر",
+          "slots": ["none", "light", "medium", "heavy", "magical"],
+          "effects": {
+            "none": {
+              "defense": 0,
+              "speed": 1.0
+            },
+            "light": {
+              "defense": 10,
+              "speed": 0.98
+            },
+            "medium": {
+              "defense": 25,
+              "speed": 0.95
+            },
+            "heavy": {
+              "defense": 50,
+              "speed": 0.9
+            },
+            "magical": {
+              "defense": 40,
+              "speed": 1.0,
+              "elemental_resistance": 20
+            }
+          }
+        },
+        {
+          "id": "shoes",
+          "name": "حدوات",
+          "description": "تؤثر على تعامل المطية مع التضاريس المختلفة",
+          "slots": ["none", "iron", "silver", "gold", "elemental"],
+          "effects": {
+            "none": {
+              "terrain_handling": 1.0
+            },
+            "iron": {
+              "terrain_handling": 1.1,
+              "speed_on_roads": 1.1
+            },
+            "silver": {
+              "terrain_handling": 1.15,
+              "speed_on_roads": 1.15,
+              "speed_on_rough_terrain": 1.05
+            },
+            "gold": {
+              "terrain_handling": 1.2,
+              "speed_on_roads": 1.2,
+              "speed_on_rough_terrain": 1.1,
+              "stamina_consumption": 0.9
+            },
+            "elemental": {
+              "terrain_handling": 1.25,
+              "speed_on_roads": 1.2,
+              "speed_on_rough_terrain": 1.15,
+              "stamina_consumption": 0.85,
+              "elemental_adaptation": true
+            }
+          }
+        }
+      ]
+    }
+  },
+  "group_ai": {
+    "behavior_types": [
+      {
+        "id": "coordinated_attack",
+        "name": "هجوم منسق",
+        "description": "تنسيق الهجمات بين أفراد المجموعة",
+        "roles": ["tank", "damage", "support"],
+        "formation": "surround",
+        "target_selection": "priority_based",
+        "communication": true
+      },
+      {
+        "id": "flanking",
+        "name": "التفاف",
+        "description": "الالتفاف حول العدو لمهاجمته من الخلف",
+        "roles": ["flanker", "distraction"],
+        "formation": "split",
+        "target_selection": "same_target",
+        "communication": true
+      },
+      {
+        "id": "support",
+        "name": "دعم",
+        "description": "دعم أفراد المجموعة بالتعزيزات والشفاء",
+        "roles": ["healer", "buffer", "protector"],
+        "formation": "defensive",
+        "target_selection": "ally_based",
+        "communication": true
+      },
+      {
+        "id": "distraction",
+        "name": "إلهاء",
+        "description": "إلهاء العدو لتشتيت انتباهه",
+        "roles": ["bait", "harasser"],
+        "formation": "scattered",
+        "target_selection": "multiple_targets",
+        "communication": true
+      },
+      {
+        "id": "formation",
+        "name": "تشكيل",
+        "description": "الحفاظ على تشكيل محدد أثناء القتال",
+        "roles": ["leader", "follower"],
+        "formation_types": ["line", "wedge", "circle", "square"],
+        "position_maintenance": true,
+        "communication": true
+      }
+    ],
+    "coordination_levels": [
+      {
+        "id": "basic",
+        "name": "أساسي",
+        "description": "تنسيق أساسي بين أفراد المجموعة",
+        "features": {
+          "target_sharing": true,
+          "basic_positioning": true,
+          "simple_roles": true
+        }
+      },
+      {
+        "id": "advanced",
+        "name": "متقدم",
+        "description": "تنسيق متقدم بين أفراد المجموعة",
+        "features": {
+          "target_sharing": true,
+          "advanced_positioning": true,
+          "complex_roles": true,
+          "ability_coordination": true,
+          "threat_management": true
+        }
+      },
+      {
+        "id": "elite",
+        "name": "نخبة",
+        "description": "تنسيق عالي المستوى بين أفراد المجموعة",
+        "features": {
+          "target_sharing": true,
+          "perfect_positioning": true,
+          "specialized_roles": true,
+          "ability_chaining": true,
+          "adaptive_strategies": true,
+          "counter_player_tactics": true
+        }
+      }
+    ],
+    "formations": [
+      {
+        "id": "line",
+        "name": "خط",
+        "description": "تشكيل خطي",
+        "positions": {
+          "front_line": {
+            "role": "tank",
+            "spacing": 2.0
+          },
+          "back_line": {
+            "role": "damage",
+            "spacing": 2.0,
+            "distance_from_front": 5.0
+          },
+          "support_line": {
+            "role": "support",
+            "spacing": 3.0,
+            "distance_from_front": 8.0
+          }
+        },
+        "advantages": ["good_for_narrow_spaces", "clear_line_of_sight"],
+        "disadvantages": ["vulnerable_to_aoe", "flanking_weakness"]
+      },
+      {
+        "id": "wedge",
+        "name": "إسفين",
+        "description": "تشكيل على شكل إسفين",
+        "positions": {
+          "point": {
+            "role": "tank",
+            "count": 1
+          },
+          "wings": {
+            "role": "damage",
+            "spacing": 2.0,
+            "angle": 45
+          },
+          "rear": {
+            "role": "support",
+            "spacing": 3.0,
+            "distance_from_point": 8.0
+          }
+        },
+        "advantages": ["good_for_breaking_through", "protected_support"],
+        "disadvantages": ["vulnerable_from_sides", "requires_coordination"]
+      },
+      {
+        "id": "circle",
+        "name": "دائرة",
+        "description": "تشكيل دائري",
+        "positions": {
+          "outer_circle": {
+            "role": "tank",
+            "spacing": 2.0,
+            "radius": 5.0
+          },
+          "inner_circle": {
+            "role": "damage",
+            "spacing": 3.0,
+            "radius": 3.0
+          },
+          "center": {
+            "role": "support",
+            "count": 1
+          }
+        },
+        "advantages": ["good_defense", "protection_from_all_sides"],
+        "disadvantages": ["limited_offensive_capability", "vulnerable_to_aoe"]
+      },
+      {
+        "id": "scattered",
+        "name": "متفرق",
+        "description": "تشكيل متفرق",
+        "positions": {
+          "random": {
+            "min_distance": 3.0,
+            "max_distance": 10.0
+          }
+        },
+        "advantages": ["resistant_to_aoe", "unpredictable"],
+        "disadvantages": ["difficult_to_coordinate", "no_focused_defense"]
+      }
+    ],
+    "roles": [
+      {
+        "id": "tank",
+        "name": "دفاع",
+        "description": "يتحمل الضرر ويجذب انتباه العدو",
+        "target_priority": ["player_tank", "highest_damage_player"],
+        "positioning": "front_line",
+        "abilities": ["taunt", "defensive_stance", "crowd_control"]
+      },
+      {
+        "id": "damage",
+        "name": "ضرر",
+        "description": "يركز على إلحاق الضرر بالعدو",
+        "target_priority": ["player_healer", "player_damage", "player_tank"],
+        "positioning": "flanking",
+        "abilities": ["high_damage", "burst_damage", "sustained_damage"]
+      },
+      {
+        "id": "support",
+        "name": "دعم",
+        "description": "يقدم الدعم والشفاء للمجموعة",
+        "target_priority": ["low_health_ally", "tank", "damage_dealer"],
+        "positioning": "back_line",
+        "abilities": ["healing", "buffing", "crowd_control"]
+      },
+      {
+        "id": "flanker",
+        "name": "ملتف",
+        "description": "يتسلل خلف خطوط العدو",
+        "target_priority": ["player_healer", "player_ranged_damage"],
+        "positioning": "behind_enemy",
+        "abilities": ["stealth", "burst_damage", "mobility"]
+      },
+      {
+        "id": "leader",
+        "name": "قائد",
+        "description": "ينسق هجمات المجموعة",
+        "target_priority": ["strategic_target", "group_target"],
+        "positioning": "central",
+        "abilities": ["command", "buff_allies", "mark_targets"]
+      }
+    ],
+    "communication": {
+      "signal_types": [
+        {
+          "id": "attack",
+          "name": "هجوم",
+          "description": "إشارة للهجوم على هدف محدد",
+          "visual_effect": "red_marker",
+          "sound_effect": "attack_signal"
+        },
+        {
+          "id": "retreat",
+          "name": "تراجع",
+          "description": "إشارة للتراجع",
+          "visual_effect": "blue_marker",
+          "sound_effect": "retreat_signal"
+        },
+        {
+          "id": "help",
+          "name": "مساعدة",
+          "description": "طلب المساعدة",
+          "visual_effect": "yellow_marker",
+          "sound_effect": "help_signal"
+        },
+        {
+          "id": "danger",
+          "name": "خطر",
+          "description": "تحذير من خطر",
+          "visual_effect": "orange_marker",
+          "sound_effect": "danger_signal"
+        }
+      ],
+      "coordination_methods": {
+        "leader_based": {
+          "description": "قائد المجموعة يصدر الأوامر",
+          "leader_selection": "highest_rank",
+          "command_types": ["attack", "defend", "move", "use_ability"]
+        },
+        "distributed": {
+          "description": "تنسيق موزع بين أفراد المجموعة",
+          "information_sharing": true,
+          "decision_making": "consensus"
+        }
+      }
+    },
+    "tactical_patterns": [
+      {
+        "id": "ambush",
+        "name": "كمين",
+        "description": "نصب كمين للاعب",
+        "setup": {
+          "concealment": true,
+          "trigger_condition": "player_proximity",
+          "positions": {
+            "front": {
+              "role": "tank",
+              "count": 2
+            },
+            "sides": {
+              "role": "damage",
+              "count": 4
+            },
+            "rear": {
+              "role": "support",
+              "count": 1
+            }
+          }
+        },
+        "execution": {
+          "surprise_bonus": {
+            "damage": 1.5,
+            "initiative": 2.0
+          },
+          "coordination_level": "advanced"
+        }
+      },
+      {
+        "id": "pincer",
+        "name": "كماشة",
+        "description": "الهجوم من جانبين",
+        "setup": {
+          "split_forces": true,
+          "positions": {
+            "left_flank": {
+              "role": "damage",
+              "count": 3
+            },
+            "right_flank": {
+              "role": "damage",
+              "count": 3
+            },
+            "center": {
+              "role": "tank",
+              "count": 1
+            }
+          }
+        },
+        "execution": {
+          "timing": "simultaneous",
+          "focus_fire": true,
+          "coordination_level": "advanced"
+        }
+      },
+      {
+        "id": "bait_and_switch",
+        "name": "الطعم والتبديل",
+        "description": "استخدام طعم لجذب اللاعب ثم الهجوم بالقوة الرئيسية",
+        "setup": {
+          "bait": {
+            "role": "flanker",
+            "count": 1,
+            "behavior": "flee_when_attacked"
+          },
+          "main_force": {
+            "hidden": true,
+            "trigger_condition": "bait_under_attack",
+            "roles": {
+              "tank": 2,
+              "damage": 4,
+              "support": 1
+            }
+          }
+        },
+        "execution": {
+          "bait_retreat_path": "towards_main_force",
+          "main_force_attack": "surround",
+          "coordination_level": "advanced"
+        }
+      },
+      {
+        "id": "defensive_retreat",
+        "name": "تراجع دفاعي",
+        "description": "تراجع منظم مع الحفاظ على القدرة القتالية",
+        "trigger_conditions": ["group_health_below_30", "outnumbered_2_to_1"],
+        "execution": {
+          "formation": "line",
+          "movement": "backwards",
+          "covering_fire": true,
+          "roles": {
+            "rear_guard": {
+              "role": "tank",
+              "behavior": "delay_enemy"
+            },
+            "main_body": {
+              "role": "damage",
+              "behavior": "cover_retreat"
+            },
+            "scouts": {
+              "role": "flanker",
+              "behavior": "find_safe_path"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

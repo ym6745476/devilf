@@ -1,0 +1,86 @@
+{
+  "channels": [
+    {
+      "id": "chat_channel_1",
+      "name": "عام",
+      "description": "قناة عامة لجميع اللاعبين في السيرفر."
+    },
+    {
+      "id": "chat_channel_2",
+      "name": "تجارة",
+      "description": "قناة مخصصة للتجارة وبيع وشراء العناصر."
+    },
+    {
+      "id": "chat_channel_3",
+      "name": "نقابة",
+      "description": "قناة خاصة بأعضاء النقابة."
+    },
+    {
+      "id": "chat_channel_4",
+      "name": "حزب",
+      "description": "قناة خاصة بأعضاء الحزب الحالي."
+    },
+    {
+      "id": "chat_channel_5",
+      "name": "خاص",
+      "description": "محادثة خاصة بين لاعبين."
+    },
+    {
+      "id": "chat_channel_6",
+      "name": "منطقة",
+      "description": "قناة خاصة باللاعبين في نفس المنطقة."
+    }
+  ],
+  "emotes": [
+    {
+      "id": "emote_1",
+      "name": "ابتسامة",
+      "command": "/smile",
+      "description": "إظهار ابتسامة."
+    },
+    {
+      "id": "emote_2",
+      "name": "ضحك",
+      "command": "/laugh",
+      "description": "إظهار ضحكة."
+    },
+    {
+      "id": "emote_3",
+      "name": "حزن",
+      "command": "/sad",
+      "description": "إظهار حزن."
+    },
+    {
+      "id": "emote_4",
+      "name": "غضب",
+      "command": "/angry",
+      "description": "إظهار غضب."
+    },
+    {
+      "id": "emote_5",
+      "name": "تحية",
+      "command": "/wave",
+      "description": "إلقاء تحية."
+    },
+    {
+      "id": "emote_6",
+      "name": "رقص",
+      "command": "/dance",
+      "description": "القيام برقصة."
+    }
+  ],
+  "filters": {
+    "spam": "منع إرسال نفس الرسالة بشكل متكرر",
+    "offensive": "منع الكلمات المسيئة والبذيئة",
+    "ads": "منع الإعلانات غير المصرح بها"
+  },
+  "reporting": {
+    "reasons": [
+      "سلوك مسيء",
+      "إزعاج",
+      "غش",
+      "إعلانات غير مصرح بها"
+    ],
+    "action": "مراجعة من قبل المشرفين واتخاذ الإجراء المناسب"
+  }
+}
