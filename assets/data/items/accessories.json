@@ -1,208 +1,259 @@
 {
-  "accessories": [
+  "rings": [
     {
       "id": "ring_1",
-      "name": "خاتم القوة",
-      "nameEn": "Ring of Power",
-      "type": "ring",
-      "rarity": "legendary",
-      "level": 40,
-      "stats": {
-        "strength": 20,
-        "stamina": 15,
-        "attackPower": 30
-      },
-      "effects": {
-        "criticalChance": 5,
-        "criticalDamage": 15
-      },
-      "glowEffect": {
-        "color": "#e74c3c",
-        "intensity": 0.8,
-        "pulseRate": 1.5
-      },
-      "upgradeSlots": 2,
-      "description": "خاتم أسطوري يمنح مرتديه قوة هائلة، صنع من معدن نادر وجواهر قديمة",
-      "descriptionEn": "A legendary ring granting its wearer immense strength, crafted from rare metal and ancient gems",
-      "modelPath": "assets/images/items/accessories/rings/power_ring.png",
-      "iconPath": "assets/images/ui/icons/accessories/power_ring_icon.png",
-      "requiredClass": ["warrior", "berserker", "paladin"],
-      "dropRate": 0.01,
-      "sellPrice": 15000,
-      "buyPrice": 45000
+      "name": "خاتم نحاسي",
+      "level": 1,
+      "rarity": "common",
+      "effects": [
+        "يزيد الصحة بنسبة 2%"
+      ],
+      "description": "خاتم بسيط من النحاس",
+      "price": 50
     },
+    {
+      "id": "ring_2",
+      "name": "خاتم فضي",
+      "level": 10,
+      "rarity": "uncommon",
+      "effects": [
+        "يزيد الصحة بنسبة 5%",
+        "يزيد المانا بنسبة 5%"
+      ],
+      "description": "خاتم متوسط القيمة من الفضة",
+      "price": 200
+    },
+    {
+      "id": "ring_3",
+      "name": "خاتم ذهبي",
+      "level": 20,
+      "rarity": "rare",
+      "effects": [
+        "يزيد الصحة بنسبة 8%",
+        "يزيد المانا بنسبة 8%",
+        "يزيد سرعة استعادة الصحة بنسبة 5%"
+      ],
+      "description": "خاتم قيم من الذهب",
+      "price": 500
+    },
+    {
+      "id": "ring_4",
+      "name": "خاتم الياقوت",
+      "level": 30,
+      "rarity": "epic",
+      "effects": [
+        "يزيد الصحة بنسبة 12%",
+        "يزيد المانا بنسبة 12%",
+        "يزيد سرعة استعادة الصحة بنسبة 10%",
+        "يقلل وقت إعادة استخدام المهارات بنسبة 5%"
+      ],
+      "description": "خاتم فاخر مرصع بالياقوت",
+      "price": 1200
+    },
+    {
+      "id": "ring_5",
+      "name": "خاتم الأبدية",
+      "level": 40,
+      "rarity": "legendary",
+      "effects": [
+        "يزيد الصحة بنسبة 15%",
+        "يزيد المانا بنسبة 15%",
+        "يزيد سرعة استعادة الصحة بنسبة 15%",
+        "يقلل وقت إعادة استخدام المهارات بنسبة 10%",
+        "فرصة 5% لتجنب الموت مرة واحدة كل 30 دقيقة"
+      ],
+      "description": "خاتم أسطوري يمنح قوة خارقة",
+      "price": 5000
+    }
+  ],
+  "necklaces": [
     {
       "id": "necklace_1",
-      "name": "قلادة الحكمة",
-      "nameEn": "Necklace of Wisdom",
-      "type": "necklace",
-      "rarity": "mythic",
-      "level": 45,
-      "stats": {
-        "intelligence": 30,
-        "wisdom": 25,
-        "manaRegeneration": 20
-      },
-      "effects": {
-        "spellPower": 15,
-        "cooldownReduction": 10
-      },
-      "glowEffect": {
-        "color": "#3498db",
-        "intensity": 1.0,
-        "pulseRate": 1.8,
-        "particleEffect": "arcane"
-      },
-      "upgradeSlots": 3,
-      "description": "قلادة نادرة تتوهج بطاقة سحرية قوية، تزيد من قدرات الساحر وتمنحه حكمة الأجيال",
-      "descriptionEn": "A rare necklace glowing with powerful magical energy, enhancing the mage's abilities and granting the wisdom of generations",
-      "modelPath": "assets/images/items/accessories/necklaces/wisdom_necklace.png",
-      "iconPath": "assets/images/ui/icons/accessories/wisdom_necklace_icon.png",
-      "requiredClass": ["mage", "wizard", "warlock"],
-      "dropRate": 0.008,
-      "sellPrice": 20000,
-      "buyPrice": 60000
+      "name": "قلادة خشبية",
+      "level": 1,
+      "rarity": "common",
+      "effects": [
+        "تزيد المانا بنسبة 2%"
+      ],
+      "description": "قلادة بسيطة من الخشب",
+      "price": 50
     },
+    {
+      "id": "necklace_2",
+      "name": "قلادة نحاسية",
+      "level": 10,
+      "rarity": "uncommon",
+      "effects": [
+        "تزيد المانا بنسبة 5%",
+        "تزيد سرعة استعادة المانا بنسبة 5%"
+      ],
+      "description": "قلادة متوسطة القيمة من النحاس",
+      "price": 200
+    },
+    {
+      "id": "necklace_3",
+      "name": "قلادة فضية",
+      "level": 20,
+      "rarity": "rare",
+      "effects": [
+        "تزيد المانا بنسبة 8%",
+        "تزيد سرعة استعادة المانا بنسبة 8%",
+        "تقلل استهلاك المانا بنسبة 5%"
+      ],
+      "description": "قلادة قيمة من الفضة",
+      "price": 500
+    },
+    {
+      "id": "necklace_4",
+      "name": "قلادة الزمرد",
+      "level": 30,
+      "rarity": "epic",
+      "effects": [
+        "تزيد المانا بنسبة 12%",
+        "تزيد سرعة استعادة المانا بنسبة 12%",
+        "تقلل استهلاك المانا بنسبة 10%",
+        "تزيد قوة السحر بنسبة 5%"
+      ],
+      "description": "قلادة فاخرة مرصعة بالزمرد",
+      "price": 1200
+    },
+    {
+      "id": "necklace_5",
+      "name": "قلادة الحكمة",
+      "level": 40,
+      "rarity": "legendary",
+      "effects": [
+        "تزيد المانا بنسبة 15%",
+        "تزيد سرعة استعادة المانا بنسبة 15%",
+        "تقلل استهلاك المانا بنسبة 15%",
+        "تزيد قوة السحر بنسبة 10%",
+        "فرصة 5% لاستخدام المهارات بدون استهلاك المانا"
+      ],
+      "description": "قلادة أسطورية تمنح حكمة وقوة سحرية هائلة",
+      "price": 5000
+    }
+  ],
+  "earrings": [
     {
       "id": "earring_1",
-      "name": "قرط الخفة",
-      "nameEn": "Earring of Agility",
-      "type": "earring",
-      "rarity": "epic",
-      "level": 35,
-      "stats": {
-        "agility": 25,
-        "dexterity": 20,
-        "attackSpeed": 10
-      },
-      "effects": {
-        "dodgeChance": 8,
-        "movementSpeed": 5
-      },
-      "glowEffect": {
-        "color": "#2ecc71",
-        "intensity": 0.7,
-        "pulseRate": 1.3
-      },
-      "upgradeSlots": 2,
-      "description": "قرط خفيف يمنح مرتديه سرعة ورشاقة فائقة، مصنوع من معدن نادر وريش طائر أسطوري",
-      "descriptionEn": "A light earring granting its wearer superior speed and agility, made from rare metal and the feather of a mythical bird",
-      "modelPath": "assets/images/items/accessories/earrings/agility_earring.png",
-      "iconPath": "assets/images/ui/icons/accessories/agility_earring_icon.png",
-      "requiredClass": ["assassin", "rogue", "archer"],
-      "dropRate": 0.02,
-      "sellPrice": 10000,
-      "buyPrice": 30000
+      "name": "أقراط خشبية",
+      "level": 1,
+      "rarity": "common",
+      "effects": [
+        "تزيد الدقة بنسبة 2%"
+      ],
+      "description": "أقراط بسيطة من الخشب",
+      "price": 50
     },
     {
-      "id": "wings_1",
-      "name": "أجنحة الملاك",
-      "nameEn": "Angel Wings",
-      "type": "wings",
+      "id": "earring_2",
+      "name": "أقراط نحاسية",
+      "level": 10,
+      "rarity": "uncommon",
+      "effects": [
+        "تزيد الدقة بنسبة 5%",
+        "تزيد فرصة الضربة الحرجة بنسبة 2%"
+      ],
+      "description": "أقراط متوسطة القيمة من النحاس",
+      "price": 200
+    },
+    {
+      "id": "earring_3",
+      "name": "أقراط فضية",
+      "level": 20,
+      "rarity": "rare",
+      "effects": [
+        "تزيد الدقة بنسبة 8%",
+        "تزيد فرصة الضربة الحرجة بنسبة 5%",
+        "تزيد ضرر الضربة الحرجة بنسبة 10%"
+      ],
+      "description": "أقراط قيمة من الفضة",
+      "price": 500
+    },
+    {
+      "id": "earring_4",
+      "name": "أقراط الياقوت الأزرق",
+      "level": 30,
+      "rarity": "epic",
+      "effects": [
+        "تزيد الدقة بنسبة 12%",
+        "تزيد فرصة الضربة الحرجة بنسبة 8%",
+        "تزيد ضرر الضربة الحرجة بنسبة 20%",
+        "تقلل مقاومة العدو بنسبة 5%"
+      ],
+      "description": "أقراط فاخرة مرصعة بالياقوت الأزرق",
+      "price": 1200
+    },
+    {
+      "id": "earring_5",
+      "name": "أقراط البصيرة",
+      "level": 40,
       "rarity": "legendary",
-      "level": 50,
-      "stats": {
-        "allStats": 15,
-        "movementSpeed": 20,
-        "jumpHeight": 30
-      },
-      "effects": {
-        "gliding": true,
-        "fallDamageReduction": 100,
-        "holyAura": 10
-      },
-      "glowEffect": {
-        "color": "#ffffff",
-        "intensity": 1.2,
-        "pulseRate": 2.0,
-        "particleEffect": "feathers"
-      },
-      "upgradeSlots": 4,
-      "description": "أجنحة ملائكية تتوهج بنور مقدس، تمنح مرتديها القدرة على التحليق والحماية من قوى الظلام",
-      "descriptionEn": "Angelic wings glowing with holy light, granting the wearer the ability to glide and protection from dark forces",
-      "modelPath": "assets/images/items/accessories/wings/angel_wings.png",
-      "iconPath": "assets/images/ui/icons/accessories/angel_wings_icon.png",
-      "requiredClass": ["all"],
-      "dropRate": 0.005,
-      "sellPrice": 50000,
-      "buyPrice": 150000,
-      "animations": {
-        "idle": "assets/animations/accessories/wings/angel_wings_idle.json",
-        "flying": "assets/animations/accessories/wings/angel_wings_flying.json",
-        "gliding": "assets/animations/accessories/wings/angel_wings_gliding.json"
-      }
+      "effects": [
+        "تزيد الدقة بنسبة 15%",
+        "تزيد فرصة الضربة الحرجة بنسبة 12%",
+        "تزيد ضرر الضربة الحرجة بنسبة 30%",
+        "تقلل مقاومة العدو بنسبة 10%",
+        "تكشف نقاط ضعف العدو"
+      ],
+      "description": "أقراط أسطورية تمنح بصيرة خارقة",
+      "price": 5000
+    }
+  ],
+  "wings": [
+    {
+      "id": "wings_1",
+      "name": "أجنحة الملاك الصغيرة",
+      "level": 20,
+      "rarity": "rare",
+      "effects": [
+        "تتيح الطيران لمدة 10 ثوانٍ",
+        "تقلل ضرر السقوط بنسبة 50%"
+      ],
+      "description": "أجنحة صغيرة تشبه أجنحة الملائكة",
+      "price": 2000
     },
     {
       "id": "wings_2",
-      "name": "أجنحة التنين",
-      "nameEn": "Dragon Wings",
-      "type": "wings",
-      "rarity": "mythic",
-      "level": 60,
-      "stats": {
-        "allStats": 20,
-        "movementSpeed": 25,
-        "jumpHeight": 35
-      },
-      "effects": {
-        "gliding": true,
-        "fallDamageReduction": 100,
-        "fireResistance": 50,
-        "fireAura": 15
-      },
-      "glowEffect": {
-        "color": "#e74c3c",
-        "intensity": 1.5,
-        "pulseRate": 2.2,
-        "particleEffect": "fire"
-      },
-      "upgradeSlots": 5,
-      "description": "أجنحة تنين قوية تتوهج بنيران حارقة، تمنح مرتديها قوة التنانين وحماية من النيران",
-      "descriptionEn": "Powerful dragon wings glowing with burning fire, granting the wearer the power of dragons and protection from fire",
-      "modelPath": "assets/images/items/accessories/wings/dragon_wings.png",
-      "iconPath": "assets/images/ui/icons/accessories/dragon_wings_icon.png",
-      "requiredClass": ["all"],
-      "dropRate": 0.003,
-      "sellPrice": 75000,
-      "buyPrice": 225000,
-      "animations": {
-        "idle": "assets/animations/accessories/wings/dragon_wings_idle.json",
-        "flying": "assets/animations/accessories/wings/dragon_wings_flying.json",
-        "gliding": "assets/animations/accessories/wings/dragon_wings_gliding.json"
-      }
+      "name": "أجنحة النسر",
+      "level": 30,
+      "rarity": "epic",
+      "effects": [
+        "تتيح الطيران لمدة 20 ثانية",
+        "تقلل ضرر السقوط بنسبة 75%",
+        "تزيد السرعة في الهواء بنسبة 20%"
+      ],
+      "description": "أجنحة قوية تشبه أجنحة النسر",
+      "price": 5000
     },
     {
-      "id": "crown_1",
-      "name": "تاج الملك",
-      "nameEn": "King's Crown",
-      "type": "crown",
+      "id": "wings_3",
+      "name": "أجنحة التنين",
+      "level": 40,
+      "rarity": "legendary",
+      "effects": [
+        "تتيح الطيران لمدة 30 ثانية",
+        "تلغي ضرر السقوط تماماً",
+        "تزيد السرعة في الهواء بنسبة 40%",
+        "تتيح إطلاق كرات نارية أثناء الطيران"
+      ],
+      "description": "أجنحة أسطورية تشبه أجنحة التنين",
+      "price": 10000
+    },
+    {
+      "id": "wings_4",
+      "name": "أجنحة الفينيق",
+      "level": 50,
       "rarity": "mythic",
-      "level": 55,
-      "stats": {
-        "charisma": 30,
-        "leadership": 25,
-        "allStats": 10
-      },
-      "effects": {
-        "allyBuffRange": 20,
-        "allyBuffStrength": 15,
-        "respectedByNPCs": true
-      },
-      "glowEffect": {
-        "color": "#f1c40f",
-        "intensity": 1.3,
-        "pulseRate": 1.7,
-        "particleEffect": "royal"
-      },
-      "upgradeSlots": 3,
-      "description": "تاج ملكي مرصع بالجواهر النادرة، يمنح مرتديه هيبة الملوك وقدرة على قيادة الحلفاء",
-      "descriptionEn": "A royal crown adorned with rare gems, granting its wearer the prestige of kings and the ability to lead allies",
-      "modelPath": "assets/images/items/accessories/crowns/kings_crown.png",
-      "iconPath": "assets/images/ui/icons/accessories/kings_crown_icon.png",
-      "requiredClass": ["all"],
-      "dropRate": 0.002,
-      "sellPrice": 100000,
-      "buyPrice": 300000
+      "effects": [
+        "تتيح الطيران بلا حدود زمنية",
+        "تلغي ضرر السقوط تماماً",
+        "تزيد السرعة في الهواء بنسبة 60%",
+        "تتيح إطلاق كرات نارية أثناء الطيران",
+        "تستعيد 1% من الصحة كل 5 ثوانٍ أثناء الطيران"
+      ],
+      "description": "أجنحة أسطورية من نار الفينيق الخالدة",
+      "price": 20000
     }
   ]
 }

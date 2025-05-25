@@ -1,230 +1,284 @@
 {
-  "weapons": [
+  "swords": [
     {
       "id": "sword_1",
-      "name": "سيف الفاتح",
-      "nameEn": "Conqueror's Sword",
-      "type": "sword",
-      "rarity": "rare",
-      "level": 30,
-      "damage": {
-        "min": 120,
-        "max": 180
-      },
-      "stats": {
-        "strength": 15,
-        "agility": 8
-      },
-      "effects": {
-        "criticalChance": 5,
-        "criticalDamage": 20
-      },
-      "glowEffect": {
-        "color": "#3498db",
-        "intensity": 0.7,
-        "pulseRate": 1.2
-      },
-      "upgradeSlots": 3,
-      "description": "سيف قوي صنع من معدن نادر، يقال أنه استخدم في معارك الفتح الأولى",
-      "descriptionEn": "A powerful sword made from rare metal, said to have been used in the first conquest battles",
-      "modelPath": "assets/images/weapons/swords/conqueror_sword.png",
-      "iconPath": "assets/images/ui/icons/weapons/conqueror_sword_icon.png",
-      "soundEffects": {
-        "swing": "assets/audio/sfx/weapons/sword_swing.mp3",
-        "hit": "assets/audio/sfx/weapons/sword_hit.mp3",
-        "critical": "assets/audio/sfx/weapons/sword_critical.mp3"
-      },
-      "animations": {
-        "idle": "assets/animations/weapons/sword_idle.json",
-        "attack": "assets/animations/weapons/sword_attack.json",
-        "special": "assets/animations/weapons/sword_special.json"
-      },
-      "requiredClass": ["warrior", "paladin"],
-      "dropRate": 0.05,
-      "sellPrice": 5000,
-      "buyPrice": 15000
+      "name": "سيف المبتدئ",
+      "level": 1,
+      "damage": 5,
+      "rarity": "common",
+      "effects": [],
+      "description": "سيف بسيط للمبتدئين",
+      "price": 50
     },
+    {
+      "id": "sword_2",
+      "name": "سيف الفارس",
+      "level": 10,
+      "damage": 15,
+      "rarity": "uncommon",
+      "effects": [
+        "يزيد القوة بنسبة 5%"
+      ],
+      "description": "سيف متوسط القوة",
+      "price": 200
+    },
+    {
+      "id": "sword_3",
+      "name": "سيف الأمير",
+      "level": 20,
+      "damage": 30,
+      "rarity": "rare",
+      "effects": [
+        "يزيد القوة بنسبة 10%",
+        "فرصة 5% لصعق العدو"
+      ],
+      "description": "سيف قوي يليق بالأمراء",
+      "price": 500
+    },
+    {
+      "id": "sword_4",
+      "name": "سيف الملك",
+      "level": 30,
+      "damage": 50,
+      "rarity": "epic",
+      "effects": [
+        "يزيد القوة بنسبة 15%",
+        "فرصة 10% لصعق العدو",
+        "يستعيد 1% من الصحة عند كل ضربة"
+      ],
+      "description": "سيف ملكي ذو قوة هائلة",
+      "price": 1200
+    },
+    {
+      "id": "sword_5",
+      "name": "ذو الفقار",
+      "level": 40,
+      "damage": 80,
+      "rarity": "legendary",
+      "effects": [
+        "يزيد القوة بنسبة 20%",
+        "فرصة 15% لصعق العدو",
+        "يستعيد 2% من الصحة عند كل ضربة",
+        "يخترق دروع العدو بنسبة 10%"
+      ],
+      "description": "سيف أسطوري لا يقهر",
+      "price": 5000
+    }
+  ],
+  "daggers": [
     {
       "id": "dagger_1",
-      "name": "خنجر الظل",
-      "nameEn": "Shadow Dagger",
-      "type": "dagger",
-      "rarity": "epic",
-      "level": 35,
-      "damage": {
-        "min": 90,
-        "max": 130
-      },
-      "stats": {
-        "agility": 25,
-        "criticalChance": 12
-      },
-      "effects": {
-        "poisonDamage": 15,
-        "poisonDuration": 5
-      },
-      "glowEffect": {
-        "color": "#8e44ad",
-        "intensity": 0.8,
-        "pulseRate": 1.5
-      },
-      "upgradeSlots": 2,
-      "description": "خنجر مسموم يخترق دروع الأعداء بسهولة، مفضل لدى القتلة والمتسللين",
-      "descriptionEn": "A poisoned dagger that easily penetrates enemy armor, favored by assassins and infiltrators",
-      "modelPath": "assets/images/weapons/daggers/shadow_dagger.png",
-      "iconPath": "assets/images/ui/icons/weapons/shadow_dagger_icon.png",
-      "soundEffects": {
-        "swing": "assets/audio/sfx/weapons/dagger_swing.mp3",
-        "hit": "assets/audio/sfx/weapons/dagger_hit.mp3",
-        "critical": "assets/audio/sfx/weapons/dagger_critical.mp3"
-      },
-      "animations": {
-        "idle": "assets/animations/weapons/dagger_idle.json",
-        "attack": "assets/animations/weapons/dagger_attack.json",
-        "special": "assets/animations/weapons/dagger_special.json"
-      },
-      "requiredClass": ["assassin", "rogue"],
-      "dropRate": 0.03,
-      "sellPrice": 8000,
-      "buyPrice": 24000
+      "name": "خنجر المتسلل",
+      "level": 1,
+      "damage": 3,
+      "rarity": "common",
+      "effects": [
+        "يزيد السرعة بنسبة 5%"
+      ],
+      "description": "خنجر خفيف وسريع",
+      "price": 50
     },
+    {
+      "id": "dagger_2",
+      "name": "خنجر الظل",
+      "level": 10,
+      "damage": 10,
+      "rarity": "uncommon",
+      "effects": [
+        "يزيد السرعة بنسبة 10%",
+        "فرصة 5% للطعن المزدوج"
+      ],
+      "description": "خنجر يتحرك بسرعة الظل",
+      "price": 200
+    },
+    {
+      "id": "dagger_3",
+      "name": "خنجر الغدر",
+      "level": 20,
+      "damage": 20,
+      "rarity": "rare",
+      "effects": [
+        "يزيد السرعة بنسبة 15%",
+        "فرصة 10% للطعن المزدوج",
+        "يزيد الضرر من الخلف بنسبة 20%"
+      ],
+      "description": "خنجر مثالي للاغتيال",
+      "price": 500
+    },
+    {
+      "id": "dagger_4",
+      "name": "خنجر الأفعى",
+      "level": 30,
+      "damage": 35,
+      "rarity": "epic",
+      "effects": [
+        "يزيد السرعة بنسبة 20%",
+        "فرصة 15% للطعن المزدوج",
+        "يزيد الضرر من الخلف بنسبة 30%",
+        "فرصة 10% لتسميم العدو"
+      ],
+      "description": "خنجر مسموم كلدغة الأفعى",
+      "price": 1200
+    },
+    {
+      "id": "dagger_5",
+      "name": "خنجر الفناء",
+      "level": 40,
+      "damage": 60,
+      "rarity": "legendary",
+      "effects": [
+        "يزيد السرعة بنسبة 25%",
+        "فرصة 20% للطعن المزدوج",
+        "يزيد الضرر من الخلف بنسبة 50%",
+        "فرصة 20% لتسميم العدو",
+        "يتجاهل 15% من دروع العدو"
+      ],
+      "description": "خنجر أسطوري يجلب الفناء لأعدائه",
+      "price": 5000
+    }
+  ],
+  "bows": [
     {
       "id": "bow_1",
-      "name": "قوس العاصفة",
-      "nameEn": "Storm Bow",
-      "type": "bow",
-      "rarity": "legendary",
-      "level": 40,
-      "damage": {
-        "min": 150,
-        "max": 220
-      },
-      "stats": {
-        "agility": 30,
-        "accuracy": 20
-      },
-      "effects": {
-        "lightningDamage": 25,
-        "stunChance": 8
-      },
-      "glowEffect": {
-        "color": "#f1c40f",
-        "intensity": 1.0,
-        "pulseRate": 1.8,
-        "particleEffect": "lightning"
-      },
-      "upgradeSlots": 4,
-      "description": "قوس أسطوري يطلق سهاماً مشحونة بالبرق، قادر على صعق عدة أعداء في آن واحد",
-      "descriptionEn": "A legendary bow that fires lightning-charged arrows, capable of stunning multiple enemies at once",
-      "modelPath": "assets/images/weapons/bows/storm_bow.png",
-      "iconPath": "assets/images/ui/icons/weapons/storm_bow_icon.png",
-      "soundEffects": {
-        "draw": "assets/audio/sfx/weapons/bow_draw.mp3",
-        "release": "assets/audio/sfx/weapons/bow_release.mp3",
-        "hit": "assets/audio/sfx/weapons/bow_hit.mp3",
-        "critical": "assets/audio/sfx/weapons/bow_critical.mp3"
-      },
-      "animations": {
-        "idle": "assets/animations/weapons/bow_idle.json",
-        "draw": "assets/animations/weapons/bow_draw.json",
-        "release": "assets/animations/weapons/bow_release.json",
-        "special": "assets/animations/weapons/bow_special.json"
-      },
-      "requiredClass": ["archer", "hunter"],
-      "dropRate": 0.01,
-      "sellPrice": 15000,
-      "buyPrice": 45000
+      "name": "قوس الصياد",
+      "level": 1,
+      "damage": 4,
+      "rarity": "common",
+      "effects": [
+        "مدى أبعد بنسبة 5%"
+      ],
+      "description": "قوس بسيط للصيد",
+      "price": 50
     },
+    {
+      "id": "bow_2",
+      "name": "قوس الرامي",
+      "level": 10,
+      "damage": 12,
+      "rarity": "uncommon",
+      "effects": [
+        "مدى أبعد بنسبة 10%",
+        "دقة أعلى بنسبة 5%"
+      ],
+      "description": "قوس متوسط القوة للرماة المهرة",
+      "price": 200
+    },
+    {
+      "id": "bow_3",
+      "name": "قوس النسر",
+      "level": 20,
+      "damage": 25,
+      "rarity": "rare",
+      "effects": [
+        "مدى أبعد بنسبة 15%",
+        "دقة أعلى بنسبة 10%",
+        "فرصة 5% لإطلاق سهمين دفعة واحدة"
+      ],
+      "description": "قوس دقيق كعين النسر",
+      "price": 500
+    },
+    {
+      "id": "bow_4",
+      "name": "قوس العاصفة",
+      "level": 30,
+      "damage": 45,
+      "rarity": "epic",
+      "effects": [
+        "مدى أبعد بنسبة 20%",
+        "دقة أعلى بنسبة 15%",
+        "فرصة 10% لإطلاق سهمين دفعة واحدة",
+        "فرصة 5% لإصابة العدو بالصعق"
+      ],
+      "description": "قوس يطلق سهاماً سريعة كالعاصفة",
+      "price": 1200
+    },
+    {
+      "id": "bow_5",
+      "name": "قوس القدر",
+      "level": 40,
+      "damage": 70,
+      "rarity": "legendary",
+      "effects": [
+        "مدى أبعد بنسبة 25%",
+        "دقة أعلى بنسبة 20%",
+        "فرصة 15% لإطلاق سهمين دفعة واحدة",
+        "فرصة 10% لإصابة العدو بالصعق",
+        "يخترق الدروع بنسبة 15%"
+      ],
+      "description": "قوس أسطوري يحدد مصير أعدائه",
+      "price": 5000
+    }
+  ],
+  "staffs": [
     {
       "id": "staff_1",
-      "name": "عصا النار الأبدية",
-      "nameEn": "Eternal Fire Staff",
-      "type": "staff",
-      "rarity": "mythic",
-      "level": 45,
-      "damage": {
-        "min": 180,
-        "max": 250
-      },
-      "stats": {
-        "intelligence": 40,
-        "wisdom": 25
-      },
-      "effects": {
-        "fireDamage": 35,
-        "burnDuration": 6,
-        "areaOfEffect": 3
-      },
-      "glowEffect": {
-        "color": "#e74c3c",
-        "intensity": 1.2,
-        "pulseRate": 2.0,
-        "particleEffect": "fire"
-      },
-      "upgradeSlots": 5,
-      "description": "عصا أسطورية تحمل قوة النار الأبدية، تحرق كل من يقف في طريقها",
-      "descriptionEn": "A mythical staff carrying the power of eternal fire, burning everything in its path",
-      "modelPath": "assets/images/weapons/staves/eternal_fire_staff.png",
-      "iconPath": "assets/images/ui/icons/weapons/eternal_fire_staff_icon.png",
-      "soundEffects": {
-        "cast": "assets/audio/sfx/weapons/staff_cast.mp3",
-        "hit": "assets/audio/sfx/weapons/staff_hit.mp3",
-        "critical": "assets/audio/sfx/weapons/staff_critical.mp3",
-        "ambient": "assets/audio/sfx/weapons/staff_ambient.mp3"
-      },
-      "animations": {
-        "idle": "assets/animations/weapons/staff_idle.json",
-        "cast": "assets/animations/weapons/staff_cast.json",
-        "special": "assets/animations/weapons/staff_special.json"
-      },
-      "requiredClass": ["mage", "wizard"],
-      "dropRate": 0.005,
-      "sellPrice": 25000,
-      "buyPrice": 75000
+      "name": "عصا المتعلم",
+      "level": 1,
+      "damage": 6,
+      "rarity": "common",
+      "effects": [
+        "يزيد قوة السحر بنسبة 5%"
+      ],
+      "description": "عصا بسيطة للسحرة المبتدئين",
+      "price": 50
     },
     {
-      "id": "axe_1",
-      "name": "فأس الجبار",
-      "nameEn": "Titan's Axe",
-      "type": "axe",
+      "id": "staff_2",
+      "name": "عصا الساحر",
+      "level": 10,
+      "damage": 18,
+      "rarity": "uncommon",
+      "effects": [
+        "يزيد قوة السحر بنسبة 10%",
+        "يقلل استهلاك المانا بنسبة 5%"
+      ],
+      "description": "عصا متوسطة القوة للسحرة",
+      "price": 200
+    },
+    {
+      "id": "staff_3",
+      "name": "عصا العناصر",
+      "level": 20,
+      "damage": 35,
+      "rarity": "rare",
+      "effects": [
+        "يزيد قوة السحر بنسبة 15%",
+        "يقلل استهلاك المانا بنسبة 10%",
+        "يزيد ضرر العناصر بنسبة 10%"
+      ],
+      "description": "عصا تتحكم بالعناصر الأربعة",
+      "price": 500
+    },
+    {
+      "id": "staff_4",
+      "name": "عصا الكون",
+      "level": 30,
+      "damage": 55,
       "rarity": "epic",
-      "level": 38,
-      "damage": {
-        "min": 160,
-        "max": 240
-      },
-      "stats": {
-        "strength": 35,
-        "stamina": 20
-      },
-      "effects": {
-        "armorPenetration": 15,
-        "stunChance": 10
-      },
-      "glowEffect": {
-        "color": "#27ae60",
-        "intensity": 0.9,
-        "pulseRate": 1.3
-      },
-      "upgradeSlots": 3,
-      "description": "فأس ضخم يحمل قوة الجبابرة، قادر على تحطيم الدروع بضربة واحدة",
-      "descriptionEn": "A massive axe carrying the power of titans, capable of shattering armor with a single blow",
-      "modelPath": "assets/images/weapons/axes/titan_axe.png",
-      "iconPath": "assets/images/ui/icons/weapons/titan_axe_icon.png",
-      "soundEffects": {
-        "swing": "assets/audio/sfx/weapons/axe_swing.mp3",
-        "hit": "assets/audio/sfx/weapons/axe_hit.mp3",
-        "critical": "assets/audio/sfx/weapons/axe_critical.mp3"
-      },
-      "animations": {
-        "idle": "assets/animations/weapons/axe_idle.json",
-        "attack": "assets/animations/weapons/axe_attack.json",
-        "special": "assets/animations/weapons/axe_special.json"
-      },
-      "requiredClass": ["warrior", "berserker"],
-      "dropRate": 0.025,
-      "sellPrice": 12000,
-      "buyPrice": 36000
+      "effects": [
+        "يزيد قوة السحر بنسبة 20%",
+        "يقلل استهلاك المانا بنسبة 15%",
+        "يزيد ضرر العناصر بنسبة 15%",
+        "يستعيد 1% من المانا عند كل هجوم"
+      ],
+      "description": "عصا تستمد قوتها من الكون",
+      "price": 1200
+    },
+    {
+      "id": "staff_5",
+      "name": "عصا الخالق",
+      "level": 40,
+      "damage": 85,
+      "rarity": "legendary",
+      "effects": [
+        "يزيد قوة السحر بنسبة 25%",
+        "يقلل استهلاك المانا بنسبة 20%",
+        "يزيد ضرر العناصر بنسبة 20%",
+        "يستعيد 2% من المانا عند كل هجوم",
+        "فرصة 10% لمضاعفة قوة السحر"
+      ],
+      "description": "عصا أسطورية تحمل قوة الخلق والتدمير",
+      "price": 5000
     }
   ]
 }

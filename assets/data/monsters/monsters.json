@@ -1,574 +1,153 @@
-{
-  "monsters": [
-    {
-      "id": "wolf_1",
-      "name": "ذئب الصحراء",
-      "nameEn": "Desert Wolf",
-      "type": "beast",
-      "level": 10,
-      "stats": {
-        "health": 300,
-        "attack": 40,
-        "defense": 20,
-        "speed": 8,
-        "aggressiveness": 7
-      },
-      "behaviors": ["pack", "territorial", "nocturnal"],
-      "drops": [
-        {
-          "itemId": "wolf_pelt",
-          "chance": 0.7,
-          "minQuantity": 1,
-          "maxQuantity": 3
-        },
-        {
-          "itemId": "wolf_fang",
-          "chance": 0.4,
-          "minQuantity": 1,
-          "maxQuantity": 2
-        },
-        {
-          "itemId": "gold_coin",
-          "chance": 1.0,
-          "minQuantity": 5,
-          "maxQuantity": 15
-        }
-      ],
-      "experience": 50,
-      "abilities": [
-        {
-          "name": "عضة قوية",
-          "nameEn": "Powerful Bite",
-          "damage": 50,
-          "cooldown": 5,
-          "range": 1,
-          "effectType": "physical",
-          "animation": "assets/animations/monsters/wolf/bite.json"
-        },
-        {
-          "name": "عواء",
-          "nameEn": "Howl",
-          "effect": "buff",
-          "buffType": "attack",
-          "buffAmount": 20,
-          "duration": 10,
-          "cooldown": 15,
-          "range": 5,
-          "animation": "assets/animations/monsters/wolf/howl.json",
-          "soundEffect": "assets/audio/sfx/monsters/wolf_howl.mp3"
-        }
-      ],
-      "spawnAreas": ["desert_outskirts", "rocky_hills"],
-      "spawnTime": {
-        "day": false,
-        "night": true,
-        "dawn": true,
-        "dusk": true
-      },
-      "description": "ذئب صحراوي شرس يعيش في مجموعات، يفضل الصيد ليلاً ويدافع بشراسة عن أراضيه",
-      "descriptionEn": "A fierce desert wolf that lives in packs, prefers hunting at night and aggressively defends its territory",
-      "modelPath": "assets/images/monsters/beasts/desert_wolf.png",
-      "iconPath": "assets/images/ui/icons/monsters/desert_wolf_icon.png",
-      "soundEffects": {
-        "attack": "assets/audio/sfx/monsters/wolf_attack.mp3",
-        "hurt": "assets/audio/sfx/monsters/wolf_hurt.mp3",
-        "death": "assets/audio/sfx/monsters/wolf_death.mp3",
-        "idle": "assets/audio/sfx/monsters/wolf_idle.mp3"
-      },
-      "animations": {
-        "idle": "assets/animations/monsters/wolf/idle.json",
-        "walk": "assets/animations/monsters/wolf/walk.json",
-        "run": "assets/animations/monsters/wolf/run.json",
-        "attack": "assets/animations/monsters/wolf/attack.json",
-        "hurt": "assets/animations/monsters/wolf/hurt.json",
-        "death": "assets/animations/monsters/wolf/death.json"
-      }
-    },
-    {
-      "id": "scorpion_1",
-      "name": "عقرب الصحراء العملاق",
-      "nameEn": "Giant Desert Scorpion",
-      "type": "insect",
-      "level": 15,
-      "stats": {
-        "health": 450,
-        "attack": 60,
-        "defense": 40,
-        "speed": 5,
-        "aggressiveness": 8
-      },
-      "behaviors": ["ambush", "territorial", "nocturnal"],
-      "drops": [
-        {
-          "itemId": "scorpion_stinger",
-          "chance": 0.6,
-          "minQuantity": 1,
-          "maxQuantity": 1
-        },
-        {
-          "itemId": "scorpion_shell",
-          "chance": 0.5,
-          "minQuantity": 1,
-          "maxQuantity": 3
-        },
-        {
-          "itemId": "poison_sac",
-          "chance": 0.3,
-          "minQuantity": 1,
-          "maxQuantity": 2
-        },
-        {
-          "itemId": "gold_coin",
-          "chance": 1.0,
-          "minQuantity": 10,
-          "maxQuantity": 25
-        }
-      ],
-      "experience": 80,
-      "abilities": [
-        {
-          "name": "لدغة سامة",
-          "nameEn": "Venomous Sting",
-          "damage": 40,
-          "poisonDamage": 10,
-          "poisonDuration": 5,
-          "cooldown": 8,
-          "range": 1,
-          "effectType": "poison",
-          "animation": "assets/animations/monsters/scorpion/sting.json"
-        },
-        {
-          "name": "قرصة",
-          "nameEn": "Pincer Grab",
-          "damage": 30,
-          "stunDuration": 2,
-          "cooldown": 12,
-          "range": 1,
-          "effectType": "physical",
-          "animation": "assets/animations/monsters/scorpion/pincer.json"
-        }
-      ],
-      "spawnAreas": ["desert", "desert_caves"],
-      "spawnTime": {
-        "day": false,
-        "night": true,
-        "dawn": false,
-        "dusk": true
-      },
-      "description": "عقرب صحراوي ضخم ذو لدغة سامة قاتلة، يفضل الاختباء تحت الرمال والهجوم المفاجئ على فرائسه",
-      "descriptionEn": "A huge desert scorpion with a deadly venomous sting, prefers hiding under the sand and ambushing its prey",
-      "modelPath": "assets/images/monsters/insects/giant_scorpion.png",
-      "iconPath": "assets/images/ui/icons/monsters/giant_scorpion_icon.png",
-      "soundEffects": {
-        "attack": "assets/audio/sfx/monsters/scorpion_attack.mp3",
-        "hurt": "assets/audio/sfx/monsters/scorpion_hurt.mp3",
-        "death": "assets/audio/sfx/monsters/scorpion_death.mp3",
-        "idle": "assets/audio/sfx/monsters/scorpion_idle.mp3"
-      },
-      "animations": {
-        "idle": "assets/animations/monsters/scorpion/idle.json",
-        "walk": "assets/animations/monsters/scorpion/walk.json",
-        "burrow": "assets/animations/monsters/scorpion/burrow.json",
-        "emerge": "assets/animations/monsters/scorpion/emerge.json",
-        "attack": "assets/animations/monsters/scorpion/attack.json",
-        "hurt": "assets/animations/monsters/scorpion/hurt.json",
-        "death": "assets/animations/monsters/scorpion/death.json"
-      }
-    },
-    {
-      "id": "djinn_1",
-      "name": "جني الصحراء",
-      "nameEn": "Desert Djinn",
-      "type": "magical",
-      "level": 30,
-      "stats": {
-        "health": 800,
-        "attack": 100,
-        "magicAttack": 150,
-        "defense": 60,
-        "magicDefense": 120,
-        "speed": 7,
-        "aggressiveness": 6
-      },
-      "behaviors": ["magical", "intelligent", "territorial"],
-      "drops": [
-        {
-          "itemId": "djinn_essence",
-          "chance": 0.4,
-          "minQuantity": 1,
-          "maxQuantity": 2
-        },
-        {
-          "itemId": "magical_dust",
-          "chance": 0.7,
-          "minQuantity": 2,
-          "maxQuantity": 5
-        },
-        {
-          "itemId": "djinn_lamp",
-          "chance": 0.05,
-          "minQuantity": 1,
-          "maxQuantity": 1
-        },
-        {
-          "itemId": "gold_coin",
-          "chance": 1.0,
-          "minQuantity": 50,
-          "maxQuantity": 100
-        }
-      ],
-      "experience": 200,
-      "abilities": [
-        {
-          "name": "عاصفة رملية",
-          "nameEn": "Sandstorm",
-          "damage": 80,
-          "areaOfEffect": 5,
-          "blindDuration": 3,
-          "cooldown": 15,
-          "range": 8,
-          "effectType": "magical",
-          "animation": "assets/animations/monsters/djinn/sandstorm.json",
-          "particleEffect": "sand"
-        },
-        {
-          "name": "نار الجن",
-          "nameEn": "Djinn Fire",
-          "damage": 120,
-          "burnDamage": 20,
-          "burnDuration": 4,
-          "cooldown": 10,
-          "range": 6,
-          "effectType": "fire",
-          "animation": "assets/animations/monsters/djinn/fire.json",
-          "particleEffect": "blue_fire"
-        },
-        {
-          "name": "تحول",
-          "nameEn": "Transformation",
-          "effect": "transform",
-          "transformDuration": 8,
-          "cooldown": 25,
-          "animation": "assets/animations/monsters/djinn/transform.json"
-        }
-      ],
-      "spawnAreas": ["ancient_ruins", "forgotten_temple", "magical_oasis"],
-      "spawnTime": {
-        "day": true,
-        "night": true,
-        "dawn": true,
-        "dusk": true
-      },
-      "description": "كائن سحري قوي يسكن الصحراء، يستطيع التحكم بالرمال والنار والتحول إلى أشكال مختلفة",
-      "descriptionEn": "A powerful magical being inhabiting the desert, able to control sand and fire and transform into different forms",
-      "modelPath": "assets/images/monsters/magical/desert_djinn.png",
-      "iconPath": "assets/images/ui/icons/monsters/desert_djinn_icon.png",
-      "soundEffects": {
-        "attack": "assets/audio/sfx/monsters/djinn_attack.mp3",
-        "hurt": "assets/audio/sfx/monsters/djinn_hurt.mp3",
-        "death": "assets/audio/sfx/monsters/djinn_death.mp3",
-        "idle": "assets/audio/sfx/monsters/djinn_idle.mp3",
-        "laugh": "assets/audio/sfx/monsters/djinn_laugh.mp3",
-        "spell": "assets/audio/sfx/monsters/djinn_spell.mp3"
-      },
-      "animations": {
-        "idle": "assets/animations/monsters/djinn/idle.json",
-        "float": "assets/animations/monsters/djinn/float.json",
-        "attack": "assets/animations/monsters/djinn/attack.json",
-        "spell": "assets/animations/monsters/djinn/spell.json",
-        "hurt": "assets/animations/monsters/djinn/hurt.json",
-        "death": "assets/animations/monsters/djinn/death.json"
-      },
-      "glowEffect": {
-        "color": "#00bfff",
-        "intensity": 0.8,
-        "pulseRate": 1.5,
-        "particleEffect": "magic"
-      }
-    },
-    {
-      "id": "mummy_1",
-      "name": "مومياء فرعونية",
-      "nameEn": "Pharaonic Mummy",
-      "type": "undead",
-      "level": 25,
-      "stats": {
-        "health": 650,
-        "attack": 85,
-        "defense": 70,
-        "speed": 4,
-        "aggressiveness": 9
-      },
-      "behaviors": ["undead", "aggressive", "curse"],
-      "drops": [
-        {
-          "itemId": "ancient_bandage",
-          "chance": 0.8,
-          "minQuantity": 2,
-          "maxQuantity": 5
-        },
-        {
-          "itemId": "mummy_dust",
-          "chance": 0.6,
-          "minQuantity": 1,
-          "maxQuantity": 3
-        },
-        {
-          "itemId": "pharaoh_amulet",
-          "chance": 0.1,
-          "minQuantity": 1,
-          "maxQuantity": 1
-        },
-        {
-          "itemId": "gold_coin",
-          "chance": 1.0,
-          "minQuantity": 30,
-          "maxQuantity": 60
-        }
-      ],
-      "experience": 150,
-      "abilities": [
-        {
-          "name": "لعنة الفراعنة",
-          "nameEn": "Pharaoh's Curse",
-          "effect": "curse",
-          "statReduction": 20,
-          "curseDuration": 10,
-          "cooldown": 20,
-          "range": 5,
-          "animation": "assets/animations/monsters/mummy/curse.json"
-        },
-        {
-          "name": "ضربة الموت",
-          "nameEn": "Death Strike",
-          "damage": 100,
-          "lifeSteal": 30,
-          "cooldown": 12,
-          "range": 1,
-          "effectType": "necrotic",
-          "animation": "assets/animations/monsters/mummy/death_strike.json"
-        },
-        {
-          "name": "استدعاء الخنافس",
-          "nameEn": "Summon Scarabs",
-          "summonType": "scarab",
-          "summonCount": 5,
-          "summonDuration": 15,
-          "cooldown": 25,
-          "animation": "assets/animations/monsters/mummy/summon.json"
-        }
-      ],
-      "spawnAreas": ["ancient_tomb", "pyramid", "burial_chamber"],
-      "spawnTime": {
-        "day": true,
-        "night": true,
-        "dawn": true,
-        "dusk": true
-      },
-      "description": "جثة محنطة لفرعون قديم عادت للحياة بقوى سحرية شريرة، تحمل لعنة قوية وتحرس كنوز المقبرة",
-      "descriptionEn": "The embalmed corpse of an ancient pharaoh brought back to life by evil magical powers, carrying a powerful curse and guarding the tomb's treasures",
-      "modelPath": "assets/images/monsters/undead/pharaonic_mummy.png",
-      "iconPath": "assets/images/ui/icons/monsters/pharaonic_mummy_icon.png",
-      "soundEffects": {
-        "attack": "assets/audio/sfx/monsters/mummy_attack.mp3",
-        "hurt": "assets/audio/sfx/monsters/mummy_hurt.mp3",
-        "death": "assets/audio/sfx/monsters/mummy_death.mp3",
-        "idle": "assets/audio/sfx/monsters/mummy_idle.mp3",
-        "curse": "assets/audio/sfx/monsters/mummy_curse.mp3"
-      },
-      "animations": {
-        "idle": "assets/animations/monsters/mummy/idle.json",
-        "walk": "assets/animations/monsters/mummy/walk.json",
-        "attack": "assets/animations/monsters/mummy/attack.json",
-        "hurt": "assets/animations/monsters/mummy/hurt.json",
-        "death": "assets/animations/monsters/mummy/death.json",
-        "resurrect": "assets/animations/monsters/mummy/resurrect.json"
-      },
-      "glowEffect": {
-        "color": "#2ecc71",
-        "intensity": 0.6,
-        "pulseRate": 1.2,
-        "particleEffect": "curse"
-      }
-    },
-    {
-      "id": "dragon_1",
-      "name": "تنين الصحراء",
-      "nameEn": "Desert Dragon",
-      "type": "dragon",
-      "level": 50,
-      "isBoss": true,
-      "stats": {
-        "health": 5000,
-        "attack": 250,
-        "magicAttack": 200,
-        "defense": 180,
-        "magicDefense": 150,
-        "speed": 9,
-        "aggressiveness": 10
-      },
-      "behaviors": ["boss", "territorial", "flying"],
-      "drops": [
-        {
-          "itemId": "dragon_scale",
-          "chance": 0.9,
-          "minQuantity": 5,
-          "maxQuantity": 10
-        },
-        {
-          "itemId": "dragon_tooth",
-          "chance": 0.7,
-          "minQuantity": 2,
-          "maxQuantity": 5
-        },
-        {
-          "itemId": "dragon_heart",
-          "chance": 0.3,
-          "minQuantity": 1,
-          "maxQuantity": 1
-        },
-        {
-          "itemId": "dragon_blood",
-          "chance": 0.5,
-          "minQuantity": 3,
-          "maxQuantity": 6
-        },
-        {
-          "itemId": "gold_coin",
-          "chance": 1.0,
-          "minQuantity": 500,
-          "maxQuantity": 1000
-        },
-        {
-          "itemId": "dragon_treasure_chest",
-          "chance": 1.0,
-          "minQuantity": 1,
-          "maxQuantity": 1
-        }
-      ],
-      "experience": 1000,
-      "abilities": [
-        {
-          "name": "نفس النار",
-          "nameEn": "Fire Breath",
-          "damage": 300,
-          "burnDamage": 50,
-          "burnDuration": 5,
-          "areaOfEffect": 8,
-          "cooldown": 15,
-          "range": 10,
-          "effectType": "fire",
-          "animation": "assets/animations/monsters/dragon/fire_breath.json",
-          "particleEffect": "dragon_fire"
-        },
-        {
-          "name": "ضربة الذيل",
-          "nameEn": "Tail Swipe",
-          "damage": 200,
-          "knockbackDistance": 5,
-          "stunDuration": 2,
-          "areaOfEffect": 6,
-          "cooldown": 10,
-          "range": 5,
-          "effectType": "physical",
-          "animation": "assets/animations/monsters/dragon/tail_swipe.json"
-        },
-        {
-          "name": "زئير مرعب",
-          "nameEn": "Terrifying Roar",
-          "effect": "fear",
-          "fearDuration": 4,
-          "statReduction": 30,
-          "areaOfEffect": 15,
-          "cooldown": 25,
-          "animation": "assets/animations/monsters/dragon/roar.json",
-          "soundEffect": "assets/audio/sfx/monsters/dragon_roar.mp3"
-        },
-        {
-          "name": "طيران",
-          "nameEn": "Flight",
-          "effect": "movement",
-          "invulnerableDuration": 5,
-          "cooldown": 30,
-          "animation": "assets/animations/monsters/dragon/flight.json"
-        },
-        {
-          "name": "هجوم انقضاضي",
-          "nameEn": "Diving Attack",
-          "damage": 350,
-          "areaOfEffect": 4,
-          "cooldown": 20,
-          "effectType": "physical",
-          "animation": "assets/animations/monsters/dragon/dive.json"
-        }
-      ],
-      "phases": [
-        {
-          "healthThreshold": 100,
-          "name": "طور البداية",
-          "nameEn": "Initial Phase",
-          "description": "التنين يقاتل على الأرض ويستخدم هجمات بسيطة",
-          "descriptionEn": "The dragon fights on the ground using simple attacks"
-        },
-        {
-          "healthThreshold": 70,
-          "name": "طور الغضب",
-          "nameEn": "Rage Phase",
-          "description": "التنين يزداد غضباً ويستخدم هجمات أقوى وأكثر تكراراً",
-          "descriptionEn": "The dragon becomes enraged and uses stronger, more frequent attacks"
-        },
-        {
-          "healthThreshold": 40,
-          "name": "طور الطيران",
-          "nameEn": "Flight Phase",
-          "description": "التنين يطير في السماء ويهاجم من الأعلى، يصعب استهدافه بالأسلحة القريبة",
-          "descriptionEn": "The dragon takes to the sky and attacks from above, becoming difficult to target with melee weapons"
-        },
-        {
-          "healthThreshold": 15,
-          "name": "طور اليأس",
-          "nameEn": "Desperation Phase",
-          "description": "التنين يستخدم كل قواه في محاولة أخيرة للبقاء، هجماته تصبح أكثر عشوائية وتدميراً",
-          "descriptionEn": "The dragon uses all its power in a last attempt to survive, its attacks become more chaotic and destructive"
-        }
-      ],
-      "spawnAreas": ["dragon_lair", "ancient_volcano"],
-      "spawnTime": {
-        "day": true,
-        "night": true,
-        "dawn": true,
-        "dusk": true
-      },
-      "respawnTime": 86400,
-      "description": "تنين ضخم يسكن الصحراء، جلده مغطى بحراشف ذهبية تعكس حرارة الشمس، نفسه الناري قادر على تحويل الرمال إلى زجاج",
-      "descriptionEn": "A massive dragon inhabiting the desert, its skin covered with golden scales that reflect the sun's heat, its fiery breath capable of turning sand into glass",
-      "modelPath": "assets/images/monsters/dragons/desert_dragon.png",
-      "iconPath": "assets/images/ui/icons/monsters/desert_dragon_icon.png",
-      "soundEffects": {
-        "attack": "assets/audio/sfx/monsters/dragon_attack.mp3",
-        "hurt": "assets/audio/sfx/monsters/dragon_hurt.mp3",
-        "death": "assets/audio/sfx/monsters/dragon_death.mp3",
-        "idle": "assets/audio/sfx/monsters/dragon_idle.mp3",
-        "roar": "assets/audio/sfx/monsters/dragon_roar.mp3",
-        "wingbeat": "assets/audio/sfx/monsters/dragon_wingbeat.mp3",
-        "firebreath": "assets/audio/sfx/monsters/dragon_firebreath.mp3"
-      },
-      "animations": {
-        "idle": "assets/animations/monsters/dragon/idle.json",
-        "walk": "assets/animations/monsters/dragon/walk.json",
-        "fly": "assets/animations/monsters/dragon/fly.json",
-        "attack": "assets/animations/monsters/dragon/attack.json",
-        "hurt": "assets/animations/monsters/dragon/hurt.json",
-        "death": "assets/animations/monsters/dragon/death.json",
-        "takeoff": "assets/animations/monsters/dragon/takeoff.json",
-        "landing": "assets/animations/monsters/dragon/landing.json"
-      },
-      "glowEffect": {
-        "color": "#e67e22",
-        "intensity": 1.0,
-        "pulseRate": 1.5,
-        "particleEffect": "ember"
-      }
-    }
-  ]
-}
+[
+  {
+    "id": "monster_1",
+    "name": "ذئب بري",
+    "level": 1,
+    "hp": 50,
+    "damage": 5,
+    "defense": 2,
+    "exp": 10,
+    "gold": "5-10",
+    "drops": [
+      "جلد ذئب",
+      "أنياب ذئب"
+    ],
+    "description": "ذئب بري يهاجم المسافرين"
+  },
+  {
+    "id": "monster_2",
+    "name": "قاطع طريق",
+    "level": 5,
+    "hp": 100,
+    "damage": 10,
+    "defense": 5,
+    "exp": 25,
+    "gold": "10-20",
+    "drops": [
+      "سيف صدئ",
+      "درع جلدي قديم"
+    ],
+    "description": "لص يهاجم المسافرين لسرقة أموالهم"
+  },
+  {
+    "id": "monster_3",
+    "name": "دب أسود",
+    "level": 10,
+    "hp": 200,
+    "damage": 20,
+    "defense": 10,
+    "exp": 50,
+    "gold": "20-40",
+    "drops": [
+      "فرو دب",
+      "مخالب دب"
+    ],
+    "description": "دب أسود ضخم وشرس"
+  },
+  {
+    "id": "monster_4",
+    "name": "هيكل عظمي",
+    "level": 15,
+    "hp": 150,
+    "damage": 25,
+    "defense": 8,
+    "exp": 75,
+    "gold": "30-60",
+    "drops": [
+      "عظام قديمة",
+      "خنجر صدئ"
+    ],
+    "description": "هيكل عظمي مسكون بأرواح شريرة"
+  },
+  {
+    "id": "monster_5",
+    "name": "ساحر شرير",
+    "level": 20,
+    "hp": 300,
+    "damage": 35,
+    "defense": 15,
+    "exp": 100,
+    "gold": "50-100",
+    "drops": [
+      "عصا سحرية",
+      "كتاب تعاويذ"
+    ],
+    "description": "ساحر يستخدم السحر الأسود لأغراض شريرة"
+  },
+  {
+    "id": "monster_6",
+    "name": "غول الصحراء",
+    "level": 25,
+    "hp": 400,
+    "damage": 45,
+    "defense": 20,
+    "exp": 150,
+    "gold": "70-140",
+    "drops": [
+      "مخلب غول",
+      "عين غول"
+    ],
+    "description": "مخلوق شرير يسكن الصحراء ويتغذى على لحوم البشر"
+  },
+  {
+    "id": "monster_7",
+    "name": "عفريت النار",
+    "level": 30,
+    "hp": 500,
+    "damage": 60,
+    "defense": 25,
+    "exp": 200,
+    "gold": "100-200",
+    "drops": [
+      "جوهرة النار",
+      "رماد عفريت"
+    ],
+    "description": "مخلوق ناري غاضب يحرق كل ما يقف في طريقه"
+  },
+  {
+    "id": "monster_8",
+    "name": "تنين صغير",
+    "level": 35,
+    "hp": 700,
+    "damage": 80,
+    "defense": 35,
+    "exp": 300,
+    "gold": "150-300",
+    "drops": [
+      "حراشف تنين",
+      "أنياب تنين"
+    ],
+    "description": "تنين صغير لكنه قوي وشرس"
+  },
+  {
+    "id": "monster_9",
+    "name": "جبار الجليد",
+    "level": 40,
+    "hp": 1000,
+    "damage": 100,
+    "defense": 50,
+    "exp": 400,
+    "gold": "200-400",
+    "drops": [
+      "قلب جليدي",
+      "فأس جبار"
+    ],
+    "description": "عملاق جليدي ضخم يسكن الجبال المتجمدة"
+  },
+  {
+    "id": "monster_10",
+    "name": "ملك التنانين",
+    "level": 50,
+    "hp": 5000,
+    "damage": 200,
+    "defense": 100,
+    "exp": 1000,
+    "gold": "500-1000",
+    "drops": [
+      "تاج التنين",
+      "قلب التنين",
+      "سيف التنين"
+    ],
+    "description": "ملك التنانين القديم، أقوى المخلوقات في المملكة"
+  }
+]

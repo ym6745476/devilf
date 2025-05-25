@@ -1,0 +1,460 @@
+{
+  "weapons": [
+    {
+      "id": "weapon_001",
+      "name": "سيف المبتدئ",
+      "type": "sword",
+      "rarity": "common",
+      "level": 1,
+      "damage": 5,
+      "attackSpeed": 1.2,
+      "attributes": {
+        "strength": 2,
+        "criticalChance": 0.03
+      },
+      "sockets": 0,
+      "description": "سيف بسيط مناسب للمبتدئين في فنون القتال.",
+      "sellPrice": 10,
+      "buyPrice": 50,
+      "requiredLevel": 1,
+      "requiredClass": ["warrior", "assassin"],
+      "visualEffects": {
+        "glow": false,
+        "trail": false
+      },
+      "dropRate": 0.1,
+      "dropFrom": ["wolf", "bandit"]
+    },
+    {
+      "id": "weapon_002",
+      "name": "عصا المتعلم",
+      "type": "staff",
+      "rarity": "common",
+      "level": 1,
+      "damage": 3,
+      "attackSpeed": 1.0,
+      "attributes": {
+        "intelligence": 3,
+        "manaRegen": 1
+      },
+      "sockets": 0,
+      "description": "عصا خشبية بسيطة تساعد المبتدئين على تركيز قواهم السحرية.",
+      "sellPrice": 10,
+      "buyPrice": 50,
+      "requiredLevel": 1,
+      "requiredClass": ["mage"],
+      "visualEffects": {
+        "glow": false,
+        "trail": false
+      },
+      "dropRate": 0.1,
+      "dropFrom": ["wolf", "bandit"]
+    },
+    {
+      "id": "weapon_003",
+      "name": "قوس الصياد",
+      "type": "bow",
+      "rarity": "common",
+      "level": 1,
+      "damage": 4,
+      "attackSpeed": 1.5,
+      "attributes": {
+        "agility": 2,
+        "range": 300
+      },
+      "sockets": 0,
+      "description": "قوس خشبي بسيط يستخدمه الصيادون المبتدئون.",
+      "sellPrice": 10,
+      "buyPrice": 50,
+      "requiredLevel": 1,
+      "requiredClass": ["archer"],
+      "visualEffects": {
+        "glow": false,
+        "trail": false
+      },
+      "dropRate": 0.1,
+      "dropFrom": ["wolf", "bandit"]
+    },
+    {
+      "id": "weapon_004",
+      "name": "خنجر الظل",
+      "type": "dagger",
+      "rarity": "common",
+      "level": 1,
+      "damage": 3,
+      "attackSpeed": 2.0,
+      "attributes": {
+        "agility": 3,
+        "criticalChance": 0.05
+      },
+      "sockets": 0,
+      "description": "خنجر صغير حاد يفضله المتسللون لسرعته وخفة وزنه.",
+      "sellPrice": 10,
+      "buyPrice": 50,
+      "requiredLevel": 1,
+      "requiredClass": ["assassin"],
+      "visualEffects": {
+        "glow": false,
+        "trail": false
+      },
+      "dropRate": 0.1,
+      "dropFrom": ["wolf", "bandit"]
+    },
+    {
+      "id": "weapon_005",
+      "name": "سيف الفارس",
+      "type": "sword",
+      "rarity": "uncommon",
+      "level": 5,
+      "damage": 12,
+      "attackSpeed": 1.3,
+      "attributes": {
+        "strength": 5,
+        "vitality": 3,
+        "criticalChance": 0.05
+      },
+      "sockets": 1,
+      "description": "سيف متين صنعه حدادو المملكة للفرسان المخلصين.",
+      "sellPrice": 100,
+      "buyPrice": 500,
+      "requiredLevel": 5,
+      "requiredClass": ["warrior"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#3498db",
+        "trail": false
+      },
+      "dropRate": 0.05,
+      "dropFrom": ["bandit_leader", "forest_wolf"]
+    },
+    {
+      "id": "weapon_006",
+      "name": "عصا النار",
+      "type": "staff",
+      "rarity": "uncommon",
+      "level": 5,
+      "damage": 8,
+      "attackSpeed": 1.1,
+      "attributes": {
+        "intelligence": 7,
+        "manaRegen": 2,
+        "fireSpellBoost": 0.1
+      },
+      "sockets": 1,
+      "description": "عصا مطعمة بحجر ناري يزيد من قوة السحر الناري.",
+      "sellPrice": 100,
+      "buyPrice": 500,
+      "requiredLevel": 5,
+      "requiredClass": ["mage"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#e74c3c",
+        "trail": false
+      },
+      "dropRate": 0.05,
+      "dropFrom": ["fire_elemental", "bandit_mage"]
+    },
+    {
+      "id": "weapon_007",
+      "name": "قوس الرياح",
+      "type": "bow",
+      "rarity": "uncommon",
+      "level": 5,
+      "damage": 10,
+      "attackSpeed": 1.7,
+      "attributes": {
+        "agility": 6,
+        "range": 350,
+        "criticalChance": 0.07
+      },
+      "sockets": 1,
+      "description": "قوس مصنوع من خشب الأشجار العتيقة ويمنح السهام سرعة إضافية.",
+      "sellPrice": 100,
+      "buyPrice": 500,
+      "requiredLevel": 5,
+      "requiredClass": ["archer"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#2ecc71",
+        "trail": false
+      },
+      "dropRate": 0.05,
+      "dropFrom": ["forest_guardian", "bandit_archer"]
+    },
+    {
+      "id": "weapon_008",
+      "name": "خناجر التوأم",
+      "type": "dual_daggers",
+      "rarity": "uncommon",
+      "level": 5,
+      "damage": 7,
+      "attackSpeed": 2.2,
+      "attributes": {
+        "agility": 8,
+        "criticalChance": 0.1,
+        "dodgeChance": 0.03
+      },
+      "sockets": 1,
+      "description": "زوج من الخناجر المتطابقة التي تمنح حاملها سرعة هجوم مضاعفة.",
+      "sellPrice": 100,
+      "buyPrice": 500,
+      "requiredLevel": 5,
+      "requiredClass": ["assassin"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#9b59b6",
+        "trail": false
+      },
+      "dropRate": 0.05,
+      "dropFrom": ["shadow_stalker", "bandit_rogue"]
+    },
+    {
+      "id": "weapon_009",
+      "name": "سيف الفاتح",
+      "type": "sword",
+      "rarity": "rare",
+      "level": 15,
+      "damage": 25,
+      "attackSpeed": 1.4,
+      "attributes": {
+        "strength": 12,
+        "vitality": 8,
+        "criticalChance": 0.08,
+        "criticalDamage": 1.5
+      },
+      "sockets": 2,
+      "description": "سيف أسطوري استخدمه الفاتح العظيم في معاركه ضد الظلام.",
+      "sellPrice": 500,
+      "buyPrice": 2500,
+      "requiredLevel": 15,
+      "requiredClass": ["warrior"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#f1c40f",
+        "trail": true,
+        "trailColor": "#f39c12"
+      },
+      "dropRate": 0.01,
+      "dropFrom": ["dungeon_boss", "ancient_guardian"]
+    },
+    {
+      "id": "weapon_010",
+      "name": "عصا الأركان",
+      "type": "staff",
+      "rarity": "rare",
+      "level": 15,
+      "damage": 18,
+      "attackSpeed": 1.2,
+      "attributes": {
+        "intelligence": 15,
+        "manaRegen": 5,
+        "spellPower": 0.15,
+        "allElementalBoost": 0.1
+      },
+      "sockets": 2,
+      "description": "عصا قديمة تحتوي على أحجار الأركان الأربعة وتمنح قوة سحرية هائلة.",
+      "sellPrice": 500,
+      "buyPrice": 2500,
+      "requiredLevel": 15,
+      "requiredClass": ["mage"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#1abc9c",
+        "trail": true,
+        "trailColor": "#16a085"
+      },
+      "dropRate": 0.01,
+      "dropFrom": ["arcane_elemental", "ancient_mage"]
+    },
+    {
+      "id": "weapon_011",
+      "name": "قوس النسر",
+      "type": "bow",
+      "rarity": "rare",
+      "level": 15,
+      "damage": 22,
+      "attackSpeed": 1.8,
+      "attributes": {
+        "agility": 14,
+        "range": 400,
+        "criticalChance": 0.12,
+        "criticalDamage": 1.7,
+        "penetration": 0.1
+      },
+      "sockets": 2,
+      "description": "قوس مصنوع من عظام النسر الذهبي ويمنح دقة استثنائية وقوة اختراق.",
+      "sellPrice": 500,
+      "buyPrice": 2500,
+      "requiredLevel": 15,
+      "requiredClass": ["archer"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#e67e22",
+        "trail": true,
+        "trailColor": "#d35400"
+      },
+      "dropRate": 0.01,
+      "dropFrom": ["eagle_guardian", "forest_ancient"]
+    },
+    {
+      "id": "weapon_012",
+      "name": "مخالب الظلام",
+      "type": "claw",
+      "rarity": "rare",
+      "level": 15,
+      "damage": 20,
+      "attackSpeed": 2.5,
+      "attributes": {
+        "agility": 18,
+        "criticalChance": 0.15,
+        "criticalDamage": 1.8,
+        "dodgeChance": 0.07,
+        "poisonChance": 0.1
+      },
+      "sockets": 2,
+      "description": "مخالب سوداء تلبس على اليدين وتمنح سرعة هجوم خارقة وفرصة تسميم الأعداء.",
+      "sellPrice": 500,
+      "buyPrice": 2500,
+      "requiredLevel": 15,
+      "requiredClass": ["assassin"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#8e44ad",
+        "trail": true,
+        "trailColor": "#9b59b6"
+      },
+      "dropRate": 0.01,
+      "dropFrom": ["shadow_lord", "poison_master"]
+    },
+    {
+      "id": "weapon_013",
+      "name": "ذو الفقار",
+      "type": "legendary_sword",
+      "rarity": "legendary",
+      "level": 30,
+      "damage": 50,
+      "attackSpeed": 1.5,
+      "attributes": {
+        "strength": 25,
+        "vitality": 20,
+        "intelligence": 10,
+        "criticalChance": 0.15,
+        "criticalDamage": 2.0,
+        "holyDamage": 0.2
+      },
+      "sockets": 3,
+      "description": "السيف الأسطوري ذو الفقار، لا يوجد سيف أقوى منه ويقال أنه يمتلك روحاً خاصة به.",
+      "sellPrice": 5000,
+      "buyPrice": 25000,
+      "requiredLevel": 30,
+      "requiredClass": ["warrior"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#f1c40f",
+        "trail": true,
+        "trailColor": "#ffffff",
+        "specialEffect": "holy_aura"
+      },
+      "dropRate": 0.001,
+      "dropFrom": ["ancient_king", "final_boss"]
+    },
+    {
+      "id": "weapon_014",
+      "name": "عصا الحكيم",
+      "type": "legendary_staff",
+      "rarity": "legendary",
+      "level": 30,
+      "damage": 40,
+      "attackSpeed": 1.3,
+      "attributes": {
+        "intelligence": 30,
+        "wisdom": 20,
+        "manaRegen": 10,
+        "spellPower": 0.3,
+        "cooldownReduction": 0.15,
+        "allElementalBoost": 0.2
+      },
+      "sockets": 3,
+      "description": "عصا الحكيم الأسطورية التي تحتوي على معرفة الكون وأسرار السحر القديم.",
+      "sellPrice": 5000,
+      "buyPrice": 25000,
+      "requiredLevel": 30,
+      "requiredClass": ["mage"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#3498db",
+        "trail": true,
+        "trailColor": "#ffffff",
+        "specialEffect": "arcane_orbs"
+      },
+      "dropRate": 0.001,
+      "dropFrom": ["ancient_wizard", "final_boss"]
+    },
+    {
+      "id": "weapon_015",
+      "name": "قوس الريح العاتية",
+      "type": "legendary_bow",
+      "rarity": "legendary",
+      "level": 30,
+      "damage": 45,
+      "attackSpeed": 2.0,
+      "attributes": {
+        "agility": 30,
+        "dexterity": 20,
+        "range": 500,
+        "criticalChance": 0.2,
+        "criticalDamage": 2.2,
+        "penetration": 0.25,
+        "multishot": 0.15
+      },
+      "sockets": 3,
+      "description": "قوس أسطوري يقال أنه صنع من ريش طائر العنقاء ويمنح أسهمه قوة الرياح العاتية.",
+      "sellPrice": 5000,
+      "buyPrice": 25000,
+      "requiredLevel": 30,
+      "requiredClass": ["archer"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#2ecc71",
+        "trail": true,
+        "trailColor": "#ffffff",
+        "specialEffect": "wind_arrows"
+      },
+      "dropRate": 0.001,
+      "dropFrom": ["ancient_hunter", "final_boss"]
+    },
+    {
+      "id": "weapon_016",
+      "name": "خناجر الفناء",
+      "type": "legendary_daggers",
+      "rarity": "legendary",
+      "level": 30,
+      "damage": 35,
+      "attackSpeed": 3.0,
+      "attributes": {
+        "agility": 35,
+        "dexterity": 25,
+        "criticalChance": 0.25,
+        "criticalDamage": 2.5,
+        "dodgeChance": 0.15,
+        "poisonChance": 0.2,
+        "bleedChance": 0.2
+      },
+      "sockets": 3,
+      "description": "زوج من الخناجر الأسطورية التي تقطع الروح قبل الجسد وتترك جروحاً لا تلتئم.",
+      "sellPrice": 5000,
+      "buyPrice": 25000,
+      "requiredLevel": 30,
+      "requiredClass": ["assassin"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#9b59b6",
+        "trail": true,
+        "trailColor": "#ffffff",
+        "specialEffect": "shadow_strike"
+      },
+      "dropRate": 0.001,
+      "dropFrom": ["shadow_master", "final_boss"]
+    }
+  ]
+}

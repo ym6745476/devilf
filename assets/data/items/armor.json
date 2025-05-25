@@ -1,284 +1,266 @@
 {
-  "armor": [
+  "helmets": [
     {
       "id": "helmet_1",
-      "name": "خوذة الفاتح",
-      "nameEn": "Conqueror's Helmet",
-      "type": "helmet",
+      "name": "خوذة جلدية",
+      "level": 1,
+      "defense": 3,
+      "rarity": "common",
+      "effects": [],
+      "description": "خوذة بسيطة من الجلد",
+      "price": 30
+    },
+    {
+      "id": "helmet_2",
+      "name": "خوذة حديدية",
+      "level": 10,
+      "defense": 8,
+      "rarity": "uncommon",
+      "effects": [
+        "تزيد الصحة بنسبة 5%"
+      ],
+      "description": "خوذة متوسطة القوة من الحديد",
+      "price": 120
+    },
+    {
+      "id": "helmet_3",
+      "name": "خوذة فولاذية",
+      "level": 20,
+      "defense": 15,
+      "rarity": "rare",
+      "effects": [
+        "تزيد الصحة بنسبة 10%",
+        "مقاومة للسحر بنسبة 5%"
+      ],
+      "description": "خوذة قوية من الفولاذ",
+      "price": 300
+    },
+    {
+      "id": "helmet_4",
+      "name": "خوذة الفارس",
+      "level": 30,
+      "defense": 25,
       "rarity": "epic",
-      "level": 35,
-      "defense": 120,
-      "stats": {
-        "strength": 10,
-        "stamina": 15,
-        "intelligence": 5
-      },
-      "effects": {
-        "magicResistance": 8,
-        "criticalResistance": 5
-      },
-      "glowEffect": {
-        "color": "#3498db",
-        "intensity": 0.7,
-        "pulseRate": 1.2
-      },
-      "upgradeSlots": 2,
-      "description": "خوذة مصنوعة من معدن نادر، تحمي رأس مرتديها من أقوى الضربات",
-      "descriptionEn": "A helmet made from rare metal, protecting the wearer's head from the strongest blows",
-      "modelPath": "assets/images/armor/helmets/conqueror_helmet.png",
-      "iconPath": "assets/images/ui/icons/armor/conqueror_helmet_icon.png",
-      "requiredClass": ["warrior", "paladin"],
-      "dropRate": 0.04,
-      "sellPrice": 6000,
-      "buyPrice": 18000,
-      "set": "conqueror"
+      "effects": [
+        "تزيد الصحة بنسبة 15%",
+        "مقاومة للسحر بنسبة 10%",
+        "تقلل مدة التأثيرات السلبية بنسبة 10%"
+      ],
+      "description": "خوذة فاخرة تليق بالفرسان",
+      "price": 800
     },
     {
-      "id": "chestplate_1",
-      "name": "درع الفاتح",
-      "nameEn": "Conqueror's Chestplate",
-      "type": "chestplate",
-      "rarity": "epic",
-      "level": 35,
-      "defense": 180,
-      "stats": {
-        "strength": 15,
-        "stamina": 25,
-        "intelligence": 8
-      },
-      "effects": {
-        "magicResistance": 12,
-        "healthRegeneration": 5
-      },
-      "glowEffect": {
-        "color": "#3498db",
-        "intensity": 0.8,
-        "pulseRate": 1.2
-      },
-      "upgradeSlots": 3,
-      "description": "درع قوي يحمي صدر المحارب، مزين بنقوش تروي قصص الفتوحات العظيمة",
-      "descriptionEn": "A powerful armor protecting the warrior's chest, adorned with engravings telling stories of great conquests",
-      "modelPath": "assets/images/armor/chestplates/conqueror_chestplate.png",
-      "iconPath": "assets/images/ui/icons/armor/conqueror_chestplate_icon.png",
-      "requiredClass": ["warrior", "paladin"],
-      "dropRate": 0.03,
-      "sellPrice": 10000,
-      "buyPrice": 30000,
-      "set": "conqueror"
-    },
-    {
-      "id": "leggings_1",
-      "name": "سروال الفاتح",
-      "nameEn": "Conqueror's Leggings",
-      "type": "leggings",
-      "rarity": "epic",
-      "level": 35,
-      "defense": 150,
-      "stats": {
-        "strength": 12,
-        "stamina": 20,
-        "agility": 10
-      },
-      "effects": {
-        "movementSpeed": 5,
-        "physicalResistance": 10
-      },
-      "glowEffect": {
-        "color": "#3498db",
-        "intensity": 0.7,
-        "pulseRate": 1.2
-      },
-      "upgradeSlots": 2,
-      "description": "سروال محارب قوي يوفر حماية ممتازة مع الحفاظ على خفة الحركة",
-      "descriptionEn": "Powerful warrior leggings providing excellent protection while maintaining mobility",
-      "modelPath": "assets/images/armor/leggings/conqueror_leggings.png",
-      "iconPath": "assets/images/ui/icons/armor/conqueror_leggings_icon.png",
-      "requiredClass": ["warrior", "paladin"],
-      "dropRate": 0.035,
-      "sellPrice": 8000,
-      "buyPrice": 24000,
-      "set": "conqueror"
-    },
-    {
-      "id": "boots_1",
-      "name": "حذاء الفاتح",
-      "nameEn": "Conqueror's Boots",
-      "type": "boots",
-      "rarity": "epic",
-      "level": 35,
-      "defense": 100,
-      "stats": {
-        "strength": 8,
-        "stamina": 12,
-        "agility": 15
-      },
-      "effects": {
-        "movementSpeed": 8,
-        "jumpHeight": 5
-      },
-      "glowEffect": {
-        "color": "#3498db",
-        "intensity": 0.7,
-        "pulseRate": 1.2
-      },
-      "upgradeSlots": 2,
-      "description": "حذاء قوي يمنح المحارب سرعة وثبات في أرض المعركة",
-      "descriptionEn": "Powerful boots giving the warrior speed and stability on the battlefield",
-      "modelPath": "assets/images/armor/boots/conqueror_boots.png",
-      "iconPath": "assets/images/ui/icons/armor/conqueror_boots_icon.png",
-      "requiredClass": ["warrior", "paladin"],
-      "dropRate": 0.04,
-      "sellPrice": 7000,
-      "buyPrice": 21000,
-      "set": "conqueror"
-    },
-    {
-      "id": "robe_1",
-      "name": "عباءة النار الأبدية",
-      "nameEn": "Eternal Fire Robe",
-      "type": "robe",
-      "rarity": "mythic",
-      "level": 45,
-      "defense": 130,
-      "stats": {
-        "intelligence": 35,
-        "wisdom": 30,
-        "manaRegeneration": 15
-      },
-      "effects": {
-        "spellPower": 20,
-        "cooldownReduction": 10,
-        "fireResistance": 25
-      },
-      "glowEffect": {
-        "color": "#e74c3c",
-        "intensity": 1.0,
-        "pulseRate": 1.8,
-        "particleEffect": "fire"
-      },
-      "upgradeSlots": 4,
-      "description": "عباءة أسطورية تتوهج بنيران لا تنطفئ، تزيد من قوة السحر وتحمي مرتديها من الحريق",
-      "descriptionEn": "A mythical robe glowing with unquenchable fire, increasing magical power and protecting its wearer from fire",
-      "modelPath": "assets/images/armor/robes/eternal_fire_robe.png",
-      "iconPath": "assets/images/ui/icons/armor/eternal_fire_robe_icon.png",
-      "requiredClass": ["mage", "wizard"],
-      "dropRate": 0.008,
-      "sellPrice": 20000,
-      "buyPrice": 60000,
-      "set": "eternal_fire"
-    },
-    {
-      "id": "hood_1",
-      "name": "قلنسوة الظل",
-      "nameEn": "Shadow Hood",
-      "type": "hood",
-      "rarity": "legendary",
+      "id": "helmet_5",
+      "name": "تاج الملك",
       "level": 40,
-      "defense": 90,
-      "stats": {
-        "agility": 25,
-        "dexterity": 20,
-        "perception": 15
-      },
-      "effects": {
-        "stealth": 15,
-        "criticalChance": 8,
-        "detectionRange": 20
-      },
-      "glowEffect": {
-        "color": "#8e44ad",
-        "intensity": 0.6,
-        "pulseRate": 1.5,
-        "particleEffect": "shadow"
-      },
-      "upgradeSlots": 3,
-      "description": "قلنسوة سوداء تخفي وجه مرتديها في الظلام، تمنح قدرات تسلل فائقة",
-      "descriptionEn": "A black hood hiding the wearer's face in darkness, granting superior stealth abilities",
-      "modelPath": "assets/images/armor/hoods/shadow_hood.png",
-      "iconPath": "assets/images/ui/icons/armor/shadow_hood_icon.png",
-      "requiredClass": ["assassin", "rogue"],
-      "dropRate": 0.015,
-      "sellPrice": 12000,
-      "buyPrice": 36000,
-      "set": "shadow"
+      "defense": 40,
+      "rarity": "legendary",
+      "effects": [
+        "تزيد الصحة بنسبة 20%",
+        "مقاومة للسحر بنسبة 15%",
+        "تقلل مدة التأثيرات السلبية بنسبة 20%",
+        "تزيد الرؤية بنسبة 15%"
+      ],
+      "description": "تاج ملكي يمنح حماية فائقة",
+      "price": 3000
     }
   ],
-  "armorSets": [
+  "chestplates": [
     {
-      "id": "conqueror",
-      "name": "طقم الفاتح",
-      "nameEn": "Conqueror's Set",
-      "pieces": ["helmet_1", "chestplate_1", "leggings_1", "boots_1"],
-      "setBonuses": [
-        {
-          "requiredPieces": 2,
-          "stats": {
-            "strength": 15,
-            "stamina": 20
-          },
-          "effects": {
-            "damageReduction": 5
-          }
-        },
-        {
-          "requiredPieces": 4,
-          "stats": {
-            "strength": 30,
-            "stamina": 40,
-            "healthRegeneration": 10
-          },
-          "effects": {
-            "damageReduction": 12,
-            "specialAbility": "conqueror_aura"
-          },
-          "specialAbilityDescription": "هالة الفاتح: تزيد من قوة الحلفاء القريبين بنسبة 10% وتخفض قوة الأعداء بنسبة 5%",
-          "specialAbilityDescriptionEn": "Conqueror's Aura: Increases nearby allies' strength by 10% and reduces enemies' power by 5%"
-        }
-      ]
+      "id": "chest_1",
+      "name": "صدرية جلدية",
+      "level": 1,
+      "defense": 5,
+      "rarity": "common",
+      "effects": [],
+      "description": "صدرية بسيطة من الجلد",
+      "price": 50
     },
     {
-      "id": "eternal_fire",
-      "name": "طقم النار الأبدية",
-      "nameEn": "Eternal Fire Set",
-      "pieces": ["robe_1", "staff_1"],
-      "setBonuses": [
-        {
-          "requiredPieces": 2,
-          "stats": {
-            "intelligence": 30,
-            "spellPower": 25,
-            "manaRegeneration": 20
-          },
-          "effects": {
-            "cooldownReduction": 15,
-            "specialAbility": "eternal_flame"
-          },
-          "specialAbilityDescription": "اللهب الأبدي: تحيط المستخدم بنيران تلحق 30 ضرر في الثانية للأعداء القريبين وتزيد قوة السحر بنسبة 20%",
-          "specialAbilityDescriptionEn": "Eternal Flame: Surrounds the user with flames dealing 30 damage per second to nearby enemies and increasing spell power by 20%"
-        }
-      ]
+      "id": "chest_2",
+      "name": "صدرية حديدية",
+      "level": 10,
+      "defense": 12,
+      "rarity": "uncommon",
+      "effects": [
+        "تزيد الصحة بنسبة 5%"
+      ],
+      "description": "صدرية متوسطة القوة من الحديد",
+      "price": 200
     },
     {
-      "id": "shadow",
-      "name": "طقم الظل",
-      "nameEn": "Shadow Set",
-      "pieces": ["hood_1", "dagger_1"],
-      "setBonuses": [
-        {
-          "requiredPieces": 2,
-          "stats": {
-            "agility": 25,
-            "criticalChance": 15,
-            "criticalDamage": 30
-          },
-          "effects": {
-            "stealth": 20,
-            "specialAbility": "shadow_step"
-          },
-          "specialAbilityDescription": "خطوة الظل: يمكن للمستخدم الانتقال فوراً خلف الهدف والقيام بهجوم مفاجئ يسبب 200% من الضرر الأساسي",
-          "specialAbilityDescriptionEn": "Shadow Step: Allows the user to instantly teleport behind the target and perform a surprise attack dealing 200% base damage"
-        }
-      ]
+      "id": "chest_3",
+      "name": "صدرية فولاذية",
+      "level": 20,
+      "defense": 22,
+      "rarity": "rare",
+      "effects": [
+        "تزيد الصحة بنسبة 10%",
+        "تقلل الضرر الجسدي بنسبة 5%"
+      ],
+      "description": "صدرية قوية من الفولاذ",
+      "price": 500
+    },
+    {
+      "id": "chest_4",
+      "name": "درع الفارس",
+      "level": 30,
+      "defense": 35,
+      "rarity": "epic",
+      "effects": [
+        "تزيد الصحة بنسبة 15%",
+        "تقلل الضرر الجسدي بنسبة 10%",
+        "تعكس 5% من الضرر إلى المهاجم"
+      ],
+      "description": "درع فاخر يليق بالفرسان",
+      "price": 1200
+    },
+    {
+      "id": "chest_5",
+      "name": "درع الملك",
+      "level": 40,
+      "defense": 55,
+      "rarity": "legendary",
+      "effects": [
+        "تزيد الصحة بنسبة 20%",
+        "تقلل الضرر الجسدي بنسبة 15%",
+        "تعكس 10% من الضرر إلى المهاجم",
+        "يستعيد 1% من الصحة كل 5 ثوانٍ"
+      ],
+      "description": "درع ملكي يمنح حماية فائقة",
+      "price": 5000
+    }
+  ],
+  "leggings": [
+    {
+      "id": "legs_1",
+      "name": "سروال جلدي",
+      "level": 1,
+      "defense": 3,
+      "rarity": "common",
+      "effects": [],
+      "description": "سروال بسيط من الجلد",
+      "price": 30
+    },
+    {
+      "id": "legs_2",
+      "name": "سروال حديدي",
+      "level": 10,
+      "defense": 8,
+      "rarity": "uncommon",
+      "effects": [
+        "يزيد السرعة بنسبة 5%"
+      ],
+      "description": "سروال متوسط القوة من الحديد",
+      "price": 120
+    },
+    {
+      "id": "legs_3",
+      "name": "سروال فولاذي",
+      "level": 20,
+      "defense": 15,
+      "rarity": "rare",
+      "effects": [
+        "يزيد السرعة بنسبة 10%",
+        "يقلل ضرر السقوط بنسبة 20%"
+      ],
+      "description": "سروال قوي من الفولاذ",
+      "price": 300
+    },
+    {
+      "id": "legs_4",
+      "name": "سروال الفارس",
+      "level": 30,
+      "defense": 25,
+      "rarity": "epic",
+      "effects": [
+        "يزيد السرعة بنسبة 15%",
+        "يقلل ضرر السقوط بنسبة 40%",
+        "يزيد القفز بنسبة 10%"
+      ],
+      "description": "سروال فاخر يليق بالفرسان",
+      "price": 800
+    },
+    {
+      "id": "legs_5",
+      "name": "سروال الملك",
+      "level": 40,
+      "defense": 40,
+      "rarity": "legendary",
+      "effects": [
+        "يزيد السرعة بنسبة 20%",
+        "يقلل ضرر السقوط بنسبة 60%",
+        "يزيد القفز بنسبة 20%",
+        "يقلل استهلاك الطاقة عند الجري بنسبة 15%"
+      ],
+      "description": "سروال ملكي يمنح حماية وسرعة فائقة",
+      "price": 3000
+    }
+  ],
+  "boots": [
+    {
+      "id": "boots_1",
+      "name": "حذاء جلدي",
+      "level": 1,
+      "defense": 2,
+      "rarity": "common",
+      "effects": [],
+      "description": "حذاء بسيط من الجلد",
+      "price": 20
+    },
+    {
+      "id": "boots_2",
+      "name": "حذاء حديدي",
+      "level": 10,
+      "defense": 5,
+      "rarity": "uncommon",
+      "effects": [
+        "يزيد السرعة بنسبة 5%"
+      ],
+      "description": "حذاء متوسط القوة من الحديد",
+      "price": 100
+    },
+    {
+      "id": "boots_3",
+      "name": "حذاء فولاذي",
+      "level": 20,
+      "defense": 10,
+      "rarity": "rare",
+      "effects": [
+        "يزيد السرعة بنسبة 10%",
+        "يقلل ضرر السقوط بنسبة 20%"
+      ],
+      "description": "حذاء قوي من الفولاذ",
+      "price": 250
+    },
+    {
+      "id": "boots_4",
+      "name": "حذاء الفارس",
+      "level": 30,
+      "defense": 18,
+      "rarity": "epic",
+      "effects": [
+        "يزيد السرعة بنسبة 15%",
+        "يقلل ضرر السقوط بنسبة 40%",
+        "يزيد ثبات الخطوات على الأسطح الزلقة"
+      ],
+      "description": "حذاء فاخر يليق بالفرسان",
+      "price": 700
+    },
+    {
+      "id": "boots_5",
+      "name": "حذاء الملك",
+      "level": 40,
+      "defense": 30,
+      "rarity": "legendary",
+      "effects": [
+        "يزيد السرعة بنسبة 20%",
+        "يقلل ضرر السقوط بنسبة 60%",
+        "يزيد ثبات الخطوات على الأسطح الزلقة",
+        "يتيح المشي على الماء لمدة 10 ثوانٍ كل دقيقة"
+      ],
+      "description": "حذاء ملكي يمنح سرعة وقدرات خارقة",
+      "price": 2500
     }
   ]
 }
