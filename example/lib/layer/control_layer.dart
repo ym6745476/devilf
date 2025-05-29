@@ -11,7 +11,6 @@ import 'package:example/layer/rucksack_layer.dart';
 import 'package:example/monster/monster_sprite.dart';
 import 'package:example/player/player_sprite.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import '../game_manager.dart';
 

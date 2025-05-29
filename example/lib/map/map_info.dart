@@ -1,6 +1,5 @@
 import 'package:devilf_engine/core/df_position.dart';
 import 'package:devilf_engine/core/df_rect.dart';
-import 'package:devilf_engine/util/df_astar.dart';
 
 /// 地图信息类
 class MapInfo {

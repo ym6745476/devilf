@@ -4,7 +4,6 @@ import 'package:devilf_engine/widget/df_button.dart';
 import 'package:example/item/item_info.dart';
 import 'package:example/player/player_info.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import '../game_manager.dart';
 import 'item_layer.dart';
 

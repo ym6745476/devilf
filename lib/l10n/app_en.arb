@@ -1,0 +1,16 @@
+{
+  "@@locale": "en",
+  "appTitle": "Al-Fath: Path of Revenge",
+  "welcomeMessage": "Welcome to the game!",
+  "login": "Login",
+  "logout": "Logout",
+  "autoMode": "Auto Mode",
+  "inventory": "Inventory",
+  "skills": "Skills",
+  "quests": "Quests",
+  "shop": "Shop",
+  "vip": "VIP",
+  "guild": "Guild",
+  "pvp": "PvP",
+  "events": "Events"
+}

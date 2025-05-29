@@ -1,0 +1,77 @@
+# Game Configuration
+
+# Server Settings
+server:
+  host: "localhost"
+  port: 8080
+  websocket_enabled: true
+
+# Game Settings
+game:
+  name: "Silkroad Online"
+  version: "1.0.0"
+  default_map: "lxd"
+  max_players_per_server: 1000
+  
+# Character Settings
+character:
+  starting_level: 1
+  starting_gold: 1000
+  max_level: 99
+  exp_rate: 1.0
+  
+# Combat Settings
+combat:
+  auto_attack_range: 3.0
+  auto_attack_interval: 1.5
+  skill_cooldown_default: 3.0
+  pvp_enabled: true
+  
+# VIP System
+vip:
+  levels: 6
+  benefits:
+    1:
+      exp_bonus: 1.1
+      gold_bonus: 1.1
+    2:
+      exp_bonus: 1.2
+      gold_bonus: 1.2
+    3:
+      exp_bonus: 1.3
+      gold_bonus: 1.3
+      auto_loot: true
+    4:
+      exp_bonus: 1.4
+      gold_bonus: 1.4
+      auto_loot: true
+      teleport_discount: 0.5
+    5:
+      exp_bonus: 1.5
+      gold_bonus: 1.5
+      auto_loot: true
+      teleport_discount: 0.75
+      daily_bonus_gold: 1000
+    6:
+      exp_bonus: 2.0
+      gold_bonus: 2.0
+      auto_loot: true
+      teleport_discount: 1.0
+      daily_bonus_gold: 2000
+      special_skills: true
+
+# Guild System
+guild:
+  creation_cost: 100000
+  min_level_create: 20
+  max_members: 100
+  alliance_enabled: true
+  
+# Event System
+events:
+  daily_reset_time: "00:00 UTC"
+  world_boss_interval: 6  # hours
+  arena_open_times:
+    - "10:00-12:00 UTC"
+    - "16:00-18:00 UTC"
+    - "20:00-22:00 UTC"
