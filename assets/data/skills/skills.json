@@ -1,0 +1,54 @@
+{
+  "warrior": [
+    {
+      "id": "warrior_skill_1",
+      "name": "ضربة قوية",
+      "level_req": 1,
+      "damage": "120% من ضرر السلاح",
+      "cooldown": 5,
+      "description": "ضربة قوية تسبب ضرراً إضافياً."
+    },
+    {
+      "id": "warrior_skill_2",
+      "name": "دوامة السيف",
+      "level_req": 5,
+      "damage": "80% من ضرر السلاح لكل عدو",
+      "cooldown": 8,
+      "description": "هجوم دائري يصيب جميع الأعداء المحيطين."
+    },
+    {
+      "id": "warrior_skill_3",
+      "name": "صرخة المعركة",
+      "level_req": 10,
+      "effect": "زيادة الهجوم بنسبة 20% لمدة 30 ثانية",
+      "cooldown": 60,
+      "description": "صرخة تزيد من قوة هجومك."
+    }
+  ],
+  "mage": [
+    {
+      "id": "mage_skill_1",
+      "name": "كرة نارية",
+      "level_req": 1,
+      "damage": "150% من قوة السحر",
+      "cooldown": 3,
+      "description": "إطلاق كرة من النار تسبب ضرراً للعدو."
+    },
+    {
+      "id": "mage_skill_2",
+      "name": "صاعقة",
+      "level_req": 5,
+      "damage": "180% من قوة السحر",
+      "cooldown": 5,
+      "description": "استدعاء صاعقة من السماء تصيب العدو."
+    },
+    {
+      "id": "mage_skill_3",
+      "name": "درع سحري",
+      "level_req": 10,
+      "effect": "امتصاص 50% من الضرر لمدة 15 ثانية",
+      "cooldown": 60,
+      "description": "درع سحري يحميك من الضرر."
+    }
+  ]
+}

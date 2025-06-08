@@ -1,0 +1,468 @@
+{
+  "system_config": {
+    "enabled": true,
+    "max_active_codes": 50,
+    "max_codes_per_player": 10,
+    "code_length": 12,
+    "code_format": "ALFATH-XXXXXX-XXXX",
+    "case_sensitive": false,
+    "allow_multiple_uses_per_player": false,
+    "log_redemptions": true,
+    "admin_notification_on_redemption": true
+  },
+  "code_types": [
+    {
+      "id": "type_1",
+      "name": "كود عام",
+      "description": "كود يمكن استخدامه من قبل جميع اللاعبين",
+      "max_uses": -1,
+      "expiry_type": "date",
+      "icon": "public_code_icon.png"
+    },
+    {
+      "id": "type_2",
+      "name": "كود محدود",
+      "description": "كود يمكن استخدامه لعدد محدود من المرات",
+      "max_uses": 1000,
+      "expiry_type": "uses",
+      "icon": "limited_code_icon.png"
+    },
+    {
+      "id": "type_3",
+      "name": "كود شخصي",
+      "description": "كود مخصص للاعب واحد فقط",
+      "max_uses": 1,
+      "expiry_type": "single_use",
+      "icon": "personal_code_icon.png"
+    },
+    {
+      "id": "type_4",
+      "name": "كود VIP",
+      "description": "كود خاص للاعبين VIP",
+      "max_uses": -1,
+      "expiry_type": "date",
+      "vip_only": true,
+      "icon": "vip_code_icon.png"
+    },
+    {
+      "id": "type_5",
+      "name": "كود حدث",
+      "description": "كود خاص بالأحداث والمناسبات",
+      "max_uses": -1,
+      "expiry_type": "date",
+      "icon": "event_code_icon.png"
+    },
+    {
+      "id": "type_6",
+      "name": "كود شريك",
+      "description": "كود خاص بالشركاء والمؤثرين",
+      "max_uses": 10000,
+      "expiry_type": "date",
+      "icon": "partner_code_icon.png"
+    }
+  ],
+  "reward_types": [
+    {
+      "id": "reward_1",
+      "name": "ذهب",
+      "description": "منح اللاعب كمية من الذهب",
+      "icon": "gold_icon.png",
+      "category": "currency"
+    },
+    {
+      "id": "reward_2",
+      "name": "جواهر",
+      "description": "منح اللاعب كمية من الجواهر",
+      "icon": "gems_icon.png",
+      "category": "currency"
+    },
+    {
+      "id": "reward_3",
+      "name": "خبرة",
+      "description": "منح اللاعب كمية من نقاط الخبرة",
+      "icon": "xp_icon.png",
+      "category": "progression"
+    },
+    {
+      "id": "reward_4",
+      "name": "عتاد",
+      "description": "منح اللاعب قطعة عتاد محددة",
+      "icon": "equipment_icon.png",
+      "category": "items"
+    },
+    {
+      "id": "reward_5",
+      "name": "مستهلكات",
+      "description": "منح اللاعب عناصر مستهلكة (جرعات، طعام، الخ)",
+      "icon": "consumable_icon.png",
+      "category": "items"
+    },
+    {
+      "id": "reward_6",
+      "name": "نقاط VIP",
+      "description": "منح اللاعب نقاط VIP",
+      "icon": "vip_icon.png",
+      "category": "special"
+    },
+    {
+      "id": "reward_7",
+      "name": "مفاتيح صناديق",
+      "description": "منح اللاعب مفاتيح لفتح صناديق الكنوز",
+      "icon": "key_icon.png",
+      "category": "special"
+    },
+    {
+      "id": "reward_8",
+      "name": "عملة حدث",
+      "description": "منح اللاعب عملات خاصة بالأحداث",
+      "icon": "event_currency_icon.png",
+      "category": "currency"
+    },
+    {
+      "id": "reward_9",
+      "name": "زي تجميلي",
+      "description": "منح اللاعب زي تجميلي",
+      "icon": "costume_icon.png",
+      "category": "cosmetic"
+    },
+    {
+      "id": "reward_10",
+      "name": "مطية",
+      "description": "منح اللاعب مطية",
+      "icon": "mount_icon.png",
+      "category": "special"
+    },
+    {
+      "id": "reward_11",
+      "name": "حيوان أليف",
+      "description": "منح اللاعب حيوان أليف",
+      "icon": "pet_icon.png",
+      "category": "special"
+    },
+    {
+      "id": "reward_12",
+      "name": "لقب",
+      "description": "منح اللاعب لقب خاص",
+      "icon": "title_icon.png",
+      "category": "cosmetic"
+    },
+    {
+      "id": "reward_13",
+      "name": "تأثير خاص",
+      "description": "منح اللاعب تأثير بصري خاص",
+      "icon": "effect_icon.png",
+      "category": "cosmetic"
+    },
+    {
+      "id": "reward_14",
+      "name": "حزمة مكافآت",
+      "description": "منح اللاعب حزمة تحتوي على عدة مكافآت",
+      "icon": "bundle_icon.png",
+      "category": "special"
+    }
+  ],
+  "active_codes": [
+    {
+      "code": "ALFATH-WELCOME-2025",
+      "type": "كود عام",
+      "description": "كود ترحيبي للاعبين الجدد",
+      "creation_date": "2025-01-01",
+      "expiry_date": "2025-12-31",
+      "max_uses": -1,
+      "current_uses": 0,
+      "rewards": [
+        {
+          "type": "ذهب",
+          "amount": 10000,
+          "description": "10,000 ذهب"
+        },
+        {
+          "type": "جواهر",
+          "amount": 100,
+          "description": "100 جوهرة"
+        },
+        {
+          "type": "مستهلكات",
+          "item_id": "health_potion_medium",
+          "amount": 10,
+          "description": "10 جرعات شفاء متوسطة"
+        }
+      ],
+      "requirements": {
+        "min_level": 1,
+        "max_level": 100,
+        "vip_only": false,
+        "new_players_only": false
+      }
+    },
+    {
+      "code": "ALFATH-RAMADAN-2025",
+      "type": "كود حدث",
+      "description": "كود خاص بشهر رمضان المبارك",
+      "creation_date": "2025-03-01",
+      "expiry_date": "2025-04-30",
+      "max_uses": -1,
+      "current_uses": 0,
+      "rewards": [
+        {
+          "type": "ذهب",
+          "amount": 20000,
+          "description": "20,000 ذهب"
+        },
+        {
+          "type": "زي تجميلي",
+          "item_id": "ramadan_costume",
+          "amount": 1,
+          "description": "زي رمضان الخاص"
+        },
+        {
+          "type": "عملة حدث",
+          "item_id": "ramadan_coin",
+          "amount": 50,
+          "description": "50 عملة رمضانية"
+        }
+      ],
+      "requirements": {
+        "min_level": 10,
+        "max_level": 100,
+        "vip_only": false,
+        "new_players_only": false
+      }
+    },
+    {
+      "code": "ALFATH-VIP-BONUS",
+      "type": "كود VIP",
+      "description": "كود خاص للاعبين VIP",
+      "creation_date": "2025-01-01",
+      "expiry_date": "2025-12-31",
+      "max_uses": -1,
+      "current_uses": 0,
+      "rewards": [
+        {
+          "type": "جواهر",
+          "amount": 500,
+          "description": "500 جوهرة"
+        },
+        {
+          "type": "نقاط VIP",
+          "amount": 100,
+          "description": "100 نقطة VIP"
+        },
+        {
+          "type": "تأثير خاص",
+          "item_id": "vip_aura",
+          "amount": 1,
+          "description": "هالة VIP الذهبية"
+        }
+      ],
+      "requirements": {
+        "min_level": 1,
+        "max_level": 100,
+        "vip_only": true,
+        "min_vip_level": 1,
+        "new_players_only": false
+      }
+    },
+    {
+      "code": "ALFATH-LAUNCH-2025",
+      "type": "كود محدود",
+      "description": "كود خاص بإطلاق اللعبة",
+      "creation_date": "2025-01-01",
+      "expiry_date": "2025-03-31",
+      "max_uses": 10000,
+      "current_uses": 0,
+      "rewards": [
+        {
+          "type": "ذهب",
+          "amount": 50000,
+          "description": "50,000 ذهب"
+        },
+        {
+          "type": "جواهر",
+          "amount": 300,
+          "description": "300 جوهرة"
+        },
+        {
+          "type": "عتاد",
+          "item_id": "launch_weapon_box",
+          "amount": 1,
+          "description": "صندوق سلاح إطلاق اللعبة"
+        },
+        {
+          "type": "لقب",
+          "item_id": "founder_title",
+          "amount": 1,
+          "description": "لقب 'مؤسس'"
+        }
+      ],
+      "requirements": {
+        "min_level": 1,
+        "max_level": 100,
+        "vip_only": false,
+        "new_players_only": false
+      }
+    },
+    {
+      "code": "ALFATH-YOUTUBER-2025",
+      "type": "كود شريك",
+      "description": "كود خاص بالشريك المؤثر 'أحمد اللاعب'",
+      "creation_date": "2025-02-01",
+      "expiry_date": "2025-12-31",
+      "max_uses": 5000,
+      "current_uses": 0,
+      "rewards": [
+        {
+          "type": "ذهب",
+          "amount": 15000,
+          "description": "15,000 ذهب"
+        },
+        {
+          "type": "جواهر",
+          "amount": 150,
+          "description": "150 جوهرة"
+        },
+        {
+          "type": "مستهلكات",
+          "item_id": "xp_boost_small",
+          "amount": 3,
+          "description": "3 معززات خبرة صغيرة"
+        }
+      ],
+      "requirements": {
+        "min_level": 1,
+        "max_level": 100,
+        "vip_only": false,
+        "new_players_only": true
+      }
+    }
+  ],
+  "code_generation": {
+    "patterns": [
+      {
+        "name": "نمط عام",
+        "format": "ALFATH-{RANDOM:6}-{RANDOM:4}",
+        "example": "ALFATH-A7B3C9-X4Y2"
+      },
+      {
+        "name": "نمط حدث",
+        "format": "ALFATH-{EVENT}-{YEAR}-{RANDOM:4}",
+        "example": "ALFATH-RAMADAN-2025-X4Y2"
+      },
+      {
+        "name": "نمط شريك",
+        "format": "{PARTNER}-ALFATH-{RANDOM:6}",
+        "example": "YOUTUBER-ALFATH-A7B3C9"
+      },
+      {
+        "name": "نمط شخصي",
+        "format": "{PLAYERID:4}-ALFATH-{RANDOM:6}",
+        "example": "P123-ALFATH-A7B3C9"
+      }
+    ],
+    "character_sets": {
+      "default": "ABCDEFGHJKLMNPQRSTUVWXYZ23456789",
+      "alphanumeric": "ABCDEFGHJKLMNPQRSTUVWXYZ23456789",
+      "numeric": "0123456789",
+      "alpha": "ABCDEFGHJKLMNPQRSTUVWXYZ"
+    }
+  },
+  "redemption_ui": {
+    "title": "استخدام كود ترويجي",
+    "description": "أدخل الكود الترويجي للحصول على مكافآت خاصة",
+    "input_placeholder": "أدخل الكود هنا",
+    "submit_button": "تحقق",
+    "success_message": "تم استخدام الكود بنجاح!",
+    "error_messages": {
+      "invalid_code": "الكود غير صالح، يرجى التحقق من الكود وإعادة المحاولة.",
+      "expired_code": "انتهت صلاحية الكود.",
+      "used_code": "تم استخدام هذا الكود مسبقاً.",
+      "requirements_not_met": "لا تستوفي متطلبات استخدام هذا الكود.",
+      "max_uses_reached": "تم الوصول إلى الحد الأقصى لاستخدام هذا الكود.",
+      "server_error": "حدث خطأ في الخادم، يرجى المحاولة لاحقاً."
+    },
+    "reward_display": {
+      "title": "المكافآت المستلمة",
+      "item_format": "{amount} {name}",
+      "close_button": "إغلاق"
+    }
+  },
+  "admin_tools": {
+    "code_management": {
+      "create_code": {
+        "title": "إنشاء كود جديد",
+        "fields": [
+          "نوع الكود",
+          "وصف الكود",
+          "تاريخ انتهاء الصلاحية",
+          "الحد الأقصى للاستخدام",
+          "المكافآت",
+          "المتطلبات"
+        ]
+      },
+      "edit_code": {
+        "title": "تعديل كود",
+        "fields": [
+          "وصف الكود",
+          "تاريخ انتهاء الصلاحية",
+          "الحد الأقصى للاستخدام",
+          "المكافآت",
+          "المتطلبات"
+        ]
+      },
+      "delete_code": {
+        "title": "حذف كود",
+        "confirmation": "هل أنت متأكد من حذف هذا الكود؟"
+      },
+      "export_codes": {
+        "title": "تصدير الأكواد",
+        "formats": ["CSV", "JSON", "Excel"]
+      }
+    },
+    "analytics": {
+      "usage_statistics": {
+        "title": "إحصائيات الاستخدام",
+        "metrics": [
+          "إجمالي الاستخدام",
+          "استخدام حسب نوع الكود",
+          "استخدام حسب الفترة الزمنية",
+          "أكثر الأكواد استخداماً"
+        ]
+      },
+      "player_statistics": {
+        "title": "إحصائيات اللاعبين",
+        "metrics": [
+          "متوسط الأكواد المستخدمة لكل لاعب",
+          "توزيع استخدام الأكواد حسب مستوى اللاعب",
+          "توزيع استخدام الأكواد حسب مستوى VIP"
+        ]
+      }
+    },
+    "batch_operations": {
+      "generate_codes": {
+        "title": "إنشاء مجموعة أكواد",
+        "fields": [
+          "عدد الأكواد",
+          "نمط الكود",
+          "نوع الكود",
+          "المكافآت",
+          "المتطلبات"
+        ]
+      },
+      "export_to_csv": {
+        "title": "تصدير إلى CSV",
+        "fields": [
+          "نوع الكود",
+          "حالة الكود",
+          "نطاق تاريخ الإنشاء"
+        ]
+      },
+      "import_from_csv": {
+        "title": "استيراد من CSV",
+        "fields": [
+          "ملف CSV",
+          "تخطي الصف الأول (العناوين)"
+        ]
+      }
+    }
+  }
+}

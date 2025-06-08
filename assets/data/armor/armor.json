@@ -1,0 +1,415 @@
+{
+  "armor": [
+    {
+      "id": "armor_helmet_001",
+      "name": "خوذة المبتدئ",
+      "type": "helmet",
+      "rarity": "common",
+      "level": 1,
+      "defense": 3,
+      "attributes": {
+        "vitality": 1
+      },
+      "sockets": 0,
+      "description": "خوذة جلدية بسيطة توفر حماية أساسية للرأس.",
+      "sellPrice": 5,
+      "buyPrice": 25,
+      "requiredLevel": 1,
+      "requiredClass": ["warrior", "archer", "mage", "assassin"],
+      "visualEffects": {
+        "glow": false
+      },
+      "dropRate": 0.1,
+      "dropFrom": ["wolf", "bandit"]
+    },
+    {
+      "id": "armor_chest_001",
+      "name": "صدرية المبتدئ",
+      "type": "chest",
+      "rarity": "common",
+      "level": 1,
+      "defense": 5,
+      "attributes": {
+        "vitality": 2
+      },
+      "sockets": 0,
+      "description": "صدرية جلدية بسيطة توفر حماية أساسية للجذع.",
+      "sellPrice": 8,
+      "buyPrice": 40,
+      "requiredLevel": 1,
+      "requiredClass": ["warrior", "archer", "mage", "assassin"],
+      "visualEffects": {
+        "glow": false
+      },
+      "dropRate": 0.1,
+      "dropFrom": ["wolf", "bandit"]
+    },
+    {
+      "id": "armor_legs_001",
+      "name": "سروال المبتدئ",
+      "type": "legs",
+      "rarity": "common",
+      "level": 1,
+      "defense": 4,
+      "attributes": {
+        "vitality": 1
+      },
+      "sockets": 0,
+      "description": "سروال جلدي بسيط يوفر حماية أساسية للساقين.",
+      "sellPrice": 6,
+      "buyPrice": 30,
+      "requiredLevel": 1,
+      "requiredClass": ["warrior", "archer", "mage", "assassin"],
+      "visualEffects": {
+        "glow": false
+      },
+      "dropRate": 0.1,
+      "dropFrom": ["wolf", "bandit"]
+    },
+    {
+      "id": "armor_boots_001",
+      "name": "حذاء المبتدئ",
+      "type": "boots",
+      "rarity": "common",
+      "level": 1,
+      "defense": 2,
+      "attributes": {
+        "agility": 1
+      },
+      "sockets": 0,
+      "description": "حذاء جلدي بسيط يوفر حماية أساسية للقدمين.",
+      "sellPrice": 4,
+      "buyPrice": 20,
+      "requiredLevel": 1,
+      "requiredClass": ["warrior", "archer", "mage", "assassin"],
+      "visualEffects": {
+        "glow": false
+      },
+      "dropRate": 0.1,
+      "dropFrom": ["wolf", "bandit"]
+    },
+    {
+      "id": "armor_helmet_002",
+      "name": "خوذة الفارس",
+      "type": "helmet",
+      "rarity": "uncommon",
+      "level": 5,
+      "defense": 8,
+      "attributes": {
+        "vitality": 3,
+        "strength": 2
+      },
+      "sockets": 1,
+      "description": "خوذة معدنية متينة تحمي رأس الفارس في المعارك.",
+      "sellPrice": 50,
+      "buyPrice": 250,
+      "requiredLevel": 5,
+      "requiredClass": ["warrior"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#3498db"
+      },
+      "dropRate": 0.05,
+      "dropFrom": ["bandit_leader", "forest_wolf"]
+    },
+    {
+      "id": "armor_chest_002",
+      "name": "درع الفارس",
+      "type": "chest",
+      "rarity": "uncommon",
+      "level": 5,
+      "defense": 12,
+      "attributes": {
+        "vitality": 5,
+        "strength": 3
+      },
+      "sockets": 1,
+      "description": "درع معدني متين يحمي جذع الفارس في المعارك.",
+      "sellPrice": 80,
+      "buyPrice": 400,
+      "requiredLevel": 5,
+      "requiredClass": ["warrior"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#3498db"
+      },
+      "dropRate": 0.05,
+      "dropFrom": ["bandit_leader", "forest_wolf"]
+    },
+    {
+      "id": "armor_helmet_003",
+      "name": "قلنسوة الساحر",
+      "type": "helmet",
+      "rarity": "uncommon",
+      "level": 5,
+      "defense": 5,
+      "attributes": {
+        "intelligence": 4,
+        "manaRegen": 1
+      },
+      "sockets": 1,
+      "description": "قلنسوة مطرزة بالرموز السحرية تعزز القدرات الذهنية.",
+      "sellPrice": 50,
+      "buyPrice": 250,
+      "requiredLevel": 5,
+      "requiredClass": ["mage"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#e74c3c"
+      },
+      "dropRate": 0.05,
+      "dropFrom": ["fire_elemental", "bandit_mage"]
+    },
+    {
+      "id": "armor_chest_003",
+      "name": "رداء الساحر",
+      "type": "chest",
+      "rarity": "uncommon",
+      "level": 5,
+      "defense": 7,
+      "attributes": {
+        "intelligence": 6,
+        "manaRegen": 2
+      },
+      "sockets": 1,
+      "description": "رداء مطرز بالرموز السحرية يعزز القدرات الذهنية ويوفر حماية معقولة.",
+      "sellPrice": 80,
+      "buyPrice": 400,
+      "requiredLevel": 5,
+      "requiredClass": ["mage"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#e74c3c"
+      },
+      "dropRate": 0.05,
+      "dropFrom": ["fire_elemental", "bandit_mage"]
+    },
+    {
+      "id": "armor_helmet_004",
+      "name": "قناع الظل",
+      "type": "helmet",
+      "rarity": "uncommon",
+      "level": 5,
+      "defense": 6,
+      "attributes": {
+        "agility": 4,
+        "criticalChance": 0.02
+      },
+      "sockets": 1,
+      "description": "قناع أسود يخفي ملامح وجه مرتديه ويساعده على التسلل في الظلام.",
+      "sellPrice": 50,
+      "buyPrice": 250,
+      "requiredLevel": 5,
+      "requiredClass": ["assassin"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#9b59b6"
+      },
+      "dropRate": 0.05,
+      "dropFrom": ["shadow_stalker", "bandit_rogue"]
+    },
+    {
+      "id": "armor_chest_004",
+      "name": "سترة الظل",
+      "type": "chest",
+      "rarity": "uncommon",
+      "level": 5,
+      "defense": 8,
+      "attributes": {
+        "agility": 6,
+        "criticalChance": 0.03
+      },
+      "sockets": 1,
+      "description": "سترة سوداء خفيفة تسمح بالحركة السريعة وتساعد على التخفي في الظلام.",
+      "sellPrice": 80,
+      "buyPrice": 400,
+      "requiredLevel": 5,
+      "requiredClass": ["assassin"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#9b59b6"
+      },
+      "dropRate": 0.05,
+      "dropFrom": ["shadow_stalker", "bandit_rogue"]
+    },
+    {
+      "id": "armor_helmet_005",
+      "name": "خوذة الفاتح",
+      "type": "helmet",
+      "rarity": "rare",
+      "level": 15,
+      "defense": 18,
+      "attributes": {
+        "vitality": 8,
+        "strength": 6,
+        "defense": 5
+      },
+      "sockets": 2,
+      "description": "خوذة أسطورية استخدمها الفاتح العظيم في معاركه ضد الظلام.",
+      "sellPrice": 300,
+      "buyPrice": 1500,
+      "requiredLevel": 15,
+      "requiredClass": ["warrior"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#f1c40f",
+        "specialEffect": "golden_aura"
+      },
+      "dropRate": 0.01,
+      "dropFrom": ["dungeon_boss", "ancient_guardian"]
+    },
+    {
+      "id": "armor_chest_005",
+      "name": "درع الفاتح",
+      "type": "chest",
+      "rarity": "rare",
+      "level": 15,
+      "defense": 25,
+      "attributes": {
+        "vitality": 12,
+        "strength": 10,
+        "defense": 8
+      },
+      "sockets": 2,
+      "description": "درع أسطوري استخدمه الفاتح العظيم في معاركه ضد الظلام.",
+      "sellPrice": 500,
+      "buyPrice": 2500,
+      "requiredLevel": 15,
+      "requiredClass": ["warrior"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#f1c40f",
+        "specialEffect": "golden_aura"
+      },
+      "dropRate": 0.01,
+      "dropFrom": ["dungeon_boss", "ancient_guardian"]
+    },
+    {
+      "id": "armor_helmet_006",
+      "name": "تاج الحكيم",
+      "type": "helmet",
+      "rarity": "legendary",
+      "level": 30,
+      "defense": 25,
+      "attributes": {
+        "intelligence": 20,
+        "wisdom": 15,
+        "manaRegen": 5,
+        "spellPower": 0.15,
+        "cooldownReduction": 0.1
+      },
+      "sockets": 3,
+      "description": "تاج أسطوري يحتوي على أحجار كريمة تعزز القدرات السحرية بشكل هائل.",
+      "sellPrice": 3000,
+      "buyPrice": 15000,
+      "requiredLevel": 30,
+      "requiredClass": ["mage"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#3498db",
+        "specialEffect": "arcane_crown"
+      },
+      "dropRate": 0.001,
+      "dropFrom": ["ancient_wizard", "final_boss"]
+    },
+    {
+      "id": "armor_chest_006",
+      "name": "رداء الحكيم",
+      "type": "chest",
+      "rarity": "legendary",
+      "level": 30,
+      "defense": 35,
+      "attributes": {
+        "intelligence": 25,
+        "wisdom": 20,
+        "manaRegen": 8,
+        "spellPower": 0.2,
+        "cooldownReduction": 0.15,
+        "allElementalResistance": 0.1
+      },
+      "sockets": 3,
+      "description": "رداء أسطوري منسوج من خيوط سحرية تعزز القدرات السحرية بشكل هائل وتوفر حماية استثنائية.",
+      "sellPrice": 5000,
+      "buyPrice": 25000,
+      "requiredLevel": 30,
+      "requiredClass": ["mage"],
+      "visualEffects": {
+        "glow": true,
+        "glowColor": "#3498db",
+        "specialEffect": "arcane_robe"
+      },
+      "dropRate": 0.001,
+      "dropFrom": ["ancient_wizard", "final_boss"]
+    },
+    {
+      "id": "armor_set_001",
+      "name": "طقم الفارس الكامل",
+      "type": "set",
+      "rarity": "rare",
+      "level": 15,
+      "pieces": ["armor_helmet_005", "armor_chest_005", "armor_legs_005", "armor_boots_005"],
+      "setBonuses": {
+        "2pieces": {
+          "strength": 5,
+          "vitality": 5
+        },
+        "4pieces": {
+          "strength": 10,
+          "vitality": 10,
+          "defense": 15,
+          "damageReduction": 0.1
+        }
+      },
+      "description": "طقم درع كامل للفارس يوفر حماية استثنائية ويعزز القوة البدنية.",
+      "requiredLevel": 15,
+      "requiredClass": ["warrior"]
+    },
+    {
+      "id": "armor_set_002",
+      "name": "طقم الساحر الكامل",
+      "type": "set",
+      "rarity": "rare",
+      "level": 15,
+      "pieces": ["armor_helmet_007", "armor_chest_007", "armor_legs_007", "armor_boots_007"],
+      "setBonuses": {
+        "2pieces": {
+          "intelligence": 5,
+          "manaRegen": 3
+        },
+        "4pieces": {
+          "intelligence": 10,
+          "manaRegen": 5,
+          "spellPower": 0.15,
+          "cooldownReduction": 0.1
+        }
+      },
+      "description": "طقم رداء كامل للساحر يعزز القدرات السحرية بشكل كبير.",
+      "requiredLevel": 15,
+      "requiredClass": ["mage"]
+    },
+    {
+      "id": "armor_set_003",
+      "name": "طقم الظل الكامل",
+      "type": "set",
+      "rarity": "legendary",
+      "level": 30,
+      "pieces": ["armor_helmet_010", "armor_chest_010", "armor_legs_010", "armor_boots_010"],
+      "setBonuses": {
+        "2pieces": {
+          "agility": 10,
+          "criticalChance": 0.05
+        },
+        "4pieces": {
+          "agility": 20,
+          "criticalChance": 0.1,
+          "criticalDamage": 0.3,
+          "dodgeChance": 0.1,
+          "stealth": "improved"
+        }
+      },
+      "description": "طقم أسطوري للمتسللين يمنح قدرات تخفي فائقة وفرصة ضربات قاتلة.",
+      "requiredLevel": 30,
+      "requiredClass": ["assassin"]
+    }
+  ]
+}

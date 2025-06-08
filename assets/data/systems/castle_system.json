@@ -1,0 +1,440 @@
+{
+  "castle_levels": [
+    {
+      "level": 1,
+      "name": "قلعة صغيرة",
+      "upgrade_cost": 50000,
+      "max_defenders": 10,
+      "max_buildings": 5,
+      "wall_health": 10000,
+      "gate_health": 5000,
+      "tax_income": 1000,
+      "description": "قلعة صغيرة توفر حماية أساسية للنقابة"
+    },
+    {
+      "level": 2,
+      "name": "قلعة متوسطة",
+      "upgrade_cost": 150000,
+      "max_defenders": 20,
+      "max_buildings": 10,
+      "wall_health": 25000,
+      "gate_health": 12500,
+      "tax_income": 2500,
+      "description": "قلعة متوسطة الحجم توفر حماية جيدة وموارد إضافية"
+    },
+    {
+      "level": 3,
+      "name": "قلعة كبيرة",
+      "upgrade_cost": 500000,
+      "max_defenders": 30,
+      "max_buildings": 15,
+      "wall_health": 50000,
+      "gate_health": 25000,
+      "tax_income": 5000,
+      "description": "قلعة كبيرة توفر حماية ممتازة وموارد وفيرة"
+    },
+    {
+      "level": 4,
+      "name": "قلعة ملكية",
+      "upgrade_cost": 1500000,
+      "max_defenders": 50,
+      "max_buildings": 25,
+      "wall_health": 100000,
+      "gate_health": 50000,
+      "tax_income": 10000,
+      "description": "قلعة ملكية ضخمة توفر حماية فائقة وموارد هائلة"
+    },
+    {
+      "level": 5,
+      "name": "قلعة إمبراطورية",
+      "upgrade_cost": 5000000,
+      "max_defenders": 100,
+      "max_buildings": 40,
+      "wall_health": 250000,
+      "gate_health": 125000,
+      "tax_income": 25000,
+      "description": "قلعة إمبراطورية عظيمة لا يمكن اختراقها تقريباً"
+    }
+  ],
+  "defensive_buildings": [
+    {
+      "id": "defense_1",
+      "name": "برج المراقبة",
+      "cost": 5000,
+      "level_req": 1,
+      "defense_bonus": 500,
+      "range": 300,
+      "damage": 50,
+      "attack_speed": 2,
+      "description": "برج مراقبة يكشف العدو من مسافة بعيدة ويطلق السهام"
+    },
+    {
+      "id": "defense_2",
+      "name": "برج السهام",
+      "cost": 15000,
+      "level_req": 1,
+      "defense_bonus": 1000,
+      "range": 400,
+      "damage": 100,
+      "attack_speed": 1.5,
+      "description": "برج مجهز بالعديد من الرماة لإطلاق وابل من السهام"
+    },
+    {
+      "id": "defense_3",
+      "name": "برج المنجنيق",
+      "cost": 30000,
+      "level_req": 2,
+      "defense_bonus": 2000,
+      "range": 600,
+      "damage": 300,
+      "attack_speed": 5,
+      "description": "برج مجهز بمنجنيق يلحق ضرراً كبيراً بمنطقة واسعة"
+    },
+    {
+      "id": "defense_4",
+      "name": "برج النار",
+      "cost": 50000,
+      "level_req": 3,
+      "defense_bonus": 3000,
+      "range": 350,
+      "damage": 150,
+      "attack_speed": 1,
+      "description": "برج يطلق كرات نارية تحرق الأعداء وتسبب ضرراً مستمراً"
+    },
+    {
+      "id": "defense_5",
+      "name": "برج الصواعق",
+      "cost": 100000,
+      "level_req": 4,
+      "defense_bonus": 5000,
+      "range": 450,
+      "damage": 250,
+      "attack_speed": 2,
+      "description": "برج سحري يطلق صواعق قوية تصيب عدة أعداء في آن واحد"
+    },
+    {
+      "id": "defense_6",
+      "name": "برج الجليد",
+      "cost": 150000,
+      "level_req": 4,
+      "defense_bonus": 4000,
+      "range": 400,
+      "damage": 200,
+      "attack_speed": 2.5,
+      "description": "برج سحري يطلق كرات جليدية تبطئ الأعداء وتلحق بهم الضرر"
+    },
+    {
+      "id": "defense_7",
+      "name": "برج الموت",
+      "cost": 300000,
+      "level_req": 5,
+      "defense_bonus": 10000,
+      "range": 500,
+      "damage": 500,
+      "attack_speed": 3,
+      "description": "برج سحري قوي جداً يطلق تعاويذ الموت التي تخترق الدروع"
+    }
+  ],
+  "resource_buildings": [
+    {
+      "id": "resource_1",
+      "name": "منجم ذهب",
+      "cost": 10000,
+      "level_req": 1,
+      "production": {
+        "resource": "gold",
+        "amount": 1000,
+        "interval": "hour"
+      },
+      "max_level": 5,
+      "upgrade_cost_multiplier": 2,
+      "production_multiplier": 1.5,
+      "description": "منجم لاستخراج الذهب وزيادة دخل النقابة"
+    },
+    {
+      "id": "resource_2",
+      "name": "محجر حجارة",
+      "cost": 8000,
+      "level_req": 1,
+      "production": {
+        "resource": "stone",
+        "amount": 500,
+        "interval": "hour"
+      },
+      "max_level": 5,
+      "upgrade_cost_multiplier": 1.8,
+      "production_multiplier": 1.5,
+      "description": "محجر لاستخراج الحجارة اللازمة لبناء وترقية المباني"
+    },
+    {
+      "id": "resource_3",
+      "name": "منجم حديد",
+      "cost": 12000,
+      "level_req": 2,
+      "production": {
+        "resource": "iron",
+        "amount": 300,
+        "interval": "hour"
+      },
+      "max_level": 5,
+      "upgrade_cost_multiplier": 2,
+      "production_multiplier": 1.5,
+      "description": "منجم لاستخراج الحديد اللازم لصناعة الأسلحة والدروع"
+    },
+    {
+      "id": "resource_4",
+      "name": "مزرعة",
+      "cost": 5000,
+      "level_req": 1,
+      "production": {
+        "resource": "food",
+        "amount": 2000,
+        "interval": "hour"
+      },
+      "max_level": 5,
+      "upgrade_cost_multiplier": 1.5,
+      "production_multiplier": 1.5,
+      "description": "مزرعة لإنتاج الطعام اللازم للجنود والمدافعين"
+    },
+    {
+      "id": "resource_5",
+      "name": "منجم جواهر",
+      "cost": 50000,
+      "level_req": 3,
+      "production": {
+        "resource": "gems",
+        "amount": 50,
+        "interval": "hour"
+      },
+      "max_level": 5,
+      "upgrade_cost_multiplier": 2.5,
+      "production_multiplier": 1.5,
+      "description": "منجم لاستخراج الجواهر النادرة والأحجار الكريمة"
+    },
+    {
+      "id": "resource_6",
+      "name": "بئر سحري",
+      "cost": 100000,
+      "level_req": 4,
+      "production": {
+        "resource": "mana",
+        "amount": 500,
+        "interval": "hour"
+      },
+      "max_level": 5,
+      "upgrade_cost_multiplier": 2,
+      "production_multiplier": 1.5,
+      "description": "بئر لاستخراج المانا اللازمة للتعاويذ السحرية والدفاعات السحرية"
+    }
+  ],
+  "utility_buildings": [
+    {
+      "id": "utility_1",
+      "name": "ثكنة",
+      "cost": 20000,
+      "level_req": 1,
+      "max_level": 5,
+      "effects": [
+        "زيادة عدد المدافعين بنسبة 20% لكل مستوى",
+        "تدريب المدافعين بشكل أسرع بنسبة 10% لكل مستوى"
+      ],
+      "upgrade_cost_multiplier": 2,
+      "description": "ثكنة لتدريب وإيواء المدافعين عن القلعة"
+    },
+    {
+      "id": "utility_2",
+      "name": "مخزن",
+      "cost": 15000,
+      "level_req": 1,
+      "max_level": 5,
+      "effects": [
+        "زيادة سعة تخزين الموارد بنسبة 50% لكل مستوى"
+      ],
+      "upgrade_cost_multiplier": 1.8,
+      "description": "مخزن لتخزين الموارد والغنائم"
+    },
+    {
+      "id": "utility_3",
+      "name": "ورشة",
+      "cost": 25000,
+      "level_req": 2,
+      "max_level": 5,
+      "effects": [
+        "تقليل تكلفة بناء وترقية المباني بنسبة 5% لكل مستوى",
+        "تقليل وقت البناء والترقية بنسبة 10% لكل مستوى"
+      ],
+      "upgrade_cost_multiplier": 2,
+      "description": "ورشة لبناء وإصلاح المباني والدفاعات"
+    },
+    {
+      "id": "utility_4",
+      "name": "برج السحر",
+      "cost": 50000,
+      "level_req": 3,
+      "max_level": 5,
+      "effects": [
+        "زيادة قوة الأبراج السحرية بنسبة 15% لكل مستوى",
+        "تقليل استهلاك المانا بنسبة 10% لكل مستوى"
+      ],
+      "upgrade_cost_multiplier": 2.2,
+      "description": "برج لتعزيز القوى السحرية وتطوير التعاويذ الدفاعية"
+    },
+    {
+      "id": "utility_5",
+      "name": "معبد",
+      "cost": 75000,
+      "level_req": 3,
+      "max_level": 5,
+      "effects": [
+        "زيادة صحة جميع المدافعين بنسبة 10% لكل مستوى",
+        "استعادة صحة المدافعين بشكل أسرع بنسبة 20% لكل مستوى"
+      ],
+      "upgrade_cost_multiplier": 2,
+      "description": "معبد لشفاء المدافعين ومنحهم البركات"
+    },
+    {
+      "id": "utility_6",
+      "name": "مرصد",
+      "cost": 100000,
+      "level_req": 4,
+      "max_level": 5,
+      "effects": [
+        "زيادة مدى رؤية الأبراج بنسبة 20% لكل مستوى",
+        "إنذار مبكر بالهجمات قبل وصولها بـ 30 ثانية لكل مستوى"
+      ],
+      "upgrade_cost_multiplier": 2,
+      "description": "مرصد لمراقبة المناطق المحيطة والإنذار المبكر بالهجمات"
+    }
+  ],
+  "siege_weapons": [
+    {
+      "id": "siege_1",
+      "name": "كبش",
+      "cost": 5000,
+      "attack_power": 500,
+      "health": 2000,
+      "speed": 50,
+      "target": "gate",
+      "description": "كبش لتحطيم بوابات القلعة"
+    },
+    {
+      "id": "siege_2",
+      "name": "سلم حصار",
+      "cost": 3000,
+      "attack_power": 0,
+      "health": 1000,
+      "speed": 70,
+      "target": "wall",
+      "description": "سلم لتسلق أسوار القلعة"
+    },
+    {
+      "id": "siege_3",
+      "name": "منجنيق",
+      "cost": 10000,
+      "attack_power": 1000,
+      "health": 1500,
+      "speed": 30,
+      "range": 600,
+      "target": "building",
+      "description": "منجنيق لقذف الصخور على القلعة من مسافة بعيدة"
+    },
+    {
+      "id": "siege_4",
+      "name": "برج حصار",
+      "cost": 20000,
+      "attack_power": 300,
+      "health": 5000,
+      "speed": 20,
+      "target": "wall",
+      "description": "برج متحرك يحمل المهاجمين إلى أعلى أسوار القلعة"
+    },
+    {
+      "id": "siege_5",
+      "name": "محطم الجدران",
+      "cost": 15000,
+      "attack_power": 2000,
+      "health": 3000,
+      "speed": 40,
+      "target": "wall",
+      "description": "آلة متخصصة في تحطيم جدران القلعة"
+    }
+  ],
+  "castle_wars": {
+    "declaration_cost": 50000,
+    "preparation_time": "24 hours",
+    "war_duration": "3 hours",
+    "cooldown_period": "3 days",
+    "victory_conditions": [
+      "تدمير قلعة العدو",
+      "تدمير أكثر من 75% من مباني العدو",
+      "الاستيلاء على معظم نقاط السيطرة"
+    ],
+    "rewards": {
+      "winner": {
+        "gold": 100000,
+        "resources": 50000,
+        "honor_points": 1000,
+        "territory_control": true
+      },
+      "loser": {
+        "gold": 10000,
+        "resources": 5000,
+        "honor_points": 100
+      }
+    }
+  },
+  "territory_control": {
+    "benefits": [
+      "زيادة إنتاج الموارد بنسبة 25%",
+      "تقليل تكلفة الترقيات بنسبة 10%",
+      "ضريبة على التجارة في المنطقة",
+      "وصول حصري لمناجم ومصادر موارد نادرة"
+    ],
+    "control_points": [
+      {
+        "id": "control_1",
+        "name": "منجم الذهب الكبير",
+        "resource_bonus": {
+          "type": "gold",
+          "amount": 5000,
+          "interval": "hour"
+        }
+      },
+      {
+        "id": "control_2",
+        "name": "غابة العمالقة",
+        "resource_bonus": {
+          "type": "wood",
+          "amount": 3000,
+          "interval": "hour"
+        }
+      },
+      {
+        "id": "control_3",
+        "name": "بحيرة المانا",
+        "resource_bonus": {
+          "type": "mana",
+          "amount": 2000,
+          "interval": "hour"
+        }
+      },
+      {
+        "id": "control_4",
+        "name": "جبل الجواهر",
+        "resource_bonus": {
+          "type": "gems",
+          "amount": 500,
+          "interval": "hour"
+        }
+      },
+      {
+        "id": "control_5",
+        "name": "معبد القوة",
+        "stat_bonus": {
+          "type": "attack",
+          "amount": "10%"
+        }
+      }
+    ]
+  }
+}

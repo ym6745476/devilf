@@ -1,0 +1,1127 @@
+{
+  "payment_methods": [
+    {
+      "id": "google_play",
+      "name": "Google Play",
+      "description": "الدفع عبر متجر Google Play",
+      "enabled": true,
+      "platforms": ["android"],
+      "currencies": ["USD", "EUR", "SAR", "AED", "EGP"],
+      "min_purchase": 0.99,
+      "processing_fee_percentage": 0.3,
+      "icon": "payment_icons/google_play.png"
+    },
+    {
+      "id": "apple_store",
+      "name": "Apple Store",
+      "description": "الدفع عبر متجر Apple Store",
+      "enabled": true,
+      "platforms": ["ios"],
+      "currencies": ["USD", "EUR", "SAR", "AED", "EGP"],
+      "min_purchase": 0.99,
+      "processing_fee_percentage": 0.3,
+      "icon": "payment_icons/apple_store.png"
+    },
+    {
+      "id": "credit_card",
+      "name": "بطاقة ائتمان",
+      "description": "الدفع باستخدام بطاقة ائتمان",
+      "enabled": true,
+      "platforms": ["android", "ios", "web"],
+      "currencies": ["USD", "EUR", "SAR", "AED", "EGP"],
+      "min_purchase": 1.0,
+      "processing_fee_percentage": 0.029,
+      "processing_fee_fixed": 0.3,
+      "supported_cards": ["visa", "mastercard", "amex"],
+      "icon": "payment_icons/credit_card.png"
+    },
+    {
+      "id": "paypal",
+      "name": "PayPal",
+      "description": "الدفع باستخدام PayPal",
+      "enabled": true,
+      "platforms": ["android", "ios", "web"],
+      "currencies": ["USD", "EUR"],
+      "min_purchase": 1.0,
+      "processing_fee_percentage": 0.039,
+      "processing_fee_fixed": 0.3,
+      "icon": "payment_icons/paypal.png"
+    },
+    {
+      "id": "mobile_carrier",
+      "name": "فاتورة الجوال",
+      "description": "الدفع عبر فاتورة الهاتف المحمول",
+      "enabled": true,
+      "platforms": ["android", "ios"],
+      "currencies": ["SAR", "AED", "EGP"],
+      "min_purchase": 5.0,
+      "processing_fee_percentage": 0.15,
+      "supported_carriers": [
+        {
+          "country": "SA",
+          "carriers": ["STC", "Mobily", "Zain"]
+        },
+        {
+          "country": "AE",
+          "carriers": ["Etisalat", "Du"]
+        },
+        {
+          "country": "EG",
+          "carriers": ["Vodafone", "Orange", "Etisalat", "WE"]
+        }
+      ],
+      "icon": "payment_icons/mobile_carrier.png"
+    },
+    {
+      "id": "prepaid_card",
+      "name": "بطاقة مسبقة الدفع",
+      "description": "الدفع باستخدام بطاقة مسبقة الدفع",
+      "enabled": true,
+      "platforms": ["android", "ios", "web"],
+      "currencies": ["USD", "SAR", "AED", "EGP"],
+      "min_purchase": 5.0,
+      "processing_fee_percentage": 0.05,
+      "supported_cards": ["onecard", "cashu", "paysafecard"],
+      "icon": "payment_icons/prepaid_card.png"
+    },
+    {
+      "id": "bank_transfer",
+      "name": "تحويل بنكي",
+      "description": "الدفع عبر تحويل بنكي",
+      "enabled": true,
+      "platforms": ["web"],
+      "currencies": ["USD", "SAR", "AED", "EGP"],
+      "min_purchase": 10.0,
+      "processing_fee_percentage": 0.01,
+      "processing_fee_fixed": 1.0,
+      "processing_time": "1-3 أيام عمل",
+      "icon": "payment_icons/bank_transfer.png"
+    },
+    {
+      "id": "crypto",
+      "name": "العملات المشفرة",
+      "description": "الدفع باستخدام العملات المشفرة",
+      "enabled": true,
+      "platforms": ["web"],
+      "currencies": ["BTC", "ETH", "USDT"],
+      "min_purchase": 5.0,
+      "processing_fee_percentage": 0.01,
+      "supported_networks": ["Bitcoin", "Ethereum", "Tron"],
+      "icon": "payment_icons/crypto.png"
+    }
+  ],
+  "virtual_currencies": [
+    {
+      "id": "gems",
+      "name": "جواهر",
+      "description": "العملة الرئيسية المدفوعة في اللعبة",
+      "icon": "currency_icons/gems.png",
+      "exchange_rate": {
+        "USD": 100
+      },
+      "purchase_options": [
+        {
+          "id": "gems_pack_1",
+          "name": "حزمة الجواهر الصغيرة",
+          "amount": 100,
+          "bonus": 0,
+          "price": {
+            "USD": 0.99,
+            "EUR": 0.99,
+            "SAR": 3.99,
+            "AED": 3.99,
+            "EGP": 30.99
+          },
+          "icon": "currency_icons/gems_pack_1.png"
+        },
+        {
+          "id": "gems_pack_2",
+          "name": "حزمة الجواهر المتوسطة",
+          "amount": 550,
+          "bonus": 50,
+          "price": {
+            "USD": 4.99,
+            "EUR": 4.99,
+            "SAR": 19.99,
+            "AED": 19.99,
+            "EGP": 149.99
+          },
+          "icon": "currency_icons/gems_pack_2.png"
+        },
+        {
+          "id": "gems_pack_3",
+          "name": "حزمة الجواهر الكبيرة",
+          "amount": 1200,
+          "bonus": 200,
+          "price": {
+            "USD": 9.99,
+            "EUR": 9.99,
+            "SAR": 39.99,
+            "AED": 39.99,
+            "EGP": 299.99
+          },
+          "icon": "currency_icons/gems_pack_3.png"
+        },
+        {
+          "id": "gems_pack_4",
+          "name": "حزمة الجواهر الضخمة",
+          "amount": 2500,
+          "bonus": 500,
+          "price": {
+            "USD": 19.99,
+            "EUR": 19.99,
+            "SAR": 79.99,
+            "AED": 79.99,
+            "EGP": 599.99
+          },
+          "icon": "currency_icons/gems_pack_4.png"
+        },
+        {
+          "id": "gems_pack_5",
+          "name": "حزمة الجواهر الملكية",
+          "amount": 6500,
+          "bonus": 1500,
+          "price": {
+            "USD": 49.99,
+            "EUR": 49.99,
+            "SAR": 199.99,
+            "AED": 199.99,
+            "EGP": 1499.99
+          },
+          "icon": "currency_icons/gems_pack_5.png"
+        },
+        {
+          "id": "gems_pack_6",
+          "name": "حزمة الجواهر الأسطورية",
+          "amount": 14000,
+          "bonus": 4000,
+          "price": {
+            "USD": 99.99,
+            "EUR": 99.99,
+            "SAR": 399.99,
+            "AED": 399.99,
+            "EGP": 2999.99
+          },
+          "icon": "currency_icons/gems_pack_6.png"
+        }
+      ]
+    },
+    {
+      "id": "gold",
+      "name": "ذهب",
+      "description": "العملة الأساسية في اللعبة التي يمكن الحصول عليها من خلال اللعب",
+      "icon": "currency_icons/gold.png",
+      "exchange_rate": {
+        "gems": 1000
+      },
+      "purchase_options": [
+        {
+          "id": "gold_pack_1",
+          "name": "كيس ذهب صغير",
+          "amount": 10000,
+          "price": {
+            "gems": 100
+          },
+          "icon": "currency_icons/gold_pack_1.png"
+        },
+        {
+          "id": "gold_pack_2",
+          "name": "كيس ذهب متوسط",
+          "amount": 55000,
+          "bonus": 5000,
+          "price": {
+            "gems": 500
+          },
+          "icon": "currency_icons/gold_pack_2.png"
+        },
+        {
+          "id": "gold_pack_3",
+          "name": "كيس ذهب كبير",
+          "amount": 120000,
+          "bonus": 20000,
+          "price": {
+            "gems": 1000
+          },
+          "icon": "currency_icons/gold_pack_3.png"
+        }
+      ]
+    },
+    {
+      "id": "event_tokens",
+      "name": "عملات الأحداث",
+      "description": "عملة خاصة بالأحداث الموسمية",
+      "icon": "currency_icons/event_tokens.png",
+      "exchange_rate": {
+        "gems": 10
+      },
+      "purchase_options": [
+        {
+          "id": "event_tokens_pack_1",
+          "name": "حزمة عملات الأحداث الصغيرة",
+          "amount": 100,
+          "price": {
+            "gems": 100
+          },
+          "icon": "currency_icons/event_tokens_pack_1.png"
+        },
+        {
+          "id": "event_tokens_pack_2",
+          "name": "حزمة عملات الأحداث المتوسطة",
+          "amount": 550,
+          "bonus": 50,
+          "price": {
+            "gems": 500
+          },
+          "icon": "currency_icons/event_tokens_pack_2.png"
+        },
+        {
+          "id": "event_tokens_pack_3",
+          "name": "حزمة عملات الأحداث الكبيرة",
+          "amount": 1200,
+          "bonus": 200,
+          "price": {
+            "gems": 1000
+          },
+          "icon": "currency_icons/event_tokens_pack_3.png"
+        }
+      ]
+    }
+  ],
+  "subscription_plans": [
+    {
+      "id": "vip_basic",
+      "name": "VIP أساسي",
+      "description": "اشتراك VIP أساسي مع مزايا حصرية",
+      "benefits": [
+        {
+          "id": "daily_gems",
+          "name": "جواهر يومية",
+          "description": "احصل على 20 جوهرة يومياً",
+          "value": 20,
+          "type": "gems",
+          "frequency": "daily"
+        },
+        {
+          "id": "xp_boost",
+          "name": "تعزيز الخبرة",
+          "description": "زيادة 10% في الخبرة المكتسبة",
+          "value": 0.1,
+          "type": "xp_multiplier"
+        },
+        {
+          "id": "gold_boost",
+          "name": "تعزيز الذهب",
+          "description": "زيادة 10% في الذهب المكتسب",
+          "value": 0.1,
+          "type": "gold_multiplier"
+        },
+        {
+          "id": "vip_chat",
+          "name": "دردشة VIP",
+          "description": "الوصول إلى قناة دردشة VIP",
+          "type": "feature"
+        }
+      ],
+      "duration_options": [
+        {
+          "id": "vip_basic_monthly",
+          "name": "اشتراك شهري",
+          "duration": 30,
+          "duration_unit": "days",
+          "price": {
+            "USD": 4.99,
+            "EUR": 4.99,
+            "SAR": 19.99,
+            "AED": 19.99,
+            "EGP": 149.99
+          },
+          "auto_renew": true
+        },
+        {
+          "id": "vip_basic_quarterly",
+          "name": "اشتراك ربع سنوي",
+          "duration": 90,
+          "duration_unit": "days",
+          "price": {
+            "USD": 12.99,
+            "EUR": 12.99,
+            "SAR": 49.99,
+            "AED": 49.99,
+            "EGP": 389.99
+          },
+          "discount_percentage": 13,
+          "auto_renew": true
+        },
+        {
+          "id": "vip_basic_yearly",
+          "name": "اشتراك سنوي",
+          "duration": 365,
+          "duration_unit": "days",
+          "price": {
+            "USD": 39.99,
+            "EUR": 39.99,
+            "SAR": 149.99,
+            "AED": 149.99,
+            "EGP": 1199.99
+          },
+          "discount_percentage": 33,
+          "auto_renew": true
+        }
+      ],
+      "icon": "subscription_icons/vip_basic.png"
+    },
+    {
+      "id": "vip_premium",
+      "name": "VIP متميز",
+      "description": "اشتراك VIP متميز مع مزايا حصرية إضافية",
+      "benefits": [
+        {
+          "id": "daily_gems_premium",
+          "name": "جواهر يومية",
+          "description": "احصل على 50 جوهرة يومياً",
+          "value": 50,
+          "type": "gems",
+          "frequency": "daily"
+        },
+        {
+          "id": "xp_boost_premium",
+          "name": "تعزيز الخبرة",
+          "description": "زيادة 25% في الخبرة المكتسبة",
+          "value": 0.25,
+          "type": "xp_multiplier"
+        },
+        {
+          "id": "gold_boost_premium",
+          "name": "تعزيز الذهب",
+          "description": "زيادة 25% في الذهب المكتسب",
+          "value": 0.25,
+          "type": "gold_multiplier"
+        },
+        {
+          "id": "vip_chat_premium",
+          "name": "دردشة VIP",
+          "description": "الوصول إلى قناة دردشة VIP",
+          "type": "feature"
+        },
+        {
+          "id": "monthly_item",
+          "name": "عنصر شهري حصري",
+          "description": "احصل على عنصر حصري كل شهر",
+          "type": "item",
+          "frequency": "monthly"
+        },
+        {
+          "id": "premium_costume",
+          "name": "زي VIP متميز",
+          "description": "زي حصري للمشتركين المتميزين",
+          "type": "costume"
+        },
+        {
+          "id": "premium_mount",
+          "name": "مطية VIP متميزة",
+          "description": "مطية حصرية للمشتركين المتميزين",
+          "type": "mount"
+        }
+      ],
+      "duration_options": [
+        {
+          "id": "vip_premium_monthly",
+          "name": "اشتراك شهري",
+          "duration": 30,
+          "duration_unit": "days",
+          "price": {
+            "USD": 9.99,
+            "EUR": 9.99,
+            "SAR": 39.99,
+            "AED": 39.99,
+            "EGP": 299.99
+          },
+          "auto_renew": true
+        },
+        {
+          "id": "vip_premium_quarterly",
+          "name": "اشتراك ربع سنوي",
+          "duration": 90,
+          "duration_unit": "days",
+          "price": {
+            "USD": 24.99,
+            "EUR": 24.99,
+            "SAR": 99.99,
+            "AED": 99.99,
+            "EGP": 749.99
+          },
+          "discount_percentage": 16,
+          "auto_renew": true
+        },
+        {
+          "id": "vip_premium_yearly",
+          "name": "اشتراك سنوي",
+          "duration": 365,
+          "duration_unit": "days",
+          "price": {
+            "USD": 79.99,
+            "EUR": 79.99,
+            "SAR": 299.99,
+            "AED": 299.99,
+            "EGP": 2399.99
+          },
+          "discount_percentage": 33,
+          "auto_renew": true
+        }
+      ],
+      "icon": "subscription_icons/vip_premium.png"
+    },
+    {
+      "id": "battle_pass",
+      "name": "تصريح المعركة",
+      "description": "تصريح موسمي يمنح مكافآت حصرية مع التقدم",
+      "benefits": [
+        {
+          "id": "premium_rewards",
+          "name": "مكافآت متميزة",
+          "description": "فتح مسار المكافآت المتميزة",
+          "type": "feature"
+        },
+        {
+          "id": "battle_pass_xp_boost",
+          "name": "تعزيز خبرة تصريح المعركة",
+          "description": "زيادة 20% في خبرة تصريح المعركة",
+          "value": 0.2,
+          "type": "battle_pass_xp_multiplier"
+        },
+        {
+          "id": "instant_levels",
+          "name": "مستويات فورية",
+          "description": "10 مستويات فورية في تصريح المعركة",
+          "value": 10,
+          "type": "battle_pass_levels"
+        }
+      ],
+      "duration_options": [
+        {
+          "id": "battle_pass_season",
+          "name": "موسم كامل",
+          "duration": 90,
+          "duration_unit": "days",
+          "price": {
+            "USD": 9.99,
+            "EUR": 9.99,
+            "SAR": 39.99,
+            "AED": 39.99,
+            "EGP": 299.99
+          },
+          "auto_renew": false
+        },
+        {
+          "id": "battle_pass_bundle",
+          "name": "حزمة تصريح المعركة",
+          "description": "تصريح المعركة مع 25 مستوى فوري",
+          "duration": 90,
+          "duration_unit": "days",
+          "price": {
+            "USD": 24.99,
+            "EUR": 24.99,
+            "SAR": 99.99,
+            "AED": 99.99,
+            "EGP": 749.99
+          },
+          "auto_renew": false,
+          "additional_benefits": [
+            {
+              "id": "extra_levels",
+              "name": "مستويات إضافية",
+              "description": "15 مستوى إضافي فوري",
+              "value": 15,
+              "type": "battle_pass_levels"
+            },
+            {
+              "id": "exclusive_costume",
+              "name": "زي حصري",
+              "description": "زي حصري لحزمة تصريح المعركة",
+              "type": "costume"
+            }
+          ]
+        }
+      ],
+      "icon": "subscription_icons/battle_pass.png"
+    }
+  ],
+  "special_offers": [
+    {
+      "id": "starter_pack",
+      "name": "حزمة المبتدئ",
+      "description": "حزمة خاصة للاعبين الجدد",
+      "price": {
+        "USD": 4.99,
+        "EUR": 4.99,
+        "SAR": 19.99,
+        "AED": 19.99,
+        "EGP": 149.99
+      },
+      "original_value": {
+        "USD": 19.99
+      },
+      "discount_percentage": 75,
+      "contents": [
+        {
+          "type": "gems",
+          "amount": 1000,
+          "description": "1000 جوهرة"
+        },
+        {
+          "type": "gold",
+          "amount": 50000,
+          "description": "50,000 ذهب"
+        },
+        {
+          "type": "item",
+          "item_id": "starter_weapon",
+          "amount": 1,
+          "description": "سلاح المبتدئ"
+        },
+        {
+          "type": "item",
+          "item_id": "starter_armor",
+          "amount": 1,
+          "description": "درع المبتدئ"
+        },
+        {
+          "type": "consumable",
+          "item_id": "xp_potion",
+          "amount": 5,
+          "description": "5 جرعات خبرة"
+        }
+      ],
+      "availability": {
+        "new_players_only": true,
+        "max_level": 10,
+        "purchase_limit": 1,
+        "expiry_days": 7
+      },
+      "icon": "special_offers/starter_pack.png"
+    },
+    {
+      "id": "daily_special",
+      "name": "العرض اليومي",
+      "description": "عرض خاص يتغير يومياً",
+      "price": {
+        "USD": 0.99,
+        "EUR": 0.99,
+        "SAR": 3.99,
+        "AED": 3.99,
+        "EGP": 29.99
+      },
+      "original_value": {
+        "USD": 2.99
+      },
+      "discount_percentage": 67,
+      "contents": [
+        {
+          "type": "gems",
+          "amount": 200,
+          "description": "200 جوهرة"
+        },
+        {
+          "type": "random_item",
+          "rarity": "rare",
+          "amount": 1,
+          "description": "عنصر نادر عشوائي"
+        }
+      ],
+      "availability": {
+        "refresh_frequency": "daily",
+        "purchase_limit": 1,
+        "expiry_hours": 24
+      },
+      "icon": "special_offers/daily_special.png"
+    },
+    {
+      "id": "weekend_special",
+      "name": "عرض نهاية الأسبوع",
+      "description": "عرض خاص متاح في عطلة نهاية الأسبوع",
+      "price": {
+        "USD": 9.99,
+        "EUR": 9.99,
+        "SAR": 39.99,
+        "AED": 39.99,
+        "EGP": 299.99
+      },
+      "original_value": {
+        "USD": 29.99
+      },
+      "discount_percentage": 67,
+      "contents": [
+        {
+          "type": "gems",
+          "amount": 2000,
+          "description": "2000 جوهرة"
+        },
+        {
+          "type": "gold",
+          "amount": 100000,
+          "description": "100,000 ذهب"
+        },
+        {
+          "type": "item",
+          "item_id": "weekend_chest",
+          "amount": 1,
+          "description": "صندوق نهاية الأسبوع"
+        },
+        {
+          "type": "consumable",
+          "item_id": "xp_boost",
+          "amount": 3,
+          "description": "3 معززات خبرة"
+        }
+      ],
+      "availability": {
+        "days_of_week": [5, 6],
+        "purchase_limit": 1,
+        "refresh_frequency": "weekly"
+      },
+      "icon": "special_offers/weekend_special.png"
+    },
+    {
+      "id": "ramadan_pack",
+      "name": "حزمة رمضان",
+      "description": "حزمة خاصة بشهر رمضان المبارك",
+      "price": {
+        "USD": 19.99,
+        "EUR": 19.99,
+        "SAR": 79.99,
+        "AED": 79.99,
+        "EGP": 599.99
+      },
+      "original_value": {
+        "USD": 49.99
+      },
+      "discount_percentage": 60,
+      "contents": [
+        {
+          "type": "gems",
+          "amount": 3000,
+          "description": "3000 جوهرة"
+        },
+        {
+          "type": "gold",
+          "amount": 200000,
+          "description": "200,000 ذهب"
+        },
+        {
+          "type": "costume",
+          "item_id": "ramadan_costume",
+          "amount": 1,
+          "description": "زي رمضان الخاص"
+        },
+        {
+          "type": "mount",
+          "item_id": "crescent_mount",
+          "amount": 1,
+          "description": "مطية الهلال"
+        },
+        {
+          "type": "pet",
+          "item_id": "ramadan_lantern_pet",
+          "amount": 1,
+          "description": "حيوان أليف فانوس رمضان"
+        },
+        {
+          "type": "consumable",
+          "item_id": "ramadan_feast",
+          "amount": 10,
+          "description": "10 ولائم رمضانية"
+        }
+      ],
+      "availability": {
+        "seasonal": true,
+        "season_id": "ramadan",
+        "purchase_limit": 1
+      },
+      "icon": "special_offers/ramadan_pack.png"
+    }
+  ],
+  "vip_system": {
+    "levels": [
+      {
+        "level": 0,
+        "name": "عادي",
+        "points_required": 0,
+        "benefits": []
+      },
+      {
+        "level": 1,
+        "name": "برونزي",
+        "points_required": 100,
+        "benefits": [
+          {
+            "id": "daily_gems_vip1",
+            "name": "جواهر يومية",
+            "description": "10 جواهر يومياً",
+            "value": 10,
+            "type": "gems",
+            "frequency": "daily"
+          },
+          {
+            "id": "xp_boost_vip1",
+            "name": "تعزيز الخبرة",
+            "description": "زيادة 5% في الخبرة المكتسبة",
+            "value": 0.05,
+            "type": "xp_multiplier"
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "name": "فضي",
+        "points_required": 500,
+        "benefits": [
+          {
+            "id": "daily_gems_vip2",
+            "name": "جواهر يومية",
+            "description": "20 جواهر يومياً",
+            "value": 20,
+            "type": "gems",
+            "frequency": "daily"
+          },
+          {
+            "id": "xp_boost_vip2",
+            "name": "تعزيز الخبرة",
+            "description": "زيادة 10% في الخبرة المكتسبة",
+            "value": 0.1,
+            "type": "xp_multiplier"
+          },
+          {
+            "id": "gold_boost_vip2",
+            "name": "تعزيز الذهب",
+            "description": "زيادة 5% في الذهب المكتسب",
+            "value": 0.05,
+            "type": "gold_multiplier"
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "name": "ذهبي",
+        "points_required": 1000,
+        "benefits": [
+          {
+            "id": "daily_gems_vip3",
+            "name": "جواهر يومية",
+            "description": "30 جواهر يومياً",
+            "value": 30,
+            "type": "gems",
+            "frequency": "daily"
+          },
+          {
+            "id": "xp_boost_vip3",
+            "name": "تعزيز الخبرة",
+            "description": "زيادة 15% في الخبرة المكتسبة",
+            "value": 0.15,
+            "type": "xp_multiplier"
+          },
+          {
+            "id": "gold_boost_vip3",
+            "name": "تعزيز الذهب",
+            "description": "زيادة 10% في الذهب المكتسب",
+            "value": 0.1,
+            "type": "gold_multiplier"
+          },
+          {
+            "id": "vip_chat_vip3",
+            "name": "دردشة VIP",
+            "description": "الوصول إلى قناة دردشة VIP",
+            "type": "feature"
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "name": "بلاتيني",
+        "points_required": 2000,
+        "benefits": [
+          {
+            "id": "daily_gems_vip4",
+            "name": "جواهر يومية",
+            "description": "50 جواهر يومياً",
+            "value": 50,
+            "type": "gems",
+            "frequency": "daily"
+          },
+          {
+            "id": "xp_boost_vip4",
+            "name": "تعزيز الخبرة",
+            "description": "زيادة 20% في الخبرة المكتسبة",
+            "value": 0.2,
+            "type": "xp_multiplier"
+          },
+          {
+            "id": "gold_boost_vip4",
+            "name": "تعزيز الذهب",
+            "description": "زيادة 15% في الذهب المكتسب",
+            "value": 0.15,
+            "type": "gold_multiplier"
+          },
+          {
+            "id": "vip_chat_vip4",
+            "name": "دردشة VIP",
+            "description": "الوصول إلى قناة دردشة VIP",
+            "type": "feature"
+          },
+          {
+            "id": "monthly_item_vip4",
+            "name": "عنصر شهري",
+            "description": "عنصر حصري شهري",
+            "type": "item",
+            "frequency": "monthly"
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "name": "ماسي",
+        "points_required": 5000,
+        "benefits": [
+          {
+            "id": "daily_gems_vip5",
+            "name": "جواهر يومية",
+            "description": "100 جواهر يومياً",
+            "value": 100,
+            "type": "gems",
+            "frequency": "daily"
+          },
+          {
+            "id": "xp_boost_vip5",
+            "name": "تعزيز الخبرة",
+            "description": "زيادة 30% في الخبرة المكتسبة",
+            "value": 0.3,
+            "type": "xp_multiplier"
+          },
+          {
+            "id": "gold_boost_vip5",
+            "name": "تعزيز الذهب",
+            "description": "زيادة 25% في الذهب المكتسب",
+            "value": 0.25,
+            "type": "gold_multiplier"
+          },
+          {
+            "id": "vip_chat_vip5",
+            "name": "دردشة VIP",
+            "description": "الوصول إلى قناة دردشة VIP",
+            "type": "feature"
+          },
+          {
+            "id": "monthly_item_vip5",
+            "name": "عنصر شهري",
+            "description": "عنصر حصري شهري",
+            "type": "item",
+            "frequency": "monthly"
+          },
+          {
+            "id": "vip_costume_vip5",
+            "name": "زي VIP",
+            "description": "زي حصري للمستوى الماسي",
+            "type": "costume"
+          },
+          {
+            "id": "vip_mount_vip5",
+            "name": "مطية VIP",
+            "description": "مطية حصرية للمستوى الماسي",
+            "type": "mount"
+          }
+        ]
+      }
+    ],
+    "points_conversion": {
+      "USD": 1,
+      "EUR": 1,
+      "SAR": 0.25,
+      "AED": 0.25,
+      "EGP": 0.033
+    }
+  },
+  "payment_ui": {
+    "store_sections": [
+      {
+        "id": "featured",
+        "name": "العروض المميزة",
+        "description": "أفضل العروض والحزم",
+        "priority": 1,
+        "icon": "ui/store/featured_icon.png",
+        "background": "ui/store/featured_bg.png"
+      },
+      {
+        "id": "gems",
+        "name": "الجواهر",
+        "description": "اشترِ الجواهر لاستخدامها في اللعبة",
+        "priority": 2,
+        "icon": "ui/store/gems_icon.png",
+        "background": "ui/store/gems_bg.png"
+      },
+      {
+        "id": "subscriptions",
+        "name": "الاشتراكات",
+        "description": "اشتراكات VIP وتصريح المعركة",
+        "priority": 3,
+        "icon": "ui/store/subscriptions_icon.png",
+        "background": "ui/store/subscriptions_bg.png"
+      },
+      {
+        "id": "special_offers",
+        "name": "عروض خاصة",
+        "description": "عروض محدودة بوقت",
+        "priority": 4,
+        "icon": "ui/store/special_offers_icon.png",
+        "background": "ui/store/special_offers_bg.png"
+      },
+      {
+        "id": "seasonal",
+        "name": "عروض موسمية",
+        "description": "عروض خاصة بالمواسم والأحداث",
+        "priority": 5,
+        "icon": "ui/store/seasonal_icon.png",
+        "background": "ui/store/seasonal_bg.png"
+      }
+    ],
+    "purchase_flow": {
+      "confirmation_required": true,
+      "show_benefits": true,
+      "show_receipt": true,
+      "receipt_email": true,
+      "save_payment_method": {
+        "option": true,
+        "default": false
+      }
+    },
+    "receipt": {
+      "include_transaction_id": true,
+      "include_date": true,
+      "include_payment_method": true,
+      "include_price": true,
+      "include_items": true,
+      "include_vip_points": true
+    }
+  },
+  "security": {
+    "purchase_verification": {
+      "server_side_validation": true,
+      "receipt_verification": true,
+      "fraud_detection": true,
+      "purchase_limits": {
+        "daily_limit": {
+          "enabled": true,
+          "amount": {
+            "USD": 1000
+          },
+          "override_with_verification": true
+        },
+        "transaction_limit": {
+          "enabled": true,
+          "amount": {
+            "USD": 500
+          },
+          "override_with_verification": true
+        }
+      }
+    },
+    "refund_policy": {
+      "time_window": 48,
+      "eligible_items": ["gems_packs", "subscriptions"],
+      "ineligible_items": ["consumed_items", "special_offers"],
+      "refund_method": "original_payment",
+      "automatic_refunds": false,
+      "max_refunds_per_year": 3
+    },
+    "parental_controls": {
+      "enabled": true,
+      "purchase_approval": {
+        "enabled": true,
+        "threshold": {
+          "USD": 20
+        }
+      },
+      "spending_limits": {
+        "enabled": true,
+        "daily_limit": {
+          "USD": 10
+        },
+        "monthly_limit": {
+          "USD": 50
+        }
+      },
+      "disable_purchases": {
+        "enabled": true
+      }
+    }
+  },
+  "analytics": {
+    "track_events": [
+      "store_view",
+      "item_view",
+      "purchase_initiated",
+      "purchase_completed",
+      "purchase_failed",
+      "subscription_started",
+      "subscription_renewed",
+      "subscription_cancelled",
+      "refund_requested",
+      "refund_processed"
+    ],
+    "purchase_funnel": {
+      "steps": [
+        "store_view",
+        "item_view",
+        "purchase_initiated",
+        "payment_method_selected",
+        "payment_processed",
+        "purchase_completed"
+      ]
+    },
+    "revenue_metrics": {
+      "arpu": true,
+      "arppu": true,
+      "conversion_rate": true,
+      "ltv": true,
+      "retention": true
+    }
+  },
+  "localization": {
+    "currencies": [
+      {
+        "code": "USD",
+        "symbol": "$",
+        "name": "دولار أمريكي",
+        "format": "{symbol}{amount}"
+      },
+      {
+        "code": "EUR",
+        "symbol": "€",
+        "name": "يورو",
+        "format": "{symbol}{amount}"
+      },
+      {
+        "code": "SAR",
+        "symbol": "ر.س",
+        "name": "ريال سعودي",
+        "format": "{amount} {symbol}"
+      },
+      {
+        "code": "AED",
+        "symbol": "د.إ",
+        "name": "درهم إماراتي",
+        "format": "{amount} {symbol}"
+      },
+      {
+        "code": "EGP",
+        "symbol": "ج.م",
+        "name": "جنيه مصري",
+        "format": "{amount} {symbol}"
+      }
+    ],
+    "default_currency": "USD",
+    "currency_detection": {
+      "based_on_location": true,
+      "based_on_device": true,
+      "user_selectable": true
+    }
+  }
+}
