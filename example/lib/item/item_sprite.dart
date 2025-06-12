@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 import 'package:devilf_engine/core/df_position.dart';
 import 'package:devilf_engine/core/df_rect.dart';

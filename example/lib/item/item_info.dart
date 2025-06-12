@@ -1,4 +1,3 @@
-import 'package:example/data/item_data.dart';
 
 /// 一件物品类
 class ItemInfo {

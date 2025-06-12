@@ -1,3 +1,4 @@
+
 name: arabic_mmorpg
 description: Al-Fateh - Path of Revenge - An Arabic MMORPG game
 
@@ -22,6 +23,7 @@ version: 1.0.0+1
 environment:
   sdk: '>=3.0.0 <4.0.0'
 
+
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
 # consider running `flutter pub upgrade --major-versions`.
@@ -29,6 +31,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
   flutter_localizations:
     sdk: flutter
 
@@ -107,7 +110,9 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+
 flutter:
+  uses-material-design: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -165,3 +170,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

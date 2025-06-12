@@ -1,0 +1,97 @@
+{
+  "general": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "back": "Back",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm",
+    "create": "Create",
+    "select": "Select",
+    "logout": "Logout"
+  },
+  "auth": {
+    "welcome": "Welcome to Silkroad Online",
+    "login": "Login",
+    "register": "Register",
+    "createAccount": "Create New Account",
+    "backToLogin": "Back to Login",
+    "username": "Username",
+    "password": "Password",
+    "email": "Email",
+    "confirmPassword": "Confirm Password"
+  },
+  "character": {
+    "select": "Select Character",
+    "create": "Create Character",
+    "createNew": "Create New Character",
+    "name": "Character Name",
+    "selectClass": "Select Class",
+    "classes": {
+      "warrior": "Warrior",
+      "mage": "Mage",
+      "archer": "Archer"
+    },
+    "level": "Level {level}"
+  },
+  "mainMenu": {
+    "newGame": "New Game",
+    "continue": "Continue",
+    "settings": "Settings",
+    "exit": "Exit"
+  },
+  "game": {
+    "level": "Level",
+    "experience": "Experience",
+    "health": "Health",
+    "mana": "Mana",
+    "strength": "Strength",
+    "agility": "Agility",
+    "intelligence": "Intelligence",
+    "inventory": "Inventory",
+    "equipment": "Equipment",
+    "skills": "Skills",
+    "quests": "Quests"
+  },
+  "combat": {
+    "attack": "Attack",
+    "defend": "Defend",
+    "useItem": "Use Item",
+    "flee": "Flee",
+    "victory": "Victory!",
+    "defeat": "Defeat",
+    "criticalHit": "Critical Hit!"
+  },
+  "inventory": {
+    "use": "Use",
+    "equip": "Equip",
+    "unequip": "Unequip",
+    "drop": "Drop",
+    "full": "Inventory Full",
+    "empty": "Inventory Empty"
+  },
+  "equipment": {
+    "weapon": "Weapon",
+    "armor": "Armor",
+    "helmet": "Helmet",
+    "boots": "Boots",
+    "accessory": "Accessory"
+  },
+  "quests": {
+    "accept": "Accept",
+    "decline": "Decline",
+    "complete": "Complete",
+    "failed": "Failed",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "rewards": "Rewards"
+  },
+  "errors": {
+    "levelRequired": "Level Required: {level}",
+    "insufficientGold": "Insufficient Gold",
+    "inventoryFull": "Inventory Full",
+    "cannotEquip": "Cannot Equip Item",
+    "questUnavailable": "Quest Unavailable"
+  }
+}

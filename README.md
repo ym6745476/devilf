@@ -1,157 +1,130 @@
-# DevilF 游戏引擎  
+# الفتح: طريق الانتقام (Al-Fateh: Path of Vengeance)
 
-<p align="center" >
-    <img src="https://github.com/ym6745476/devilf/blob/master/logo.png?raw=true" />
-</p>
+An Arabic MMORPG game built with Flutter, Dart, and Flame engine.
 
-<p align="center">
-    <img src="https://img.shields.io/badge/devilf-0.1.0-orange" />
-    <img src="https://img.shields.io/badge/flutter-2.5.0-green" />
-</p>
+## Overview
 
-<p align="center" >
-    A Flutter 2D RPG Game Engine On Web & Android & IOS.
-</p>
-<p align="center" >
-    一个基于Flutter的2D RPG游戏引擎。
-</p>
-  
-<p align="center" >
-   The Devilf Engine Is A Open Source 2D Game Engine.
-   The Engine Is Development Using Flutter & Dart Language.
-   You Can Use It Independently In Your Flutter Project.
-   Some Documentation Of How To Use It Can Be Found Here.
-</p>
+الفتح: طريق الانتقام (Al-Fateh: Path of Vengeance) is a fully-featured MMORPG game with Arabic language support, designed to run on mobile devices and web browsers. The game features a rich fantasy world inspired by Arabic and Islamic history, with deep character progression, guild systems, PvP and PvE combat, and much more.
 
-## 引擎介绍  
-Flutter由Google的工程师团队打造，用于创建高性能、跨平台的移动应用。  
-使用Flutter可以很容易的实现三端跨平台，为APP游戏化，以及跨平台游戏开发提供了更多可能性。  
-感谢大家关注，也欢迎贡献你的想法和技术。欢迎加QQ群讨论：687500695！！！   
-声明：游戏内素材来源传奇世界，如有侵权请联系站长删除，素材仅供开发学习，如滥用产生的后果与本站无关。  
-## 适用范围：  
-中型游戏，营销活动，小游戏。  
+## Features
 
-## 主要特性：  
-游戏循环，精灵渲染，精灵动画，摄像机，瓦片地图，碰撞检测等。   
+- **Character Classes**: Warrior, Mage, Archer, and Assassin with unique skills and abilities
+- **Rich Game World**: Cities, forests, deserts, mountains, dungeons with day/night cycle and weather effects
+- **Deep Progression**: Level up, acquire skills, enhance equipment, and customize your character
+- **Social Systems**: Guilds, parties, chat, trading, and marriage systems
+- **Combat**: Real-time combat with skills, combos, and strategic gameplay
+- **Quests**: Main storyline and side quests with rewards and progression
+- **Economy**: Trading, crafting, and marketplace systems
+- **PvP**: Duels, arena battles, and guild wars
+- **Full Arabic Support**: Right-to-left text, Arabic UI, and localized content
 
-## 引擎官网    
-https://devilf.com  
+## Technical Architecture
 
-## 开发手册  
-https://ymbok.com/book/devilf.html  
+The game is built using:
 
-## 在线体验    
-https://ymbok.com/download/slayer.html  
+- **Flutter & Dart**: For cross-platform UI and game logic
+- **Flame Engine**: For 2D game rendering and physics
+- **Clean Architecture**: Separation of concerns with domain, data, and presentation layers
+- **BLoC Pattern**: For state management
+- **WebSockets**: For real-time multiplayer communication
+- **REST APIs**: For non-real-time game operations
+- **Firebase**: For authentication and cloud services
 
-## 安装引擎  
-```yaml
-dependencies:
-  devilf: ^0.1.0
+## Project Structure
+
+```
+lib/
+├── config/                 # Configuration files
+├── core/                   # Core utilities and helpers
+│   ├── error/              # Error handling
+│   ├── network/            # Network utilities
+│   └── utils/              # Utility functions
+├── data/                   # Data layer
+│   ├── datasources/        # Remote and local data sources
+│   ├── models/             # Data models
+│   └── repositories/       # Repository implementations
+├── domain/                 # Domain layer
+│   ├── entities/           # Business entities
+│   ├── repositories/       # Repository interfaces
+│   └── usecases/           # Use cases
+├── game/                   # Game engine and components
+│   ├── components/         # Game components
+│   │   ├── environment/    # Environment components
+│   │   ├── monster/        # Monster components
+│   │   ├── npc/            # NPC components
+│   │   ├── player/         # Player components
+│   │   ├── ui/             # UI components
+│   │   └── effects/        # Visual effects
+│   ├── systems/            # Game systems
+│   └── worlds/             # Game worlds
+├── presentation/           # Presentation layer
+│   ├── blocs/              # BLoC state management
+│   ├── pages/              # App pages
+│   └── widgets/            # Reusable widgets
+└── main.dart               # App entry point
 ```
 
-## 示例演示  
-<img src="https://github.com/ym6745476/devilf/blob/master/screenshot/slayer.gif?v=10" width="600" height="292"/>  
+## Getting Started
 
-## 示例功能  
-* GameManager：游戏管理器  
-* GameScene：游戏场景  
-* PlayerSprite：玩家精灵  
-* MonsterSprite：怪物精灵  
-* EffectSprite：特效精灵  
-* MapSprite：地图精灵  
-* ItemSprite：物品精灵  
+### Prerequisites
 
-## 核心组件    
-* GameScene：游戏场景  
-* GameWidget：游戏控件  
-* GameRenderBox：渲染控件  
-* GameLoop：游戏循环  
-* Sprite：精灵类  
-* Camera：摄像机    
-* Audio：音效    
+- Flutter SDK (latest stable version)
+- Dart SDK (latest stable version)
+- Android Studio / VS Code with Flutter plugins
 
-## 精灵渲染    
-* TextSprite：文本精灵  
-* ImageSprite：图片精灵  
-* AnimationSprite：动画精灵  
-* ProgressSprite：进度精灵  
-* TileMapSprite：瓦片精灵  
+### Installation
 
-## 游戏控件   
-* Joystick：遥杆   
-* Button：按钮   
-* CheckButton：选择按钮  
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/arabic-mmorpg.git
+   ```
 
-## 游戏功能   
-* 资源加载  
-* 碰撞检测  
-* 坐标转换  
-* A*寻路算法  
+2. Install dependencies:
+   ```
+   cd arabic-mmorpg
+   flutter pub get
+   ```
 
-## [0.1.0] - 2021/09/26.   
-* 升级[核心] Flutter 2.5.0    
-* 新增[示例] 物品拾取功能   
-* 新增[示例] 物品掉落到场景中显示  
-* 新增[示例] 怪物死亡物品掉落配置  
-* 新增[示例] 装备信息显示  
-* 新增[核心] 精灵可监听点击事件  
+3. Run the app:
+   ```
+   flutter run
+   ```
 
-## [0.0.9] - 2021/08/19.   
-* 优化[示例] 修复BUG  
-* 新增[示例] 人物界面背包页面 换装  
-* 新增[示例] 数据配置文件  
-* 优化[示例] 地图移动范围限制    
-* 新增[示例] 怪物蛇，假人，两把武器素材  
-* 新增[示例] 玩家和怪物动作和战斗音效  
+## Development
 
-## [0.0.8] - 2021/08/15.   
-* 优化[示例] 修复BUG  
-* 优化[核心] 代码逻辑优化  
-* 新增[核心] 音效类       
+### Building Assets
 
-## [0.0.7] - 2021/08/10.  
-* 优化[示例] 自动战斗逻辑优化   
-* 优化[示例] 主角和怪物A*寻目标  
-* 新增[核心] A*最佳路径算法   
-* 新增[核心] 碰撞形状 碰撞函数   
-* 新增[核心] 绘制遮挡层和碰撞层    
+The game requires various assets (images, audio, etc.) that should be placed in the `assets/` directory. The structure is as follows:
 
-## [0.0.6] - 2021/08/01.  
-* 优化[示例] 技能区域 按钮布局   
-* 新增[核心] 按钮控件  
-* 新增[核心] 地图瓦片动态加载  
-* 新增[核心] Camera 摄像机 主角跟随   
-* 新增[示例] Tiled地图显示  
-* 新增[核心] 新增瓦片精灵    
-* 优化[核心] 摇杆不固定位置  
-* 新增[示例] 玩家和怪物增加血条显示  
-* 新增[核心] 进度精灵   
-* 新增[示例] 目标锁定 自动移动 自动战斗   
-* 新增[示例] 攻杀剑术和小火球特效  
-* 新增[示例] 怪物死亡动画    
-* 新增[示例] 新增蜘蛛怪物    
+```
+assets/
+├── images/                 # Game images
+│   ├── characters/         # Character sprites
+│   ├── monsters/           # Monster sprites
+│   ├── maps/               # Map backgrounds
+│   ├── items/              # Item icons
+│   └── ui/                 # UI elements
+├── audio/                  # Audio files
+│   ├── music/              # Background music
+│   └── sfx/                # Sound effects
+├── fonts/                  # Custom fonts
+└── maps/                   # Map data files
+```
 
-## [0.0.5] - 2021/07/16. 
-* 优化[核心] 引擎代码和示例    
+### Server Setup
 
-## [0.0.4] - 2021/07/15. 
-* 新增[示例] 摇杆控制玩家移动   
-* 新增[核心] Joystick 摇杆控件   
+The game requires a backend server for multiplayer functionality. The server code is available in a separate repository.
 
-## [0.0.3] - 2021/07/11.  
-* 新增[示例] 精灵渲染  
-* 优化[核心] 重命名全部类增加DF前缀   
-* 新增[核心] 读取TexturePacker导出的Plist转Json文件格式  
-* 新增[核心] AnimationSprite  动画精灵  
-* 新增[核心] ImageSprite  图像精灵  
-* 新增[核心] TextSprite  文本精灵  
+## Contributing
 
-## [0.0.2] - 2021/07/07.  
-* 新增[核心] GameScene  游戏场景  
-* 新增[核心] AssetsLoader 资源读取  
-* 新增[核心] GameRenderBox 渲染盒子  
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## [0.0.1] - 2021/07/06.  
-* 新增[核心] GameLoop 游戏循环  
-* 新增[核心] GameWidget 游戏控件  
-* 新增[核心] Sprite 基础精灵类  
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgements
+
+- [Flame Engine](https://flame-engine.org/)
+- [Flutter](https://flutter.dev/)
+- [Silkroad Online](https://github.com/kiko19768/Silkroad-online) - For inspiration and reference

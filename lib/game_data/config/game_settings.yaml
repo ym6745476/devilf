@@ -1,0 +1,49 @@
+# Game Settings Configuration
+
+# Game Window Settings
+window:
+  width: 1280
+  height: 720
+  fullscreen: false
+  title: "Al-Fath: Path of Revenge"
+
+# Player Settings
+player:
+  initial_level: 1
+  initial_hp: 100
+  initial_mp: 50
+  movement_speed: 5.0
+  auto_attack_range: 3.0
+
+# Combat Settings
+combat:
+  auto_attack_interval: 1.0
+  skill_cooldown_reduction: 1.0
+  max_target_distance: 10.0
+  aggro_range: 8.0
+
+# UI Settings
+ui:
+  joystick_opacity: 0.7
+  show_damage_numbers: true
+  show_exp_gain: true
+  minimap_size: 150
+
+# Game Features
+features:
+  auto_walk: true
+  auto_combat: true
+  pvp_enabled: true
+  guild_system: true
+
+# VIP System
+vip:
+  max_level: 10
+  exp_bonus_per_level: 0.1
+  gold_bonus_per_level: 0.05
+
+# Server Settings
+server:
+  tick_rate: 60
+  max_players_per_instance: 100
+  save_interval: 300
