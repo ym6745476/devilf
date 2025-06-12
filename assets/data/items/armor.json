@@ -1,0 +1,39 @@
+{
+  "helmets": [
+    {
+      "id": "helmet_1",
+      "name": "خوذة جلدية",
+      "level": 1,
+      "defense": 3,
+      "rarity": "common",
+      "effects": [],
+      "description": "خوذة بسيطة من الجلد",
+      "price": 30
+    },
+    {
+      "id": "helmet_2",
+      "name": "خوذة حديدية",
+      "level": 10,
+      "defense": 8,
+      "rarity": "uncommon",
+      "effects": [
+        "تزيد الصحة بنسبة 5%"
+      ],
+      "description": "خوذة متوسطة القوة من الحديد",
+      "price": 120
+    },
+    {
+      "id": "helmet_3",
+      "name": "خوذة فولاذية",
+      "level": 20,
+      "defense": 15,
+      "rarity": "rare",
+      "effects": [
+        "تزيد الصحة بنسبة 10%",
+        "مقاومة للسحر بنسبة 5%"
+      ],
+      "description": "خوذة قوية من الفولاذ",
+      "price": 300
+    }
+  ]
+}

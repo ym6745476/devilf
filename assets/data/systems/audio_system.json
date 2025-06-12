@@ -1,0 +1,1694 @@
+{
+  "music": {
+    "themes": [
+      {
+        "id": "main_theme",
+        "name": "موسيقى اللعبة الرئيسية",
+        "file": "music/main_theme.mp3",
+        "description": "موسيقى شرقية حماسية تعكس روح اللعبة",
+        "duration": 180,
+        "loop": true,
+        "volume": 0.8,
+        "usage": ["main_menu", "character_creation"]
+      },
+      {
+        "id": "city_theme",
+        "name": "موسيقى المدينة",
+        "file": "music/city_theme.mp3",
+        "description": "موسيقى هادئة تعكس الحياة في المدينة",
+        "duration": 240,
+        "loop": true,
+        "volume": 0.7,
+        "usage": ["cities", "safe_zones"]
+      },
+      {
+        "id": "desert_theme",
+        "name": "موسيقى الصحراء",
+        "file": "music/desert_theme.mp3",
+        "description": "موسيقى تعكس جو الصحراء والمغامرة",
+        "duration": 210,
+        "loop": true,
+        "volume": 0.7,
+        "usage": ["desert_areas"]
+      },
+      {
+        "id": "forest_theme",
+        "name": "موسيقى الغابة",
+        "file": "music/forest_theme.mp3",
+        "description": "موسيقى غامضة تعكس أجواء الغابة",
+        "duration": 195,
+        "loop": true,
+        "volume": 0.7,
+        "usage": ["forest_areas"]
+      },
+      {
+        "id": "mountain_theme",
+        "name": "موسيقى الجبال",
+        "file": "music/mountain_theme.mp3",
+        "description": "موسيقى عظيمة تعكس عظمة الجبال",
+        "duration": 225,
+        "loop": true,
+        "volume": 0.7,
+        "usage": ["mountain_areas"]
+      },
+      {
+        "id": "combat_theme",
+        "name": "موسيقى القتال",
+        "file": "music/combat_theme.mp3",
+        "description": "موسيقى حماسية للقتال",
+        "duration": 150,
+        "loop": true,
+        "volume": 0.8,
+        "usage": ["combat"]
+      },
+      {
+        "id": "boss_theme",
+        "name": "موسيقى قتال الزعماء",
+        "file": "music/boss_theme.mp3",
+        "description": "موسيقى ملحمية لقتال الزعماء",
+        "duration": 180,
+        "loop": true,
+        "volume": 0.9,
+        "usage": ["boss_fights"]
+      },
+      {
+        "id": "dungeon_theme",
+        "name": "موسيقى الزنزانات",
+        "file": "music/dungeon_theme.mp3",
+        "description": "موسيقى مخيفة وغامضة للزنزانات",
+        "duration": 210,
+        "loop": true,
+        "volume": 0.8,
+        "usage": ["dungeons"]
+      },
+      {
+        "id": "victory_theme",
+        "name": "موسيقى النصر",
+        "file": "music/victory_theme.mp3",
+        "description": "موسيقى احتفالية للنصر",
+        "duration": 30,
+        "loop": false,
+        "volume": 0.8,
+        "usage": ["victory"]
+      },
+      {
+        "id": "defeat_theme",
+        "name": "موسيقى الهزيمة",
+        "file": "music/defeat_theme.mp3",
+        "description": "موسيقى حزينة للهزيمة",
+        "duration": 20,
+        "loop": false,
+        "volume": 0.7,
+        "usage": ["defeat"]
+      },
+      {
+        "id": "market_theme",
+        "name": "موسيقى السوق",
+        "file": "music/market_theme.mp3",
+        "description": "موسيقى نشطة تعكس أجواء السوق",
+        "duration": 180,
+        "loop": true,
+        "volume": 0.7,
+        "usage": ["markets", "trading_areas"]
+      },
+      {
+        "id": "night_theme",
+        "name": "موسيقى الليل",
+        "file": "music/night_theme.mp3",
+        "description": "موسيقى هادئة وغامضة لفترة الليل",
+        "duration": 240,
+        "loop": true,
+        "volume": 0.6,
+        "usage": ["night_time"]
+      },
+      {
+        "id": "ramadan_theme",
+        "name": "موسيقى رمضان",
+        "file": "music/ramadan_theme.mp3",
+        "description": "موسيقى خاصة بشهر رمضان",
+        "duration": 210,
+        "loop": true,
+        "volume": 0.7,
+        "usage": ["ramadan_event"]
+      },
+      {
+        "id": "eid_theme",
+        "name": "موسيقى العيد",
+        "file": "music/eid_theme.mp3",
+        "description": "موسيقى احتفالية للعيد",
+        "duration": 180,
+        "loop": true,
+        "volume": 0.8,
+        "usage": ["eid_event"]
+      },
+      {
+        "id": "wedding_theme",
+        "name": "موسيقى الزفاف",
+        "file": "music/wedding_theme.mp3",
+        "description": "موسيقى احتفالية للزفاف",
+        "duration": 240,
+        "loop": true,
+        "volume": 0.8,
+        "usage": ["wedding_ceremony"]
+      }
+    ],
+    "transitions": {
+      "fade_duration": 2.0,
+      "cross_fade": true,
+      "priority_rules": [
+        {
+          "high_priority": ["combat_theme", "boss_theme"],
+          "override_all": true
+        },
+        {
+          "high_priority": ["victory_theme", "defeat_theme"],
+          "override": ["combat_theme", "boss_theme"],
+          "duration": "once"
+        }
+      ]
+    },
+    "dynamic_music": {
+      "layers": [
+        {
+          "id": "base_layer",
+          "name": "الطبقة الأساسية",
+          "always_active": true
+        },
+        {
+          "id": "tension_layer",
+          "name": "طبقة التوتر",
+          "activation": "enemies_nearby"
+        },
+        {
+          "id": "action_layer",
+          "name": "طبقة الحركة",
+          "activation": "in_combat"
+        },
+        {
+          "id": "ambient_layer",
+          "name": "طبقة المحيط",
+          "activation": "exploration"
+        }
+      ],
+      "transitions": {
+        "layer_fade_in": 1.0,
+        "layer_fade_out": 2.0
+      }
+    },
+    "time_based": {
+      "day_night_cycle": {
+        "dawn": {
+          "theme": "dawn_variation",
+          "transition_duration": 5.0
+        },
+        "day": {
+          "theme": "day_variation",
+          "transition_duration": 3.0
+        },
+        "dusk": {
+          "theme": "dusk_variation",
+          "transition_duration": 5.0
+        },
+        "night": {
+          "theme": "night_variation",
+          "transition_duration": 3.0
+        }
+      }
+    }
+  },
+  "sound_effects": {
+    "player": {
+      "movement": [
+        {
+          "id": "footstep_grass",
+          "name": "خطوات على العشب",
+          "file": "sfx/player/footstep_grass.wav",
+          "volume": 0.4,
+          "pitch_variation": 0.1,
+          "trigger": "walking_on_grass"
+        },
+        {
+          "id": "footstep_stone",
+          "name": "خطوات على الحجر",
+          "file": "sfx/player/footstep_stone.wav",
+          "volume": 0.5,
+          "pitch_variation": 0.1,
+          "trigger": "walking_on_stone"
+        },
+        {
+          "id": "footstep_wood",
+          "name": "خطوات على الخشب",
+          "file": "sfx/player/footstep_wood.wav",
+          "volume": 0.5,
+          "pitch_variation": 0.1,
+          "trigger": "walking_on_wood"
+        },
+        {
+          "id": "footstep_sand",
+          "name": "خطوات على الرمل",
+          "file": "sfx/player/footstep_sand.wav",
+          "volume": 0.3,
+          "pitch_variation": 0.1,
+          "trigger": "walking_on_sand"
+        },
+        {
+          "id": "footstep_water",
+          "name": "خطوات في الماء",
+          "file": "sfx/player/footstep_water.wav",
+          "volume": 0.6,
+          "pitch_variation": 0.1,
+          "trigger": "walking_in_water"
+        },
+        {
+          "id": "footstep_snow",
+          "name": "خطوات على الثلج",
+          "file": "sfx/player/footstep_snow.wav",
+          "volume": 0.4,
+          "pitch_variation": 0.1,
+          "trigger": "walking_on_snow"
+        },
+        {
+          "id": "jump",
+          "name": "قفزة",
+          "file": "sfx/player/jump.wav",
+          "volume": 0.5,
+          "pitch_variation": 0.05,
+          "trigger": "jumping"
+        },
+        {
+          "id": "land",
+          "name": "هبوط",
+          "file": "sfx/player/land.wav",
+          "volume": 0.6,
+          "pitch_variation": 0.1,
+          "trigger": "landing"
+        }
+      ],
+      "combat": [
+        {
+          "id": "sword_swing",
+          "name": "ضربة سيف",
+          "file": "sfx/player/sword_swing.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "sword_attack"
+        },
+        {
+          "id": "sword_hit",
+          "name": "إصابة سيف",
+          "file": "sfx/player/sword_hit.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "sword_hit"
+        },
+        {
+          "id": "dagger_swing",
+          "name": "ضربة خنجر",
+          "file": "sfx/player/dagger_swing.wav",
+          "volume": 0.6,
+          "pitch_variation": 0.1,
+          "trigger": "dagger_attack"
+        },
+        {
+          "id": "dagger_hit",
+          "name": "إصابة خنجر",
+          "file": "sfx/player/dagger_hit.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "dagger_hit"
+        },
+        {
+          "id": "bow_draw",
+          "name": "سحب قوس",
+          "file": "sfx/player/bow_draw.wav",
+          "volume": 0.5,
+          "pitch_variation": 0.05,
+          "trigger": "bow_draw"
+        },
+        {
+          "id": "bow_release",
+          "name": "إطلاق سهم",
+          "file": "sfx/player/bow_release.wav",
+          "volume": 0.6,
+          "pitch_variation": 0.1,
+          "trigger": "bow_release"
+        },
+        {
+          "id": "arrow_hit",
+          "name": "إصابة سهم",
+          "file": "sfx/player/arrow_hit.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "arrow_hit"
+        },
+        {
+          "id": "staff_swing",
+          "name": "ضربة عصا",
+          "file": "sfx/player/staff_swing.wav",
+          "volume": 0.6,
+          "pitch_variation": 0.1,
+          "trigger": "staff_attack"
+        },
+        {
+          "id": "staff_hit",
+          "name": "إصابة عصا",
+          "file": "sfx/player/staff_hit.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "staff_hit"
+        },
+        {
+          "id": "block",
+          "name": "صد",
+          "file": "sfx/player/block.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "block_attack"
+        },
+        {
+          "id": "dodge",
+          "name": "تفادي",
+          "file": "sfx/player/dodge.wav",
+          "volume": 0.5,
+          "pitch_variation": 0.1,
+          "trigger": "dodge"
+        },
+        {
+          "id": "critical_hit",
+          "name": "ضربة حاسمة",
+          "file": "sfx/player/critical_hit.wav",
+          "volume": 0.9,
+          "pitch_variation": 0.05,
+          "trigger": "critical_hit"
+        }
+      ],
+      "magic": [
+        {
+          "id": "fire_cast",
+          "name": "إلقاء سحر ناري",
+          "file": "sfx/player/fire_cast.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "fire_spell_cast"
+        },
+        {
+          "id": "fire_impact",
+          "name": "تأثير سحر ناري",
+          "file": "sfx/player/fire_impact.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "fire_spell_impact"
+        },
+        {
+          "id": "ice_cast",
+          "name": "إلقاء سحر ثلجي",
+          "file": "sfx/player/ice_cast.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "ice_spell_cast"
+        },
+        {
+          "id": "ice_impact",
+          "name": "تأثير سحر ثلجي",
+          "file": "sfx/player/ice_impact.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "ice_spell_impact"
+        },
+        {
+          "id": "lightning_cast",
+          "name": "إلقاء سحر برق",
+          "file": "sfx/player/lightning_cast.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "lightning_spell_cast"
+        },
+        {
+          "id": "lightning_impact",
+          "name": "تأثير سحر برق",
+          "file": "sfx/player/lightning_impact.wav",
+          "volume": 0.9,
+          "pitch_variation": 0.1,
+          "trigger": "lightning_spell_impact"
+        },
+        {
+          "id": "heal_cast",
+          "name": "إلقاء سحر شفاء",
+          "file": "sfx/player/heal_cast.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "heal_spell_cast"
+        },
+        {
+          "id": "heal_effect",
+          "name": "تأثير سحر شفاء",
+          "file": "sfx/player/heal_effect.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "heal_spell_effect"
+        },
+        {
+          "id": "buff_cast",
+          "name": "إلقاء سحر تعزيز",
+          "file": "sfx/player/buff_cast.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "buff_spell_cast"
+        },
+        {
+          "id": "buff_effect",
+          "name": "تأثير سحر تعزيز",
+          "file": "sfx/player/buff_effect.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "buff_spell_effect"
+        }
+      ],
+      "voice": [
+        {
+          "id": "male_attack",
+          "name": "صوت هجوم ذكر",
+          "file": "sfx/player/male_attack.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.2,
+          "trigger": "male_attack"
+        },
+        {
+          "id": "female_attack",
+          "name": "صوت هجوم أنثى",
+          "file": "sfx/player/female_attack.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.2,
+          "trigger": "female_attack"
+        },
+        {
+          "id": "male_hurt",
+          "name": "صوت ألم ذكر",
+          "file": "sfx/player/male_hurt.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.2,
+          "trigger": "male_hurt"
+        },
+        {
+          "id": "female_hurt",
+          "name": "صوت ألم أنثى",
+          "file": "sfx/player/female_hurt.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.2,
+          "trigger": "female_hurt"
+        },
+        {
+          "id": "male_death",
+          "name": "صوت موت ذكر",
+          "file": "sfx/player/male_death.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "male_death"
+        },
+        {
+          "id": "female_death",
+          "name": "صوت موت أنثى",
+          "file": "sfx/player/female_death.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "female_death"
+        },
+        {
+          "id": "male_victory",
+          "name": "صوت نصر ذكر",
+          "file": "sfx/player/male_victory.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "male_victory"
+        },
+        {
+          "id": "female_victory",
+          "name": "صوت نصر أنثى",
+          "file": "sfx/player/female_victory.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "female_victory"
+        }
+      ]
+    },
+    "monsters": {
+      "general": [
+        {
+          "id": "monster_attack",
+          "name": "هجوم وحش",
+          "file": "sfx/monsters/monster_attack.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.2,
+          "trigger": "monster_attack"
+        },
+        {
+          "id": "monster_hit",
+          "name": "إصابة وحش",
+          "file": "sfx/monsters/monster_hit.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.2,
+          "trigger": "monster_hit"
+        },
+        {
+          "id": "monster_death",
+          "name": "موت وحش",
+          "file": "sfx/monsters/monster_death.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.2,
+          "trigger": "monster_death"
+        },
+        {
+          "id": "monster_idle",
+          "name": "صوت وحش خامل",
+          "file": "sfx/monsters/monster_idle.wav",
+          "volume": 0.5,
+          "pitch_variation": 0.2,
+          "trigger": "monster_idle"
+        },
+        {
+          "id": "monster_alert",
+          "name": "صوت وحش متنبه",
+          "file": "sfx/monsters/monster_alert.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "monster_alert"
+        }
+      ],
+      "specific": [
+        {
+          "id": "wolf_howl",
+          "name": "عواء ذئب",
+          "file": "sfx/monsters/wolf_howl.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "wolf_idle"
+        },
+        {
+          "id": "wolf_attack",
+          "name": "هجوم ذئب",
+          "file": "sfx/monsters/wolf_attack.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "wolf_attack"
+        },
+        {
+          "id": "wolf_death",
+          "name": "موت ذئب",
+          "file": "sfx/monsters/wolf_death.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "wolf_death"
+        },
+        {
+          "id": "skeleton_rattle",
+          "name": "صوت هيكل عظمي",
+          "file": "sfx/monsters/skeleton_rattle.wav",
+          "volume": 0.6,
+          "pitch_variation": 0.1,
+          "trigger": "skeleton_idle"
+        },
+        {
+          "id": "skeleton_attack",
+          "name": "هجوم هيكل عظمي",
+          "file": "sfx/monsters/skeleton_attack.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "skeleton_attack"
+        },
+        {
+          "id": "skeleton_death",
+          "name": "تحطم هيكل عظمي",
+          "file": "sfx/monsters/skeleton_death.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "skeleton_death"
+        },
+        {
+          "id": "dragon_roar",
+          "name": "زئير تنين",
+          "file": "sfx/monsters/dragon_roar.wav",
+          "volume": 1.0,
+          "pitch_variation": 0.1,
+          "trigger": "dragon_idle"
+        },
+        {
+          "id": "dragon_attack",
+          "name": "هجوم تنين",
+          "file": "sfx/monsters/dragon_attack.wav",
+          "volume": 0.9,
+          "pitch_variation": 0.1,
+          "trigger": "dragon_attack"
+        },
+        {
+          "id": "dragon_death",
+          "name": "موت تنين",
+          "file": "sfx/monsters/dragon_death.wav",
+          "volume": 1.0,
+          "pitch_variation": 0.1,
+          "trigger": "dragon_death"
+        },
+        {
+          "id": "dragon_fire_breath",
+          "name": "نفس ناري للتنين",
+          "file": "sfx/monsters/dragon_fire_breath.wav",
+          "volume": 0.9,
+          "pitch_variation": 0.1,
+          "trigger": "dragon_fire_breath"
+        }
+      ],
+      "boss": [
+        {
+          "id": "boss_entrance",
+          "name": "ظهور زعيم",
+          "file": "sfx/monsters/boss_entrance.wav",
+          "volume": 1.0,
+          "pitch_variation": 0.0,
+          "trigger": "boss_entrance"
+        },
+        {
+          "id": "boss_attack",
+          "name": "هجوم زعيم",
+          "file": "sfx/monsters/boss_attack.wav",
+          "volume": 0.9,
+          "pitch_variation": 0.1,
+          "trigger": "boss_attack"
+        },
+        {
+          "id": "boss_special_attack",
+          "name": "هجوم خاص للزعيم",
+          "file": "sfx/monsters/boss_special_attack.wav",
+          "volume": 1.0,
+          "pitch_variation": 0.1,
+          "trigger": "boss_special_attack"
+        },
+        {
+          "id": "boss_phase_change",
+          "name": "تغيير مرحلة الزعيم",
+          "file": "sfx/monsters/boss_phase_change.wav",
+          "volume": 1.0,
+          "pitch_variation": 0.0,
+          "trigger": "boss_phase_change"
+        },
+        {
+          "id": "boss_death",
+          "name": "موت زعيم",
+          "file": "sfx/monsters/boss_death.wav",
+          "volume": 1.0,
+          "pitch_variation": 0.0,
+          "trigger": "boss_death"
+        }
+      ]
+    },
+    "environment": {
+      "weather": [
+        {
+          "id": "rain_light",
+          "name": "مطر خفيف",
+          "file": "sfx/environment/rain_light.wav",
+          "volume": 0.5,
+          "loop": true,
+          "trigger": "light_rain"
+        },
+        {
+          "id": "rain_heavy",
+          "name": "مطر غزير",
+          "file": "sfx/environment/rain_heavy.wav",
+          "volume": 0.7,
+          "loop": true,
+          "trigger": "heavy_rain"
+        },
+        {
+          "id": "thunder",
+          "name": "رعد",
+          "file": "sfx/environment/thunder.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.2,
+          "trigger": "thunder"
+        },
+        {
+          "id": "wind_light",
+          "name": "رياح خفيفة",
+          "file": "sfx/environment/wind_light.wav",
+          "volume": 0.4,
+          "loop": true,
+          "trigger": "light_wind"
+        },
+        {
+          "id": "wind_strong",
+          "name": "رياح قوية",
+          "file": "sfx/environment/wind_strong.wav",
+          "volume": 0.6,
+          "loop": true,
+          "trigger": "strong_wind"
+        },
+        {
+          "id": "sandstorm",
+          "name": "عاصفة رملية",
+          "file": "sfx/environment/sandstorm.wav",
+          "volume": 0.7,
+          "loop": true,
+          "trigger": "sandstorm"
+        }
+      ],
+      "ambience": [
+        {
+          "id": "forest_day",
+          "name": "غابة نهاراً",
+          "file": "sfx/environment/forest_day.wav",
+          "volume": 0.4,
+          "loop": true,
+          "trigger": "forest_day"
+        },
+        {
+          "id": "forest_night",
+          "name": "غابة ليلاً",
+          "file": "sfx/environment/forest_night.wav",
+          "volume": 0.4,
+          "loop": true,
+          "trigger": "forest_night"
+        },
+        {
+          "id": "desert_day",
+          "name": "صحراء نهاراً",
+          "file": "sfx/environment/desert_day.wav",
+          "volume": 0.4,
+          "loop": true,
+          "trigger": "desert_day"
+        },
+        {
+          "id": "desert_night",
+          "name": "صحراء ليلاً",
+          "file": "sfx/environment/desert_night.wav",
+          "volume": 0.4,
+          "loop": true,
+          "trigger": "desert_night"
+        },
+        {
+          "id": "city_day",
+          "name": "مدينة نهاراً",
+          "file": "sfx/environment/city_day.wav",
+          "volume": 0.4,
+          "loop": true,
+          "trigger": "city_day"
+        },
+        {
+          "id": "city_night",
+          "name": "مدينة ليلاً",
+          "file": "sfx/environment/city_night.wav",
+          "volume": 0.3,
+          "loop": true,
+          "trigger": "city_night"
+        },
+        {
+          "id": "mountain_day",
+          "name": "جبال نهاراً",
+          "file": "sfx/environment/mountain_day.wav",
+          "volume": 0.4,
+          "loop": true,
+          "trigger": "mountain_day"
+        },
+        {
+          "id": "mountain_night",
+          "name": "جبال ليلاً",
+          "file": "sfx/environment/mountain_night.wav",
+          "volume": 0.4,
+          "loop": true,
+          "trigger": "mountain_night"
+        },
+        {
+          "id": "dungeon",
+          "name": "زنزانة",
+          "file": "sfx/environment/dungeon.wav",
+          "volume": 0.5,
+          "loop": true,
+          "trigger": "dungeon"
+        },
+        {
+          "id": "cave",
+          "name": "كهف",
+          "file": "sfx/environment/cave.wav",
+          "volume": 0.5,
+          "loop": true,
+          "trigger": "cave"
+        },
+        {
+          "id": "water_stream",
+          "name": "جدول ماء",
+          "file": "sfx/environment/water_stream.wav",
+          "volume": 0.5,
+          "loop": true,
+          "trigger": "water_stream"
+        },
+        {
+          "id": "waterfall",
+          "name": "شلال",
+          "file": "sfx/environment/waterfall.wav",
+          "volume": 0.6,
+          "loop": true,
+          "trigger": "waterfall"
+        },
+        {
+          "id": "ocean",
+          "name": "محيط",
+          "file": "sfx/environment/ocean.wav",
+          "volume": 0.5,
+          "loop": true,
+          "trigger": "ocean"
+        }
+      ],
+      "objects": [
+        {
+          "id": "door_open",
+          "name": "فتح باب",
+          "file": "sfx/environment/door_open.wav",
+          "volume": 0.6,
+          "pitch_variation": 0.1,
+          "trigger": "door_open"
+        },
+        {
+          "id": "door_close",
+          "name": "إغلاق باب",
+          "file": "sfx/environment/door_close.wav",
+          "volume": 0.6,
+          "pitch_variation": 0.1,
+          "trigger": "door_close"
+        },
+        {
+          "id": "chest_open",
+          "name": "فتح صندوق",
+          "file": "sfx/environment/chest_open.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "chest_open"
+        },
+        {
+          "id": "fire_crackle",
+          "name": "طقطقة نار",
+          "file": "sfx/environment/fire_crackle.wav",
+          "volume": 0.5,
+          "loop": true,
+          "trigger": "fire_source"
+        },
+        {
+          "id": "torch",
+          "name": "مشعل",
+          "file": "sfx/environment/torch.wav",
+          "volume": 0.4,
+          "loop": true,
+          "trigger": "torch"
+        }
+      ]
+    },
+    "ui": {
+      "general": [
+        {
+          "id": "button_click",
+          "name": "نقر زر",
+          "file": "sfx/ui/button_click.wav",
+          "volume": 0.5,
+          "trigger": "button_click"
+        },
+        {
+          "id": "menu_open",
+          "name": "فتح قائمة",
+          "file": "sfx/ui/menu_open.wav",
+          "volume": 0.5,
+          "trigger": "menu_open"
+        },
+        {
+          "id": "menu_close",
+          "name": "إغلاق قائمة",
+          "file": "sfx/ui/menu_close.wav",
+          "volume": 0.5,
+          "trigger": "menu_close"
+        },
+        {
+          "id": "hover",
+          "name": "تحويم",
+          "file": "sfx/ui/hover.wav",
+          "volume": 0.3,
+          "trigger": "hover"
+        },
+        {
+          "id": "error",
+          "name": "خطأ",
+          "file": "sfx/ui/error.wav",
+          "volume": 0.6,
+          "trigger": "error"
+        },
+        {
+          "id": "notification",
+          "name": "إشعار",
+          "file": "sfx/ui/notification.wav",
+          "volume": 0.6,
+          "trigger": "notification"
+        }
+      ],
+      "inventory": [
+        {
+          "id": "item_pickup",
+          "name": "التقاط عنصر",
+          "file": "sfx/ui/item_pickup.wav",
+          "volume": 0.6,
+          "pitch_variation": 0.1,
+          "trigger": "item_pickup"
+        },
+        {
+          "id": "item_drop",
+          "name": "إسقاط عنصر",
+          "file": "sfx/ui/item_drop.wav",
+          "volume": 0.6,
+          "pitch_variation": 0.1,
+          "trigger": "item_drop"
+        },
+        {
+          "id": "item_equip",
+          "name": "ارتداء عنصر",
+          "file": "sfx/ui/item_equip.wav",
+          "volume": 0.6,
+          "trigger": "item_equip"
+        },
+        {
+          "id": "item_unequip",
+          "name": "خلع عنصر",
+          "file": "sfx/ui/item_unequip.wav",
+          "volume": 0.6,
+          "trigger": "item_unequip"
+        },
+        {
+          "id": "inventory_open",
+          "name": "فتح الحقيبة",
+          "file": "sfx/ui/inventory_open.wav",
+          "volume": 0.5,
+          "trigger": "inventory_open"
+        },
+        {
+          "id": "inventory_close",
+          "name": "إغلاق الحقيبة",
+          "file": "sfx/ui/inventory_close.wav",
+          "volume": 0.5,
+          "trigger": "inventory_close"
+        }
+      ],
+      "character": [
+        {
+          "id": "level_up",
+          "name": "ترقية المستوى",
+          "file": "sfx/ui/level_up.wav",
+          "volume": 0.8,
+          "trigger": "level_up"
+        },
+        {
+          "id": "skill_unlock",
+          "name": "فتح مهارة",
+          "file": "sfx/ui/skill_unlock.wav",
+          "volume": 0.7,
+          "trigger": "skill_unlock"
+        },
+        {
+          "id": "skill_upgrade",
+          "name": "ترقية مهارة",
+          "file": "sfx/ui/skill_upgrade.wav",
+          "volume": 0.7,
+          "trigger": "skill_upgrade"
+        },
+        {
+          "id": "stat_increase",
+          "name": "زيادة إحصائية",
+          "file": "sfx/ui/stat_increase.wav",
+          "volume": 0.6,
+          "trigger": "stat_increase"
+        }
+      ],
+      "quest": [
+        {
+          "id": "quest_accept",
+          "name": "قبول مهمة",
+          "file": "sfx/ui/quest_accept.wav",
+          "volume": 0.7,
+          "trigger": "quest_accept"
+        },
+        {
+          "id": "quest_complete",
+          "name": "إكمال مهمة",
+          "file": "sfx/ui/quest_complete.wav",
+          "volume": 0.8,
+          "trigger": "quest_complete"
+        },
+        {
+          "id": "quest_update",
+          "name": "تحديث مهمة",
+          "file": "sfx/ui/quest_update.wav",
+          "volume": 0.6,
+          "trigger": "quest_update"
+        },
+        {
+          "id": "quest_fail",
+          "name": "فشل مهمة",
+          "file": "sfx/ui/quest_fail.wav",
+          "volume": 0.7,
+          "trigger": "quest_fail"
+        }
+      ],
+      "social": [
+        {
+          "id": "message_received",
+          "name": "استلام رسالة",
+          "file": "sfx/ui/message_received.wav",
+          "volume": 0.6,
+          "trigger": "message_received"
+        },
+        {
+          "id": "message_sent",
+          "name": "إرسال رسالة",
+          "file": "sfx/ui/message_sent.wav",
+          "volume": 0.5,
+          "trigger": "message_sent"
+        },
+        {
+          "id": "friend_request",
+          "name": "طلب صداقة",
+          "file": "sfx/ui/friend_request.wav",
+          "volume": 0.6,
+          "trigger": "friend_request"
+        },
+        {
+          "id": "guild_invite",
+          "name": "دعوة نقابة",
+          "file": "sfx/ui/guild_invite.wav",
+          "volume": 0.6,
+          "trigger": "guild_invite"
+        },
+        {
+          "id": "party_invite",
+          "name": "دعوة مجموعة",
+          "file": "sfx/ui/party_invite.wav",
+          "volume": 0.6,
+          "trigger": "party_invite"
+        }
+      ],
+      "trading": [
+        {
+          "id": "trade_request",
+          "name": "طلب تجارة",
+          "file": "sfx/ui/trade_request.wav",
+          "volume": 0.6,
+          "trigger": "trade_request"
+        },
+        {
+          "id": "trade_accept",
+          "name": "قبول تجارة",
+          "file": "sfx/ui/trade_accept.wav",
+          "volume": 0.6,
+          "trigger": "trade_accept"
+        },
+        {
+          "id": "trade_cancel",
+          "name": "إلغاء تجارة",
+          "file": "sfx/ui/trade_cancel.wav",
+          "volume": 0.6,
+          "trigger": "trade_cancel"
+        },
+        {
+          "id": "trade_success",
+          "name": "نجاح تجارة",
+          "file": "sfx/ui/trade_success.wav",
+          "volume": 0.7,
+          "trigger": "trade_success"
+        },
+        {
+          "id": "gold_received",
+          "name": "استلام ذهب",
+          "file": "sfx/ui/gold_received.wav",
+          "volume": 0.7,
+          "trigger": "gold_received"
+        },
+        {
+          "id": "gold_spent",
+          "name": "إنفاق ذهب",
+          "file": "sfx/ui/gold_spent.wav",
+          "volume": 0.6,
+          "trigger": "gold_spent"
+        }
+      ]
+    },
+    "mounts": {
+      "horse": [
+        {
+          "id": "horse_neigh",
+          "name": "صهيل حصان",
+          "file": "sfx/mounts/horse_neigh.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "horse_idle"
+        },
+        {
+          "id": "horse_gallop",
+          "name": "جري حصان",
+          "file": "sfx/mounts/horse_gallop.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "horse_gallop"
+        },
+        {
+          "id": "horse_walk",
+          "name": "مشي حصان",
+          "file": "sfx/mounts/horse_walk.wav",
+          "volume": 0.6,
+          "pitch_variation": 0.1,
+          "trigger": "horse_walk"
+        },
+        {
+          "id": "horse_jump",
+          "name": "قفزة حصان",
+          "file": "sfx/mounts/horse_jump.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "horse_jump"
+        }
+      ],
+      "dragon": [
+        {
+          "id": "dragon_mount_roar",
+          "name": "زئير تنين",
+          "file": "sfx/mounts/dragon_mount_roar.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "dragon_mount_idle"
+        },
+        {
+          "id": "dragon_mount_flap",
+          "name": "رفرفة أجنحة تنين",
+          "file": "sfx/mounts/dragon_mount_flap.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "dragon_mount_fly"
+        },
+        {
+          "id": "dragon_mount_land",
+          "name": "هبوط تنين",
+          "file": "sfx/mounts/dragon_mount_land.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "dragon_mount_land"
+        }
+      ],
+      "tiger": [
+        {
+          "id": "tiger_growl",
+          "name": "زمجرة نمر",
+          "file": "sfx/mounts/tiger_growl.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "tiger_idle"
+        },
+        {
+          "id": "tiger_run",
+          "name": "جري نمر",
+          "file": "sfx/mounts/tiger_run.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "tiger_run"
+        },
+        {
+          "id": "tiger_attack",
+          "name": "هجوم نمر",
+          "file": "sfx/mounts/tiger_attack.wav",
+          "volume": 0.8,
+          "pitch_variation": 0.1,
+          "trigger": "tiger_attack"
+        }
+      ]
+    },
+    "pets": {
+      "general": [
+        {
+          "id": "pet_summon",
+          "name": "استدعاء حيوان أليف",
+          "file": "sfx/pets/pet_summon.wav",
+          "volume": 0.7,
+          "trigger": "pet_summon"
+        },
+        {
+          "id": "pet_dismiss",
+          "name": "صرف حيوان أليف",
+          "file": "sfx/pets/pet_dismiss.wav",
+          "volume": 0.7,
+          "trigger": "pet_dismiss"
+        },
+        {
+          "id": "pet_level_up",
+          "name": "ترقية مستوى حيوان أليف",
+          "file": "sfx/pets/pet_level_up.wav",
+          "volume": 0.8,
+          "trigger": "pet_level_up"
+        }
+      ],
+      "specific": [
+        {
+          "id": "dog_bark",
+          "name": "نباح كلب",
+          "file": "sfx/pets/dog_bark.wav",
+          "volume": 0.6,
+          "pitch_variation": 0.2,
+          "trigger": "dog_idle"
+        },
+        {
+          "id": "dog_attack",
+          "name": "هجوم كلب",
+          "file": "sfx/pets/dog_attack.wav",
+          "volume": 0.7,
+          "pitch_variation": 0.1,
+          "trigger": "dog_attack"
+        },
+        {
+          "id": "cat_meow",
+          "name": "مواء قطة",
+          "file": "sfx/pets/cat_meow.wav",
+          "volume": 0.5,
+          "pitch_variation": 0.2,
+          "trigger": "cat_idle"
+        },
+        {
+          "id": "cat_purr",
+          "name": "خرخرة قطة",
+          "file": "sfx/pets/cat_purr.wav",
+          "volume": 0.4,
+          "loop": true,
+          "trigger": "cat_happy"
+        },
+        {
+          "id": "bird_chirp",
+          "name": "زقزقة طائر",
+          "file": "sfx/pets/bird_chirp.wav",
+          "volume": 0.5,
+          "pitch_variation": 0.2,
+          "trigger": "bird_idle"
+        },
+        {
+          "id": "bird_flap",
+          "name": "رفرفة طائر",
+          "file": "sfx/pets/bird_flap.wav",
+          "volume": 0.5,
+          "pitch_variation": 0.1,
+          "trigger": "bird_fly"
+        }
+      ]
+    }
+  },
+  "voice_acting": {
+    "npcs": [
+      {
+        "id": "merchant_male",
+        "name": "تاجر ذكر",
+        "lines": [
+          {
+            "id": "merchant_greeting_1",
+            "text": "مرحباً بك في متجري!",
+            "file": "voice/npcs/merchant_male/greeting_1.wav",
+            "volume": 0.8,
+            "trigger": "merchant_greeting"
+          },
+          {
+            "id": "merchant_greeting_2",
+            "text": "أهلاً بك! تفضل بالشراء.",
+            "file": "voice/npcs/merchant_male/greeting_2.wav",
+            "volume": 0.8,
+            "trigger": "merchant_greeting"
+          },
+          {
+            "id": "merchant_farewell_1",
+            "text": "شكراً لزيارتك! عد قريباً.",
+            "file": "voice/npcs/merchant_male/farewell_1.wav",
+            "volume": 0.8,
+            "trigger": "merchant_farewell"
+          },
+          {
+            "id": "merchant_farewell_2",
+            "text": "أتمنى أن تكون راضياً عن مشترياتك.",
+            "file": "voice/npcs/merchant_male/farewell_2.wav",
+            "volume": 0.8,
+            "trigger": "merchant_farewell"
+          }
+        ]
+      },
+      {
+        "id": "merchant_female",
+        "name": "تاجرة أنثى",
+        "lines": [
+          {
+            "id": "merchant_f_greeting_1",
+            "text": "أهلاً وسهلاً! تفضل بالنظر إلى بضائعي.",
+            "file": "voice/npcs/merchant_female/greeting_1.wav",
+            "volume": 0.8,
+            "trigger": "merchant_greeting"
+          },
+          {
+            "id": "merchant_f_greeting_2",
+            "text": "مرحباً! لدي أفضل البضائع في المدينة.",
+            "file": "voice/npcs/merchant_female/greeting_2.wav",
+            "volume": 0.8,
+            "trigger": "merchant_greeting"
+          },
+          {
+            "id": "merchant_f_farewell_1",
+            "text": "شكراً لك! أتمنى رؤيتك مجدداً.",
+            "file": "voice/npcs/merchant_female/farewell_1.wav",
+            "volume": 0.8,
+            "trigger": "merchant_farewell"
+          },
+          {
+            "id": "merchant_f_farewell_2",
+            "text": "وداعاً! عد قريباً.",
+            "file": "voice/npcs/merchant_female/farewell_2.wav",
+            "volume": 0.8,
+            "trigger": "merchant_farewell"
+          }
+        ]
+      },
+      {
+        "id": "quest_giver_male",
+        "name": "مانح مهام ذكر",
+        "lines": [
+          {
+            "id": "quest_giver_greeting_1",
+            "text": "أهلاً أيها المغامر! هل تبحث عن مهمة؟",
+            "file": "voice/npcs/quest_giver_male/greeting_1.wav",
+            "volume": 0.8,
+            "trigger": "quest_giver_greeting"
+          },
+          {
+            "id": "quest_giver_greeting_2",
+            "text": "أحتاج إلى مساعدتك في أمر مهم.",
+            "file": "voice/npcs/quest_giver_male/greeting_2.wav",
+            "volume": 0.8,
+            "trigger": "quest_giver_greeting"
+          },
+          {
+            "id": "quest_giver_accept_1",
+            "text": "رائع! أنا واثق من قدرتك على النجاح.",
+            "file": "voice/npcs/quest_giver_male/accept_1.wav",
+            "volume": 0.8,
+            "trigger": "quest_accept"
+          },
+          {
+            "id": "quest_giver_complete_1",
+            "text": "أحسنت! لقد أنجزت المهمة بنجاح.",
+            "file": "voice/npcs/quest_giver_male/complete_1.wav",
+            "volume": 0.8,
+            "trigger": "quest_complete"
+          }
+        ]
+      },
+      {
+        "id": "quest_giver_female",
+        "name": "مانحة مهام أنثى",
+        "lines": [
+          {
+            "id": "quest_giver_f_greeting_1",
+            "text": "مرحباً! هل يمكنك مساعدتي؟",
+            "file": "voice/npcs/quest_giver_female/greeting_1.wav",
+            "volume": 0.8,
+            "trigger": "quest_giver_greeting"
+          },
+          {
+            "id": "quest_giver_f_greeting_2",
+            "text": "أهلاً بالمغامر! لدي مهمة خاصة لك.",
+            "file": "voice/npcs/quest_giver_female/greeting_2.wav",
+            "volume": 0.8,
+            "trigger": "quest_giver_greeting"
+          },
+          {
+            "id": "quest_giver_f_accept_1",
+            "text": "شكراً لك! أنا ممتنة لمساعدتك.",
+            "file": "voice/npcs/quest_giver_female/accept_1.wav",
+            "volume": 0.8,
+            "trigger": "quest_accept"
+          },
+          {
+            "id": "quest_giver_f_complete_1",
+            "text": "رائع! لقد أكملت المهمة بنجاح.",
+            "file": "voice/npcs/quest_giver_female/complete_1.wav",
+            "volume": 0.8,
+            "trigger": "quest_complete"
+          }
+        ]
+      },
+      {
+        "id": "guard_male",
+        "name": "حارس ذكر",
+        "lines": [
+          {
+            "id": "guard_greeting_1",
+            "text": "توخى الحذر في رحلاتك.",
+            "file": "voice/npcs/guard_male/greeting_1.wav",
+            "volume": 0.8,
+            "trigger": "guard_greeting"
+          },
+          {
+            "id": "guard_greeting_2",
+            "text": "أنا أحرس هذه المنطقة. هل من مساعدة؟",
+            "file": "voice/npcs/guard_male/greeting_2.wav",
+            "volume": 0.8,
+            "trigger": "guard_greeting"
+          },
+          {
+            "id": "guard_warning_1",
+            "text": "توقف! لا يمكنك الدخول إلى هذه المنطقة.",
+            "file": "voice/npcs/guard_male/warning_1.wav",
+            "volume": 0.8,
+            "trigger": "guard_warning"
+          },
+          {
+            "id": "guard_attack_1",
+            "text": "ستدفع ثمن جرائمك!",
+            "file": "voice/npcs/guard_male/attack_1.wav",
+            "volume": 0.8,
+            "trigger": "guard_attack"
+          }
+        ]
+      }
+    ],
+    "narrator": [
+      {
+        "id": "intro_1",
+        "text": "مرحباً بك في عالم الفتح، حيث المغامرات والأساطير تنتظرك.",
+        "file": "voice/narrator/intro_1.wav",
+        "volume": 1.0,
+        "trigger": "game_intro"
+      },
+      {
+        "id": "tutorial_1",
+        "text": "استخدم مفاتيح WASD للتحرك في العالم.",
+        "file": "voice/narrator/tutorial_1.wav",
+        "volume": 0.9,
+        "trigger": "tutorial_movement"
+      },
+      {
+        "id": "tutorial_2",
+        "text": "انقر بزر الفأرة الأيسر للهجوم.",
+        "file": "voice/narrator/tutorial_2.wav",
+        "volume": 0.9,
+        "trigger": "tutorial_combat"
+      },
+      {
+        "id": "tutorial_3",
+        "text": "اضغط I لفتح الحقيبة.",
+        "file": "voice/narrator/tutorial_3.wav",
+        "volume": 0.9,
+        "trigger": "tutorial_inventory"
+      },
+      {
+        "id": "level_up_1",
+        "text": "مبروك! لقد ارتقيت إلى المستوى التالي.",
+        "file": "voice/narrator/level_up_1.wav",
+        "volume": 0.9,
+        "trigger": "player_level_up"
+      },
+      {
+        "id": "death_1",
+        "text": "لقد سقطت في المعركة. ستعود إلى آخر نقطة حفظ.",
+        "file": "voice/narrator/death_1.wav",
+        "volume": 0.9,
+        "trigger": "player_death"
+      }
+    ],
+    "bosses": [
+      {
+        "id": "dragon_king",
+        "name": "ملك التنانين",
+        "lines": [
+          {
+            "id": "dragon_king_intro",
+            "text": "أنا ملك التنانين! لن تخرج من هنا حياً!",
+            "file": "voice/bosses/dragon_king/intro.wav",
+            "volume": 1.0,
+            "trigger": "dragon_king_intro"
+          },
+          {
+            "id": "dragon_king_phase_2",
+            "text": "لم أستخدم قوتي الحقيقية بعد!",
+            "file": "voice/bosses/dragon_king/phase_2.wav",
+            "volume": 1.0,
+            "trigger": "dragon_king_phase_2"
+          },
+          {
+            "id": "dragon_king_death",
+            "text": "مستحيل! كيف هزمتني؟!",
+            "file": "voice/bosses/dragon_king/death.wav",
+            "volume": 1.0,
+            "trigger": "dragon_king_death"
+          }
+        ]
+      },
+      {
+        "id": "necromancer",
+        "name": "ساحر الموت",
+        "lines": [
+          {
+            "id": "necromancer_intro",
+            "text": "أهلاً بك في مملكة الموت. ستنضم إلى جيشي قريباً!",
+            "file": "voice/bosses/necromancer/intro.wav",
+            "volume": 1.0,
+            "trigger": "necromancer_intro"
+          },
+          {
+            "id": "necromancer_phase_2",
+            "text": "انهضوا يا خدامي! قاتلوا من أجلي!",
+            "file": "voice/bosses/necromancer/phase_2.wav",
+            "volume": 1.0,
+            "trigger": "necromancer_phase_2"
+          },
+          {
+            "id": "necromancer_death",
+            "text": "لا! قوتي... تتلاشى...",
+            "file": "voice/bosses/necromancer/death.wav",
+            "volume": 1.0,
+            "trigger": "necromancer_death"
+          }
+        ]
+      }
+    ]
+  },
+  "audio_settings": {
+    "master_volume": 1.0,
+    "music_volume": 0.7,
+    "sfx_volume": 0.8,
+    "voice_volume": 0.9,
+    "ambient_volume": 0.6,
+    "ui_volume": 0.7,
+    "mute_when_unfocused": true,
+    "audio_quality": "high",
+    "spatial_audio": true,
+    "reverb_enabled": true,
+    "dynamic_range_compression": false
+  },
+  "audio_engine": {
+    "max_concurrent_sounds": 32,
+    "distance_model": "inverse",
+    "rolloff_factor": 1.0,
+    "doppler_factor": 1.0,
+    "spatial_blend": 1.0,
+    "reverb_zones": [
+      {
+        "id": "cave_reverb",
+        "name": "صدى الكهف",
+        "preset": "cave",
+        "room_size": 0.9,
+        "damping": 0.2,
+        "wet_level": 0.7,
+        "dry_level": 0.3
+      },
+      {
+        "id": "hall_reverb",
+        "name": "صدى القاعة",
+        "preset": "hall",
+        "room_size": 0.8,
+        "damping": 0.1,
+        "wet_level": 0.5,
+        "dry_level": 0.5
+      },
+      {
+        "id": "dungeon_reverb",
+        "name": "صدى الزنزانة",
+        "preset": "dungeon",
+        "room_size": 0.7,
+        "damping": 0.3,
+        "wet_level": 0.6,
+        "dry_level": 0.4
+      },
+      {
+        "id": "forest_reverb",
+        "name": "صدى الغابة",
+        "preset": "forest",
+        "room_size": 0.5,
+        "damping": 0.6,
+        "wet_level": 0.3,
+        "dry_level": 0.7
+      },
+      {
+        "id": "desert_reverb",
+        "name": "صدى الصحراء",
+        "preset": "desert",
+        "room_size": 0.3,
+        "damping": 0.8,
+        "wet_level": 0.2,
+        "dry_level": 0.8
+      }
+    ],
+    "audio_filters": [
+      {
+        "id": "low_pass_filter",
+        "name": "مرشح تمرير منخفض",
+        "cutoff_frequency": 1000,
+        "resonance": 1.0
+      },
+      {
+        "id": "high_pass_filter",
+        "name": "مرشح تمرير عالي",
+        "cutoff_frequency": 500,
+        "resonance": 1.0
+      },
+      {
+        "id": "echo_filter",
+        "name": "مرشح صدى",
+        "delay": 0.5,
+        "decay": 0.5,
+        "wet_mix": 0.5,
+        "dry_mix": 0.5
+      }
+    ],
+    "audio_mixers": [
+      {
+        "id": "default_mixer",
+        "name": "مزيج افتراضي",
+        "channels": ["master", "music", "sfx", "voice", "ambient", "ui"]
+      },
+      {
+        "id": "combat_mixer",
+        "name": "مزيج القتال",
+        "channels": ["master", "music", "sfx", "voice"],
+        "overrides": {
+          "music": 0.6,
+          "sfx": 0.9,
+          "voice": 0.8
+        }
+      },
+      {
+        "id": "cutscene_mixer",
+        "name": "مزيج المشاهد السينمائية",
+        "channels": ["master", "music", "voice"],
+        "overrides": {
+          "music": 0.5,
+          "voice": 1.0
+        }
+      }
+    ]
+  },
+  "localization": {
+    "supported_languages": ["ar", "en"],
+    "default_language": "ar",
+    "voice_languages": ["ar"],
+    "text_to_speech_fallback": false
+  }
+}

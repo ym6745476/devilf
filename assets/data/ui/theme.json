@@ -1,0 +1,362 @@
+{
+  "theme": {
+    "name": "الفتح: طريق الانتقام",
+    "nameEn": "Al-Fateh: Path of Revenge",
+    "version": "1.0.0",
+    "description": "تصميم واجهة المستخدم للعبة الفتح: طريق الانتقام",
+    "descriptionEn": "UI design for Al-Fateh: Path of Revenge game",
+    "direction": "rtl",
+    "fonts": {
+      "primary": {
+        "name": "Cairo",
+        "path": "assets/fonts/Cairo-Regular.ttf",
+        "bold": "assets/fonts/Cairo-Bold.ttf",
+        "light": "assets/fonts/Cairo-Light.ttf"
+      },
+      "secondary": {
+        "name": "Amiri",
+        "path": "assets/fonts/Amiri-Regular.ttf",
+        "bold": "assets/fonts/Amiri-Bold.ttf",
+        "italic": "assets/fonts/Amiri-Italic.ttf"
+      },
+      "decorative": {
+        "name": "Aref Ruqaa",
+        "path": "assets/fonts/ArefRuqaa-Regular.ttf",
+        "bold": "assets/fonts/ArefRuqaa-Bold.ttf"
+      }
+    },
+    "colors": {
+      "primary": "#e67e22",
+      "secondary": "#3498db",
+      "accent": "#f1c40f",
+      "background": "#34495e",
+      "text": {
+        "light": "#ecf0f1",
+        "dark": "#2c3e50",
+        "muted": "#95a5a6"
+      },
+      "status": {
+        "success": "#2ecc71",
+        "warning": "#f39c12",
+        "danger": "#e74c3c",
+        "info": "#3498db"
+      },
+      "elements": {
+        "header": "#2c3e50",
+        "panel": "rgba(44, 62, 80, 0.8)",
+        "button": "#e67e22",
+        "buttonHover": "#d35400",
+        "border": "#7f8c8d"
+      }
+    },
+    "styles": {
+      "buttons": {
+        "primary": {
+          "background": "#e67e22",
+          "backgroundHover": "#d35400",
+          "text": "#ffffff",
+          "border": "#c0392b",
+          "borderRadius": 8,
+          "fontSize": 18,
+          "padding": [12, 24],
+          "shadow": true,
+          "shadowColor": "rgba(0, 0, 0, 0.3)",
+          "iconPosition": "right"
+        },
+        "secondary": {
+          "background": "#3498db",
+          "backgroundHover": "#2980b9",
+          "text": "#ffffff",
+          "border": "#2980b9",
+          "borderRadius": 8,
+          "fontSize": 16,
+          "padding": [10, 20],
+          "shadow": true,
+          "shadowColor": "rgba(0, 0, 0, 0.3)",
+          "iconPosition": "right"
+        },
+        "action": {
+          "background": "#f1c40f",
+          "backgroundHover": "#f39c12",
+          "text": "#2c3e50",
+          "border": "#f39c12",
+          "borderRadius": 8,
+          "fontSize": 16,
+          "padding": [10, 20],
+          "shadow": true,
+          "shadowColor": "rgba(0, 0, 0, 0.3)",
+          "iconPosition": "right"
+        },
+        "danger": {
+          "background": "#e74c3c",
+          "backgroundHover": "#c0392b",
+          "text": "#ffffff",
+          "border": "#c0392b",
+          "borderRadius": 8,
+          "fontSize": 16,
+          "padding": [10, 20],
+          "shadow": true,
+          "shadowColor": "rgba(0, 0, 0, 0.3)",
+          "iconPosition": "right"
+        }
+      },
+      "panels": {
+        "main": {
+          "background": "rgba(44, 62, 80, 0.9)",
+          "border": "#7f8c8d",
+          "borderRadius": 12,
+          "padding": 16,
+          "shadow": true,
+          "shadowColor": "rgba(0, 0, 0, 0.5)"
+        },
+        "popup": {
+          "background": "rgba(44, 62, 80, 0.95)",
+          "border": "#e67e22",
+          "borderRadius": 12,
+          "padding": 20,
+          "shadow": true,
+          "shadowColor": "rgba(0, 0, 0, 0.7)"
+        },
+        "inventory": {
+          "background": "rgba(44, 62, 80, 0.9)",
+          "border": "#3498db",
+          "borderRadius": 12,
+          "padding": 16,
+          "shadow": true,
+          "shadowColor": "rgba(0, 0, 0, 0.5)",
+          "slotBackground": "rgba(52, 73, 94, 0.8)",
+          "slotBorder": "#7f8c8d",
+          "slotBorderRadius": 8,
+          "slotSize": 64,
+          "slotPadding": 4,
+          "slotGap": 8
+        }
+      },
+      "text": {
+        "header": {
+          "font": "decorative",
+          "fontSize": 28,
+          "color": "#f1c40f",
+          "shadow": true,
+          "shadowColor": "rgba(0, 0, 0, 0.5)",
+          "letterSpacing": 1.2,
+          "alignment": "center"
+        },
+        "subheader": {
+          "font": "primary",
+          "fontSize": 22,
+          "color": "#e67e22",
+          "shadow": true,
+          "shadowColor": "rgba(0, 0, 0, 0.3)",
+          "letterSpacing": 1,
+          "alignment": "right"
+        },
+        "body": {
+          "font": "primary",
+          "fontSize": 16,
+          "color": "#ecf0f1",
+          "shadow": false,
+          "letterSpacing": 0.5,
+          "alignment": "right",
+          "lineHeight": 1.5
+        },
+        "caption": {
+          "font": "secondary",
+          "fontSize": 14,
+          "color": "#95a5a6",
+          "shadow": false,
+          "letterSpacing": 0.5,
+          "alignment": "right",
+          "fontStyle": "italic"
+        }
+      },
+      "icons": {
+        "small": 24,
+        "medium": 32,
+        "large": 48,
+        "xlarge": 64,
+        "color": "#f1c40f",
+        "colorHover": "#f39c12",
+        "shadow": true,
+        "shadowColor": "rgba(0, 0, 0, 0.3)"
+      },
+      "progressBars": {
+        "health": {
+          "background": "#34495e",
+          "fill": "#e74c3c",
+          "border": "#c0392b",
+          "borderRadius": 6,
+          "height": 16
+        },
+        "mana": {
+          "background": "#34495e",
+          "fill": "#3498db",
+          "border": "#2980b9",
+          "borderRadius": 6,
+          "height": 16
+        },
+        "experience": {
+          "background": "#34495e",
+          "fill": "#2ecc71",
+          "border": "#27ae60",
+          "borderRadius": 6,
+          "height": 8
+        },
+        "loading": {
+          "background": "#34495e",
+          "fill": "#f1c40f",
+          "border": "#f39c12",
+          "borderRadius": 6,
+          "height": 12
+        }
+      },
+      "inputs": {
+        "text": {
+          "background": "rgba(52, 73, 94, 0.8)",
+          "border": "#7f8c8d",
+          "borderRadius": 8,
+          "textColor": "#ecf0f1",
+          "placeholderColor": "#95a5a6",
+          "fontSize": 16,
+          "padding": [10, 16],
+          "height": 40,
+          "fontFamily": "primary"
+        },
+        "dropdown": {
+          "background": "rgba(52, 73, 94, 0.8)",
+          "border": "#7f8c8d",
+          "borderRadius": 8,
+          "textColor": "#ecf0f1",
+          "arrowColor": "#e67e22",
+          "fontSize": 16,
+          "padding": [10, 16],
+          "height": 40,
+          "optionsBackground": "rgba(44, 62, 80, 0.95)",
+          "optionHoverBackground": "rgba(230, 126, 34, 0.3)",
+          "fontFamily": "primary"
+        },
+        "checkbox": {
+          "size": 24,
+          "background": "rgba(52, 73, 94, 0.8)",
+          "border": "#7f8c8d",
+          "borderRadius": 4,
+          "checkColor": "#e67e22",
+          "labelColor": "#ecf0f1",
+          "fontSize": 16,
+          "fontFamily": "primary"
+        }
+      },
+      "tooltips": {
+        "background": "rgba(44, 62, 80, 0.95)",
+        "border": "#7f8c8d",
+        "borderRadius": 8,
+        "textColor": "#ecf0f1",
+        "padding": [8, 12],
+        "fontSize": 14,
+        "fontFamily": "primary",
+        "shadow": true,
+        "shadowColor": "rgba(0, 0, 0, 0.5)",
+        "maxWidth": 300
+      },
+      "scrollbars": {
+        "width": 8,
+        "trackBackground": "rgba(52, 73, 94, 0.5)",
+        "thumbBackground": "#7f8c8d",
+        "thumbBackgroundHover": "#95a5a6",
+        "borderRadius": 4
+      }
+    },
+    "animations": {
+      "buttonPress": {
+        "type": "scale",
+        "duration": 0.1,
+        "scale": 0.95
+      },
+      "panelOpen": {
+        "type": "fade",
+        "duration": 0.2,
+        "easing": "easeOutQuad"
+      },
+      "tooltipShow": {
+        "type": "fade",
+        "duration": 0.15,
+        "easing": "easeOutQuad"
+      },
+      "itemHighlight": {
+        "type": "pulse",
+        "duration": 1.0,
+        "intensity": 1.2,
+        "color": "#f1c40f"
+      },
+      "notification": {
+        "type": "slideIn",
+        "duration": 0.3,
+        "easing": "easeOutBack"
+      }
+    },
+    "layouts": {
+      "mainMenu": {
+        "background": "assets/images/ui/themes/main_menu_bg.jpg",
+        "logoPosition": "top",
+        "logoSize": [400, 200],
+        "buttonAlignment": "center",
+        "buttonSpacing": 16,
+        "padding": [40, 60]
+      },
+      "hud": {
+        "healthBarPosition": "topLeft",
+        "manaBarPosition": "topLeft",
+        "experienceBarPosition": "top",
+        "minimapPosition": "topRight",
+        "minimapSize": [200, 200],
+        "actionBarPosition": "bottom",
+        "actionBarSize": [600, 80],
+        "chatPosition": "bottomLeft",
+        "chatSize": [400, 200],
+        "inventoryButtonPosition": "bottomRight",
+        "menuButtonPosition": "topRight"
+      },
+      "inventory": {
+        "gridColumns": 6,
+        "gridRows": 6,
+        "equipmentPosition": "left",
+        "statsPosition": "right",
+        "goldPosition": "bottom"
+      },
+      "character": {
+        "statsPosition": "right",
+        "equipmentPosition": "left",
+        "skillsPosition": "bottom",
+        "attributesPosition": "top"
+      },
+      "shop": {
+        "itemsPosition": "left",
+        "detailsPosition": "right",
+        "goldPosition": "bottom",
+        "categoriesPosition": "top"
+      }
+    },
+    "sounds": {
+      "ui": {
+        "buttonClick": "assets/audio/ui/button_click.mp3",
+        "buttonHover": "assets/audio/ui/button_hover.mp3",
+        "panelOpen": "assets/audio/ui/panel_open.mp3",
+        "panelClose": "assets/audio/ui/panel_close.mp3",
+        "notification": "assets/audio/ui/notification.mp3",
+        "error": "assets/audio/ui/error.mp3",
+        "success": "assets/audio/ui/success.mp3",
+        "itemPickup": "assets/audio/ui/item_pickup.mp3",
+        "itemDrop": "assets/audio/ui/item_drop.mp3",
+        "levelUp": "assets/audio/ui/level_up.mp3",
+        "questComplete": "assets/audio/ui/quest_complete.mp3",
+        "questAccept": "assets/audio/ui/quest_accept.mp3"
+      }
+    },
+    "responsiveBreakpoints": {
+      "small": 600,
+      "medium": 900,
+      "large": 1200,
+      "xlarge": 1600
+    }
+  }
+}

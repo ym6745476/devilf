@@ -1,0 +1,61 @@
+[
+  {
+    "id": "map_1",
+    "name": "مدينة البداية",
+    "type": "مدينة",
+    "level_range": "1-10",
+    "description": "المدينة الرئيسية حيث يبدأ المغامرون رحلتهم.",
+    "npcs": [
+      "التاجر حسن",
+      "الحداد علي",
+      "الطبيب يوسف",
+      "الملك سليمان",
+      "حارس البوابة أحمد"
+    ],
+    "connected_maps": [
+      "غابة البداية",
+      "سهول الشرق",
+      "طريق التجارة"
+    ],
+    "safe_zone": true,
+    "environment": {
+      "weather": [
+        "مشمس",
+        "غائم",
+        "ممطر"
+      ],
+      "time_cycle": true,
+      "background_music": "city_theme.mp3"
+    }
+  },
+  {
+    "id": "map_2",
+    "name": "غابة البداية",
+    "type": "غابة",
+    "level_range": "1-5",
+    "description": "غابة صغيرة بالقرب من المدينة، مليئة بالحيوانات البرية.",
+    "monsters": [
+      "ذئب بري"
+    ],
+    "resources": [
+      "خشب",
+      "عشبة طبية",
+      "فاكهة برية"
+    ],
+    "connected_maps": [
+      "مدينة البداية",
+      "غابة الظلام"
+    ],
+    "safe_zone": false,
+    "environment": {
+      "weather": [
+        "مشمس",
+        "غائم",
+        "ممطر",
+        "ضبابي"
+      ],
+      "time_cycle": true,
+      "background_music": "forest_theme.mp3"
+    }
+  }
+]

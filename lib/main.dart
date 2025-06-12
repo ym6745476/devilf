@@ -1,30 +1,47 @@
 import 'package:flutter/material.dart';
-import 'core/injection/injection_container.dart' as di;
-import 'core/services/game_service.dart';
-import 'ui/main_menu.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:arabic_mmorpg/core/localization/app_localizations.dart';
+import 'package:arabic_mmorpg/core/rtl/rtl.dart';
+import 'package:arabic_mmorpg/main/app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await di.init();
-
-  final gameService = di.sl<GameService>();
-  // Initialize character or other startup logic here if needed
-  // await gameService.initializeCharacter('character_id');
-
-  runApp(const SilkroadOnlineApp());
+  
+  // Set preferred orientations
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  
+  // Set system UI overlay style
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.black,
+      systemNavigationBarIconBrightness: Brightness.light,
+    ),
+  );
+  
+  runApp(const ArabicMMORPGApp());
 }
 
-class SilkroadOnlineApp extends StatelessWidget {
-  const SilkroadOnlineApp({Key? key}) : super(key: key);
+class ArabicMMORPGApp extends StatelessWidget {
+  const ArabicMMORPGApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Silkroad Online',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MainMenu(),
+      title: 'الفتح: طريق الانتقام',
+      debugShowCheckedModeBanner: false,
+      theme: RTLTheme.lightRTLTheme(),
+      darkTheme: RTLTheme.darkRTLTheme(),
+      themeMode: ThemeMode.system,
+      locale: const Locale('ar', ''),
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      home: const GameApp(),
     );
   }
 }

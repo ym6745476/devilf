@@ -1,0 +1,24 @@
+{
+  "languages": [
+    {
+      "id": "lang_1",
+      "name": "العربية",
+      "code": "ar",
+      "default": true
+    },
+    {
+      "id": "lang_2",
+      "name": "English",
+      "code": "en",
+      "default": false
+    }
+  ],
+  "text_direction": {
+    "ar": "rtl",
+    "en": "ltr"
+  },
+  "fonts": {
+    "ar": "Cairo",
+    "en": "Roboto"
+  }
+}

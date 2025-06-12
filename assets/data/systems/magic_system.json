@@ -1,0 +1,1020 @@
+{
+  "magic_schools": [
+    {
+      "id": "school_1",
+      "name": "سحر النار",
+      "description": "مدرسة سحرية تتخصص في التعاويذ النارية الهجومية",
+      "primary_stat": "intelligence",
+      "secondary_stat": "strength",
+      "element": "fire",
+      "base_effects": ["ضرر ناري", "حرق مستمر", "انفجار"]
+    },
+    {
+      "id": "school_2",
+      "name": "سحر الجليد",
+      "description": "مدرسة سحرية تتخصص في التعاويذ الجليدية للتحكم والإبطاء",
+      "primary_stat": "intelligence",
+      "secondary_stat": "vitality",
+      "element": "ice",
+      "base_effects": ["ضرر جليدي", "إبطاء", "تجميد"]
+    },
+    {
+      "id": "school_3",
+      "name": "سحر البرق",
+      "description": "مدرسة سحرية تتخصص في تعاويذ البرق السريعة والقوية",
+      "primary_stat": "intelligence",
+      "secondary_stat": "agility",
+      "element": "lightning",
+      "base_effects": ["ضرر كهربائي", "صعق", "انتقال سريع"]
+    },
+    {
+      "id": "school_4",
+      "name": "سحر الأرض",
+      "description": "مدرسة سحرية تتخصص في تعاويذ الأرض الدفاعية والتحكم بالأرض",
+      "primary_stat": "intelligence",
+      "secondary_stat": "vitality",
+      "element": "earth",
+      "base_effects": ["ضرر أرضي", "درع حجري", "زلزال"]
+    },
+    {
+      "id": "school_5",
+      "name": "سحر الهواء",
+      "description": "مدرسة سحرية تتخصص في تعاويذ الهواء للحركة والتحكم",
+      "primary_stat": "intelligence",
+      "secondary_stat": "agility",
+      "element": "air",
+      "base_effects": ["ضرر هوائي", "طيران", "عاصفة"]
+    },
+    {
+      "id": "school_6",
+      "name": "سحر الضوء",
+      "description": "مدرسة سحرية تتخصص في تعاويذ الضوء للشفاء والتطهير",
+      "primary_stat": "intelligence",
+      "secondary_stat": "vitality",
+      "element": "light",
+      "base_effects": ["ضرر مقدس", "شفاء", "تطهير"]
+    },
+    {
+      "id": "school_7",
+      "name": "سحر الظلام",
+      "description": "مدرسة سحرية تتخصص في تعاويذ الظلام للإضعاف واستنزاف الحياة",
+      "primary_stat": "intelligence",
+      "secondary_stat": "strength",
+      "element": "dark",
+      "base_effects": ["ضرر ظلامي", "استنزاف حياة", "إضعاف"]
+    },
+    {
+      "id": "school_8",
+      "name": "سحر الطبيعة",
+      "description": "مدرسة سحرية تتخصص في تعاويذ الطبيعة للشفاء والتعزيز",
+      "primary_stat": "intelligence",
+      "secondary_stat": "vitality",
+      "element": "nature",
+      "base_effects": ["ضرر طبيعي", "شفاء تدريجي", "تعزيز"]
+    }
+  ],
+  "spells": [
+    {
+      "id": "spell_1",
+      "name": "كرة نارية",
+      "school": "سحر النار",
+      "level_req": 1,
+      "mana_cost": 10,
+      "cooldown": 3,
+      "cast_time": 1.0,
+      "damage": 50,
+      "range": 20,
+      "area_of_effect": 0,
+      "effects": [],
+      "description": "إطلاق كرة من النار تسبب ضرراً للعدو",
+      "visual_effect": "fire_ball_effect",
+      "sound_effect": "fire_ball_sound"
+    },
+    {
+      "id": "spell_2",
+      "name": "عاصفة نارية",
+      "school": "سحر النار",
+      "level_req": 15,
+      "mana_cost": 40,
+      "cooldown": 12,
+      "cast_time": 2.5,
+      "damage": 120,
+      "range": 15,
+      "area_of_effect": 8,
+      "effects": [
+        {
+          "type": "burn",
+          "damage": 10,
+          "duration": 5,
+          "tick_rate": 1
+        }
+      ],
+      "description": "إطلاق عاصفة من النار تسبب ضرراً لجميع الأعداء في المنطقة وتحرقهم",
+      "visual_effect": "fire_storm_effect",
+      "sound_effect": "fire_storm_sound"
+    },
+    {
+      "id": "spell_3",
+      "name": "جدار ناري",
+      "school": "سحر النار",
+      "level_req": 25,
+      "mana_cost": 60,
+      "cooldown": 20,
+      "cast_time": 1.5,
+      "damage": 30,
+      "range": 10,
+      "area_of_effect": 0,
+      "duration": 10,
+      "effects": [
+        {
+          "type": "burn",
+          "damage": 20,
+          "duration": 3,
+          "tick_rate": 1
+        }
+      ],
+      "description": "إنشاء جدار من النار يحرق أي عدو يمر من خلاله",
+      "visual_effect": "fire_wall_effect",
+      "sound_effect": "fire_wall_sound"
+    },
+    {
+      "id": "spell_4",
+      "name": "سهم جليدي",
+      "school": "سحر الجليد",
+      "level_req": 1,
+      "mana_cost": 8,
+      "cooldown": 2,
+      "cast_time": 0.8,
+      "damage": 40,
+      "range": 25,
+      "area_of_effect": 0,
+      "effects": [
+        {
+          "type": "slow",
+          "amount": 20,
+          "duration": 3
+        }
+      ],
+      "description": "إطلاق سهم من الجليد يسبب ضرراً ويبطئ العدو",
+      "visual_effect": "ice_arrow_effect",
+      "sound_effect": "ice_arrow_sound"
+    },
+    {
+      "id": "spell_5",
+      "name": "عاصفة ثلجية",
+      "school": "سحر الجليد",
+      "level_req": 15,
+      "mana_cost": 45,
+      "cooldown": 15,
+      "cast_time": 2.0,
+      "damage": 100,
+      "range": 12,
+      "area_of_effect": 10,
+      "effects": [
+        {
+          "type": "slow",
+          "amount": 40,
+          "duration": 5
+        }
+      ],
+      "description": "إطلاق عاصفة من الثلج تسبب ضرراً وتبطئ جميع الأعداء في المنطقة",
+      "visual_effect": "blizzard_effect",
+      "sound_effect": "blizzard_sound"
+    },
+    {
+      "id": "spell_6",
+      "name": "سجن جليدي",
+      "school": "سحر الجليد",
+      "level_req": 25,
+      "mana_cost": 70,
+      "cooldown": 25,
+      "cast_time": 1.8,
+      "damage": 60,
+      "range": 15,
+      "area_of_effect": 0,
+      "effects": [
+        {
+          "type": "freeze",
+          "duration": 4
+        }
+      ],
+      "description": "تجميد العدو في مكانه وإلحاق ضرر به",
+      "visual_effect": "ice_prison_effect",
+      "sound_effect": "ice_prison_sound"
+    },
+    {
+      "id": "spell_7",
+      "name": "صاعقة",
+      "school": "سحر البرق",
+      "level_req": 1,
+      "mana_cost": 12,
+      "cooldown": 4,
+      "cast_time": 0.5,
+      "damage": 60,
+      "range": 18,
+      "area_of_effect": 0,
+      "effects": [],
+      "description": "استدعاء صاعقة من السماء تصيب العدو",
+      "visual_effect": "lightning_bolt_effect",
+      "sound_effect": "lightning_bolt_sound"
+    },
+    {
+      "id": "spell_8",
+      "name": "عاصفة رعدية",
+      "school": "سحر البرق",
+      "level_req": 15,
+      "mana_cost": 50,
+      "cooldown": 18,
+      "cast_time": 2.2,
+      "damage": 150,
+      "range": 15,
+      "area_of_effect": 12,
+      "effects": [
+        {
+          "type": "stun",
+          "duration": 1.5
+        }
+      ],
+      "description": "استدعاء عاصفة رعدية تصيب جميع الأعداء في المنطقة وتصعقهم",
+      "visual_effect": "thunder_storm_effect",
+      "sound_effect": "thunder_storm_sound"
+    },
+    {
+      "id": "spell_9",
+      "name": "انتقال برقي",
+      "school": "سحر البرق",
+      "level_req": 25,
+      "mana_cost": 40,
+      "cooldown": 15,
+      "cast_time": 0.2,
+      "damage": 0,
+      "range": 20,
+      "area_of_effect": 0,
+      "effects": [],
+      "description": "الانتقال الفوري إلى موقع آخر على شكل برق",
+      "visual_effect": "lightning_teleport_effect",
+      "sound_effect": "lightning_teleport_sound"
+    },
+    {
+      "id": "spell_10",
+      "name": "رمح أرضي",
+      "school": "سحر الأرض",
+      "level_req": 1,
+      "mana_cost": 10,
+      "cooldown": 3,
+      "cast_time": 1.2,
+      "damage": 55,
+      "range": 15,
+      "area_of_effect": 0,
+      "effects": [],
+      "description": "استدعاء رمح من الصخور يخترق العدو",
+      "visual_effect": "earth_spear_effect",
+      "sound_effect": "earth_spear_sound"
+    },
+    {
+      "id": "spell_11",
+      "name": "درع حجري",
+      "school": "سحر الأرض",
+      "level_req": 15,
+      "mana_cost": 35,
+      "cooldown": 30,
+      "cast_time": 1.0,
+      "damage": 0,
+      "range": 0,
+      "area_of_effect": 0,
+      "effects": [
+        {
+          "type": "shield",
+          "amount": 200,
+          "duration": 15
+        }
+      ],
+      "description": "إنشاء درع من الصخور يحمي من الضرر",
+      "visual_effect": "stone_armor_effect",
+      "sound_effect": "stone_armor_sound"
+    },
+    {
+      "id": "spell_12",
+      "name": "زلزال",
+      "school": "سحر الأرض",
+      "level_req": 25,
+      "mana_cost": 80,
+      "cooldown": 40,
+      "cast_time": 3.0,
+      "damage": 200,
+      "range": 0,
+      "area_of_effect": 15,
+      "effects": [
+        {
+          "type": "knockdown",
+          "duration": 2
+        }
+      ],
+      "description": "إحداث زلزال يسبب ضرراً لجميع الأعداء في المنطقة ويسقطهم أرضاً",
+      "visual_effect": "earthquake_effect",
+      "sound_effect": "earthquake_sound"
+    },
+    {
+      "id": "spell_13",
+      "name": "نسمة هوائية",
+      "school": "سحر الهواء",
+      "level_req": 1,
+      "mana_cost": 8,
+      "cooldown": 2,
+      "cast_time": 0.5,
+      "damage": 35,
+      "range": 20,
+      "area_of_effect": 0,
+      "effects": [
+        {
+          "type": "push",
+          "distance": 5
+        }
+      ],
+      "description": "إطلاق نسمة هوائية قوية تدفع العدو للخلف",
+      "visual_effect": "air_blast_effect",
+      "sound_effect": "air_blast_sound"
+    },
+    {
+      "id": "spell_14",
+      "name": "طيران",
+      "school": "سحر الهواء",
+      "level_req": 15,
+      "mana_cost": 30,
+      "cooldown": 60,
+      "cast_time": 1.0,
+      "damage": 0,
+      "range": 0,
+      "area_of_effect": 0,
+      "effects": [
+        {
+          "type": "flight",
+          "duration": 20
+        }
+      ],
+      "description": "القدرة على الطيران لفترة محدودة",
+      "visual_effect": "flight_effect",
+      "sound_effect": "flight_sound"
+    },
+    {
+      "id": "spell_15",
+      "name": "إعصار",
+      "school": "سحر الهواء",
+      "level_req": 25,
+      "mana_cost": 70,
+      "cooldown": 35,
+      "cast_time": 2.5,
+      "damage": 180,
+      "range": 15,
+      "area_of_effect": 10,
+      "effects": [
+        {
+          "type": "pull",
+          "duration": 3
+        }
+      ],
+      "description": "إنشاء إعصار يسحب الأعداء للداخل ويسبب لهم ضرراً مستمراً",
+      "visual_effect": "tornado_effect",
+      "sound_effect": "tornado_sound"
+    },
+    {
+      "id": "spell_16",
+      "name": "شعاع مقدس",
+      "school": "سحر الضوء",
+      "level_req": 1,
+      "mana_cost": 12,
+      "cooldown": 4,
+      "cast_time": 1.0,
+      "damage": 45,
+      "range": 20,
+      "area_of_effect": 0,
+      "effects": [
+        {
+          "type": "holy_damage",
+          "multiplier": 2.0,
+          "target": "undead"
+        }
+      ],
+      "description": "إطلاق شعاع من الضوء المقدس، فعال جداً ضد الأموات",
+      "visual_effect": "holy_beam_effect",
+      "sound_effect": "holy_beam_sound"
+    },
+    {
+      "id": "spell_17",
+      "name": "شفاء",
+      "school": "سحر الضوء",
+      "level_req": 15,
+      "mana_cost": 40,
+      "cooldown": 15,
+      "cast_time": 1.5,
+      "healing": 100,
+      "range": 15,
+      "area_of_effect": 0,
+      "effects": [],
+      "description": "شفاء الهدف وإزالة التأثيرات السلبية",
+      "visual_effect": "healing_effect",
+      "sound_effect": "healing_sound"
+    },
+    {
+      "id": "spell_18",
+      "name": "هالة مقدسة",
+      "school": "سحر الضوء",
+      "level_req": 25,
+      "mana_cost": 60,
+      "cooldown": 30,
+      "cast_time": 2.0,
+      "healing": 20,
+      "range": 0,
+      "area_of_effect": 10,
+      "duration": 10,
+      "effects": [
+        {
+          "type": "heal_over_time",
+          "amount": 20,
+          "tick_rate": 1,
+          "duration": 10
+        },
+        {
+          "type": "damage_aura",
+          "damage": 30,
+          "tick_rate": 1,
+          "duration": 10,
+          "target": "undead"
+        }
+      ],
+      "description": "إنشاء هالة مقدسة تشفي الحلفاء وتؤذي الأموات",
+      "visual_effect": "holy_aura_effect",
+      "sound_effect": "holy_aura_sound"
+    },
+    {
+      "id": "spell_19",
+      "name": "سهم ظلامي",
+      "school": "سحر الظلام",
+      "level_req": 1,
+      "mana_cost": 10,
+      "cooldown": 3,
+      "cast_time": 0.8,
+      "damage": 50,
+      "range": 22,
+      "area_of_effect": 0,
+      "effects": [
+        {
+          "type": "life_steal",
+          "percentage": 20
+        }
+      ],
+      "description": "إطلاق سهم من الظلام يستنزف حياة العدو",
+      "visual_effect": "shadow_arrow_effect",
+      "sound_effect": "shadow_arrow_sound"
+    },
+    {
+      "id": "spell_20",
+      "name": "استنزاف الحياة",
+      "school": "سحر الظلام",
+      "level_req": 15,
+      "mana_cost": 45,
+      "cooldown": 20,
+      "cast_time": 1.5,
+      "damage": 120,
+      "range": 15,
+      "area_of_effect": 0,
+      "effects": [
+        {
+          "type": "life_steal",
+          "percentage": 50
+        },
+        {
+          "type": "weaken",
+          "amount": 30,
+          "duration": 8
+        }
+      ],
+      "description": "استنزاف حياة العدو وإضعافه",
+      "visual_effect": "life_drain_effect",
+      "sound_effect": "life_drain_sound"
+    },
+    {
+      "id": "spell_21",
+      "name": "انفجار ظلامي",
+      "school": "سحر الظلام",
+      "level_req": 25,
+      "mana_cost": 75,
+      "cooldown": 35,
+      "cast_time": 2.5,
+      "damage": 200,
+      "range": 12,
+      "area_of_effect": 8,
+      "effects": [
+        {
+          "type": "fear",
+          "duration": 3
+        }
+      ],
+      "description": "إطلاق انفجار من الظلام يسبب ضرراً هائلاً ويخيف الأعداء",
+      "visual_effect": "shadow_explosion_effect",
+      "sound_effect": "shadow_explosion_sound"
+    },
+    {
+      "id": "spell_22",
+      "name": "شوكة طبيعية",
+      "school": "سحر الطبيعة",
+      "level_req": 1,
+      "mana_cost": 8,
+      "cooldown": 2,
+      "cast_time": 0.7,
+      "damage": 40,
+      "range": 18,
+      "area_of_effect": 0,
+      "effects": [
+        {
+          "type": "root",
+          "duration": 1
+        }
+      ],
+      "description": "إطلاق شوكة نباتية تثبت العدو في مكانه",
+      "visual_effect": "nature_thorn_effect",
+      "sound_effect": "nature_thorn_sound"
+    },
+    {
+      "id": "spell_23",
+      "name": "لمسة الشفاء",
+      "school": "سحر الطبيعة",
+      "level_req": 15,
+      "mana_cost": 35,
+      "cooldown": 12,
+      "cast_time": 1.2,
+      "healing": 80,
+      "range": 10,
+      "area_of_effect": 0,
+      "effects": [
+        {
+          "type": "heal_over_time",
+          "amount": 10,
+          "tick_rate": 1,
+          "duration": 8
+        }
+      ],
+      "description": "لمسة شفاء تستعيد الصحة بشكل فوري وتدريجي",
+      "visual_effect": "healing_touch_effect",
+      "sound_effect": "healing_touch_sound"
+    },
+    {
+      "id": "spell_24",
+      "name": "غضب الطبيعة",
+      "school": "سحر الطبيعة",
+      "level_req": 25,
+      "mana_cost": 65,
+      "cooldown": 30,
+      "cast_time": 2.0,
+      "damage": 150,
+      "range": 15,
+      "area_of_effect": 10,
+      "effects": [
+        {
+          "type": "root",
+          "duration": 3
+        },
+        {
+          "type": "poison",
+          "damage": 15,
+          "tick_rate": 1,
+          "duration": 5
+        }
+      ],
+      "description": "استدعاء قوة الطبيعة لتثبيت الأعداء وتسميمهم",
+      "visual_effect": "nature_wrath_effect",
+      "sound_effect": "nature_wrath_sound"
+    }
+  ],
+  "spell_books": [
+    {
+      "id": "book_1",
+      "name": "كتاب النار الأساسي",
+      "rarity": "common",
+      "spells": ["كرة نارية"],
+      "description": "كتاب يعلم أساسيات سحر النار"
+    },
+    {
+      "id": "book_2",
+      "name": "كتاب الجليد الأساسي",
+      "rarity": "common",
+      "spells": ["سهم جليدي"],
+      "description": "كتاب يعلم أساسيات سحر الجليد"
+    },
+    {
+      "id": "book_3",
+      "name": "كتاب البرق الأساسي",
+      "rarity": "common",
+      "spells": ["صاعقة"],
+      "description": "كتاب يعلم أساسيات سحر البرق"
+    },
+    {
+      "id": "book_4",
+      "name": "كتاب الأرض الأساسي",
+      "rarity": "common",
+      "spells": ["رمح أرضي"],
+      "description": "كتاب يعلم أساسيات سحر الأرض"
+    },
+    {
+      "id": "book_5",
+      "name": "كتاب الهواء الأساسي",
+      "rarity": "common",
+      "spells": ["نسمة هوائية"],
+      "description": "كتاب يعلم أساسيات سحر الهواء"
+    },
+    {
+      "id": "book_6",
+      "name": "كتاب الضوء الأساسي",
+      "rarity": "common",
+      "spells": ["شعاع مقدس"],
+      "description": "كتاب يعلم أساسيات سحر الضوء"
+    },
+    {
+      "id": "book_7",
+      "name": "كتاب الظلام الأساسي",
+      "rarity": "common",
+      "spells": ["سهم ظلامي"],
+      "description": "كتاب يعلم أساسيات سحر الظلام"
+    },
+    {
+      "id": "book_8",
+      "name": "كتاب الطبيعة الأساسي",
+      "rarity": "common",
+      "spells": ["شوكة طبيعية"],
+      "description": "كتاب يعلم أساسيات سحر الطبيعة"
+    },
+    {
+      "id": "book_9",
+      "name": "كتاب النار المتقدم",
+      "rarity": "rare",
+      "spells": ["كرة نارية", "عاصفة نارية"],
+      "description": "كتاب يعلم تعاويذ متقدمة من سحر النار"
+    },
+    {
+      "id": "book_10",
+      "name": "كتاب الجليد المتقدم",
+      "rarity": "rare",
+      "spells": ["سهم جليدي", "عاصفة ثلجية"],
+      "description": "كتاب يعلم تعاويذ متقدمة من سحر الجليد"
+    },
+    {
+      "id": "book_11",
+      "name": "كتاب البرق المتقدم",
+      "rarity": "rare",
+      "spells": ["صاعقة", "عاصفة رعدية"],
+      "description": "كتاب يعلم تعاويذ متقدمة من سحر البرق"
+    },
+    {
+      "id": "book_12",
+      "name": "كتاب الأرض المتقدم",
+      "rarity": "rare",
+      "spells": ["رمح أرضي", "درع حجري"],
+      "description": "كتاب يعلم تعاويذ متقدمة من سحر الأرض"
+    },
+    {
+      "id": "book_13",
+      "name": "كتاب الهواء المتقدم",
+      "rarity": "rare",
+      "spells": ["نسمة هوائية", "طيران"],
+      "description": "كتاب يعلم تعاويذ متقدمة من سحر الهواء"
+    },
+    {
+      "id": "book_14",
+      "name": "كتاب الضوء المتقدم",
+      "rarity": "rare",
+      "spells": ["شعاع مقدس", "شفاء"],
+      "description": "كتاب يعلم تعاويذ متقدمة من سحر الضوء"
+    },
+    {
+      "id": "book_15",
+      "name": "كتاب الظلام المتقدم",
+      "rarity": "rare",
+      "spells": ["سهم ظلامي", "استنزاف الحياة"],
+      "description": "كتاب يعلم تعاويذ متقدمة من سحر الظلام"
+    },
+    {
+      "id": "book_16",
+      "name": "كتاب الطبيعة المتقدم",
+      "rarity": "rare",
+      "spells": ["شوكة طبيعية", "لمسة الشفاء"],
+      "description": "كتاب يعلم تعاويذ متقدمة من سحر الطبيعة"
+    },
+    {
+      "id": "book_17",
+      "name": "كتاب النار الأسطوري",
+      "rarity": "legendary",
+      "spells": ["كرة نارية", "عاصفة نارية", "جدار ناري"],
+      "description": "كتاب نادر جداً يعلم جميع تعاويذ سحر النار"
+    },
+    {
+      "id": "book_18",
+      "name": "كتاب الجليد الأسطوري",
+      "rarity": "legendary",
+      "spells": ["سهم جليدي", "عاصفة ثلجية", "سجن جليدي"],
+      "description": "كتاب نادر جداً يعلم جميع تعاويذ سحر الجليد"
+    },
+    {
+      "id": "book_19",
+      "name": "كتاب البرق الأسطوري",
+      "rarity": "legendary",
+      "spells": ["صاعقة", "عاصفة رعدية", "انتقال برقي"],
+      "description": "كتاب نادر جداً يعلم جميع تعاويذ سحر البرق"
+    },
+    {
+      "id": "book_20",
+      "name": "كتاب الأرض الأسطوري",
+      "rarity": "legendary",
+      "spells": ["رمح أرضي", "درع حجري", "زلزال"],
+      "description": "كتاب نادر جداً يعلم جميع تعاويذ سحر الأرض"
+    },
+    {
+      "id": "book_21",
+      "name": "كتاب الهواء الأسطوري",
+      "rarity": "legendary",
+      "spells": ["نسمة هوائية", "طيران", "إعصار"],
+      "description": "كتاب نادر جداً يعلم جميع تعاويذ سحر الهواء"
+    },
+    {
+      "id": "book_22",
+      "name": "كتاب الضوء الأسطوري",
+      "rarity": "legendary",
+      "spells": ["شعاع مقدس", "شفاء", "هالة مقدسة"],
+      "description": "كتاب نادر جداً يعلم جميع تعاويذ سحر الضوء"
+    },
+    {
+      "id": "book_23",
+      "name": "كتاب الظلام الأسطوري",
+      "rarity": "legendary",
+      "spells": ["سهم ظلامي", "استنزاف الحياة", "انفجار ظلامي"],
+      "description": "كتاب نادر جداً يعلم جميع تعاويذ سحر الظلام"
+    },
+    {
+      "id": "book_24",
+      "name": "كتاب الطبيعة الأسطوري",
+      "rarity": "legendary",
+      "spells": ["شوكة طبيعية", "لمسة الشفاء", "غضب الطبيعة"],
+      "description": "كتاب نادر جداً يعلم جميع تعاويذ سحر الطبيعة"
+    },
+    {
+      "id": "book_25",
+      "name": "كتاب العناصر",
+      "rarity": "mythic",
+      "spells": ["كرة نارية", "سهم جليدي", "صاعقة", "رمح أرضي"],
+      "description": "كتاب أسطوري يعلم تعاويذ من مختلف مدارس العناصر الأربعة"
+    },
+    {
+      "id": "book_26",
+      "name": "كتاب الحكمة القديمة",
+      "rarity": "mythic",
+      "spells": ["هالة مقدسة", "انفجار ظلامي", "زلزال", "إعصار"],
+      "description": "كتاب قديم جداً يعلم أقوى التعاويذ من مختلف المدارس السحرية"
+    }
+  ],
+  "spell_enhancement": {
+    "enhancement_levels": [
+      {
+        "level": 1,
+        "name": "تعزيز بسيط",
+        "cost": 100,
+        "materials": ["حجر سحري صغير"],
+        "effects": {
+          "damage_increase": "10%",
+          "mana_cost_reduction": "5%",
+          "cooldown_reduction": "5%"
+        }
+      },
+      {
+        "level": 2,
+        "name": "تعزيز متوسط",
+        "cost": 500,
+        "materials": ["حجر سحري متوسط", "غبار سحري"],
+        "effects": {
+          "damage_increase": "20%",
+          "mana_cost_reduction": "10%",
+          "cooldown_reduction": "10%"
+        }
+      },
+      {
+        "level": 3,
+        "name": "تعزيز متقدم",
+        "cost": 2000,
+        "materials": ["حجر سحري كبير", "جوهرة عنصرية"],
+        "effects": {
+          "damage_increase": "35%",
+          "mana_cost_reduction": "15%",
+          "cooldown_reduction": "15%",
+          "area_increase": "20%"
+        }
+      },
+      {
+        "level": 4,
+        "name": "تعزيز ملكي",
+        "cost": 10000,
+        "materials": ["جوهرة سحرية نادرة", "دم تنين", "غبار نجمي"],
+        "effects": {
+          "damage_increase": "50%",
+          "mana_cost_reduction": "25%",
+          "cooldown_reduction": "25%",
+          "area_increase": "30%",
+          "cast_time_reduction": "20%"
+        }
+      },
+      {
+        "level": 5,
+        "name": "تعزيز أسطوري",
+        "cost": 50000,
+        "materials": ["حجر فلسفة", "قلب فينيكس", "دمعة إله"],
+        "effects": {
+          "damage_increase": "100%",
+          "mana_cost_reduction": "40%",
+          "cooldown_reduction": "40%",
+          "area_increase": "50%",
+          "cast_time_reduction": "40%",
+          "additional_effect": "إضافة تأثير إضافي للتعويذة"
+        }
+      }
+    ],
+    "enhancement_materials": [
+      {
+        "id": "material_1",
+        "name": "حجر سحري صغير",
+        "rarity": "common",
+        "source": ["الوحوش الضعيفة", "المتاجر الأساسية"],
+        "description": "حجر صغير يحتوي على طاقة سحرية بسيطة"
+      },
+      {
+        "id": "material_2",
+        "name": "حجر سحري متوسط",
+        "rarity": "uncommon",
+        "source": ["الوحوش المتوسطة", "المتاجر المتخصصة"],
+        "description": "حجر متوسط الحجم يحتوي على طاقة سحرية جيدة"
+      },
+      {
+        "id": "material_3",
+        "name": "حجر سحري كبير",
+        "rarity": "rare",
+        "source": ["الوحوش القوية", "الزنزانات"],
+        "description": "حجر كبير يحتوي على طاقة سحرية قوية"
+      },
+      {
+        "id": "material_4",
+        "name": "غبار سحري",
+        "rarity": "uncommon",
+        "source": ["طحن الأحجار السحرية", "السحرة"],
+        "description": "غبار ناتج عن طحن الأحجار السحرية"
+      },
+      {
+        "id": "material_5",
+        "name": "جوهرة عنصرية",
+        "rarity": "rare",
+        "source": ["الزعماء العنصريين", "الزنزانات المتقدمة"],
+        "description": "جوهرة تحتوي على قوة أحد العناصر الأساسية"
+      },
+      {
+        "id": "material_6",
+        "name": "جوهرة سحرية نادرة",
+        "rarity": "epic",
+        "source": ["الزعماء الأقوياء", "أحداث خاصة"],
+        "description": "جوهرة نادرة جداً تحتوي على طاقة سحرية هائلة"
+      },
+      {
+        "id": "material_7",
+        "name": "دم تنين",
+        "rarity": "epic",
+        "source": ["التنانين", "الزنزانات الصعبة"],
+        "description": "دم تنين يحتوي على قوة سحرية فطرية"
+      },
+      {
+        "id": "material_8",
+        "name": "غبار نجمي",
+        "rarity": "epic",
+        "source": ["أحداث نيازك", "مناطق سماوية"],
+        "description": "غبار من النجوم يحتوي على طاقة كونية"
+      },
+      {
+        "id": "material_9",
+        "name": "حجر فلسفة",
+        "rarity": "legendary",
+        "source": ["مهام أسطورية", "أقوى الزعماء"],
+        "description": "حجر أسطوري يمكنه تحويل الطاقة وتعزيزها"
+      },
+      {
+        "id": "material_10",
+        "name": "قلب فينيكس",
+        "rarity": "legendary",
+        "source": ["زعيم الفينيكس", "أحداث نادرة جداً"],
+        "description": "قلب طائر الفينيكس الأسطوري، يحتوي على قوة الحياة الأبدية"
+      },
+      {
+        "id": "material_11",
+        "name": "دمعة إله",
+        "rarity": "mythic",
+        "source": ["أحداث عالمية", "مهام مستحيلة"],
+        "description": "دمعة من كائن إلهي، تحتوي على قوة لا يمكن تصورها"
+      }
+    ]
+  },
+  "visual_effects": {
+    "spell_effects": [
+      {
+        "id": "effect_1",
+        "name": "تأثير ناري",
+        "color": "#FF5722",
+        "particles": "fire_particles",
+        "sound": "fire_sound",
+        "description": "تأثير بصري من اللهب والشرر"
+      },
+      {
+        "id": "effect_2",
+        "name": "تأثير جليدي",
+        "color": "#2196F3",
+        "particles": "ice_particles",
+        "sound": "ice_sound",
+        "description": "تأثير بصري من بلورات الثلج والبرد"
+      },
+      {
+        "id": "effect_3",
+        "name": "تأثير كهربائي",
+        "color": "#FFEB3B",
+        "particles": "lightning_particles",
+        "sound": "lightning_sound",
+        "description": "تأثير بصري من البرق والشرارات الكهربائية"
+      },
+      {
+        "id": "effect_4",
+        "name": "تأثير أرضي",
+        "color": "#795548",
+        "particles": "earth_particles",
+        "sound": "earth_sound",
+        "description": "تأثير بصري من الصخور والتراب"
+      },
+      {
+        "id": "effect_5",
+        "name": "تأثير هوائي",
+        "color": "#E0E0E0",
+        "particles": "air_particles",
+        "sound": "air_sound",
+        "description": "تأثير بصري من الرياح والهواء"
+      },
+      {
+        "id": "effect_6",
+        "name": "تأثير مقدس",
+        "color": "#FFECB3",
+        "particles": "holy_particles",
+        "sound": "holy_sound",
+        "description": "تأثير بصري من الضوء المقدس"
+      },
+      {
+        "id": "effect_7",
+        "name": "تأثير ظلامي",
+        "color": "#4A148C",
+        "particles": "shadow_particles",
+        "sound": "shadow_sound",
+        "description": "تأثير بصري من الظلام والفراغ"
+      },
+      {
+        "id": "effect_8",
+        "name": "تأثير طبيعي",
+        "color": "#4CAF50",
+        "particles": "nature_particles",
+        "sound": "nature_sound",
+        "description": "تأثير بصري من النباتات والأوراق"
+      }
+    ],
+    "enhancement_effects": [
+      {
+        "level": 1,
+        "glow_intensity": 0.2,
+        "particle_rate": 0.5,
+        "sound_volume": 0.8
+      },
+      {
+        "level": 2,
+        "glow_intensity": 0.4,
+        "particle_rate": 1.0,
+        "sound_volume": 0.9
+      },
+      {
+        "level": 3,
+        "glow_intensity": 0.6,
+        "particle_rate": 1.5,
+        "sound_volume": 1.0,
+        "additional_effects": ["small_shockwave"]
+      },
+      {
+        "level": 4,
+        "glow_intensity": 0.8,
+        "particle_rate": 2.0,
+        "sound_volume": 1.1,
+        "additional_effects": ["medium_shockwave", "screen_flash"]
+      },
+      {
+        "level": 5,
+        "glow_intensity": 1.0,
+        "particle_rate": 3.0,
+        "sound_volume": 1.2,
+        "additional_effects": ["large_shockwave", "screen_flash", "time_slow"]
+      }
+    ]
+  }
+}
